@@ -1,0 +1,33 @@
+{
+  "kind": "versioned_index_of_execution_followup_evidence_not_stage_acceptance",
+  "baseline_commit": "f37c837",
+  "baseline_tag": "baseline-20261015",
+  "work_branch": "fix/openwam-execution-audit",
+  "implementation_commit": "1928d83",
+  "report_builder_commit": "f45afb8",
+  "report_packaging_fix_commit": "9f33f35",
+  "delivery_tag": "repro-followup-20261015",
+  "report": {
+    "path": "outputs/repro-followup-20261015-final2/EmbodiedEval-repro-followup-20261015.html",
+    "sha256": "46817b5345758c2f9fefbb5d58303f1d31ab94776abee0c19408e48f19a78244"
+  },
+  "receipt": {
+    "path": "outputs/repro-followup-20261015-final2/receipt.json",
+    "sha256": "96695cf20609bf6b6ba85f13b52b3329e3577d87def236cf537f21ae280b5c3c"
+  },
+  "source_sha256": {
+    "path": "outputs/repro-followup-20261015-final2/source-sha256.json",
+    "sha256": "bc23e14f12a6f3762b16b19565f432ff739869a6185fd390030797ef0a90a6cc"
+  },
+  "git_bundle": "outputs/repro-followup-20261015-final2/EmbodiedEval-repro-followup-20261015.bundle",
+  "post_commit_bundle_and_HTTP_verification": "outputs/repro-followup-20261015-final2/version-control.json",
+  "software_tests": 443,
+  "new_tests_are_synthetic": true,
+  "five_CLI_exit_codes": [0, 0, 0, 1, 2],
+  "strict_original_fresh_rollout_gate_passed": false,
+  "fixed_saved_plan_replay_is_controlled_diagnostic_not_policy_evaluation": true,
+  "stage4_formally_accepted": false,
+  "contract_frozen": false,
+  "Git_and_bundle_exclude_weights_environments_and_outputs": true,
+  "no_remote_or_external_upload_created": true
+}
