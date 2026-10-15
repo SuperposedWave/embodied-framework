@@ -1,0 +1,27 @@
+{
+  "repo_id": "VLABench/pi05-primitive-10task",
+  "revision": "f658a8bec801aab960fe0ceab370a123b31c1837",
+  "expected_total_bytes": 12440875959,
+  "scope": "Inference params and matching normalization only; no train_state",
+  "objects": [
+    {"relative": "assets/vlabench/vlabench_ft_primitive/norm_stats.json", "size": 4424, "git_blob": "3d60e65da019b00a73770bf1b7e5095433a0be68", "sha256": "bce33fc1831830d953ef9bc57e520c02ee44e02b7ad07f27ce92b931a879384f"},
+    {"relative": "params/_METADATA", "size": 23497, "git_blob": "38153ee2995836aae38081a4f1df72f0d55bb8a3"},
+    {"relative": "params/_sharding", "size": 18152, "git_blob": "dee7b906f3d22f39dcb6cbfd9ace2b27c46842ea"},
+    {"relative": "params/array_metadatas/process_0", "size": 9070, "git_blob": "cd7d761cfc471c71b47aa46f0b76895f2c0795d1"},
+    {"relative": "params/d/240db4f987e97c9477b3f39d77996210", "size": 42300, "git_blob": "f4ac982cfb43489f0051004344787ae03ff9c928"},
+    {"relative": "params/manifest.ocdbt", "size": 120, "git_blob": "5f560982aac3ed47321ff545c20dea225fa01c4b"},
+    {"relative": "params/ocdbt.process_0/d/06f38ac8ce3b4d335b4d8874c6f4cbdd", "size": 1400381529, "sha256": "6d85fdecfd8bf733236b77bb07a7cbe3ac56f5fd2709e61f457258ce9506be37"},
+    {"relative": "params/ocdbt.process_0/d/10793e6211fcc7417882f7e0045e4716", "size": 2413742780, "sha256": "4a268f12b03ffa222a4f149471d8cdb0138f920dd7e24e285f97995b7bf65d4b"},
+    {"relative": "params/ocdbt.process_0/d/1ecf5103d5b0f495f5863314e86eea7b", "size": 1083, "git_blob": "145ab1a22d5883a8cda827bcda001174282898bd"},
+    {"relative": "params/ocdbt.process_0/d/1fd2df50f9903ae9af667f64e5b419d0", "size": 560018549, "sha256": "441ae698cb9b4e9213e852cfc8ac776dbd8836c0aaf67c8b5ee1a6eeb14c30d0"},
+    {"relative": "params/ocdbt.process_0/d/2c941f15cc97858f9b30af0ee43f29f7", "size": 2325564895, "sha256": "81d7e90e91ddcedf5c185161597928a0ac888e950afabe46c94046c7b11c8260"},
+    {"relative": "params/ocdbt.process_0/d/4169568cfbf46b0dae6fc22a0bf2eda7", "size": 359815733, "sha256": "e9d2aaeddbd67dcff219fac2adcbd18f6b9d198babaa574524565f48f7af2e54"},
+    {"relative": "params/ocdbt.process_0/d/45d9e5a421f69966c7607b581347ecbe", "size": 217, "git_blob": "b4a4f19b626dd94b59f02e20e84bcb37282ac267"},
+    {"relative": "params/ocdbt.process_0/d/688c267d7a9b74953496a770eb397a95", "size": 2239879800, "sha256": "fefd85b19c2963d7711c1e76634b469e3055d6d1e385b7dcf3d4e333d537a77e"},
+    {"relative": "params/ocdbt.process_0/d/7d4706d06df24d39c8f3fa6c0ba0f148", "size": 489355208, "sha256": "e7bfe248e437d2bfe2f28dd9d293c70d60401d1fb2c4ab280764df9a2ceaeb12"},
+    {"relative": "params/ocdbt.process_0/d/b75a78724b72047ad2794d1fb82eb9b4", "size": 958, "git_blob": "1a45b10796bb3b4e37b70a7c2778fef75e73ba8d"},
+    {"relative": "params/ocdbt.process_0/d/e4524ef6248870c9924af8ded3aeeb89", "size": 733892948, "sha256": "039ca41bca440a958b3d6b9ae587fff4b962e64a5a596df78643dfc84d9e372f"},
+    {"relative": "params/ocdbt.process_0/d/ed213ba2737a0c76ac9df23fffdf10c3", "size": 1918124196, "sha256": "35ececf94f374973567e9b4175e4e1ee338c68190c9f9faedc4d1b861a672e82"},
+    {"relative": "params/ocdbt.process_0/manifest.ocdbt", "size": 500, "git_blob": "19ea9dcd26552fc77baa1abe23fd552173d1e617"}
+  ]
+}

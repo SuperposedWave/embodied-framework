@@ -1,0 +1,8 @@
+{
+  "contract_version": "0.2",
+  "run_id": "independent-architecture-example",
+  "model": {"adapter": "synthetic_policy_a", "options": {"cache_rows": 2}},
+  "benchmark": {"adapter": "synthetic_simulator_b", "options": {"camera_name": "front", "robot_id": "armA"}},
+  "binding": {"inputs": {"image": "front", "instruction": "instruction"}, "targets": {"joint": "armA/j0"}, "action_spec_ref": "joint-position@1"},
+  "episodes": [{"episode_id": "example", "budgets": {"env_steps": 3, "model_calls": 3}}]
+}

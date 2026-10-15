@@ -1,0 +1,18 @@
+{
+  "run_id": "stage4-pi05-libero-spatial",
+  "model": {
+    "adapter": "openpi_libero",
+    "openpi_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/openpi",
+    "checkpoint_dir": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Model/pi05_libero",
+    "host": "127.0.0.1",
+    "port": 8921,
+    "request_timeout_s": 300
+  },
+  "benchmark": {
+    "adapter": "libero_openpi",
+    "libero_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/openpi/third_party/libero"
+  },
+  "profile": {"chunk_mode": "adapter_owned", "execution_horizon_steps": 1},
+  "episodes": [{"episode_id": "spatial-task0-trial0", "seed": 7,
+    "budgets": {"env_steps": 220, "sim_time_s": 11, "model_calls": 220}}]
+}

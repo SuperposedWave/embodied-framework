@@ -1,0 +1,54 @@
+{
+  "contract_version": "0.2",
+  "run_id": "openwam-dual-wxyz-encoded-absolute-bounded",
+  "model": {
+    "adapter": "openwam",
+    "options": {
+      "io_profile": "eef20_dual_wxyz_encoded_absolute",
+      "repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/OpenWAM",
+      "checkpoint_dir": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Model/OpenWAM-Alpha-Sim-RoboTwin-Full",
+      "host": "127.0.0.1",
+      "port": 8964,
+      "request_timeout_s": 300
+    }
+  },
+  "benchmark": {
+    "adapter": "robotwin",
+    "options": {
+      "repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/RoboTwin-openwam",
+      "protocol": "sealed-instruction",
+      "task_name": "adjust_bottle",
+      "task_config": "demo_clean",
+      "instruction_type": "unseen",
+      "max_seed_candidates": 100,
+      "trial_index": 0
+    }
+  },
+  "binding": {
+    "inputs": {
+      "head": "head_camera",
+      "left_wrist": "left_camera",
+      "right_wrist": "right_camera",
+      "instruction": "instruction",
+      "left_position": "left_eef_position",
+      "left_quaternion": "left_eef_quaternion",
+      "left_grip": "left_gripper_open_fraction",
+      "right_position": "right_eef_position",
+      "right_quaternion": "right_eef_quaternion",
+      "right_grip": "right_gripper_open_fraction"
+    },
+    "targets": {
+      "left_eef": "robot0/left_eef",
+      "left_grip": "robot0/left_grip",
+      "right_eef": "robot0/right_eef",
+      "right_grip": "robot0/right_grip"
+    },
+    "action_spec_ref": "dual-cartesian-native-gripper@1",
+    "frame_conversions": []
+  },
+  "episodes": [{
+    "episode_id": "adjust-bottle-clean-episode0",
+    "seed": 0,
+    "budgets": {"env_steps": 4, "model_calls": 4}
+  }]
+}

@@ -1,0 +1,29 @@
+{
+  "run_id": "mock-chunk-run",
+  "benchmark": {
+    "adapter": "mock_benchmark",
+    "control_period_s": 0.05
+  },
+  "model": {
+    "adapter": "mock_model",
+    "scenario": "chunk",
+    "chunk_length": 8,
+    "observation_update": "every_env_step"
+  },
+  "profile": {
+    "chunk_mode": "runner_owned",
+    "execution_horizon_steps": 2
+  },
+  "episodes": [
+    {
+      "episode_id": "ep-0",
+      "seed": 0,
+      "budgets": {
+        "env_steps": 6,
+        "sim_time_s": 0.3,
+        "model_calls": 6,
+        "tool_calls": 0
+      }
+    }
+  ]
+}

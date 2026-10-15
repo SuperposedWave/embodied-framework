@@ -1,0 +1,30 @@
+{
+  "run_id": "mock-tool-run",
+  "benchmark": {
+    "adapter": "mock_benchmark",
+    "control_period_s": 0.05,
+    "tool_ticks": 3,
+    "intermediate_observations_supported": true
+  },
+  "model": {
+    "adapter": "mock_model",
+    "scenario": "tool",
+    "observation_update": "every_env_step"
+  },
+  "profile": {
+    "chunk_mode": "runner_owned",
+    "execution_horizon_steps": 1
+  },
+  "episodes": [
+    {
+      "episode_id": "ep-0",
+      "seed": 0,
+      "budgets": {
+        "env_steps": 5,
+        "sim_time_s": 0.25,
+        "model_calls": 5,
+        "tool_calls": 3
+      }
+    }
+  ]
+}

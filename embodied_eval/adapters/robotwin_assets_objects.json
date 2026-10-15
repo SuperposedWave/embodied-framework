@@ -1,0 +1,23 @@
+{
+  "repo_id": "TianxingChen/RoboTwin2.0",
+  "repo_type": "dataset",
+  "revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+  "source": "native assets/_download.py dataset, public fixed HF dataset metadata 2026-10-06",
+  "objects": [
+    {
+      "relative": "background_texture.zip",
+      "size": 10970687027,
+      "sha256": "54ede0fb5b783e0faa2bc98720d3affd6ca3bb9280b225b48c1aafaf31473070"
+    },
+    {
+      "relative": "embodiments.zip",
+      "size": 219847741,
+      "sha256": "85ffeff55a5066def5931224a85cfa3f8abaa1fbf779bd17789a7fb3f85bc789"
+    },
+    {
+      "relative": "objects.zip",
+      "size": 3737778549,
+      "sha256": "6aa56b3cf1e1064f7c809308144da36b00815f8b137fef2d7e4de856f8becf27"
+    }
+  ]
+}

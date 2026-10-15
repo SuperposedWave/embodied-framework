@@ -1,0 +1,50 @@
+{
+  "checked_at_utc": "2026-10-04T05:14:27Z",
+  "scope": "stage1_contracts_only",
+  "python": "3.13.5",
+  "jsonschema": "4.26.0",
+  "package_version": "0.1.0",
+  "contract_version": "0.1",
+  "unit_tests": {
+    "command": "uv run --frozen python -m unittest discover -s tests -v",
+    "exit_code": 0,
+    "passed_count": 53,
+    "full_output": "test-output.txt"
+  },
+  "wire_examples": {
+    "command": "uv run --frozen python -m examples.validate_contracts",
+    "exit_code": 0,
+    "prediction_cases": 8,
+    "path": "../examples/contract_examples.json"
+  },
+  "installed_import": {
+    "working_directory": "/tmp",
+    "exit_code": 0,
+    "output": "0.1.0\n0.1\n/Users/boboyuyong/Library/CloudStorage/OneDrive-Personal/WorkSpace/1TempFiles/EmbodiedEval/embodied_eval/__init__.py"
+  },
+  "claims": {
+    "real_model_inference": false,
+    "real_benchmark_evaluation": false,
+    "runner_implemented": false,
+    "cli_implemented": false,
+    "tests_use_synthetic_data": true,
+    "contract_frozen": false
+  },
+  "source_sha256": {
+    "embodied_eval/__init__.py": "0264c9bb97ac5df8eb932152dc7e491f8aa3da465ead66833a47cbc87b942b2e",
+    "embodied_eval/codec.py": "be8c5a00d7a0e182c6eecff97995052810d9bd6ea5cf98b75b2e7ba2ab0b7c89",
+    "embodied_eval/compatibility.py": "aad5511aaba395eb4869f88d89826a45123c264cafe2c1ea0e0374c5cf3e0c70",
+    "embodied_eval/contracts.py": "d7d4c39ba681e78b13efaaa55460fbd02fecd9d2225d99aae84c7d2b93bd616b",
+    "embodied_eval/errors.py": "48e84515926280a9c803b10ffd13d20712928cc07813d4df4bc1bf3453d37b4c",
+    "embodied_eval/geometry.py": "4aa7df3fea3f121951e55e8b82cb7ff0e11b2bc6f2add30dd797c9772095a79d",
+    "embodied_eval/interfaces.py": "502976f250ae2162ccc4fcc5224740b90daf569909c96ef8f4021820362c1b2d",
+    "embodied_eval/validation.py": "a88b2a5d1cd49dc6aaac6665f7c9a88c1dc2fe874f490036f3e040356e28356a",
+    "embodied_eval/visibility.py": "64416f3b38c109d12e9bc57caabd2dc0e7ed79fc384c4489e02f681ce8be1272",
+    "examples/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "examples/contract_sample.py": "7fc0dbaa69810c667bffdea26ecde4bf33087e18c62844eba56ea7f8c999aa7c",
+    "examples/validate_contracts.py": "d123bda8a9c70844b162e813b861358f8ba6c6e285e1d3efcabd9ce69135b084",
+    "tests/test_contracts.py": "5f49ff2846ac26ce482cd27d0aa144a2f2fc3feb67ec9a6dff4185d061441e78",
+    "pyproject.toml": "29f9da0c41fb6a63053fa759002e2977810abf85e2c7b3a0804a718c1ea5f350",
+    "uv.lock": "43e061736ec21051097b2d28b02426669b19f691e9e21550c569f2cd39dd7577"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "created_at_utc": "2026-10-05T07:38:12.747302+00:00",
+  "source_project": "/Users/boboyuyong/Library/CloudStorage/OneDrive-Personal/WorkSpace/1TempFiles/EmbodiedEval",
+  "source_branch": "codex/contracts-v0.1",
+  "source_has_head_commit": false,
+  "source_has_remote": false,
+  "source_git_metadata_included": false,
+  "payload_file_count_excluding_generated_manifests": 85,
+  "payload_bytes_excluding_generated_manifests": 845479,
+  "included_acceptance": "outputs/stage2-20261005T063033Z-final",
+  "excluded": [
+    ".git",
+    ".venv",
+    "__pycache__",
+    "*.pyc",
+    "*.egg-info",
+    "dist",
+    "build",
+    "other outputs",
+    "weights",
+    "credentials"
+  ],
+  "stage2_acceptance_confirmed": false,
+  "stage3_details_confirmed": false,
+  "platform_validated_before_handoff": "macOS arm64 Python 3.13.5",
+  "linux_gpu_validated": false,
+  "test_baseline": {
+    "unittest": 85,
+    "contract_examples": 8,
+    "cli_exit_codes": [
+      0,
+      0,
+      0,
+      1,
+      2
+    ]
+  }
+}

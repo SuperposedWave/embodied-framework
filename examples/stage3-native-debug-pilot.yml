@@ -1,0 +1,27 @@
+action_mode: eef
+host: 127.0.0.1
+port: 8920
+request_timeout: 300
+suite: libero_spatial
+task_id: 0
+num_trials: 1
+trial_start: 0
+max_steps: 600
+seed: 42
+rng_mode: environment
+reseed_each_trial: false
+settle_steps: 30
+settle_action: [0, 0, 0, 0, 0, 0, -1]
+camera_height: 256
+camera_width: 256
+head_camera_key: agentview_image
+left_wrist_camera_key: robot0_eye_in_hand_image
+right_wrist_camera_key: null
+image_transform: rotate_180
+send_state: true
+state_dim: 10
+action_indices: null
+action_clip: null
+debug: true
+debug_dir: /inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/EmbodiedEval/outputs/stage3-native-debug-20261005T1724Z/policy-debug
+result_dir: /inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/EmbodiedEval/outputs/stage3-native-debug-20261005T1724Z/results

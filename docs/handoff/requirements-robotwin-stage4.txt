@@ -1,0 +1,35 @@
+# Native RoboTwin simulation profile, NOT LingBot's inference environment.
+# Fixed RoboTwin script/requirements.txt pins retained for the inference path;
+# torchvision 0.19.1 matches native torch 2.4.1 instead of resolving latest torch.
+# numpy 1.26.x is explicitly required by LingBot's fixed RoboTwin guide.
+# Extra data/description generation dependencies intentionally excluded.
+# CuRobo v0.7.8 and official dependency patches remain separate verified gates.
+torch==2.4.1
+torchvision==0.19.1
+numpy==1.26.4
+transforms3d==0.4.2
+sapien==3.0.0b1
+scipy==1.10.1
+mplib==0.2.1
+gymnasium==0.29.1
+trimesh==4.4.3
+open3d==0.18.0
+imageio==2.34.2
+huggingface_hub==0.25.0
+opencv-python-headless==4.11.0.86
+PyYAML==6.0.2
+toppra==0.6.3
+pyglet==1.5.31
+termcolor==2.4.0
+h5py==3.11.0
+setuptools==75.1.0
+wheel==0.45.1
+ninja==1.11.1.4
+warp-lang==1.13.0
+numpy-quaternion==2023.0.4
+yourdfpy==0.0.58
+setuptools-scm==8.1.0
+pybind11==2.13.6
+# Independent model-transport client; no inference stack in the simulator.
+websockets==15.0.1
+msgpack==1.1.1

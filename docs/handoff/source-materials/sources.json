@@ -1,0 +1,32 @@
+{
+  "scope": "read_only_research_snapshot",
+  "research_date": "2026-10-04",
+  "copied_client_date": "2026-10-05",
+  "sources_unchanged": true,
+  "files": [
+    {
+      "source": "/Users/boboyuyong/.codex/visualizations/2026/10/04/01a104bf-9243-7722-9089-3c49d5778669/stage0/阶段0确认材料.md",
+      "copy": "阶段0确认材料.md",
+      "sha256": "f645e4844724301b23c70b47d02263e1fd40212025501bf584155bddd84fb501",
+      "bytes": 8072
+    },
+    {
+      "source": "/Users/boboyuyong/.codex/visualizations/2026/10/04/01a104bf-9243-7722-9089-3c49d5778669/stage0/兼容性清单.md",
+      "copy": "兼容性清单.md",
+      "sha256": "7a974e0ce5d44574e9f3edc03b433e5d222badcfc71ad4f7b738979540e47b96",
+      "bytes": 22779
+    },
+    {
+      "source": "/Users/boboyuyong/.codex/visualizations/2026/10/04/01a104bf-9243-7722-9089-3c49d5778669/stage0/compatibility-draft.json",
+      "copy": "compatibility-draft.json",
+      "sha256": "ca5fba2c6c6a65005ca9c7c16bebb5e3caeb76743ede75fde1b21ba3f0250196",
+      "bytes": 74277
+    },
+    {
+      "source": "/Users/boboyuyong/Downloads/模型×Benchmark_分工表.xlsx",
+      "copy": "模型×Benchmark_分工表.xlsx",
+      "sha256": "2002ec227399594458223ee9e04b5e81aeb58af0c4d601dba4c1d1885d3e9ced",
+      "bytes": 13165
+    }
+  ]
+}

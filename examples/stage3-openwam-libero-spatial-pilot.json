@@ -1,0 +1,32 @@
+{
+  "run_id": "stage3-openwam-libero-spatial-trial0",
+  "episodes": [
+    {
+      "episode_id": "spatial-task0-trial0",
+      "seed": 42,
+      "budgets": {
+        "env_steps": 600,
+        "sim_time_s": 30.0,
+        "model_calls": 600,
+        "tool_calls": 0,
+        "wall_time_s": null
+      }
+    }
+  ],
+  "benchmark": {
+    "adapter": "libero_spatial",
+    "libero_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/LIBERO"
+  },
+  "model": {
+    "adapter": "openwam_libero",
+    "openwam_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/OpenWAM",
+    "checkpoint_dir": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Model/OpenWAM/OpenWAM-Alpha-Sim-LIBERO",
+    "host": "127.0.0.1",
+    "port": 8920,
+    "request_timeout_s": 300
+  },
+  "profile": {
+    "chunk_mode": "adapter_owned",
+    "execution_horizon_steps": 1
+  }
+}

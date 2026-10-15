@@ -1,0 +1,204 @@
+{
+  "client_date": "2026-10-05",
+  "timezone": "Asia/Shanghai",
+  "scope": "stage2_mock_runner_and_cli",
+  "synthetic": true,
+  "test_command": ".venv/bin/python -m unittest discover -s tests -v",
+  "test_exit_code": 0,
+  "total_tests_passed": 85,
+  "stage1_regression_tests": 53,
+  "stage2_tests": 32,
+  "test_output": "stage2-test-output.txt",
+  "cli_checks": [
+    {
+      "case": "chunk",
+      "config": "examples/mock_chunk_run.json",
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "output": "/Users/boboyuyong/Library/CloudStorage/OneDrive-Personal/WorkSpace/1TempFiles/EmbodiedEval/outputs/stage2-20261005T063033Z-final/chunk",
+      "tool_output": "mock-chunk-run: completed=1, errors=0\n/Users/boboyuyong/Library/CloudStorage/OneDrive-Personal/WorkSpace/1TempFiles/EmbodiedEval/outputs/stage2-20261005T063033Z-final/chunk"
+    },
+    {
+      "case": "tool",
+      "config": "examples/mock_tool_run.json",
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "output": "/Users/boboyuyong/Library/CloudStorage/OneDrive-Personal/WorkSpace/1TempFiles/EmbodiedEval/outputs/stage2-20261005T063033Z-final/tool",
+      "tool_output": "mock-tool-run: completed=1, errors=0\n/Users/boboyuyong/Library/CloudStorage/OneDrive-Personal/WorkSpace/1TempFiles/EmbodiedEval/outputs/stage2-20261005T063033Z-final/tool"
+    },
+    {
+      "case": "cache",
+      "config": "examples/mock_cache_run.json",
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "output": "/Users/boboyuyong/Library/CloudStorage/OneDrive-Personal/WorkSpace/1TempFiles/EmbodiedEval/outputs/stage2-20261005T063033Z-final/cache",
+      "tool_output": "mock-cache-run: completed=2, errors=0\n/Users/boboyuyong/Library/CloudStorage/OneDrive-Personal/WorkSpace/1TempFiles/EmbodiedEval/outputs/stage2-20261005T063033Z-final/cache"
+    },
+    {
+      "case": "score-error",
+      "config": "examples/mock_score_error_run.json",
+      "expected_exit_code": 1,
+      "actual_exit_code": 1,
+      "output": "/Users/boboyuyong/Library/CloudStorage/OneDrive-Personal/WorkSpace/1TempFiles/EmbodiedEval/outputs/stage2-20261005T063033Z-final/score-error",
+      "tool_output": "mock-score-error-run: completed=0, errors=1\n/Users/boboyuyong/Library/CloudStorage/OneDrive-Personal/WorkSpace/1TempFiles/EmbodiedEval/outputs/stage2-20261005T063033Z-final/score-error"
+    },
+    {
+      "case": "rejected",
+      "config": "examples/mock_rejected_run.json",
+      "expected_exit_code": 2,
+      "actual_exit_code": 2,
+      "output": "/Users/boboyuyong/Library/CloudStorage/OneDrive-Personal/WorkSpace/1TempFiles/EmbodiedEval/outputs/stage2-20261005T063033Z-final/rejected",
+      "tool_output": "Run rejected: profile_mismatch at chunk_mode: expected 'adapter_owned'; got 'runner_owned'"
+    }
+  ],
+  "verified_statistics": [
+    {
+      "case": "chunk",
+      "episode_id": "ep-0",
+      "status": "completed",
+      "reason": "budget_exhausted",
+      "statistics": {
+        "env_steps": 6,
+        "sim_time_s": 0.30000000000000004,
+        "model_calls": 3,
+        "tool_calls": 0,
+        "model_forward_count": 3
+      },
+      "observe_count": 7,
+      "success": {
+        "value": false,
+        "unit": "boolean",
+        "source": "mock-scorer@1",
+        "valid": true,
+        "unavailable_reason": null
+      }
+    },
+    {
+      "case": "tool",
+      "episode_id": "ep-0",
+      "status": "completed",
+      "reason": "budget_exhausted",
+      "statistics": {
+        "env_steps": 5,
+        "sim_time_s": 0.25,
+        "model_calls": 2,
+        "tool_calls": 2,
+        "model_forward_count": 2
+      },
+      "observe_count": 6,
+      "success": {
+        "value": false,
+        "unit": "boolean",
+        "source": "mock-scorer@1",
+        "valid": true,
+        "unavailable_reason": null
+      }
+    },
+    {
+      "case": "cache",
+      "episode_id": "ep-0",
+      "status": "completed",
+      "reason": "budget_exhausted",
+      "statistics": {
+        "env_steps": 3,
+        "sim_time_s": 0.15000000000000002,
+        "model_calls": 3,
+        "tool_calls": 0,
+        "model_forward_count": 1
+      },
+      "observe_count": 4,
+      "success": {
+        "value": false,
+        "unit": "boolean",
+        "source": "mock-scorer@1",
+        "valid": true,
+        "unavailable_reason": null
+      }
+    },
+    {
+      "case": "cache",
+      "episode_id": "ep-1",
+      "status": "completed",
+      "reason": "budget_exhausted",
+      "statistics": {
+        "env_steps": 3,
+        "sim_time_s": 0.15000000000000002,
+        "model_calls": 3,
+        "tool_calls": 0,
+        "model_forward_count": 1
+      },
+      "observe_count": 4,
+      "success": {
+        "value": false,
+        "unit": "boolean",
+        "source": "mock-scorer@1",
+        "valid": true,
+        "unavailable_reason": null
+      }
+    },
+    {
+      "case": "score-error",
+      "episode_id": "ep-0",
+      "status": "error",
+      "reason": "run_error",
+      "statistics": {
+        "env_steps": 3,
+        "sim_time_s": 0.15000000000000002,
+        "model_calls": 3,
+        "tool_calls": 0,
+        "model_forward_count": 3
+      },
+      "observe_count": 4,
+      "success": {
+        "value": null,
+        "unit": "boolean",
+        "source": "mock-scorer@1",
+        "valid": false,
+        "unavailable_reason": "scorer_failed"
+      }
+    }
+  ],
+  "claims": {
+    "real_model_inference": false,
+    "real_benchmark_evaluation": false,
+    "weights_downloaded": false,
+    "model_api_called": false,
+    "runner_implemented": true,
+    "cli_implemented": true,
+    "parallel_workers_implemented": false,
+    "hard_timeout_implemented": false,
+    "automatic_retry": false,
+    "public_contract_structure_changed": false
+  },
+  "checked_at_utc": "2026-10-05T06:42:37.702974+00:00",
+  "runtime": {
+    "python": "3.13.5",
+    "jsonschema": "4.26.0"
+  },
+  "source_sha256": {
+    "embodied_eval/__init__.py": "0264c9bb97ac5df8eb932152dc7e491f8aa3da465ead66833a47cbc87b942b2e",
+    "embodied_eval/__main__.py": "51eebb25cab487d405985e56a7aafc524d36f869ae7a0ffc7c5a9ca5f2fbf4ea",
+    "embodied_eval/adapters/__init__.py": "b7c5bae57162766cd591f628ba598e47917d7f228bc842599fe375a23f3e2b64",
+    "embodied_eval/adapters/mock_benchmark.py": "95f2de9bdd6bce043610eec0832cb8628ad9e094f1140b8fc0a31b5ddb87eb77",
+    "embodied_eval/adapters/mock_model.py": "2e26eb4631908a17dbbf0d474edbff1619e4ffcdef23eeebd15daa8cb1b5cb8b",
+    "embodied_eval/adapters/mock_spec.py": "f8c3ff93f469618fd87509dda7e79378fc4878748576d7a6907195ed26468eb2",
+    "embodied_eval/artifacts.py": "37298ebb6d087159680fd068b4c27789cca440c7289383fae81c55701843c6f0",
+    "embodied_eval/codec.py": "be8c5a00d7a0e182c6eecff97995052810d9bd6ea5cf98b75b2e7ba2ab0b7c89",
+    "embodied_eval/compatibility.py": "aad5511aaba395eb4869f88d89826a45123c264cafe2c1ea0e0374c5cf3e0c70",
+    "embodied_eval/config.py": "48eaa36ed1a984c98b2cb29f7b2b9269e4f6da7735d51e96e537294a96cda87e",
+    "embodied_eval/contracts.py": "d7d4c39ba681e78b13efaaa55460fbd02fecd9d2225d99aae84c7d2b93bd616b",
+    "embodied_eval/errors.py": "48e84515926280a9c803b10ffd13d20712928cc07813d4df4bc1bf3453d37b4c",
+    "embodied_eval/geometry.py": "4aa7df3fea3f121951e55e8b82cb7ff0e11b2bc6f2add30dd797c9772095a79d",
+    "embodied_eval/interfaces.py": "502976f250ae2162ccc4fcc5224740b90daf569909c96ef8f4021820362c1b2d",
+    "embodied_eval/runner.py": "d8f16756a92ca80773762c0f5a7b57a2788b89730b18cea541edac007f7667ba",
+    "embodied_eval/validation.py": "a88b2a5d1cd49dc6aaac6665f7c9a88c1dc2fe874f490036f3e040356e28356a",
+    "embodied_eval/visibility.py": "64416f3b38c109d12e9bc57caabd2dc0e7ed79fc384c4489e02f681ce8be1272",
+    "tests/test_contracts.py": "5f49ff2846ac26ce482cd27d0aa144a2f2fc3feb67ec9a6dff4185d061441e78",
+    "tests/test_runner.py": "23e2816c359076292e27af171542c6ce3346cc32d43299de0ec1a536ca2cc887",
+    "examples/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "examples/contract_sample.py": "c2e4347ae222533deae70caef5f6766d883397e38cb434d468ad1f2d6f05423d",
+    "examples/validate_contracts.py": "d123bda8a9c70844b162e813b861358f8ba6c6e285e1d3efcabd9ce69135b084",
+    "pyproject.toml": "29f9da0c41fb6a63053fa759002e2977810abf85e2c7b3a0804a718c1ea5f350",
+    "uv.lock": "43e061736ec21051097b2d28b02426669b19f691e9e21550c569f2cd39dd7577"
+  }
+}

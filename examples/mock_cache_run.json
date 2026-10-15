@@ -1,0 +1,33 @@
+{
+  "run_id": "mock-cache-run",
+  "model": {
+    "adapter": "mock_model",
+    "scenario": "adapter_cache",
+    "chunk_length": 8,
+    "observation_update": "every_env_step"
+  },
+  "profile": {
+    "chunk_mode": "adapter_owned",
+    "execution_horizon_steps": 1
+  },
+  "episodes": [
+    {
+      "episode_id": "ep-0",
+      "seed": 0,
+      "budgets": {
+        "env_steps": 3,
+        "model_calls": 10,
+        "tool_calls": 0
+      }
+    },
+    {
+      "episode_id": "ep-1",
+      "seed": 0,
+      "budgets": {
+        "env_steps": 3,
+        "model_calls": 10,
+        "tool_calls": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "run_id": "mock-rejected-run",
+  "model": {
+    "adapter": "mock_model",
+    "scenario": "adapter_cache"
+  },
+  "profile": {
+    "chunk_mode": "runner_owned",
+    "execution_horizon_steps": 2
+  },
+  "episodes": [
+    {
+      "episode_id": "ep-0",
+      "seed": 0,
+      "budgets": {
+        "env_steps": 3,
+        "model_calls": 3,
+        "tool_calls": 0
+      }
+    }
+  ]
+}
