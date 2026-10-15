@@ -22,14 +22,19 @@ def recorded_dual_pose_row(action):
     """Independent evidence reader, not the production Benchmark conversion."""
     import numpy as np
     commands = {cmd["target_id"].split("/",1)[1]:cmd for cmd in action["commands"]}
-    if set(commands) != {"left_eef","right_eef","left_grip","right_grip"}:
+    if len(action["commands"]) != 4 or set(commands) != {"left_eef","right_eef","left_grip","right_grip"}:
         raise ValueError("complete_recorded_dual_pose_required")
+    if action["native_protocol"] != "gripper-open-fraction-interpolate-then-clamp@1":
+        raise ValueError("declared_recorded_native_gripper_protocol_required")
     values=[]
     for side in ("left","right"):
         pose,grip=commands[side+"_eef"],commands[side+"_grip"]
-        if pose["kind"]!="pose_target" or pose["pose"]["frame_id"]!="world" or grip["controller_profile_ref"]!="gripper-open-fraction-raw-request@1":
+        if (pose["kind"]!="pose_target" or pose["pose"]["frame_id"]!="world" or grip["kind"]!="controller_command"
+                or grip["controller_profile_ref"]!="gripper-open-fraction-raw-request@1"):
             raise ValueError("world_pose_and_native_gripper_request_required")
         q=pose["pose"]["quaternion_xyzw"]
+        if len(q) != 4 or len(pose["pose"]["position_m"]) != 3:
+            raise ValueError("physical_pose_dimensions_required")
         values.extend((*pose["pose"]["position_m"],q[3],q[0],q[1],q[2],grip["parameters"]["requested_open_fraction"]))
     row=np.asarray(values,dtype=action["native_dtype"])
     if row.shape!=(16,) or not np.isfinite(row).all() or not np.array_equal(np.asarray(values),row):

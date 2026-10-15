@@ -18,3 +18,9 @@ htmlcov/
 *.log
 *.tmp
 .DS_Store
+*.safetensors
+*.ckpt
+*.pth
+*.pt
+*.onnx
+*.mp4

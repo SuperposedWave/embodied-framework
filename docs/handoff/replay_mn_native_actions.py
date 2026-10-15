@@ -6,6 +6,7 @@ RoboTwin counts completed PhysX steps independently of the production meter.
 Differences are retained, not replaced by a task-success acceptance criterion.
 """
 import argparse
+from contextlib import nullcontext
 import copy
 from datetime import datetime, timezone
 import hashlib
@@ -59,7 +60,7 @@ def field(left, right):
             if a.shape == b.shape and a.size else None}
 
 
-def snapshot(observation, values, images, acquired_at=None):
+def snapshot(observation, values, images, acquired_at=None, state_acquired_at=None):
     result = {}
     if set(values) != set(observation["states"]):
         raise ValueError("public_state_inventory_changed")
@@ -68,8 +69,9 @@ def snapshot(observation, values, images, acquired_at=None):
     for name, value in values.items():
         sample = observation["states"][name]
         result[name] = field(sample["payload"]["data"], value)
-        if acquired_at is not None:
-            result[name + ":acquisition_time"] = field(sample["captured_at_s"], acquired_at)
+        timestamp = (state_acquired_at or {}).get(name, acquired_at)
+        if timestamp is not None:
+            result[name + ":acquisition_time"] = field(sample["captured_at_s"], timestamp)
     for name, value in images.items():
         sample = observation["sensors"][name]
         left = np.asarray(sample["payload"]["data"], np.uint8)
@@ -206,7 +208,40 @@ def replay_vlabench(config, episode_dir, result, output):
         env.close()
 
 
-def replay_robotwin(config, episode_dir, result, output):
+def robotwin_action_row(action):
+    """Independent saved-evidence reader; never call the production packer.
+
+    Preserve the historical native/joint routes and recognize the new physical
+    dual-pose route explicitly. Unknown or incomplete commands must not fall
+    through to a joint-array interpretation.
+    """
+    commands = {cmd["target_id"].split("/", 1)[1]: cmd for cmd in action["commands"]}
+    if len(commands) != len(action["commands"]):
+        raise ValueError("duplicate_recorded_target")
+    if action["native_protocol"] == "dual-eef16-legacy-quaternion@1":
+        parameters = action["commands"][0]["parameters"]
+        row = np.asarray(parameters["native_row"], dtype=parameters["native_dtype"])
+        mode, size = "ee", 16
+    elif any(cmd["kind"] == "pose_target" for cmd in commands.values()):
+        from compare_native_robotwin_closedloop import recorded_dual_pose_row
+        return recorded_dual_pose_row(action), "ee"
+    else:
+        expected = {side + f"_j{i}" for side in ("left", "right") for i in range(6)} | {"left_grip", "right_grip"}
+        if set(commands) != expected or any(commands[side + f"_j{i}"]["kind"] != "joint_target"
+                for side in ("left", "right") for i in range(6)):
+            raise ValueError("complete_recorded_joint14_required")
+        row = np.asarray([v for side in ("left", "right") for v in
+            [*[commands[side + f"_j{i}"]["value"] for i in range(6)],
+             commands[side + "_grip"]["parameters"]["requested_open_fraction"]
+             if commands[side + "_grip"]["kind"] == "controller_command" else commands[side + "_grip"]["value"]]],
+            dtype=action["native_dtype"])
+        mode, size = "qpos", 14
+    if row.shape != (size,) or not np.isfinite(row).all():
+        raise ValueError("finite_recorded_native_row_required")
+    return row, mode
+
+
+def replay_robotwin(config, episode_dir, result, output, observer=None):
     import torch
     import yaml
     from replay_robotwin_native_actions import observe_physx, seed_native
@@ -279,24 +314,15 @@ def replay_robotwin(config, episode_dir, result, output):
         raw = copy.deepcopy(env.get_obs())
         period = float(env.scene.get_timestep())
         rows, steps, acquired = [], 0, 0.
-        with observe_physx(env.scene.physx_system) as counter:
+        with observe_physx(env.scene.physx_system) as counter, (observer.watch(env) if observer else nullcontext()):
             for observation, action, reply in trace(episode_dir / "trace.internal.jsonl"):
                 fields = {}
                 if action is not None:
                     if env.eval_success:
                         break
-                    commands = {cmd["target_id"].split("/", 1)[1]: cmd for cmd in action["commands"]}
-                    if action["native_protocol"] == "dual-eef16-legacy-quaternion@1":
-                        parameters = action["commands"][0]["parameters"]
-                        row = np.asarray(parameters["native_row"], dtype=parameters["native_dtype"])
-                        mode = "ee"
-                    else:
-                        row = np.asarray([v for side in ("left", "right") for v in
-                            [*[commands[side + f"_j{i}"]["value"] for i in range(6)],
-                             commands[side + "_grip"]["parameters"]["requested_open_fraction"]
-                             if commands[side + "_grip"]["kind"] == "controller_command" else commands[side + "_grip"]["value"]]],
-                            dtype=action["native_dtype"])
-                        mode = "qpos"
+                    row, mode = robotwin_action_row(action)
+                    if observer:
+                        observer.begin_action(steps + 1)
                     before = counter["completed"]
                     env.take_action(row, action_type=mode)
                     steps += 1
@@ -315,8 +341,16 @@ def replay_robotwin(config, episode_dir, result, output):
                     ee = np.asarray(raw["endpose"][side + "_endpose"], np.float64)
                     values.update({side + "_eef_position": ee[:3], side + "_eef_quaternion": ee[[4, 5, 6, 3]],
                                    side + "_gripper_open_fraction": raw["endpose"][side + "_gripper"]})
+                    # Newer public recordings include actual arm qpos. Query
+                    # the same native accessor only when that field exists;
+                    # do not change old traces or substitute drive targets.
+                    key = side + "_joint_positions"
+                    if key in observation["states"]:
+                        values[key] = np.asarray(getattr(env.robot, "get_" + side + "_arm_real_jointState")(), np.float64)[:6]
                 images = {name: raw["observation"][name]["rgb"] for name in ("head_camera", "left_camera", "right_camera")}
-                fields.update(snapshot(observation, values, images, acquired))
+                measured_times = {side + "_joint_positions": counter["completed"] * period for side in ("left", "right")
+                                  if side + "_joint_positions" in observation["states"]}
+                fields.update(snapshot(observation, values, images, acquired, measured_times))
                 fields["cumulative_sim_time_s"] = {"exact_equal": math.isclose(counter["completed"] * period, observation["sim_time_s"], abs_tol=1e-12)}
                 rows.append({"env_step": steps, "fields": fields})
                 if len(rows) % 25 == 0:
