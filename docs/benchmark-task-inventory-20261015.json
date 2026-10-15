@@ -1,0 +1,1255 @@
+{
+  "kind": "static_fixed_source_task_inventory_not_runtime_or_acceptance",
+  "date": "2026-10-15",
+  "source_modules_executed": false,
+  "GPU_or_simulation_started": false,
+  "task_assets_verified": false,
+  "all_listed_tasks_implemented_in_framework": false,
+  "runtime_protocol_expansion_approved_by_this_inventory": false,
+  "benchmarks": {
+    "libero": {
+      "path_relative_to_framework": "../upstream/LIBERO-mn-clean",
+      "source_revision": "8f1084e3132a39270c3a13ebe37270a43ece2a01",
+      "tracked_worktree_clean": true,
+      "catalog_file": "libero/libero/benchmark/libero_suite_task_map.py",
+      "catalog_sha256": "0c950df0a785aa55de968bb38ccd865d2017f71ddbe6f48cfd05ac0742b6d62d",
+      "suites": {
+        "libero_spatial": {
+          "declared_task_count": 10,
+          "task_names": [
+            "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+            "pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate",
+            "pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate",
+            "pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+            "pick_up_the_black_bowl_in_the_top_drawer_of_the_wooden_cabinet_and_place_it_on_the_plate",
+            "pick_up_the_black_bowl_on_the_ramekin_and_place_it_on_the_plate",
+            "pick_up_the_black_bowl_next_to_the_cookie_box_and_place_it_on_the_plate",
+            "pick_up_the_black_bowl_on_the_stove_and_place_it_on_the_plate",
+            "pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate",
+            "pick_up_the_black_bowl_on_the_wooden_cabinet_and_place_it_on_the_plate"
+          ]
+        },
+        "libero_object": {
+          "declared_task_count": 10,
+          "task_names": [
+            "pick_up_the_alphabet_soup_and_place_it_in_the_basket",
+            "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+            "pick_up_the_salad_dressing_and_place_it_in_the_basket",
+            "pick_up_the_bbq_sauce_and_place_it_in_the_basket",
+            "pick_up_the_ketchup_and_place_it_in_the_basket",
+            "pick_up_the_tomato_sauce_and_place_it_in_the_basket",
+            "pick_up_the_butter_and_place_it_in_the_basket",
+            "pick_up_the_milk_and_place_it_in_the_basket",
+            "pick_up_the_chocolate_pudding_and_place_it_in_the_basket",
+            "pick_up_the_orange_juice_and_place_it_in_the_basket"
+          ]
+        },
+        "libero_goal": {
+          "declared_task_count": 10,
+          "task_names": [
+            "open_the_middle_drawer_of_the_cabinet",
+            "put_the_bowl_on_the_stove",
+            "put_the_wine_bottle_on_top_of_the_cabinet",
+            "open_the_top_drawer_and_put_the_bowl_inside",
+            "put_the_bowl_on_top_of_the_cabinet",
+            "push_the_plate_to_the_front_of_the_stove",
+            "put_the_cream_cheese_in_the_bowl",
+            "turn_on_the_stove",
+            "put_the_bowl_on_the_plate",
+            "put_the_wine_bottle_on_the_rack"
+          ]
+        },
+        "libero_10": {
+          "declared_task_count": 10,
+          "task_names": [
+            "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket",
+            "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket",
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_moka_pot_on_it",
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet_and_close_it",
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate",
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy",
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate",
+            "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket",
+            "KITCHEN_SCENE8_put_both_moka_pots_on_the_stove",
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it"
+          ]
+        },
+        "libero_90": {
+          "declared_task_count": 90,
+          "task_names": [
+            "KITCHEN_SCENE10_close_the_top_drawer_of_the_cabinet",
+            "KITCHEN_SCENE10_close_the_top_drawer_of_the_cabinet_and_put_the_black_bowl_on_top_of_it",
+            "KITCHEN_SCENE10_put_the_black_bowl_in_the_top_drawer_of_the_cabinet",
+            "KITCHEN_SCENE10_put_the_butter_at_the_back_in_the_top_drawer_of_the_cabinet_and_close_it",
+            "KITCHEN_SCENE10_put_the_butter_at_the_front_in_the_top_drawer_of_the_cabinet_and_close_it",
+            "KITCHEN_SCENE10_put_the_chocolate_pudding_in_the_top_drawer_of_the_cabinet_and_close_it",
+            "KITCHEN_SCENE1_open_the_bottom_drawer_of_the_cabinet",
+            "KITCHEN_SCENE1_open_the_top_drawer_of_the_cabinet",
+            "KITCHEN_SCENE1_open_the_top_drawer_of_the_cabinet_and_put_the_bowl_in_it",
+            "KITCHEN_SCENE1_put_the_black_bowl_on_the_plate",
+            "KITCHEN_SCENE1_put_the_black_bowl_on_top_of_the_cabinet",
+            "KITCHEN_SCENE2_open_the_top_drawer_of_the_cabinet",
+            "KITCHEN_SCENE2_put_the_black_bowl_at_the_back_on_the_plate",
+            "KITCHEN_SCENE2_put_the_black_bowl_at_the_front_on_the_plate",
+            "KITCHEN_SCENE2_put_the_middle_black_bowl_on_the_plate",
+            "KITCHEN_SCENE2_put_the_middle_black_bowl_on_top_of_the_cabinet",
+            "KITCHEN_SCENE2_stack_the_black_bowl_at_the_front_on_the_black_bowl_in_the_middle",
+            "KITCHEN_SCENE2_stack_the_middle_black_bowl_on_the_back_black_bowl",
+            "KITCHEN_SCENE3_put_the_frying_pan_on_the_stove",
+            "KITCHEN_SCENE3_put_the_moka_pot_on_the_stove",
+            "KITCHEN_SCENE3_turn_on_the_stove",
+            "KITCHEN_SCENE3_turn_on_the_stove_and_put_the_frying_pan_on_it",
+            "KITCHEN_SCENE4_close_the_bottom_drawer_of_the_cabinet",
+            "KITCHEN_SCENE4_close_the_bottom_drawer_of_the_cabinet_and_open_the_top_drawer",
+            "KITCHEN_SCENE4_put_the_black_bowl_in_the_bottom_drawer_of_the_cabinet",
+            "KITCHEN_SCENE4_put_the_black_bowl_on_top_of_the_cabinet",
+            "KITCHEN_SCENE4_put_the_wine_bottle_in_the_bottom_drawer_of_the_cabinet",
+            "KITCHEN_SCENE4_put_the_wine_bottle_on_the_wine_rack",
+            "KITCHEN_SCENE5_close_the_top_drawer_of_the_cabinet",
+            "KITCHEN_SCENE5_put_the_black_bowl_in_the_top_drawer_of_the_cabinet",
+            "KITCHEN_SCENE5_put_the_black_bowl_on_the_plate",
+            "KITCHEN_SCENE5_put_the_black_bowl_on_top_of_the_cabinet",
+            "KITCHEN_SCENE5_put_the_ketchup_in_the_top_drawer_of_the_cabinet",
+            "KITCHEN_SCENE6_close_the_microwave",
+            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_to_the_front_of_the_white_mug",
+            "KITCHEN_SCENE7_open_the_microwave",
+            "KITCHEN_SCENE7_put_the_white_bowl_on_the_plate",
+            "KITCHEN_SCENE7_put_the_white_bowl_to_the_right_of_the_plate",
+            "KITCHEN_SCENE8_put_the_right_moka_pot_on_the_stove",
+            "KITCHEN_SCENE8_turn_off_the_stove",
+            "KITCHEN_SCENE9_put_the_frying_pan_on_the_cabinet_shelf",
+            "KITCHEN_SCENE9_put_the_frying_pan_on_top_of_the_cabinet",
+            "KITCHEN_SCENE9_put_the_frying_pan_under_the_cabinet_shelf",
+            "KITCHEN_SCENE9_put_the_white_bowl_on_top_of_the_cabinet",
+            "KITCHEN_SCENE9_turn_on_the_stove",
+            "KITCHEN_SCENE9_turn_on_the_stove_and_put_the_frying_pan_on_it",
+            "LIVING_ROOM_SCENE1_pick_up_the_alphabet_soup_and_put_it_in_the_basket",
+            "LIVING_ROOM_SCENE1_pick_up_the_cream_cheese_box_and_put_it_in_the_basket",
+            "LIVING_ROOM_SCENE1_pick_up_the_ketchup_and_put_it_in_the_basket",
+            "LIVING_ROOM_SCENE1_pick_up_the_tomato_sauce_and_put_it_in_the_basket",
+            "LIVING_ROOM_SCENE2_pick_up_the_alphabet_soup_and_put_it_in_the_basket",
+            "LIVING_ROOM_SCENE2_pick_up_the_butter_and_put_it_in_the_basket",
+            "LIVING_ROOM_SCENE2_pick_up_the_milk_and_put_it_in_the_basket",
+            "LIVING_ROOM_SCENE2_pick_up_the_orange_juice_and_put_it_in_the_basket",
+            "LIVING_ROOM_SCENE2_pick_up_the_tomato_sauce_and_put_it_in_the_basket",
+            "LIVING_ROOM_SCENE3_pick_up_the_alphabet_soup_and_put_it_in_the_tray",
+            "LIVING_ROOM_SCENE3_pick_up_the_butter_and_put_it_in_the_tray",
+            "LIVING_ROOM_SCENE3_pick_up_the_cream_cheese_and_put_it_in_the_tray",
+            "LIVING_ROOM_SCENE3_pick_up_the_ketchup_and_put_it_in_the_tray",
+            "LIVING_ROOM_SCENE3_pick_up_the_tomato_sauce_and_put_it_in_the_tray",
+            "LIVING_ROOM_SCENE4_pick_up_the_black_bowl_on_the_left_and_put_it_in_the_tray",
+            "LIVING_ROOM_SCENE4_pick_up_the_chocolate_pudding_and_put_it_in_the_tray",
+            "LIVING_ROOM_SCENE4_pick_up_the_salad_dressing_and_put_it_in_the_tray",
+            "LIVING_ROOM_SCENE4_stack_the_left_bowl_on_the_right_bowl_and_place_them_in_the_tray",
+            "LIVING_ROOM_SCENE4_stack_the_right_bowl_on_the_left_bowl_and_place_them_in_the_tray",
+            "LIVING_ROOM_SCENE5_put_the_red_mug_on_the_left_plate",
+            "LIVING_ROOM_SCENE5_put_the_red_mug_on_the_right_plate",
+            "LIVING_ROOM_SCENE5_put_the_white_mug_on_the_left_plate",
+            "LIVING_ROOM_SCENE5_put_the_yellow_and_white_mug_on_the_right_plate",
+            "LIVING_ROOM_SCENE6_put_the_chocolate_pudding_to_the_left_of_the_plate",
+            "LIVING_ROOM_SCENE6_put_the_chocolate_pudding_to_the_right_of_the_plate",
+            "LIVING_ROOM_SCENE6_put_the_red_mug_on_the_plate",
+            "LIVING_ROOM_SCENE6_put_the_white_mug_on_the_plate",
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_front_compartment_of_the_caddy",
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_left_compartment_of_the_caddy",
+            "STUDY_SCENE1_pick_up_the_book_and_place_it_in_the_right_compartment_of_the_caddy",
+            "STUDY_SCENE1_pick_up_the_yellow_and_white_mug_and_place_it_to_the_right_of_the_caddy",
+            "STUDY_SCENE2_pick_up_the_book_and_place_it_in_the_back_compartment_of_the_caddy",
+            "STUDY_SCENE2_pick_up_the_book_and_place_it_in_the_front_compartment_of_the_caddy",
+            "STUDY_SCENE2_pick_up_the_book_and_place_it_in_the_left_compartment_of_the_caddy",
+            "STUDY_SCENE2_pick_up_the_book_and_place_it_in_the_right_compartment_of_the_caddy",
+            "STUDY_SCENE3_pick_up_the_book_and_place_it_in_the_front_compartment_of_the_caddy",
+            "STUDY_SCENE3_pick_up_the_book_and_place_it_in_the_left_compartment_of_the_caddy",
+            "STUDY_SCENE3_pick_up_the_book_and_place_it_in_the_right_compartment_of_the_caddy",
+            "STUDY_SCENE3_pick_up_the_red_mug_and_place_it_to_the_right_of_the_caddy",
+            "STUDY_SCENE3_pick_up_the_white_mug_and_place_it_to_the_right_of_the_caddy",
+            "STUDY_SCENE4_pick_up_the_book_in_the_middle_and_place_it_on_the_cabinet_shelf",
+            "STUDY_SCENE4_pick_up_the_book_on_the_left_and_place_it_on_top_of_the_shelf",
+            "STUDY_SCENE4_pick_up_the_book_on_the_right_and_place_it_on_the_cabinet_shelf",
+            "STUDY_SCENE4_pick_up_the_book_on_the_right_and_place_it_under_the_cabinet_shelf"
+          ]
+        }
+      },
+      "current_framework_scope": "libero_spatial/task0/init_state0; two separately named settle protocols",
+      "denominator_note": "Do not sum suites into unique physical tasks or silently include training suites in evaluation"
+    },
+    "vlabench": {
+      "path_relative_to_framework": "../upstream/VLABench",
+      "source_revision": "cf588fe60c0c7282174fe979f5913170cfe69017",
+      "tracked_worktree_clean": true,
+      "tracks": {
+        "track_1_in_distribution": {
+          "catalog_file": "VLABench/configs/evaluation/tracks/track_1_in_distribution.json",
+          "sha256": "61b07440c6f4272705bea0c8d721bc196e744232f48408075613cc9b6f7c8c04",
+          "task_key_count": 10,
+          "configuration_entries": 500,
+          "entries_per_task": {
+            "select_painting": 50,
+            "select_book": 50,
+            "select_drink": 50,
+            "select_chemistry_tube": 50,
+            "select_poker": 50,
+            "select_mahjong": 50,
+            "select_toy": 50,
+            "select_fruit": 50,
+            "add_condiment": 50,
+            "insert_flower": 50
+          }
+        },
+        "track_2_cross_category": {
+          "catalog_file": "VLABench/configs/evaluation/tracks/track_2_cross_category.json",
+          "sha256": "cf004383de22d994f83126ca30a315cbfc6a92fd0dbb8d25fa4c185dd75a21fb",
+          "task_key_count": 10,
+          "configuration_entries": 460,
+          "entries_per_task": {
+            "select_painting": 50,
+            "select_fruit": 50,
+            "select_toy": 50,
+            "select_poker": 50,
+            "select_mahjong": 50,
+            "insert_flower": 10,
+            "select_chemistry_tube": 50,
+            "add_condiment": 50,
+            "select_drink": 50,
+            "select_book": 50
+          }
+        },
+        "track_3_common_sense": {
+          "catalog_file": "VLABench/configs/evaluation/tracks/track_3_common_sense.json",
+          "sha256": "2aaa298580e74bec13555a6950b95241edf6c5264b498eeaf0e919837952ec6d",
+          "task_key_count": 10,
+          "configuration_entries": 500,
+          "entries_per_task": {
+            "select_painting": 50,
+            "select_book": 50,
+            "select_drink": 50,
+            "select_chemistry_tube": 50,
+            "select_toy": 50,
+            "select_fruit": 50,
+            "add_condiment": 50,
+            "insert_flower": 50,
+            "select_nth_largest_poker": 50,
+            "select_unique_type_mahjong": 50
+          }
+        },
+        "track_4_semantic_instruction": {
+          "catalog_file": "VLABench/configs/evaluation/tracks/track_4_semantic_instruction.json",
+          "sha256": "9aff9dfc778ae35f299dce4c3aa07afbdc5275847490abd8037f3f5bdd9de411",
+          "task_key_count": 10,
+          "configuration_entries": 500,
+          "entries_per_task": {
+            "select_painting": 50,
+            "select_book": 50,
+            "select_drink": 50,
+            "select_chemistry_tube": 50,
+            "select_poker": 50,
+            "select_mahjong": 50,
+            "select_toy": 50,
+            "select_fruit": 50,
+            "add_condiment": 50,
+            "insert_flower": 50
+          }
+        },
+        "track_6_unseen_texture": {
+          "catalog_file": "VLABench/configs/evaluation/tracks/track_6_unseen_texture.json",
+          "sha256": "249c1bca941b13267571b7641a91bcfbaffbc9c2b6b210d9ee2d2513324aa817",
+          "task_key_count": 10,
+          "configuration_entries": 500,
+          "entries_per_task": {
+            "select_painting": 50,
+            "select_book": 50,
+            "select_drink": 50,
+            "select_chemistry_tube": 50,
+            "select_poker": 50,
+            "select_mahjong": 50,
+            "select_toy": 50,
+            "select_fruit": 50,
+            "add_condiment": 50,
+            "insert_flower": 50
+          }
+        }
+      },
+      "current_framework_scope": "track_1_in_distribution/select_fruit/trial0",
+      "denominator_note": "Configuration entries may share task classes across tracks; not unique tasks or seeds"
+    },
+    "robotwin_sealed_source": {
+      "path_relative_to_framework": "../upstream/RoboTwin-openwam",
+      "source_revision": "0aeea2d669c0f8516f4d5785f0aa33ba812c14b4",
+      "tracked_worktree_clean": true,
+      "declared_direct_task_class_count": 50,
+      "tasks": [
+        {
+          "name": "adjust_bottle",
+          "module": "envs/adjust_bottle.py",
+          "sha256": "4f76b35e718a4c5a364dae564d35d68268755818d9062e3ed4ff393d158d0548"
+        },
+        {
+          "name": "beat_block_hammer",
+          "module": "envs/beat_block_hammer.py",
+          "sha256": "90269f15f9ce274fb5bcad703c47b0b552ff5a2f0a3ff62d12dbe9a553018014"
+        },
+        {
+          "name": "blocks_ranking_rgb",
+          "module": "envs/blocks_ranking_rgb.py",
+          "sha256": "0e632df38d9024e7952c0df7a1f59e3d011b537724e6e6588455dee4d4e6074b"
+        },
+        {
+          "name": "blocks_ranking_size",
+          "module": "envs/blocks_ranking_size.py",
+          "sha256": "18ddb8ca5465f450ef03db292bcfc22e8e795fcb397f104fc24213a5fa063696"
+        },
+        {
+          "name": "click_alarmclock",
+          "module": "envs/click_alarmclock.py",
+          "sha256": "f69a1ad4f1b483ab0dd82d8bad872e12047ed8d898f1fa4058de9e382ddeef49"
+        },
+        {
+          "name": "click_bell",
+          "module": "envs/click_bell.py",
+          "sha256": "a0b7673e6ef842738999acbccaaa3d01f86d62a147bb8387cb92163218db48ac"
+        },
+        {
+          "name": "dump_bin_bigbin",
+          "module": "envs/dump_bin_bigbin.py",
+          "sha256": "3bd57fe9172d59731db1ccf1bc9605dfe3ef08a0f7224edc720ea4812c214611"
+        },
+        {
+          "name": "grab_roller",
+          "module": "envs/grab_roller.py",
+          "sha256": "f0e1864199605acf59cf8982dded05129d873bb3934f200e47abafd918d41c89"
+        },
+        {
+          "name": "handover_block",
+          "module": "envs/handover_block.py",
+          "sha256": "5439712296d7e143d41f8e78b4ab86cd4fad7fb98f40f5f5abb067a462d17650"
+        },
+        {
+          "name": "handover_mic",
+          "module": "envs/handover_mic.py",
+          "sha256": "41ed0f2561cc8f1ae2449ba405decd4f5d7e3b80243b60921598657551891b17"
+        },
+        {
+          "name": "hanging_mug",
+          "module": "envs/hanging_mug.py",
+          "sha256": "8793ed6be6a80b18a10690767a1910c3c49a7a9e4887ecbdd48a191ca3e03034"
+        },
+        {
+          "name": "lift_pot",
+          "module": "envs/lift_pot.py",
+          "sha256": "347e06f3f9f82b1bc35882671bbbdea50b6e3c77fff0f7fb4449b024875402eb"
+        },
+        {
+          "name": "move_can_pot",
+          "module": "envs/move_can_pot.py",
+          "sha256": "ea838bb2502199610eea6cc058a4ba5fc7abb01c3d8ee0705c44854ddca20186"
+        },
+        {
+          "name": "move_pillbottle_pad",
+          "module": "envs/move_pillbottle_pad.py",
+          "sha256": "a5db7c65db15c2273d1f9e99fab8fc00533a27b740a45161c9402d43b8aa6824"
+        },
+        {
+          "name": "move_playingcard_away",
+          "module": "envs/move_playingcard_away.py",
+          "sha256": "edf557d5a29ab724860651e24398e03c400a71e4c82bdbf2cedd3958fbfb6cc2"
+        },
+        {
+          "name": "move_stapler_pad",
+          "module": "envs/move_stapler_pad.py",
+          "sha256": "c2b7aa7bf4e896afc392a8cf1ac107b6982088a459c716de005a3412fcdedd6d"
+        },
+        {
+          "name": "open_laptop",
+          "module": "envs/open_laptop.py",
+          "sha256": "b826d4f36513dba6df3c17b65f1251bf3dbe2994857ba672f4d06c5900c0cac0"
+        },
+        {
+          "name": "open_microwave",
+          "module": "envs/open_microwave.py",
+          "sha256": "ad679b7753fc50487ba8034570e3b94aa7bfc84756048b94580fa3d2516a1bd0"
+        },
+        {
+          "name": "pick_diverse_bottles",
+          "module": "envs/pick_diverse_bottles.py",
+          "sha256": "95ebb80fa96eafd0b7ff5518251c2a7aa42f22ef9b7cfdda4e80eac511f06151"
+        },
+        {
+          "name": "pick_dual_bottles",
+          "module": "envs/pick_dual_bottles.py",
+          "sha256": "422f23510f3662405dcb5518d1ebe8a0270935849a4b02a2585615ff7bffc4ef"
+        },
+        {
+          "name": "place_a2b_left",
+          "module": "envs/place_a2b_left.py",
+          "sha256": "8603f48febcb5b5b534dc7d973ac4651264ebb9c6fb60f199d4d2adc9e14d7cd"
+        },
+        {
+          "name": "place_a2b_right",
+          "module": "envs/place_a2b_right.py",
+          "sha256": "1225e32207912e15855deff8aa9d4fd2cf425b4c5eeaeaf1eb795daaba4ac6ae"
+        },
+        {
+          "name": "place_bread_basket",
+          "module": "envs/place_bread_basket.py",
+          "sha256": "50c433166301a7f0ac8615d041cc51aa673746b5b7d6fcc0b6f29790c560c053"
+        },
+        {
+          "name": "place_bread_skillet",
+          "module": "envs/place_bread_skillet.py",
+          "sha256": "b1fa08d7f23d8bcd933ea7d64904fea17f67dbe58101c66e42c6addbfdbbcd73"
+        },
+        {
+          "name": "place_burger_fries",
+          "module": "envs/place_burger_fries.py",
+          "sha256": "19e8a3428e677839e7e51ae6488752acc940a7d2bc8ee54587c354b422ba6d2c"
+        },
+        {
+          "name": "place_can_basket",
+          "module": "envs/place_can_basket.py",
+          "sha256": "9f24e5ac98146babe93c68cb46baaf1d7bf21e38dbfc7c0b29e7020ae764e7f0"
+        },
+        {
+          "name": "place_cans_plasticbox",
+          "module": "envs/place_cans_plasticbox.py",
+          "sha256": "5d004110de53d95c7a6fc7721f9136d96b9792a61b97686f7b5489ff7ec48a5f"
+        },
+        {
+          "name": "place_container_plate",
+          "module": "envs/place_container_plate.py",
+          "sha256": "7a288f27f61e96fe905d5cfb80eb0a4fd8e490c829f2f02149951266012a3aee"
+        },
+        {
+          "name": "place_dual_shoes",
+          "module": "envs/place_dual_shoes.py",
+          "sha256": "f35c4a133e1de567b274cbd15f158f585eb05e32aeb05be88839d249d0d7ab9e"
+        },
+        {
+          "name": "place_empty_cup",
+          "module": "envs/place_empty_cup.py",
+          "sha256": "424bbd61f990ebfffb283eb152d17103c2a990edd20f68229203a96a2fd4d581"
+        },
+        {
+          "name": "place_fan",
+          "module": "envs/place_fan.py",
+          "sha256": "7e8be55f1f26ce6128c254b50464edc438a96f272581ccb19827521bc679c237"
+        },
+        {
+          "name": "place_mouse_pad",
+          "module": "envs/place_mouse_pad.py",
+          "sha256": "369bf399d0fd6a2687abb7d80b8feb6101c8b5405d33f9de63bbbdaaea7b73d0"
+        },
+        {
+          "name": "place_object_basket",
+          "module": "envs/place_object_basket.py",
+          "sha256": "e809bd3eabac48cb34589f164291b04b9e2fbf6cc1ebd8c4024c0af8e265ed48"
+        },
+        {
+          "name": "place_object_scale",
+          "module": "envs/place_object_scale.py",
+          "sha256": "555f04a2a2fa0a41ad8dfccd771579d1cc2686fc65ad6c7ef297c98f4c9ba310"
+        },
+        {
+          "name": "place_object_stand",
+          "module": "envs/place_object_stand.py",
+          "sha256": "0b4db3a679230ff3732b9bfdfcfaba3437bd5f942043de9921240118849e3fe8"
+        },
+        {
+          "name": "place_phone_stand",
+          "module": "envs/place_phone_stand.py",
+          "sha256": "719cf84ebf997b8d15d0ef9f997d439da62d64067a292b6008433da3536a0216"
+        },
+        {
+          "name": "place_shoe",
+          "module": "envs/place_shoe.py",
+          "sha256": "9e9b29eaca488f41617127070add87f33900c37db0d286a4c4b08e2138cbfc6f"
+        },
+        {
+          "name": "press_stapler",
+          "module": "envs/press_stapler.py",
+          "sha256": "69274cf09aa1d4ba51469621461683b5225b8f98cf7837f821e848196ce51f9c"
+        },
+        {
+          "name": "put_bottles_dustbin",
+          "module": "envs/put_bottles_dustbin.py",
+          "sha256": "1c03a4b227daa7d285fa366944f1f75773e32dc6a7b73ab693217a13fcd42795"
+        },
+        {
+          "name": "put_object_cabinet",
+          "module": "envs/put_object_cabinet.py",
+          "sha256": "1de25dd513b4ad29e158440eefb28fb050be95d557c7df1b87578168ff35a7b2"
+        },
+        {
+          "name": "rotate_qrcode",
+          "module": "envs/rotate_qrcode.py",
+          "sha256": "382165e22a2a52a73958ff69c662e57a4d1f0bc8cb7cecf3e9dd1f5ba11defa9"
+        },
+        {
+          "name": "scan_object",
+          "module": "envs/scan_object.py",
+          "sha256": "860dfe2cc86d180096089bc87502c7904f7ce2efb64fb32620c1720ca0178c2b"
+        },
+        {
+          "name": "shake_bottle",
+          "module": "envs/shake_bottle.py",
+          "sha256": "2e37395b302eb37ecac39b2a676ea119c4bf7a1dcc9e6df75cd683a5cf37b026"
+        },
+        {
+          "name": "shake_bottle_horizontally",
+          "module": "envs/shake_bottle_horizontally.py",
+          "sha256": "def5f373a3a289c946bb32c6d01145672432dbe1d2b71a10992e5280d5f8dead"
+        },
+        {
+          "name": "stack_blocks_three",
+          "module": "envs/stack_blocks_three.py",
+          "sha256": "b19f1f1c5a3a2c7c7312a4e1b2e577ccd269ebb0c444c287fecbc16ff5b47fb9"
+        },
+        {
+          "name": "stack_blocks_two",
+          "module": "envs/stack_blocks_two.py",
+          "sha256": "4e92a679cb5be4ef87a1b842432c930560a2c9b539a4cbcee0161e2b2112f526"
+        },
+        {
+          "name": "stack_bowls_three",
+          "module": "envs/stack_bowls_three.py",
+          "sha256": "95848e9c2987e64fef2cfd928128d7a19967ba600c57dc7a6b7f1c9ea5b358e6"
+        },
+        {
+          "name": "stack_bowls_two",
+          "module": "envs/stack_bowls_two.py",
+          "sha256": "3e3217c277d84a0838739d55a0061a9acb3315240b5a99c6607d9637ea719637"
+        },
+        {
+          "name": "stamp_seal",
+          "module": "envs/stamp_seal.py",
+          "sha256": "28a159e27aa76459355fa1f81e962815c62ee6435727039d73664b7eb6731b82"
+        },
+        {
+          "name": "turn_switch",
+          "module": "envs/turn_switch.py",
+          "sha256": "035e108a861f94f61369ba2221431e123b7ac231e8de683d8bf38090bf021f9a"
+        }
+      ],
+      "current_framework_scope": "adjust_bottle/demo_clean; bounded expert-valid seed selection",
+      "denominator_note": "Two source revisions of the same task names are not 100 distinct tasks"
+    },
+    "robotwin_seeded_source": {
+      "path_relative_to_framework": "../upstream/RoboTwin-lingbot",
+      "source_revision": "13c3c47ff4312dd62484bcd51be034af55c062d1",
+      "tracked_worktree_clean": true,
+      "declared_direct_task_class_count": 50,
+      "tasks": [
+        {
+          "name": "adjust_bottle",
+          "module": "envs/adjust_bottle.py",
+          "sha256": "4f76b35e718a4c5a364dae564d35d68268755818d9062e3ed4ff393d158d0548"
+        },
+        {
+          "name": "beat_block_hammer",
+          "module": "envs/beat_block_hammer.py",
+          "sha256": "90269f15f9ce274fb5bcad703c47b0b552ff5a2f0a3ff62d12dbe9a553018014"
+        },
+        {
+          "name": "blocks_ranking_rgb",
+          "module": "envs/blocks_ranking_rgb.py",
+          "sha256": "0e632df38d9024e7952c0df7a1f59e3d011b537724e6e6588455dee4d4e6074b"
+        },
+        {
+          "name": "blocks_ranking_size",
+          "module": "envs/blocks_ranking_size.py",
+          "sha256": "18ddb8ca5465f450ef03db292bcfc22e8e795fcb397f104fc24213a5fa063696"
+        },
+        {
+          "name": "click_alarmclock",
+          "module": "envs/click_alarmclock.py",
+          "sha256": "f69a1ad4f1b483ab0dd82d8bad872e12047ed8d898f1fa4058de9e382ddeef49"
+        },
+        {
+          "name": "click_bell",
+          "module": "envs/click_bell.py",
+          "sha256": "a0b7673e6ef842738999acbccaaa3d01f86d62a147bb8387cb92163218db48ac"
+        },
+        {
+          "name": "dump_bin_bigbin",
+          "module": "envs/dump_bin_bigbin.py",
+          "sha256": "3bd57fe9172d59731db1ccf1bc9605dfe3ef08a0f7224edc720ea4812c214611"
+        },
+        {
+          "name": "grab_roller",
+          "module": "envs/grab_roller.py",
+          "sha256": "f0e1864199605acf59cf8982dded05129d873bb3934f200e47abafd918d41c89"
+        },
+        {
+          "name": "handover_block",
+          "module": "envs/handover_block.py",
+          "sha256": "5439712296d7e143d41f8e78b4ab86cd4fad7fb98f40f5f5abb067a462d17650"
+        },
+        {
+          "name": "handover_mic",
+          "module": "envs/handover_mic.py",
+          "sha256": "41ed0f2561cc8f1ae2449ba405decd4f5d7e3b80243b60921598657551891b17"
+        },
+        {
+          "name": "hanging_mug",
+          "module": "envs/hanging_mug.py",
+          "sha256": "8793ed6be6a80b18a10690767a1910c3c49a7a9e4887ecbdd48a191ca3e03034"
+        },
+        {
+          "name": "lift_pot",
+          "module": "envs/lift_pot.py",
+          "sha256": "347e06f3f9f82b1bc35882671bbbdea50b6e3c77fff0f7fb4449b024875402eb"
+        },
+        {
+          "name": "move_can_pot",
+          "module": "envs/move_can_pot.py",
+          "sha256": "ea838bb2502199610eea6cc058a4ba5fc7abb01c3d8ee0705c44854ddca20186"
+        },
+        {
+          "name": "move_pillbottle_pad",
+          "module": "envs/move_pillbottle_pad.py",
+          "sha256": "a5db7c65db15c2273d1f9e99fab8fc00533a27b740a45161c9402d43b8aa6824"
+        },
+        {
+          "name": "move_playingcard_away",
+          "module": "envs/move_playingcard_away.py",
+          "sha256": "edf557d5a29ab724860651e24398e03c400a71e4c82bdbf2cedd3958fbfb6cc2"
+        },
+        {
+          "name": "move_stapler_pad",
+          "module": "envs/move_stapler_pad.py",
+          "sha256": "c2b7aa7bf4e896afc392a8cf1ac107b6982088a459c716de005a3412fcdedd6d"
+        },
+        {
+          "name": "open_laptop",
+          "module": "envs/open_laptop.py",
+          "sha256": "b826d4f36513dba6df3c17b65f1251bf3dbe2994857ba672f4d06c5900c0cac0"
+        },
+        {
+          "name": "open_microwave",
+          "module": "envs/open_microwave.py",
+          "sha256": "ad679b7753fc50487ba8034570e3b94aa7bfc84756048b94580fa3d2516a1bd0"
+        },
+        {
+          "name": "pick_diverse_bottles",
+          "module": "envs/pick_diverse_bottles.py",
+          "sha256": "95ebb80fa96eafd0b7ff5518251c2a7aa42f22ef9b7cfdda4e80eac511f06151"
+        },
+        {
+          "name": "pick_dual_bottles",
+          "module": "envs/pick_dual_bottles.py",
+          "sha256": "422f23510f3662405dcb5518d1ebe8a0270935849a4b02a2585615ff7bffc4ef"
+        },
+        {
+          "name": "place_a2b_left",
+          "module": "envs/place_a2b_left.py",
+          "sha256": "8603f48febcb5b5b534dc7d973ac4651264ebb9c6fb60f199d4d2adc9e14d7cd"
+        },
+        {
+          "name": "place_a2b_right",
+          "module": "envs/place_a2b_right.py",
+          "sha256": "1225e32207912e15855deff8aa9d4fd2cf425b4c5eeaeaf1eb795daaba4ac6ae"
+        },
+        {
+          "name": "place_bread_basket",
+          "module": "envs/place_bread_basket.py",
+          "sha256": "50c433166301a7f0ac8615d041cc51aa673746b5b7d6fcc0b6f29790c560c053"
+        },
+        {
+          "name": "place_bread_skillet",
+          "module": "envs/place_bread_skillet.py",
+          "sha256": "b1fa08d7f23d8bcd933ea7d64904fea17f67dbe58101c66e42c6addbfdbbcd73"
+        },
+        {
+          "name": "place_burger_fries",
+          "module": "envs/place_burger_fries.py",
+          "sha256": "19e8a3428e677839e7e51ae6488752acc940a7d2bc8ee54587c354b422ba6d2c"
+        },
+        {
+          "name": "place_can_basket",
+          "module": "envs/place_can_basket.py",
+          "sha256": "9f24e5ac98146babe93c68cb46baaf1d7bf21e38dbfc7c0b29e7020ae764e7f0"
+        },
+        {
+          "name": "place_cans_plasticbox",
+          "module": "envs/place_cans_plasticbox.py",
+          "sha256": "5d004110de53d95c7a6fc7721f9136d96b9792a61b97686f7b5489ff7ec48a5f"
+        },
+        {
+          "name": "place_container_plate",
+          "module": "envs/place_container_plate.py",
+          "sha256": "7a288f27f61e96fe905d5cfb80eb0a4fd8e490c829f2f02149951266012a3aee"
+        },
+        {
+          "name": "place_dual_shoes",
+          "module": "envs/place_dual_shoes.py",
+          "sha256": "f35c4a133e1de567b274cbd15f158f585eb05e32aeb05be88839d249d0d7ab9e"
+        },
+        {
+          "name": "place_empty_cup",
+          "module": "envs/place_empty_cup.py",
+          "sha256": "424bbd61f990ebfffb283eb152d17103c2a990edd20f68229203a96a2fd4d581"
+        },
+        {
+          "name": "place_fan",
+          "module": "envs/place_fan.py",
+          "sha256": "7e8be55f1f26ce6128c254b50464edc438a96f272581ccb19827521bc679c237"
+        },
+        {
+          "name": "place_mouse_pad",
+          "module": "envs/place_mouse_pad.py",
+          "sha256": "369bf399d0fd6a2687abb7d80b8feb6101c8b5405d33f9de63bbbdaaea7b73d0"
+        },
+        {
+          "name": "place_object_basket",
+          "module": "envs/place_object_basket.py",
+          "sha256": "e809bd3eabac48cb34589f164291b04b9e2fbf6cc1ebd8c4024c0af8e265ed48"
+        },
+        {
+          "name": "place_object_scale",
+          "module": "envs/place_object_scale.py",
+          "sha256": "555f04a2a2fa0a41ad8dfccd771579d1cc2686fc65ad6c7ef297c98f4c9ba310"
+        },
+        {
+          "name": "place_object_stand",
+          "module": "envs/place_object_stand.py",
+          "sha256": "0b4db3a679230ff3732b9bfdfcfaba3437bd5f942043de9921240118849e3fe8"
+        },
+        {
+          "name": "place_phone_stand",
+          "module": "envs/place_phone_stand.py",
+          "sha256": "719cf84ebf997b8d15d0ef9f997d439da62d64067a292b6008433da3536a0216"
+        },
+        {
+          "name": "place_shoe",
+          "module": "envs/place_shoe.py",
+          "sha256": "9e9b29eaca488f41617127070add87f33900c37db0d286a4c4b08e2138cbfc6f"
+        },
+        {
+          "name": "press_stapler",
+          "module": "envs/press_stapler.py",
+          "sha256": "69274cf09aa1d4ba51469621461683b5225b8f98cf7837f821e848196ce51f9c"
+        },
+        {
+          "name": "put_bottles_dustbin",
+          "module": "envs/put_bottles_dustbin.py",
+          "sha256": "1c03a4b227daa7d285fa366944f1f75773e32dc6a7b73ab693217a13fcd42795"
+        },
+        {
+          "name": "put_object_cabinet",
+          "module": "envs/put_object_cabinet.py",
+          "sha256": "1de25dd513b4ad29e158440eefb28fb050be95d557c7df1b87578168ff35a7b2"
+        },
+        {
+          "name": "rotate_qrcode",
+          "module": "envs/rotate_qrcode.py",
+          "sha256": "382165e22a2a52a73958ff69c662e57a4d1f0bc8cb7cecf3e9dd1f5ba11defa9"
+        },
+        {
+          "name": "scan_object",
+          "module": "envs/scan_object.py",
+          "sha256": "860dfe2cc86d180096089bc87502c7904f7ce2efb64fb32620c1720ca0178c2b"
+        },
+        {
+          "name": "shake_bottle",
+          "module": "envs/shake_bottle.py",
+          "sha256": "2e37395b302eb37ecac39b2a676ea119c4bf7a1dcc9e6df75cd683a5cf37b026"
+        },
+        {
+          "name": "shake_bottle_horizontally",
+          "module": "envs/shake_bottle_horizontally.py",
+          "sha256": "def5f373a3a289c946bb32c6d01145672432dbe1d2b71a10992e5280d5f8dead"
+        },
+        {
+          "name": "stack_blocks_three",
+          "module": "envs/stack_blocks_three.py",
+          "sha256": "b19f1f1c5a3a2c7c7312a4e1b2e577ccd269ebb0c444c287fecbc16ff5b47fb9"
+        },
+        {
+          "name": "stack_blocks_two",
+          "module": "envs/stack_blocks_two.py",
+          "sha256": "4e92a679cb5be4ef87a1b842432c930560a2c9b539a4cbcee0161e2b2112f526"
+        },
+        {
+          "name": "stack_bowls_three",
+          "module": "envs/stack_bowls_three.py",
+          "sha256": "95848e9c2987e64fef2cfd928128d7a19967ba600c57dc7a6b7f1c9ea5b358e6"
+        },
+        {
+          "name": "stack_bowls_two",
+          "module": "envs/stack_bowls_two.py",
+          "sha256": "3e3217c277d84a0838739d55a0061a9acb3315240b5a99c6607d9637ea719637"
+        },
+        {
+          "name": "stamp_seal",
+          "module": "envs/stamp_seal.py",
+          "sha256": "28a159e27aa76459355fa1f81e962815c62ee6435727039d73664b7eb6731b82"
+        },
+        {
+          "name": "turn_switch",
+          "module": "envs/turn_switch.py",
+          "sha256": "035e108a861f94f61369ba2221431e123b7ac231e8de683d8bf38090bf021f9a"
+        }
+      ],
+      "current_framework_scope": "adjust_bottle/demo_clean; bounded expert-valid seed selection",
+      "denominator_note": "Two source revisions of the same task names are not 100 distinct tasks"
+    },
+    "robodojo": {
+      "path_relative_to_framework": "../upstream/RoboDojo",
+      "source_revision": "266130a3ec41ba9b20b0e5648d2f3542f219c06c",
+      "tracked_worktree_clean": true,
+      "module_class_configuration_pair_count": 54,
+      "standard_count": 42,
+      "random_variant_count": 12,
+      "tasks": [
+        {
+          "name": "align_blocks",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/align_blocks.py",
+          "module_sha256": "c8597e96132cd7c9d30f3ae101f7bbe8ac28597b629599d75d442bbea4c6e74c",
+          "configuration": "task/RoboDojo/config/align_blocks.yml",
+          "configuration_sha256": "082c9d7a32968052b8ce954bee212c7ec0a96b756150701d4b531abdea59be2b"
+        },
+        {
+          "name": "arrange_largest_number",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/arrange_largest_number.py",
+          "module_sha256": "277acd20ae4345dc71267762e588b7b0343387c71685183890f044a4808b7a20",
+          "configuration": "task/RoboDojo/config/arrange_largest_number.yml",
+          "configuration_sha256": "3bf6b7e286ea328fb1e4a994a8d30af9afb4b0b4dcd7ceafed43cc6160c9978f"
+        },
+        {
+          "name": "arrange_largest_number_random",
+          "variant": "random",
+          "module": "task/RoboDojo/tasks/arrange_largest_number_random.py",
+          "module_sha256": "01757509978663bf7c0c95059e8ae18d45b8fe0953f6b54540e2bd6bf141182e",
+          "configuration": "task/RoboDojo/config/arrange_largest_number_random.yml",
+          "configuration_sha256": "145b26eb5c8ed7d084a4ddc6e21694c542f4a86150756188ea38dcf66e565603"
+        },
+        {
+          "name": "build_tower",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/build_tower.py",
+          "module_sha256": "814cf6ffb459871e5cf49f4e127903dbfbc30926f33db71de0b84a71ab235d6e",
+          "configuration": "task/RoboDojo/config/build_tower.yml",
+          "configuration_sha256": "e1bab8756bbc5664e3171e2389c060a79a3fbbf92a6af4ef555dcaf59fce275c"
+        },
+        {
+          "name": "classify_objects",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/classify_objects.py",
+          "module_sha256": "aef4333c088766375e21a928d53a9a93aaee285fecae41e22385acdc74dd11ac",
+          "configuration": "task/RoboDojo/config/classify_objects.yml",
+          "configuration_sha256": "80a754d2aedd6a89f58185eae36f5b2eb1a28250f40a67325f576fde34650384"
+        },
+        {
+          "name": "classify_objects_by_language",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/classify_objects_by_language.py",
+          "module_sha256": "242a8f048f487eb174ef246be78613bbb5f153549ee11a2650412718cf3b36c9",
+          "configuration": "task/RoboDojo/config/classify_objects_by_language.yml",
+          "configuration_sha256": "ac6c739ca82a64b53c799af79b44363db1a88246f76d867f8830729e5613507b"
+        },
+        {
+          "name": "cover_blocks",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/cover_blocks.py",
+          "module_sha256": "9d14931b16842b93bea8abf9a07991a93a7e663b93c5fd1695108c8b922ab862",
+          "configuration": "task/RoboDojo/config/cover_blocks.yml",
+          "configuration_sha256": "68f90c85fad2b152cf7853cf48888d09ce74bb27a692ff2feacd11160771c5a7"
+        },
+        {
+          "name": "deposit_coin",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/deposit_coin.py",
+          "module_sha256": "f9868ef827ec17b8db6c4650cc5d9a9e593d20d00ee822e2212ce229ec01fb61",
+          "configuration": "task/RoboDojo/config/deposit_coin.yml",
+          "configuration_sha256": "f547b12216fb9a5dfe2e7d7e882d89e1e53ee1a805c943ba09a3c2cdea8c17a3"
+        },
+        {
+          "name": "fasten_screws",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/fasten_screws.py",
+          "module_sha256": "2e187a28e33e44efb87baae6463b3ec35264ccd41e35c21a1be44f6361675185",
+          "configuration": "task/RoboDojo/config/fasten_screws.yml",
+          "configuration_sha256": "5fbe4cf5b3ee2eafc2771137b13176f01617f8b2131f02503e676a7b62e2eabf"
+        },
+        {
+          "name": "fill_egg_holder",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/fill_egg_holder.py",
+          "module_sha256": "506dfb772f8882ae53966e3580affde19c3c0f11591c78cc5f5b1d997ba04f7e",
+          "configuration": "task/RoboDojo/config/fill_egg_holder.yml",
+          "configuration_sha256": "d79129278c9a5488d63bb1d3865f2c6b39f21f85957ec94ace091af9ae29e31f"
+        },
+        {
+          "name": "fill_pen_holder",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/fill_pen_holder.py",
+          "module_sha256": "8706dce239487e078b21af0b95bcc5cd4eabdcdadcdcbc6400d6b138d982f1e6",
+          "configuration": "task/RoboDojo/config/fill_pen_holder.yml",
+          "configuration_sha256": "ac72e5582495e8757c547997b317e2fe990370009527b1faa6bfbf4e1275537c"
+        },
+        {
+          "name": "fold_clothes",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/fold_clothes.py",
+          "module_sha256": "ecea9c287d0579605330168e6f36734704fb14a6b1e5dec82b6f2ee3a56ec20a",
+          "configuration": "task/RoboDojo/config/fold_clothes.yml",
+          "configuration_sha256": "56447e3f592e0db388ebb7482ec758ecd5485ec81b9227c2dffe5390bd7d8c8e"
+        },
+        {
+          "name": "fold_clothes_random",
+          "variant": "random",
+          "module": "task/RoboDojo/tasks/fold_clothes_random.py",
+          "module_sha256": "9e40abe3f7201a8c13961edc1ca8075260c315584d3d6b93fa1df966d13d1e88",
+          "configuration": "task/RoboDojo/config/fold_clothes_random.yml",
+          "configuration_sha256": "eafe52c0abcc1889069383b008cbe95c6af2d18ceafb1aecc78f0fae3b491b04"
+        },
+        {
+          "name": "general_pickup",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/general_pickup.py",
+          "module_sha256": "1a9eef7fe518f9d2c6805ad1a8f97c1045fa83726f84b9c63f67ffdfabbc40a7",
+          "configuration": "task/RoboDojo/config/general_pickup.yml",
+          "configuration_sha256": "35de68117cb0ed596b30db1c62f1f9090f2cd1237242a03d5aaeb7186e791d93"
+        },
+        {
+          "name": "hang_mugs",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/hang_mugs.py",
+          "module_sha256": "4bc6586bd87de030b9c580fea2a45e7977c3b6a4d75cf3c43b546d349d42e906",
+          "configuration": "task/RoboDojo/config/hang_mugs.yml",
+          "configuration_sha256": "0086d374d3f7e82abb85e43a17cdfa437e1ac645a0171fb47496c2b81427dce9"
+        },
+        {
+          "name": "hang_mugs_random",
+          "variant": "random",
+          "module": "task/RoboDojo/tasks/hang_mugs_random.py",
+          "module_sha256": "ebfa4a95deb954aa7a9063a07fe366cb5ea1835d3f52342b10d531225dfeee92",
+          "configuration": "task/RoboDojo/config/hang_mugs_random.yml",
+          "configuration_sha256": "847dfd39059275a671b5beff0243bf7bbaeebd9e5c0612a1877cdf12b9007dc6"
+        },
+        {
+          "name": "imitate_sorting_sequence",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/imitate_sorting_sequence.py",
+          "module_sha256": "18400cb3c5f5103492819df2dcdf05a77916106e8a503cb62b4ee6cdbaa9305b",
+          "configuration": "task/RoboDojo/config/imitate_sorting_sequence.yml",
+          "configuration_sha256": "d9e194d8c742288601c641ccb75052a67da46e536c0b06c7fb7311d9e2c61a42"
+        },
+        {
+          "name": "insert_key",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/insert_key.py",
+          "module_sha256": "180978a2915744f0596fbca4ea0ad6dcb47dce005d43f06807249bc8b4d1a828",
+          "configuration": "task/RoboDojo/config/insert_key.yml",
+          "configuration_sha256": "c0b409d5c020e0ad706c378b6f63b39dfe7bed4682d978907c40e1cfa7623335"
+        },
+        {
+          "name": "insert_tubes",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/insert_tubes.py",
+          "module_sha256": "9a68795ddbd0b816ffd7627e673390ecd83594c0e9d374d4e3abf3435ad439e1",
+          "configuration": "task/RoboDojo/config/insert_tubes.yml",
+          "configuration_sha256": "5c070e5c764a2ea93f8de0b52e6a664a23c717963fe09fe3af17918a4a1ee9ef"
+        },
+        {
+          "name": "make_kong",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/make_kong.py",
+          "module_sha256": "b9266689d65f9213b05219ad952344f9fd63be8892097ec0103af99791b245d5",
+          "configuration": "task/RoboDojo/config/make_kong.yml",
+          "configuration_sha256": "8a33c9e57b6e6c719c4800911c37272ba055ad0f4cda2f1de9d531ee2910351a"
+        },
+        {
+          "name": "make_toast",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/make_toast.py",
+          "module_sha256": "1047f484a73d1f92304393879b51f87e33d661b6ad7937198352fe37a0d3233d",
+          "configuration": "task/RoboDojo/config/make_toast.yml",
+          "configuration_sha256": "d190a26233db174538ff0052b4c2958a3b107f0ccc63d0fdfe28da4c7f5dc57b"
+        },
+        {
+          "name": "make_toast_random",
+          "variant": "random",
+          "module": "task/RoboDojo/tasks/make_toast_random.py",
+          "module_sha256": "69fb879b89e98f7369971834eb6d1b95c5a65f5ffe978b2cffae0b12c6b756ca",
+          "configuration": "task/RoboDojo/config/make_toast_random.yml",
+          "configuration_sha256": "ca2c1e55a0975c8b019523710e90131504d8d2afeb829be362e4d7927fe97b48"
+        },
+        {
+          "name": "match_and_pick_from_conveyor",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/match_and_pick_from_conveyor.py",
+          "module_sha256": "53110b8a0c971bd3ae8878bfb7d0dcd9626bd9b610d4e7fc91772313b435a5c0",
+          "configuration": "task/RoboDojo/config/match_and_pick_from_conveyor.yml",
+          "configuration_sha256": "0ae1c2537d9b1880748316928cfd7ba4c6421ecccfedb85c4c5395a7a86c5361"
+        },
+        {
+          "name": "organize_table",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/organize_table.py",
+          "module_sha256": "9e3057e70b8ad0b8cb553be6dec00d2b71fada6f4087edcb38fc56508f572dbd",
+          "configuration": "task/RoboDojo/config/organize_table.yml",
+          "configuration_sha256": "9ffa15dd279060d4f042285a2c53a341c7208e2f89a2f3dd36ee08b22aa453fa"
+        },
+        {
+          "name": "pack_objects_into_box",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/pack_objects_into_box.py",
+          "module_sha256": "84a1cf1dd5e166f36291130f9d8cb5dfe4b3f4732a46674bef6374a7ea2d66be",
+          "configuration": "task/RoboDojo/config/pack_objects_into_box.yml",
+          "configuration_sha256": "e232962b8394d08c04c5da14deb88d7b233afa00ab99af8001c084218951d7ca"
+        },
+        {
+          "name": "pack_objects_into_box_random",
+          "variant": "random",
+          "module": "task/RoboDojo/tasks/pack_objects_into_box_random.py",
+          "module_sha256": "4db259a1b97cdcc39ebc9794244fadc79d31c4ae64069c9b11a233356fcb655c",
+          "configuration": "task/RoboDojo/config/pack_objects_into_box_random.yml",
+          "configuration_sha256": "7ac7f034fcb169e33a7f0a03b2b77e54d0206ed715409359b579055a701196ef"
+        },
+        {
+          "name": "pick_from_conveyor_by_image",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/pick_from_conveyor_by_image.py",
+          "module_sha256": "a0d29576d0aab8232d2fd3ebcc8c510e81c70b4cc04602a5be3e99ee2275e01d",
+          "configuration": "task/RoboDojo/config/pick_from_conveyor_by_image.yml",
+          "configuration_sha256": "6b310b70a0ead9d09e7c221c6bbc952140a44b1d43034613bf02e954eebcf9dd"
+        },
+        {
+          "name": "play_Xylophone",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/play_Xylophone.py",
+          "module_sha256": "b7a4b0bc0457bcf55d714ca1867476fc4aabc53084adfc78d3ff5d1437bf7847",
+          "configuration": "task/RoboDojo/config/play_Xylophone.yml",
+          "configuration_sha256": "28adedb0f03c49693af32cea37855f3f95ec3f76f031bfd571fb8bfffb2ec59c"
+        },
+        {
+          "name": "play_stacking_toy",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/play_stacking_toy.py",
+          "module_sha256": "23361329ee7efe330da1f1c241415205bafed2b6c082a913659d868a80d338c3",
+          "configuration": "task/RoboDojo/config/play_stacking_toy.yml",
+          "configuration_sha256": "a09afc106161064a2ea6a40882d717f7872bd4875309a97431d6863a9b7ffa1c"
+        },
+        {
+          "name": "play_tic_tac_toe",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/play_tic_tac_toe.py",
+          "module_sha256": "8f75ebfe55c997ad9bd3b342db46e843e87397db94356f31cadcbe0cb483bca7",
+          "configuration": "task/RoboDojo/config/play_tic_tac_toe.yml",
+          "configuration_sha256": "63f863a7fb81a040f65803c64f97c4e9577d4fe32cd0f92563bdc72d1aa336d2"
+        },
+        {
+          "name": "plug_in_charger",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/plug_in_charger.py",
+          "module_sha256": "aaa59ade46dc54f430e1148e3f6fae487970cd29eb2c07b5ff7b4045edb831b6",
+          "configuration": "task/RoboDojo/config/plug_in_charger.yml",
+          "configuration_sha256": "2046b47112049e038ecfa24a8c8044fb1db84f629a4a32eeb24822157d2d4dcb"
+        },
+        {
+          "name": "pour_balls_into_vase",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/pour_balls_into_vase.py",
+          "module_sha256": "eae388b93ec196c401f76bbab3b0119cb2164f90bece0225d4fb925d3f2b73ab",
+          "configuration": "task/RoboDojo/config/pour_balls_into_vase.yml",
+          "configuration_sha256": "084a707af61d24123912777b417fe0c0b230eb9653e686af42570791e924ff8b"
+        },
+        {
+          "name": "pour_by_language",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/pour_by_language.py",
+          "module_sha256": "f7a15a7fca2c649a7918d68960ede27e667f409a339b668dd9876db890724cfb",
+          "configuration": "task/RoboDojo/config/pour_by_language.yml",
+          "configuration_sha256": "efb2e3c3cb08dd6d2d2ae011b3e9a218b5f1f0a92f025b8e3b9e8abd7011c250"
+        },
+        {
+          "name": "pour_liquid_into_cup",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/pour_liquid_into_cup.py",
+          "module_sha256": "73f8c91b57c352fdc1e7ba3fe5354b3c10e4156d8e5ba777762ad0fa1aff5663",
+          "configuration": "task/RoboDojo/config/pour_liquid_into_cup.yml",
+          "configuration_sha256": "32092b11667b3306579b04225303610c061585ace28531fa9996afc339c5a2ba"
+        },
+        {
+          "name": "pour_liquid_into_cup_random",
+          "variant": "random",
+          "module": "task/RoboDojo/tasks/pour_liquid_into_cup_random.py",
+          "module_sha256": "a1c4097b6e34b2c62885b3a9c7d2584a93d9e296dc41d311a80c2e6d541d53af",
+          "configuration": "task/RoboDojo/config/pour_liquid_into_cup_random.yml",
+          "configuration_sha256": "1603feeab6f0f7dc9c4897e7f40f322b86112b6ab987dad0598f42ac1b35db69"
+        },
+        {
+          "name": "press_by_number",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/press_by_number.py",
+          "module_sha256": "006f969087c00c417a63875a9de153f698c52d1f1ca0caf0aa16076aa15059c5",
+          "configuration": "task/RoboDojo/config/press_by_number.yml",
+          "configuration_sha256": "b784643495bcbca933f5a5fbc91b7dad3465fe888239b358d516977c78c38f63"
+        },
+        {
+          "name": "push_T",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/push_T.py",
+          "module_sha256": "a01d753bc320ffbf492ccc29e5f7ab3b39e6c7d255cd25804db1934a30fa5b41",
+          "configuration": "task/RoboDojo/config/push_T.yml",
+          "configuration_sha256": "b55ea11002ff3e5dc63982ca8c1247fd7bee4f4a607f4d674e220b86cf120a25"
+        },
+        {
+          "name": "push_T_random",
+          "variant": "random",
+          "module": "task/RoboDojo/tasks/push_T_random.py",
+          "module_sha256": "dc8d9c8e0d2e8dfffa2b7d433a8278c0eaf707cc4861b15035364c2e70061dab",
+          "configuration": "task/RoboDojo/config/push_T_random.yml",
+          "configuration_sha256": "07609ec20cea40afa1d5720e895fb1b445411f261b2e5b6850e75d0f1930d32d"
+        },
+        {
+          "name": "put_bottles_into_dustbin",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/put_bottles_into_dustbin.py",
+          "module_sha256": "3ba6e19df0c5ff19ba961092f031ce14e91e72a9a4a5934eece6000a1ffa1c48",
+          "configuration": "task/RoboDojo/config/put_bottles_into_dustbin.yml",
+          "configuration_sha256": "7eddf43e287b6e8aea686c6d686fb87e13ac1be1cb5aac16a8a2b0d2e9eb976e"
+        },
+        {
+          "name": "solve_equation",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/solve_equation.py",
+          "module_sha256": "e287a2f36b82b28e8ca7824f63b1b723b02972ea6dfc115ff32b2882729751f7",
+          "configuration": "task/RoboDojo/config/solve_equation.yml",
+          "configuration_sha256": "bdaad2ff1cc8b7ec6413a3715d49ea9cefd664e7e204544977832e18785f1e75"
+        },
+        {
+          "name": "sort_nesting_dolls_by_size",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/sort_nesting_dolls_by_size.py",
+          "module_sha256": "1838fa6b515bad3796895cb5c1883c6a42789b7dada5434765764600e70beb49",
+          "configuration": "task/RoboDojo/config/sort_nesting_dolls_by_size.yml",
+          "configuration_sha256": "8927cb2ebb18449554d851e629bd7d568e12e46c5c3c636c8e7122f4fab1ed1f"
+        },
+        {
+          "name": "sort_nesting_dolls_by_size_random",
+          "variant": "random",
+          "module": "task/RoboDojo/tasks/sort_nesting_dolls_by_size_random.py",
+          "module_sha256": "b793ab5bd32bd2c10bd46874440904837f9c4e290e7508b06426e2e96425709a",
+          "configuration": "task/RoboDojo/config/sort_nesting_dolls_by_size_random.yml",
+          "configuration_sha256": "f895d3ce7eaae99454706afccd09011f56d077998bcc1e95840116658b78f139"
+        },
+        {
+          "name": "stack_blocks",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/stack_blocks.py",
+          "module_sha256": "50bd388f9e47002966fbb0146742467a820295b8686e0f86379f0efbcfffcc1b",
+          "configuration": "task/RoboDojo/config/stack_blocks.yml",
+          "configuration_sha256": "2802e88ebc3e2d3d05ce345d75e9ad6151a6690e4ef1e0021a5223d291a402d2"
+        },
+        {
+          "name": "stack_blocks_by_language",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/stack_blocks_by_language.py",
+          "module_sha256": "36a83925f35c7a4caac5add328dd35cb1d346bad833d3064f455d88221e7a41e",
+          "configuration": "task/RoboDojo/config/stack_blocks_by_language.yml",
+          "configuration_sha256": "4fbfed4f7fc49120831087e709a8dbdfdb4504eb143196000d5790b54eb3bc40"
+        },
+        {
+          "name": "stack_blocks_random",
+          "variant": "random",
+          "module": "task/RoboDojo/tasks/stack_blocks_random.py",
+          "module_sha256": "19d4e5cd693e068ad64de75cbcd24977ab8d39e22fa17362a391dcd733bc9bb5",
+          "configuration": "task/RoboDojo/config/stack_blocks_random.yml",
+          "configuration_sha256": "e25d2a096601da30abdcfe1256a464eaf48c0c8f844eb2c737232626d49639d5"
+        },
+        {
+          "name": "stack_bowls",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/stack_bowls.py",
+          "module_sha256": "022c129ec3493183b1a26688a0402f5a00a1546ae011999e9c19f4c0029e2b7d",
+          "configuration": "task/RoboDojo/config/stack_bowls.yml",
+          "configuration_sha256": "4e2aaa12b8b0f58ca801f1a93638c46d3b49ebad809c5a8011382ccda846dcb1"
+        },
+        {
+          "name": "stack_bowls_random",
+          "variant": "random",
+          "module": "task/RoboDojo/tasks/stack_bowls_random.py",
+          "module_sha256": "a0e20469eb44a9ee98650d09386814c1df5264c68ec139f06aabf0c86f092514",
+          "configuration": "task/RoboDojo/config/stack_bowls_random.yml",
+          "configuration_sha256": "5c08af1bcc925d958d53de51e8ebd336006203f1bc81e4ef68f3719eadfabb49"
+        },
+        {
+          "name": "store_laptop_and_headphones",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/store_laptop_and_headphones.py",
+          "module_sha256": "2bee4e31f0594900629fe7f43266e16fecb310b152930ce51524507136809a92",
+          "configuration": "task/RoboDojo/config/store_laptop_and_headphones.yml",
+          "configuration_sha256": "0fdaab803a9370a9e2d1fc8d86a5788daa3940c08fd6f767334f625642fca3e2"
+        },
+        {
+          "name": "store_laptop_and_headphones_random",
+          "variant": "random",
+          "module": "task/RoboDojo/tasks/store_laptop_and_headphones_random.py",
+          "module_sha256": "58c3c5113054a379214d64ae406ed8dde99603cf684ce9cd8c7bcb72ed334382",
+          "configuration": "task/RoboDojo/config/store_laptop_and_headphones_random.yml",
+          "configuration_sha256": "93f0ca39bc8bb32df94e84a02f22ed4d7860f37cdc0b9dd17e44721445849576"
+        },
+        {
+          "name": "store_tools_in_toolbox",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/store_tools_in_toolbox.py",
+          "module_sha256": "2969fc3eb171560b3c0bcea62b9f38b8b35f3aecc9bcc7085c3b1cec365b48fc",
+          "configuration": "task/RoboDojo/config/store_tools_in_toolbox.yml",
+          "configuration_sha256": "641c8ef92393bd986e408d26a84b1cfcdac27466a5ac5f0b3ebe4bb84430c527"
+        },
+        {
+          "name": "swap_T",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/swap_T.py",
+          "module_sha256": "57fc289b3957caa454e1d8e005e3a57c973d6ab40121845c94799e61e4bfafdf",
+          "configuration": "task/RoboDojo/config/swap_T.yml",
+          "configuration_sha256": "1daf769911e13714b4aeabd208292931e32f4dd39968893152bb7bb477c46c9b"
+        },
+        {
+          "name": "swap_blocks",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/swap_blocks.py",
+          "module_sha256": "08ed24ae9dff27f4e5c850161a02f62ce237859c096d9b06a853a7890e0ad4ed",
+          "configuration": "task/RoboDojo/config/swap_blocks.yml",
+          "configuration_sha256": "b6bb2a9df494719f26c6b1aab2e7576107ae76e2fbac8b63a5770f21e0e9f05f"
+        },
+        {
+          "name": "sweep_blocks",
+          "variant": "standard",
+          "module": "task/RoboDojo/tasks/sweep_blocks.py",
+          "module_sha256": "65786217e199c1e2b26ec8e2c232bf98ecb304a20939d0908fe12bc41e990614",
+          "configuration": "task/RoboDojo/config/sweep_blocks.yml",
+          "configuration_sha256": "98aa25ac39be9d335c71b2b586bbba372789e9d61e652e1147152c87febbf1f5"
+        },
+        {
+          "name": "sweep_blocks_random",
+          "variant": "random",
+          "module": "task/RoboDojo/tasks/sweep_blocks_random.py",
+          "module_sha256": "68b6127038322cf001d5f614060b8a1d96e64a49efddfcdcae91127d5c206bc5",
+          "configuration": "task/RoboDojo/config/sweep_blocks_random.yml",
+          "configuration_sha256": "4ebff5e2cad07f958dc4b2793b86b1aa803c0809394818ee3752d300e58b6187"
+        }
+      ],
+      "current_framework_scope": "stack_bowls/arx_x5; layout selection; one seed0 episode per process",
+      "denominator_note": "Static module/class/config pairing, not proof of assets, successful imports or actual evaluation eligibility"
+    },
+    "droid_sim": {
+      "path_relative_to_framework": "../upstream/sim-evals-mn",
+      "source_revision": "3a6b0e8177f696947f49c082728f10ef5133ede1",
+      "tracked_worktree_clean": true,
+      "catalog_file": "run_eval.py",
+      "catalog_sha256": "d1d8231f2982e1374283d7ab8d9483a920a6fd72de211c12e789c2dcf289c19a",
+      "source_scene_ids": [
+        1,
+        2,
+        3
+      ],
+      "current_framework_scope": "scene1/2/3 structurally selectable; completed Cosmos real reference scene1 only, limited actions",
+      "official_task_success_scoring_available": false,
+      "denominator_note": "Three example scenes, not a complete DROID real-world benchmark; no invented success scoring"
+    }
+  }
+}

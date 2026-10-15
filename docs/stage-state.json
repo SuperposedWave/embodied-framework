@@ -1,6 +1,35 @@
 {
-  "last_update_utc": "2026-10-15T08:41:08+00:00",
-  "review_status": "git_baseline_created_execution_replay_tools_fixed_native_planner_variation_observed_strict_rollout_still_not_accepted",
+  "last_update_utc": "2026-10-15T11:26:57+00:00",
+  "review_status": "onboarding_guide_and_fixed_source_task_inventory_delivered_runtime_coverage_not_expanded_strict_gates_retained",
+  "onboarding_and_coverage_20261015": {
+    "user_direction": "不强求一键接入工具，写清接入指引；优先尽可能充分覆盖已纳入Benchmark",
+    "state": "documentation_and_static_inventory_complete_specific_expanded_runtime_protocols_require_review",
+    "onboarding_guide": "docs/adapter-onboarding.md",
+    "coverage_expansion_review": "docs/benchmark-coverage-review.md",
+    "static_task_inventory": "docs/benchmark-task-inventory-20261015.json",
+    "inventory_is_runtime_coverage_or_asset_proof": false,
+    "fixed_source_snapshots": 6,
+    "source_files_reverified": 215,
+    "LIBERO_declared_suite_sizes": {"libero_spatial": 10, "libero_object": 10, "libero_goal": 10, "libero_10": 10, "libero_90": 90},
+    "VLABench_track_configuration_counts": {"track1": 500, "track2": 460, "track3": 500, "track4": 500, "track6": 500},
+    "RoboTwin_task_classes_per_fixed_source_version": 50,
+    "RoboDojo_static_module_class_config_pairs": 54,
+    "RoboDojo_standard_and_random_variant_counts": [42, 12],
+    "DROID_source_example_scenes": 3,
+    "task_catalogs_must_not_be_summed_as_unique_evaluation_tasks": true,
+    "documentation_verification": "outputs/onboarding-coverage-doc-check-20261015-run1/receipt.json",
+    "software_regression": "outputs/onboarding-coverage-baseline-20261015-run1/baseline-check.json",
+    "software_tests": 443,
+    "five_CLI_exit_codes": [0, 0, 0, 1, 2],
+    "public_contract_or_production_Adapter_or_Runner_changed": false,
+    "automatic_semantic_role_binding_implemented": false,
+    "one_click_onboarding_required_for_delivery": false,
+    "new_real_inference_simulation_or_weight_download": false,
+    "expanded_task_initialization_budget_and_score_protocols_approved": false,
+    "historical_evidence_rewritten": false,
+    "stage4_formally_accepted": false,
+    "contract_frozen": false
+  },
   "repro_followup_20261015": {
     "user_request": "先创建Git管理现有版本，再推进残留问题，提交详细本轮修改报告",
     "state": "software_and_fixed_plan_execution_diagnostics_passed_native_replanning_variation_preserved_not_stage_acceptance",
@@ -895,7 +924,7 @@
       "implementation_started": false
     }
   ],
-  "next_gate": "继续完成已具名新增组件的大权重/编码器、兼容推理和Isaac环境、场景引用闭包及原生逐项对照。已有π0.5_ARX真实GPU推理和50动作跨RoboTwin诊断不等于任务验收；VA明确暂缓，未知协议/范围外项不标完成。旧六组真实单次及严格复现差异保留；阶段4正式验收和契约冻结另行确认，未进入阶段5。",
+  "next_gate": "优先按接入指引维护独立Adapter，并据固定源码任务目录提交各环境通用任务选择、初始化集合、预算、控制器、官方评分和重复方案，确认具体扩展协议后实施完整任务覆盖。不强求一键工具，不把静态目录或试点成功当成全任务完成。原生严格复现差异保留；DreamZero双H100资源待用户后续对接，LingBot-VA继续暂缓。阶段4正式验收和契约冻结另行确认，未进入阶段5。",
   "observations": {
     "local_arch": "arm64",
     "local_memory_bytes": 38654705664,
