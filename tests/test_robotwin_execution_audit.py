@@ -5,6 +5,7 @@ import random
 import sys
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -12,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "docs/handoff"))
 from replay_mn_native_actions import robotwin_action_row, snapshot
 from robotwin_execution_observer import ExecutionObserver, array, rng_fingerprints
 from compare_robotwin_execution_audits import compare
+import build_repro_followup_report as report_builder
 
 
 def pose_action():
@@ -206,6 +208,15 @@ class ObserverSafetyTests(unittest.TestCase):
 
 
 class EvidenceComparisonTests(unittest.TestCase):
+    def test_git_chinese_paths_are_read_without_quoted_escapes(self):
+        with patch.object(report_builder, "git", return_value="docs/GPU实例交接文档.md\0README.md\0") as call:
+            self.assertEqual(report_builder.tracked_paths(), ["docs/GPU实例交接文档.md", "README.md"])
+        call.assert_called_once_with("ls-files", "-z")
+
+    def test_git_space_and_newline_paths_are_not_split(self):
+        with patch.object(report_builder, "git", return_value="docs/with space.md\0docs/with\nnewline.md\0"):
+            self.assertEqual(report_builder.tracked_paths(), ["docs/with space.md", "docs/with\nnewline.md"])
+
     def receipt(self):
         return {"completed": True, "observer_enabled": True, "manifest_sha256": "synthetic-manifest",
             "source_assets_verified": {"synthetic": True}, "package_versions": {"numpy": "synthetic"},

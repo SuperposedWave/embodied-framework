@@ -35,12 +35,18 @@ def git(*args):
     return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
 
 
+def tracked_paths():
+    # Git's line output quotes non-ASCII names by default. NUL-separated output
+    # is unquoted and also preserves spaces/newlines without changing Git config.
+    return [path for path in git("ls-files", "-z").split("\0") if path]
+
+
 def collect():
-    baseline_path = "outputs/repro-followup-baseline-20261015-final/baseline-check.json"
+    baseline_path = "outputs/repro-followup-baseline-20261015-final2/baseline-check.json"
     baseline = read(baseline_path)
     cli = [item["actual_exit_code"] for item in baseline["checks"] if "actual_exit_code" in item]
-    if not baseline["passed"] or baseline["checks"][0]["tests_run"] != 441 or cli != [0, 0, 0, 1, 2]:
-        raise ValueError("full_441_tests_and_five_CLI_gates_required")
+    if not baseline["passed"] or baseline["checks"][0]["tests_run"] != 443 or cli != [0, 0, 0, 1, 2]:
+        raise ValueError("full_443_tests_and_five_CLI_gates_required")
     runs = {}
     for name in RUNS:
         path = PREFIX + name
@@ -104,7 +110,7 @@ def collect():
         "source_commit_at_build": git("rev-parse", "HEAD"), "baseline_commit": git("rev-parse", "baseline-20261015^{commit}"),
         "branch": git("branch", "--show-current"), "git_remote_names": git("remote").splitlines(),
         "historical_commit_history_reconstructed": False, "external_upload_performed": False,
-        "software": {"receipt": baseline_path, "tests": 441, "new_synthetic_tests": 25, "five_CLI_exit_codes": cli},
+        "software": {"receipt": baseline_path, "tests": 443, "new_synthetic_tests": 27, "five_CLI_exit_codes": cli},
         "runs": runs, "comparisons": comparisons, "observer_off_control": off,
         "fixed_plan_camera_sequences_equal": fixed_camera_equal,
         "fixed_plan_replay_is_diagnostic_not_new_policy_evaluation": True,
@@ -112,6 +118,7 @@ def collect():
         "all_production_Adapter_Runner_and_contract_files_unchanged_from_Git_baseline": unchanged,
         "gpu": gpu_summary, "evidence_sha256": {path: sha(ROOT / path) for path in evidence},
         "prototype_attempts_preserved_not_final_source_version": [PREFIX + "native1", PREFIX + "native2"],
+        "preserved_failed_report_attempt": PREFIX + "final/build-failure.json",
         "new_model_inference_or_new_weight_download": False,
         "strict_original_fresh_rollout_trajectory_gate_passed": False,
         "planner_internal_rng_or_kernel_unique_root_identified": False,
@@ -176,13 +183,13 @@ def render(data, output):
         ("robotwin_execution_observer.py", "新增只读规划／控制／物理记录器；异常时恢复临时绑定。", "在边界上记下收到什么、规划出什么、每一步实际变成什么。"),
         ("diagnose_openwam_pose_execution.py", "新增有监督的四动作原生／框架对照，支持不加新增记录器的控制组及固定规划诊断。", "只停止自己创建的子进程，不把原生日志或进程环境写入证据。"),
         ("compare_robotwin_execution_audits.py", "逐项比较实际规划输入、输出、控制指令和物理状态。", "报告第一个分叉点，不用任务成功掩盖映射错误。"),
-        ("test_robotwin_execution_audit.py", "新增25项合成测试。", "它们证明检查逻辑和边界行为，不冒充真实模型成绩。"),
+        ("test_robotwin_execution_audit.py", "新增27项合成测试。", "它们证明检查逻辑和边界行为，不冒充真实模型成绩。"),
         ("build_repro_followup_report.py / stage-state.json", "封存证据摘要、生成本报告并登记最新进展。", "新报告新目录，旧报告和历史路径不回写。")]
     run_rows = []
     labels = {"native3":"原生重新规划 A", "native4":"原生重新规划 B", "adapter1":"框架重新规划", "fixed-native1":"原生固定规划", "fixed-adapter1":"框架固定规划", "native-off1":"原生控制组 A（关闭新增记录器）", "native-off2":"原生控制组 B（关闭新增记录器）"}
     for name, run in runs.items():
         run_rows.append((labels[name], " / ".join(map(str, run["physics_steps_by_action"])) if run["physics_steps_by_action"] else "仅保存独立总数，不补猜逐动作数", str(run["physics_steps_total"]), link(run["component"], "实际记录")))
-    evidence_rows = [("软件回归", link(data["software"]["receipt"], "441项与五组CLI回执")),
+    evidence_rows = [("软件回归", link(data["software"]["receipt"], "443项与五组CLI回执")),
         ("原生重复规划", link(PREFIX+"native-repeat.json", "规划与物理分叉对照")),
         ("框架／原生重新规划", link(PREFIX+"adapter-native.json", "未强求相同轨迹的实际对照")),
         ("固定规划的两侧对照", link(PREFIX+"fixed-comparison.json", "控制命令与逐步关节状态对照")),
@@ -198,7 +205,7 @@ def render(data, output):
 <p class="lead">2026-10-15｜先建立 Git，再推进 OpenWAM／RoboTwin 剩余执行差异。下列数字由保存的回执生成，不是全任务榜单。</p>
 <section aria-labelledby="summary"><h2 id="summary">先说结论</h2>
 <div class="callout"><strong>本轮解决了版本管理和回放检查工具的实际缺口，并把差异定位推进到原生规划器内部；没有把“仍不能严格复现”改写成“全部已修好”。</strong></div>
-<p>源码现有 Git 基线 <code>{data['baseline_commit'][:7]}</code>，修复与证据工具分批提交。软件回归为 <strong>441 项通过</strong>，包括原有416项和新增25项合成测试；五组命令行退出码仍为 <code>0 / 0 / 0 / 1 / 2</code>。</p>
+<p>源码现有 Git 基线 <code>{data['baseline_commit'][:7]}</code>，修复与证据工具分批提交。软件回归为 <strong>443 项通过</strong>，包括原有416项和新增27项合成测试；五组命令行退出码仍为 <code>0 / 0 / 0 / 1 / 2</code>。</p>
 <p>使用相同的四条已保存真实模型动作，两个不经过 Adapter 的原生进程，第一条动作的左右臂规划输入、起步关节位置与速度都一致，但返回的规划轨迹不同。反过来，把同一组已保存规划结果分别交给原生执行和框架执行，两侧控制指令与记录的每个物理步关节位置、速度完全一致。</p>
 <p>人话就是：<strong>“怎么把动作翻译给环境”目前能对齐；“同样的目标每次规划成完全相同的一条路”目前不能保证。</strong>第二件事不能靠把四元数换个顺序来解决，也不能把固定轨迹的诊断通过，算作真实重新规划已经通过。</p>
 <p>本轮没有新模型推理，没有下载权重，没有改生产 Adapter、Runner、公共契约、控制器或评分规则；阶段4仍未正式验收，契约仍未冻结。</p></section>
@@ -249,9 +256,10 @@ git bundle verify /实际保存位置/EmbodiedEval-repro-followup-20261015.bundl
 <p>关闭新增记录器的两个原生控制组，物理步总数为 {data['observer_off_control']['physics_totals'][0]} 和 {data['observer_off_control']['physics_totals'][1]}，整段相机字节摘要{'相同' if data['observer_off_control']['camera_sequences_equal'] else '不同'}。仍保留原来的独立 PhysX 计数器，因此不是“未经任何修改的官方整套评测程序”。</p>
 <p>早期两次诊断 <code>native1</code> 和 <code>native2</code> 也保留，没有覆盖或删除；它们位于检查工具修订期间，不作为最终同版本对照。最终表内运行均记录了诊断源码摘要，并检查执行过程中源码未发生变化。</p>
 <h3 id="regression">轻量回归没有退步</h3>
-<p>修改前416项通过；修改后441项通过，无跳过。新增25项均为合成测试，覆盖公共位姿／旧原生／关节分支、双臂缺失和重复、错误坐标与协议、精度损失、非有限值、记录器不增加物理步或消耗随机数、异常恢复绑定、固定轨迹标记、错误证据拒绝，以及图像／关节采集时间分离。</p>
+<p>修改前416项通过；修改后443项通过，无跳过。新增27项均为合成测试，覆盖公共位姿／旧原生／关节分支、双臂缺失和重复、错误坐标与协议、精度损失、非有限值、记录器不增加物理步或消耗随机数、异常恢复绑定、固定轨迹标记、错误证据拒绝、图像／关节采集时间分离，以及中文／空白字符文件名读取。</p>
 <p>五组 CLI（命令行程序）分别为 chunk（连续动作段）、tool（工具调用）、cache（缓存）、score-error（评分出错）、rejected（预检查拒绝），退出码为 <code>0 / 0 / 0 / 1 / 2</code>。退出码0表示正常完成，1表示预期运行错误，2表示预检查拒绝；后两组不是“测试没修好”。</p>
-<p>{link(data['software']['receipt'],'查看实际441项及五组CLI回执')}。没有声称所有真实模型运行环境都各自重跑了441项。</p>
+<p>{link(data['software']['receipt'],'查看实际443项及五组CLI回执')}。没有声称所有真实模型运行环境都各自重跑了443项。</p>
+<p>第一次报告打包遇到 Git 默认转义中文文件名的问题，已改用 NUL 分隔读取。NUL 是分隔文件名的空字节，不是文件名的一部分；它避免按空格或换行错误切分。{link(data['preserved_failed_report_attempt'],'失败打包记录保留')}，不影响前面已经完成的仿真证据。未覆盖首次部分回执，后续使用新目录重新封存。</p>
 </section>
 <section aria-labelledby="integrity"><h2 id="integrity">资产、历史和GPU</h2>
 <p>沿用 OpenWAM 源码 <code>48bd67b89d489b14d03b8d92bc66e65d306df32e</code>、RoboTwin 源码 <code>0aeea2d669c0f8516f4d5785f0aa33ba812c14b4</code> 的既有资产。本轮每个仿真诊断重新核验环境来源与配置，不重新加载或下载24.8GB模型权重；权重及 normalization（匹配权重的标准化统计）的既有摘要仍见上轮交付，不冒充本轮重新推理。</p>
@@ -279,11 +287,13 @@ def main():
     output.relative_to(ROOT / "outputs")
     output.mkdir(parents=True, exist_ok=False)
     data = collect()
-    write(output / "receipt.json", data)
-    source_files = git("ls-files").splitlines()
-    write(output / "source-sha256.json", {path: sha(ROOT / path) for path in source_files if path != "docs/stage-state.json"})
+    source_files = tracked_paths()
+    source_hashes = {path: sha(ROOT / path) for path in source_files if path != "docs/stage-state.json"}
+    write(output / "source-sha256.json", source_hashes)
     with (output / "EmbodiedEval-repro-followup-20261015.html").open("x", encoding="utf-8") as stream:
         stream.write(render(data, output))
+    # The ready receipt is written last, after both report and hashes exist.
+    write(output / "receipt.json", data)
     print(str(output / "EmbodiedEval-repro-followup-20261015.html"), flush=True)
     return 0
 
