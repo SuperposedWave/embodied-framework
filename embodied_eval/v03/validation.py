@@ -54,7 +54,9 @@ def tensor_matches(tensor, spec, path):
 
 
 def state_base(key):
-    return key.removeprefix("left_").removeprefix("right_")
+    # Remove at most ONE side. A compound left_right_* name is not a public
+    # left/right field and must not be silently treated as the underlying state.
+    return key[5:] if key.startswith("left_") else key[6:] if key.startswith("right_") else key
 
 
 def validate_space(space):

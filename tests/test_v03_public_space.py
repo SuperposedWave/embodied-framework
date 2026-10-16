@@ -443,6 +443,9 @@ class StateIntegrityTests(unittest.TestCase):
         for spec in (replace(self.space.state_fields['eef_quaternion'], frame_id=None), replace(self.space.state_fields['eef_quaternion'], site_id=None)):
             with self.assertRaises(ContractError):
                 validate_space(replace(self.space, state_fields={'eef_quaternion': spec}))
+        for key in ('left_right_eef_quaternion', 'right_left_eef_quaternion', 'left_left_eef_quaternion'):
+            with self.assertRaises(ContractError):
+                validate_space(replace(self.space, state_fields={key: self.space.state_fields['eef_quaternion']}))
 
     def test_wrong_state_provenance_rejected(self):
         with self.assertRaises(ContractError):
