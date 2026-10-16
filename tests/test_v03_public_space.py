@@ -67,9 +67,34 @@ class CanonicalArchitectureTests(unittest.TestCase):
                 self.assertTrue(outcome.summary['synthetic'])
 
     def test_third_model_and_environment_need_only_registration(self):
-        self.registry.register_model('third-model', self.registry.model('synthetic_policy_b'))
-        self.registry.register_benchmark('third-env', self.registry.benchmark('synthetic_simulator_b'))
-        self.assertEqual(self.execute(config('third-model', 'third-env')).exit_code, 0)
+        # Genuine new test implementations, not aliases of existing entries.
+        class ThirdPolicy(SyntheticModel):
+            def predict(self, context):
+                result = super().predict(context)
+                return replace(result, action=replace(result.action,
+                    commands=(replace(result.action.commands[0], value=.37),)))
+        class ThirdEnvironment(SyntheticBenchmark):
+            def __init__(self, options, output):
+                super().__init__({'native_camera_name': 'third_original_rgb', 'period_s': .025, **options}, output)
+                self.space = replace(self.space, spec_id='third-public-space')
+            def snapshot(self):
+                return replace(super().snapshot(), public_instruction='third environment instruction')
+        self.registry.register_model('third-model', replace(self.registry.model('synthetic_policy_a'),
+            describe=lambda o: replace(capability(o), model_id='third-policy', io_profile_id='third-head-joint'),
+            factory=ThirdPolicy))
+        self.registry.register_benchmark('third-env', replace(self.registry.benchmark('synthetic_simulator_a'),
+            describe=lambda o: replace(space({'native_camera_name': 'third_original_rgb', 'period_s': .025, **o}), spec_id='third-public-space'),
+            factory=ThirdEnvironment))
+        outcome = self.execute(config('third-model', 'third-env'))
+        self.assertEqual(outcome.exit_code, 0)
+        manifest = json.loads((outcome.output / 'manifest.json').read_text())
+        self.assertEqual((manifest['capability']['model_id'], manifest['space']['spec_id']), ('third-policy', 'third-public-space'))
+        self.assertAlmostEqual(outcome.results[0]['execution_statistics']['sim_time_s'], .15)
+        trace = [json.loads(line) for line in (outcome.output / 'episodes/ep-0/trace.internal.jsonl').read_text().splitlines()]
+        first = next(row['data'] for row in trace if row['event'] == 'prediction')
+        self.assertEqual(first['action']['commands'][0]['value'], .37)
+        view = json.loads((outcome.output / 'episodes/ep-0/model_input.public.jsonl').read_text().splitlines()[0])
+        self.assertEqual(view['task_public']['instruction'], 'third environment instruction')
 
     def test_native_camera_names_do_not_escape(self):
         result = self.execute(config(options={'native_camera_name': 'completely_different_rgb'}))
