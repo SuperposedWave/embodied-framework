@@ -11,9 +11,9 @@ The native decoder's float32 results are permuted only, never renormalized.
 """
 import numpy as np
 
-from .. import contracts as leaf
+from .. import _legacy_contracts as leaf
 from ..adapters.native_common import finite_array
-from ..validation import require, quaternion
+from .._legacy_validation import require, quaternion
 from . import contracts as c
 from .native_catalog import GRIPPER_CONTROLLER, GRIPPER_PROTOCOL
 

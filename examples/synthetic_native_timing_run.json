@@ -1,0 +1,25 @@
+{
+  "contract_version": "0.3",
+  "run_id": "synthetic-native-timing-run",
+  "model": {
+    "adapter": "synthetic_policy_a",
+    "options": {}
+  },
+  "benchmark": {
+    "adapter": "synthetic_simulator_b",
+    "options": {
+      "timing_mode": "measured_native",
+      "native_camera_name": "third_party_scene_rgb"
+    }
+  },
+  "episodes": [
+    {
+      "episode_id": "episode-0",
+      "seed": 0,
+      "budgets": {
+        "env_steps": 6,
+        "model_calls": 6
+      }
+    }
+  ]
+}

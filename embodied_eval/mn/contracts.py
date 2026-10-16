@@ -6,7 +6,7 @@ with silently different meanings.
 """
 from dataclasses import dataclass, field
 from typing import Literal
-from ..contracts import (ActionSpec, Budgets, Command, ControllerSpec, FrameSpec,
+from .._legacy_contracts import (ActionSpec, Budgets, Command, ControllerSpec, FrameSpec,
                          Metric, PublicTask, RobotSpec, SensorSample, SensorSpec,
                          Tensor, TensorSpec, ExecutionFeedback, TimedTransform)
 

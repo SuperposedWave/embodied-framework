@@ -3,7 +3,7 @@ from collections import deque
 from copy import deepcopy
 from dataclasses import replace
 
-from .. import contracts as c
+from .. import _legacy_contracts as c
 from ..errors import AdapterError
 from .mock_spec import make_case, IDENTITY
 

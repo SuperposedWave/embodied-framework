@@ -1,7 +1,7 @@
 """Neither factory nor lifecycle passes the opposite adapter/configuration."""
 from typing import Protocol
 from pathlib import Path
-from ..contracts import Budgets, Metric, PublicTask
+from .._legacy_contracts import Budgets, Metric, PublicTask
 from .contracts import (CapabilitySpec, SpaceSpec, BoundProfile, Context, ModelInput,
                         Prediction, TaskSpec, Observation, Action, StepResult)
 

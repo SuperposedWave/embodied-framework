@@ -1,0 +1,34 @@
+{
+  "run_id": "stage4-openwam-robotwin-adjust-bottle",
+  "model": {
+    "adapter": "openwam_robotwin",
+    "openwam_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/OpenWAM",
+    "checkpoint_dir": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Model/OpenWAM-Alpha-Sim-RoboTwin-Full",
+    "host": "127.0.0.1",
+    "port": 8924,
+    "request_timeout_s": 300
+  },
+  "benchmark": {
+    "adapter": "robotwin_openwam",
+    "robotwin_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/RoboTwin-openwam",
+    "task_name": "adjust_bottle",
+    "task_config": "demo_clean",
+    "instruction_type": "unseen",
+    "trial_index": 0,
+    "max_seed_candidates": 100
+  },
+  "profile": {
+    "chunk_mode": "adapter_owned",
+    "execution_horizon_steps": 1
+  },
+  "episodes": [
+    {
+      "episode_id": "adjust-bottle-clean-episode0",
+      "seed": 0,
+      "budgets": {
+        "env_steps": 400,
+        "model_calls": 400
+      }
+    }
+  ]
+}

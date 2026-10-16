@@ -1,0 +1,21 @@
+{
+  "run_id": "pi05-vlabench-select-fruit-interface-profile",
+  "model": {
+    "adapter": "openpi_vlabench",
+    "openpi_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/openpi-vlabench",
+    "checkpoint_dir": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Model/pi05_vlabench_primitive10",
+    "host": "127.0.0.1",
+    "port": 8942,
+    "request_timeout_s": 300
+  },
+  "benchmark": {
+    "adapter": "vlabench_openpi",
+    "vlabench_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/VLABench",
+    "task_name": "select_fruit",
+    "track": "track_1_in_distribution",
+    "trial_index": 0
+  },
+  "profile": {"chunk_mode": "adapter_owned", "execution_horizon_steps": 1},
+  "episodes": [{"episode_id": "select-fruit-episode000", "seed": 7,
+                "budgets": {"env_steps": 300, "model_calls": 300}}]
+}

@@ -1,0 +1,21 @@
+{
+  "run_id": "stage4-openwam-vlabench-select-fruit",
+  "model": {
+    "adapter": "openwam_vlabench",
+    "openwam_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/OpenWAM",
+    "checkpoint_dir": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Model/OpenWAM-Alpha-Sim-VLABench",
+    "host": "127.0.0.1",
+    "port": 8922,
+    "request_timeout_s": 300
+  },
+  "benchmark": {
+    "adapter": "vlabench",
+    "vlabench_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/VLABench",
+    "task_name": "select_fruit",
+    "track": "track_1_in_distribution",
+    "trial_index": 0
+  },
+  "profile": {"chunk_mode": "adapter_owned", "execution_horizon_steps": 1},
+  "episodes": [{"episode_id": "select-fruit-track1-episode0", "seed": 0,
+    "budgets": {"env_steps": 300, "model_calls": 300}}]
+}

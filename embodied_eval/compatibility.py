@@ -1,9 +1,9 @@
 """Static compatibility evidence and checks of required dynamic model inputs."""
 from dataclasses import dataclass
-from . import contracts as c
+from . import _legacy_contracts as c
 from .codec import decode
 from .errors import ContractError, Issue
-from .validation import require, validate_space, validate_observation, shape_matches
+from ._legacy_validation import require, validate_space, validate_observation, shape_matches
 
 
 @dataclass(frozen=True)
@@ -235,7 +235,7 @@ def check_compatibility(space: c.SpaceSpec, cap: c.CapabilitySpec, profile: c.Ad
 def validate_model_input(model_input: c.ModelInput, space: c.SpaceSpec, cap: c.CapabilitySpec, profile: c.AdaptationProfile):
     decode(c.ModelInput, model_input)
     check_compatibility(space, cap, profile).require_compatible()
-    from .validation import same_episode
+    from ._legacy_validation import same_episode
     same_episode(model_input.context, model_input.observation_view.context)
     obs = validate_observation(model_input.observation_view, space)
     view = profile.view_policy

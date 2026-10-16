@@ -6,15 +6,15 @@ import tempfile
 from types import SimpleNamespace
 import unittest
 
-from embodied_eval import contracts as c
+from embodied_eval import _legacy_contracts as c
 from embodied_eval.codec import to_data, decode
 from embodied_eval.compatibility import check_compatibility
-from embodied_eval.config import RunConfig, ModelConfig, BenchmarkConfig, EpisodeConfig, ProfileConfig, validate_config
+from tests.legacy_support.config import RunConfig, ModelConfig, BenchmarkConfig, EpisodeConfig, ProfileConfig, validate_config
 from embodied_eval.errors import AdapterError, ContractError
-from embodied_eval.validation import validate_observation, validate_prediction, validate_step_result, validate_task
+from embodied_eval._legacy_validation import validate_observation, validate_prediction, validate_step_result, validate_task
 from embodied_eval.visibility import build_model_input
 from embodied_eval.artifacts import ArtifactWriter
-from embodied_eval.runner import run_episode
+from tests.legacy_support.runner import run_episode
 
 try:
     import numpy as np
@@ -292,7 +292,7 @@ class RobotwinPairTests(unittest.TestCase):
         self.assertEqual(self.model.cache.rows, [])
 
     def test_registry_provenance_not_verified_before_preflight(self):
-        from embodied_eval.config import run_provenance
+        from tests.legacy_support.config import run_provenance
         info = run_provenance(self.cfg)
         self.assertFalse(info["server_identity_verified"])
         self.assertFalse(info["asset_checks_completed"])

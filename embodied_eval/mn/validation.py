@@ -1,9 +1,9 @@
 """Shared semantic checks; no model or simulator names belong here."""
 from dataclasses import fields
 import math
-from .. import contracts as leaf
+from .. import _legacy_contracts as leaf
 from ..codec import decode
-from ..validation import (require, validate_tensor, validate_space as validate_leaf_space,
+from .._legacy_validation import (require, validate_tensor, validate_space as validate_leaf_space,
                           quaternion, schema_value, target_table, validate_gripper, shape_matches)
 from . import contracts as c
 

@@ -1,0 +1,24 @@
+{
+  "contract_version": "0.3",
+  "run_id": "synthetic-cache-run",
+  "model": {
+    "adapter": "synthetic_policy_a",
+    "options": {
+      "cache_rows": 3
+    }
+  },
+  "benchmark": {
+    "adapter": "synthetic_simulator_a",
+    "options": {}
+  },
+  "episodes": [
+    {
+      "episode_id": "episode-0",
+      "seed": 0,
+      "budgets": {
+        "env_steps": 6,
+        "model_calls": 6
+      }
+    }
+  ]
+}

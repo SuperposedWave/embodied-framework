@@ -41,7 +41,7 @@ def main():
     checkpoint()
     try:
         import numpy as np
-        from embodied_eval import contracts as leaf
+        from embodied_eval import _legacy_contracts as leaf
         from embodied_eval.mn import contracts as c
         from embodied_eval.mn.binding import resolve
         from embodied_eval.mn.native_models import NativeActionModel

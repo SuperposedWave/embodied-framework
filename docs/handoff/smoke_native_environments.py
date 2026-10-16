@@ -15,8 +15,8 @@ if str(ROOT) not in sys.path:
 def child(pair):
     from embodied_eval.config import load_config
     from embodied_eval.codec import to_data
-    from embodied_eval.validation import validate_observation
-    from embodied_eval import contracts as c
+    from embodied_eval._legacy_validation import validate_observation
+    from embodied_eval import _legacy_contracts as c
     config = load_config(ROOT / "examples" / {
         "openwam_vlabench": "stage4-openwam-vlabench-select-fruit.json",
         "openpi_vlabench": "stage4-pi05-vlabench-select-fruit.json",

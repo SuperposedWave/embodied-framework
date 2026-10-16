@@ -5,9 +5,9 @@ are touched by factories during run, never by describe or structural preflight.
 """
 from dataclasses import dataclass, replace
 from pathlib import Path
-from .. import contracts as leaf
+from .. import _legacy_contracts as leaf
 from ..codec import decode
-from ..validation import require
+from .._legacy_validation import require
 from ..adapters import openwam_libero_spec as ow, openpi_libero_spec as pi
 from ..adapters import vlabench_spec as vla, openpi_vlabench_spec as pivla, robotwin_spec as rw
 from . import contracts as c

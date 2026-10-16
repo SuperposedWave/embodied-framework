@@ -1,6 +1,6 @@
 """Explicit physical transforms; never apply controller scaling here."""
 import math
-from .contracts import Pose, Transform
+from ._legacy_contracts import Pose, Transform
 from .errors import ContractError
 
 
@@ -141,7 +141,7 @@ def convert_quantity(value: float, source_unit: str, target_unit: str) -> float:
 
 def frame_transform(space, observation, *, source_frame: str, target_frame: str, max_age_s: float | None = None):
     """Resolve T_target_source from the declared frame graph and current samples."""
-    from .validation import validate_space, validate_observation
+    from ._legacy_validation import validate_space, validate_observation
     validate_space(space)
     validate_observation(observation, space)
     if source_frame not in space.frames or target_frame not in space.frames:

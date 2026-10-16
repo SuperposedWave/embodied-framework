@@ -4,8 +4,8 @@ from pathlib import Path
 from typing import Literal
 import re
 from ..codec import loads, decode, to_data
-from ..contracts import Budgets
-from ..validation import require
+from .._legacy_contracts import Budgets
+from .._legacy_validation import require
 from .contracts import BindingConfig
 
 

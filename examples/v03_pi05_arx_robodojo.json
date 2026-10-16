@@ -1,0 +1,36 @@
+{
+  "run_id": "mn-extension-pi05-arx-robodojo",
+  "model": {
+    "adapter": "openpi",
+    "options": {
+      "io_profile": "arx_joint14",
+      "repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/xpolicy-reference-mn",
+      "checkpoint_dir": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Model/pi05_arx_x5_seed0_step59999",
+      "port": 8942
+    }
+  },
+  "benchmark": {
+    "adapter": "robodojo",
+    "options": {
+      "repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/RoboDojo",
+      "protocol": "stack-bowls-arx-x5-native-v1",
+      "layout_index": 0,
+      "device": "cuda:3"
+    }
+  },
+  "episodes": [
+    {
+      "episode_id": "ep-0",
+      "seed": 0,
+      "budgets": {
+        "env_steps": 800,
+        "sim_time_s": null,
+        "model_calls": 800,
+        "tool_calls": null,
+        "wall_time_s": 3600
+      }
+    }
+  ],
+  "control_mode": "dual-joint-raw-gripper@1",
+  "contract_version": "0.3"
+}

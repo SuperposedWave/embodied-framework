@@ -3,10 +3,10 @@ from dataclasses import replace
 from pathlib import Path
 import unittest
 
-from embodied_eval import contracts as c
+from embodied_eval import _legacy_contracts as c
 from embodied_eval.adapters.openwam_libero_spec import EXTENSION, capability, profile, space
 from embodied_eval.compatibility import check_compatibility
-from embodied_eval.config import BenchmarkConfig, EpisodeConfig, ModelConfig, ProfileConfig, RunConfig, run_provenance, validate_config
+from tests.legacy_support.config import BenchmarkConfig, EpisodeConfig, ModelConfig, ProfileConfig, RunConfig, run_provenance, validate_config
 from embodied_eval.errors import ContractError
 from embodied_eval.visibility import build_model_input
 

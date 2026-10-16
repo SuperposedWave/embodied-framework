@@ -1,25 +1,27 @@
 {
   "run_id": "stage4-lingbot-robotwin-adjust-bottle",
   "model": {
-    "adapter": "lingbot_robotwin",
-    "lingbot_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/lingbot-vla-v2",
-    "checkpoint_dir": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Model/lingbot-vla-v2-6b-robotwin",
-    "host": "127.0.0.1",
-    "port": 8925,
-    "request_timeout_s": 300
+    "adapter": "lingbot_vla",
+    "options": {
+      "io_profile": "joint14",
+      "repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/lingbot-vla-v2",
+      "checkpoint_dir": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Model/lingbot-vla-v2-6b-robotwin",
+      "host": "127.0.0.1",
+      "port": 8925,
+      "request_timeout_s": 300
+    }
   },
   "benchmark": {
-    "adapter": "robotwin_lingbot",
-    "robotwin_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/RoboTwin-lingbot",
-    "task_name": "adjust_bottle",
-    "task_config": "demo_clean",
-    "instruction_type": "unseen",
-    "trial_index": 0,
-    "max_seed_candidates": 100
-  },
-  "profile": {
-    "chunk_mode": "adapter_owned",
-    "execution_horizon_steps": 1
+    "adapter": "robotwin",
+    "options": {
+      "repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/RoboTwin-lingbot",
+      "protocol": "seeded-instruction",
+      "task_name": "adjust_bottle",
+      "task_config": "demo_clean",
+      "instruction_type": "unseen",
+      "max_seed_candidates": 100,
+      "trial_index": 0
+    }
   },
   "episodes": [
     {
@@ -27,8 +29,13 @@
       "seed": 0,
       "budgets": {
         "env_steps": 400,
-        "model_calls": 400
+        "sim_time_s": null,
+        "model_calls": 400,
+        "tool_calls": null,
+        "wall_time_s": null
       }
     }
-  ]
+  ],
+  "control_mode": null,
+  "contract_version": "0.3"
 }

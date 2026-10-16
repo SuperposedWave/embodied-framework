@@ -13,7 +13,7 @@ from unittest.mock import patch
 
 import numpy as np
 
-from embodied_eval import contracts as leaf
+from embodied_eval import _legacy_contracts as leaf
 from embodied_eval.errors import AdapterError, ContractError
 from embodied_eval.geometry import quaternion_to_rot6d, rot6d_to_quaternion, normalize_quaternion
 from embodied_eval.config import load_config
@@ -23,7 +23,7 @@ from embodied_eval.mn.native_catalog import capability, space, GRIPPER_PROTOCOL
 from embodied_eval.mn.native_models import NativeActionModel
 from embodied_eval.mn.native_benchmarks import NativeSimulator
 from embodied_eval.mn.openwam_dual_pose import PROFILE, encode_state, decode_action
-from embodied_eval.mn.preflight import check
+from embodied_eval.v03.preflight import check
 from embodied_eval.mn.validation import validate_prediction
 
 

@@ -1,5 +1,5 @@
 """Synthetic contract fixtures: no real model, simulator or benchmark claims."""
-from .. import contracts as c
+from .. import _legacy_contracts as c
 
 IDENTITY = c.Transform(translation_m=(0., 0., 0.), quaternion_xyzw=(0., 0., 0., 1.))
 

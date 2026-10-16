@@ -39,7 +39,7 @@ def digest(path):
 
 def configurations():
     """Examples of explicit data wiring, never a runtime compatibility list."""
-    from embodied_eval import contracts as leaf
+    from embodied_eval import _legacy_contracts as leaf
     from embodied_eval.mn import contracts as c
     from embodied_eval.mn.config import RunConfig, AdapterConfig, EpisodeConfig
     from embodied_eval.mn.registry import default_registry

@@ -6,8 +6,8 @@ public-to-wire packing, native chunk cache, session boundaries and action decode
 from collections import deque
 from uuid import uuid4
 import numpy as np
-from .. import contracts as leaf
-from ..validation import require
+from .. import _legacy_contracts as leaf
+from .._legacy_validation import require
 from ..adapters.native_common import native_module, finite_array
 from ..adapters.native_policy_transport import NativePolicyPeer
 from . import contracts as c

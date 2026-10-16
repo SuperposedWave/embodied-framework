@@ -4,9 +4,9 @@ import copy
 import time
 from ..artifacts import ArtifactWriter
 from ..codec import to_data, decode
-from ..contracts import Budgets, Metric
+from .._legacy_contracts import Budgets, Metric
 from ..errors import ContractError
-from ..validation import require
+from .._legacy_validation import require
 from ..runner import RunOutcome, _error
 from . import contracts as c
 from .binding import resolve, model_input

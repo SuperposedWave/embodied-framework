@@ -5,9 +5,9 @@ do not imply that missing weights/runtime assets have been installed or tested.
 """
 from dataclasses import dataclass
 from pathlib import Path
-from .. import contracts as leaf
+from .. import _legacy_contracts as leaf
 from ..codec import decode
-from ..validation import require
+from .._legacy_validation import require
 from . import contracts as c
 from .registry import ModelRegistration, BenchmarkRegistration
 from .assets_common import _revision, _hf_objects

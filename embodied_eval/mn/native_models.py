@@ -6,9 +6,9 @@ environment object is accepted. Native model-side pure helpers are source-pinned
 from collections import deque
 import math
 import numpy as np
-from .. import contracts as leaf
+from .. import _legacy_contracts as leaf
 from ..errors import AdapterError
-from ..validation import require
+from .._legacy_validation import require
 from ..adapters.native_common import finite_array, native_module
 from ..adapters.native_policy_transport import NativePolicyPeer
 from . import contracts as c

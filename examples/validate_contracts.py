@@ -2,10 +2,10 @@
 from dataclasses import replace
 import json
 from pathlib import Path
-from embodied_eval import contracts as c
+from embodied_eval import _legacy_contracts as c
 from embodied_eval.codec import dumps, loads, to_data
 from embodied_eval.compatibility import check_compatibility, validate_model_input
-from embodied_eval.validation import (
+from embodied_eval._legacy_validation import (
     validate_space, validate_task, validate_observation, validate_prediction,
     validate_step_result, validate_episode_result,
 )

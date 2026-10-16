@@ -4,7 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
-from ..validation import require
+from .._legacy_validation import require
 from .assets_common import _revision, _file, _hf_objects, _sha
 from .native_catalog import model_options, benchmark_options, PROFILES
 

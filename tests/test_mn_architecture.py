@@ -8,7 +8,7 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
-from embodied_eval import contracts as leaf
+from embodied_eval import _legacy_contracts as leaf
 from embodied_eval.codec import decode, dumps, to_data
 from embodied_eval.errors import ContractError
 from embodied_eval.mn import contracts as c

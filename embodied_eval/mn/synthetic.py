@@ -1,8 +1,8 @@
 """Small independent policy/simulator plugins, explicitly synthetic evidence."""
 from dataclasses import dataclass, replace
-from .. import contracts as leaf
+from .. import _legacy_contracts as leaf
 from ..codec import decode
-from ..validation import require
+from .._legacy_validation import require
 from . import contracts as c
 from .registry import ModelRegistration, BenchmarkRegistration
 

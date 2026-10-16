@@ -3,7 +3,7 @@ from dataclasses import dataclass, replace
 import copy
 from ..codec import decode
 from ..errors import Issue
-from ..validation import require, shape_matches, target_table
+from .._legacy_validation import require, shape_matches, target_table
 from . import contracts as c
 
 

@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT))
 
 def child(args):
     import numpy as np
-    from embodied_eval import contracts as leaf
+    from embodied_eval import _legacy_contracts as leaf
     from embodied_eval.codec import to_data
     from embodied_eval.mn import contracts as c
     from embodied_eval.mn.registry import default_registry

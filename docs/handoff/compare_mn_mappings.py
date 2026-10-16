@@ -47,7 +47,7 @@ def source_nodes(path, predicate, namespace):
 
 def perform(case,configs):
     import numpy as np
-    from embodied_eval import contracts as old
+    from embodied_eval import _legacy_contracts as old
     from embodied_eval.codec import decode
     from embodied_eval.config import load_config
     from embodied_eval.mn import contracts as c

@@ -6,10 +6,10 @@ import tempfile
 import numpy as np
 import yaml
 
-from .. import contracts as c
+from .. import _legacy_contracts as c
 from ..codec import decode
 from ..errors import AdapterError
-from ..validation import same_episode
+from .._legacy_validation import same_episode
 from .openwam_libero_spec import CONTROLLER, EXTENSION, space
 
 
@@ -49,7 +49,7 @@ class LiberoSpatialBenchmark:
 
     def enumerate_tasks(self, selection):
         from libero.libero import benchmark
-        from ..config import EpisodeConfig
+        from .runtime_options import EpisodeConfig
         self.suite = benchmark.get_benchmark_dict()["libero_spatial"]()
         self.native_task = self.suite.get_task(0)
         self.init_states = self._load_init_states()

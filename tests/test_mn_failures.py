@@ -3,7 +3,7 @@ from dataclasses import replace
 from pathlib import Path
 import tempfile
 import unittest
-from embodied_eval import contracts as leaf
+from embodied_eval import _legacy_contracts as leaf
 from embodied_eval.errors import AdapterError,ContractError
 from embodied_eval.mn import contracts as c
 from embodied_eval.mn.registry import AdapterRegistry

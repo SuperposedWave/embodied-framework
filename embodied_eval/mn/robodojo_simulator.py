@@ -9,10 +9,10 @@ from copy import deepcopy
 from dataclasses import dataclass, replace
 import hashlib
 from pathlib import Path
-from .. import contracts as leaf
+from .. import _legacy_contracts as leaf
 from ..codec import decode
 from ..errors import ContractError
-from ..validation import require
+from .._legacy_validation import require
 from . import contracts as c
 from .registry import BenchmarkRegistration
 from .assets_common import _revision, _hf_objects

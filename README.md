@@ -1,5 +1,30 @@
 # EmbodiedEval
 
+## 当前入口：0.3公共空间（2026-10-16）
+
+用户已批准全部迁移到0.3。正常CLI和顶层Python配置、契约、接口与校验已切到0.3：
+环境Adapter先把原生相机／状态变成统一公共字段，模型Adapter只取公共字段并完成自己的私有编码。
+普通配置不再填写模型与环境逐对的 `binding`；匹配按必要输入、单位、坐标、工具参考点和完整动作目标自动检查。
+模型家族5个、具名输入输出配置11份、仿真家族5个、环境协议7份，结构声明不等于资产或真实验证。
+
+```sh
+.venv/bin/python -m embodied_eval check --config examples/mn_synthetic_run.json
+.venv/bin/python -m embodied_eval run --config examples/mn_synthetic_run.json --output outputs/my-v03-run
+.venv/bin/python -m embodied_eval migrate --config /path/to/old.json --output outputs/migrated-v03.json
+```
+
+详见[0.3契约](docs/contract-v0.3.md)和[接入指引](docs/adapter-onboarding.md)。
+当前实现位于 `embodied_eval/v03/`，顶层 `contracts/interfaces/config/validation/runner` 为当前入口；
+`mn/` 与 `adapters/` 中仍被复用的原生组件保留，但不再作为旧配置自动回退入口。
+旧mock运行配置移入 `tests/fixtures/legacy-configs/`；原443项覆盖保留，另增52项专项，
+首轮完整回归495项、零跳过，新版五组CLI为0/0/0/1/2。
+它们包含单步、缓存、变时长、评分错误和结构拒绝，不冒充已退役工具调用的同一语义。
+
+`pre-v03-20261016` 标签是迁移前版本；分支 `feat/public-v03` 承载本轮。
+历史报告、输出、0.1／0.2契约及Mac路径不回写。
+下方按日期保留的0.1／0.2材料是历史说明，不是当前使用指南；依赖旧接口的历史诊断脚本请在该标签的独立检出目录运行。
+阶段4未因此正式接受，契约未冻结；DreamZero双H10080GB真实验证仍后置，LingBot-VA暂缓。
+
 ## 本地版本管理
 
 2026-10-15 起，Git 仓库设在本目录（不是包含上游源码和运行环境的父目录）。

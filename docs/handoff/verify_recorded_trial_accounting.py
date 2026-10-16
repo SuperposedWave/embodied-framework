@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT))
 
 
 def analyze(events):
-    from embodied_eval import contracts as leaf
+    from embodied_eval import _legacy_contracts as leaf
     from embodied_eval.codec import decode
     resets = predictions = replies = env_steps = physics_steps = 0
     sim_time = 0.0

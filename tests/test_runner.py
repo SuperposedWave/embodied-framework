@@ -7,11 +7,11 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from embodied_eval import contracts as c
+from embodied_eval import _legacy_contracts as c
 from embodied_eval.codec import decode, to_data
-from embodied_eval.config import RunConfig, ModelConfig, BenchmarkConfig, ProfileConfig, EpisodeConfig
+from tests.legacy_support.config import RunConfig, ModelConfig, BenchmarkConfig, ProfileConfig, EpisodeConfig
 from embodied_eval.errors import ContractError, AdapterError
-from embodied_eval.runner import run
+from tests.legacy_support.runner import run
 
 
 class RunnerTests(unittest.TestCase):
@@ -25,7 +25,7 @@ class RunnerTests(unittest.TestCase):
             return result
         config = replace(self.config, model=ModelConfig(scenario="stop"),
             episodes=(replace(self.config.episodes[0], budgets=c.Budgets(wall_time_s=.01)),))
-        with patch("embodied_eval.runner.time.monotonic", side_effect=lambda: clock[0]), patch.object(MockModel, "predict", late_predict):
+        with patch("tests.legacy_support.runner.time.monotonic", side_effect=lambda: clock[0]), patch.object(MockModel, "predict", late_predict):
             outcome = self.execute(config)
         self.assertEqual(outcome.results[0].termination_reason, "budget_exhausted")
         self.assertEqual(outcome.results[0].execution_statistics.env_steps, 0)
@@ -385,8 +385,9 @@ class CliTests(unittest.TestCase):
     def test_cli_exit_codes_and_existing_directory(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            base = RunConfig(run_id="cli-test", model=ModelConfig(scenario="stop"),
-                             episodes=(EpisodeConfig(episode_id="ep-0"),))
+            from embodied_eval.config import RunConfig as CurrentConfig, AdapterConfig, EpisodeConfig as CurrentEpisode
+            base = CurrentConfig(run_id="cli-test", model=AdapterConfig(adapter="synthetic_policy_a"),
+                benchmark=AdapterConfig(adapter="synthetic_simulator_a"), episodes=(CurrentEpisode(episode_id="ep-0"),))
             config_path = root/"config.json"
             def invoke(config, target):
                 config_path.write_text(json.dumps(to_data(config)))
@@ -396,9 +397,9 @@ class CliTests(unittest.TestCase):
             self.assertEqual(ok.returncode, 0, ok.stderr)
             existing = invoke(base, root/"success")
             self.assertEqual(existing.returncode, 2)
-            error = invoke(replace(base, benchmark=BenchmarkConfig(fault="score_error")), root/"error")
+            error = invoke(replace(base, benchmark=AdapterConfig(adapter="synthetic_simulator_a", options={"fault": "score_error"})), root/"error")
             self.assertEqual(error.returncode, 1, error.stderr)
-            rejected = invoke(replace(base, profile=ProfileConfig(chunk_mode="adapter_owned")), root/"rejected")
+            rejected = invoke(replace(base, control_mode="missing-mode"), root/"rejected")
             self.assertEqual(rejected.returncode, 2)
             self.assertFalse((root/"rejected").exists())
 

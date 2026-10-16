@@ -3,7 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
-from ..validation import require
+from .._legacy_validation import require
 
 
 def _sha(path):

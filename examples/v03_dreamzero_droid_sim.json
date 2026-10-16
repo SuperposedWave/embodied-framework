@@ -1,0 +1,38 @@
+{
+  "run_id": "mn-extension-dreamzero-droid-sim",
+  "model": {
+    "adapter": "dreamzero",
+    "options": {
+      "io_profile": "droid-joint8-causal",
+      "repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/dreamzero-mn",
+      "codec_repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/openpi",
+      "checkpoint_dir": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Model/DreamZero-DROID",
+      "port": 8941
+    }
+  },
+  "benchmark": {
+    "adapter": "droid_sim",
+    "options": {
+      "repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/sim-evals-mn",
+      "assets_dir": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Model/DROID-sim-environments",
+      "protocol": "droid-three-scenes-native-v1",
+      "scene": 1,
+      "device": "cuda:3"
+    }
+  },
+  "episodes": [
+    {
+      "episode_id": "ep-0",
+      "seed": 0,
+      "budgets": {
+        "env_steps": 600,
+        "sim_time_s": null,
+        "model_calls": 800,
+        "tool_calls": null,
+        "wall_time_s": 3600
+      }
+    }
+  ],
+  "control_mode": "joint7-binary-gripper@1",
+  "contract_version": "0.3"
+}

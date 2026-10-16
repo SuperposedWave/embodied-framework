@@ -1,6 +1,6 @@
 """Shared synthetic fixtures and contract example helpers."""
 from dataclasses import replace
-from embodied_eval import contracts as c
+from embodied_eval import _legacy_contracts as c
 from embodied_eval.adapters.mock_spec import make_case, IDENTITY
 
 

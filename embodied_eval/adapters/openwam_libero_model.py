@@ -5,7 +5,7 @@ import sys
 
 import numpy as np
 
-from .. import contracts as c
+from .. import _legacy_contracts as c
 from ..errors import AdapterError
 from .openwam_libero_spec import ACTION, CONTROLLER, EXTENSION, capability
 

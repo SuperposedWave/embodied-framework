@@ -143,7 +143,7 @@ def native_import(component):
 
 def openwam_request(record, input_episode=None):
     import numpy as np
-    from embodied_eval import contracts as leaf
+    from embodied_eval import _legacy_contracts as leaf
     from embodied_eval.codec import to_data
     from embodied_eval.mn import contracts as c
     from embodied_eval.mn.binding import resolve
@@ -282,7 +282,7 @@ def droid_reset(record, args):
     from embodied_eval.mn.registry import default_registry
     from embodied_eval.mn import contracts as c
     from embodied_eval.mn.validation import validate_observation, validate_step
-    from embodied_eval import contracts as leaf
+    from embodied_eval import _legacy_contracts as leaf
     from embodied_eval.codec import to_data
     from dataclasses import replace
     from prepare_mn_extension import configurations
@@ -333,7 +333,7 @@ def droid_reset(record, args):
 def cosmos_request(record, args):
     import numpy as np
     from dataclasses import replace
-    from embodied_eval import contracts as leaf
+    from embodied_eval import _legacy_contracts as leaf
     from embodied_eval.codec import to_data
     from embodied_eval.mn import contracts as c
     from embodied_eval.mn.binding import resolve

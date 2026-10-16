@@ -21,7 +21,7 @@ def main():
     args = parser.parse_args()
     if args.output.exists():
         raise ValueError("immutable_output_required")
-    from embodied_eval import contracts as c
+    from embodied_eval import _legacy_contracts as c
     from embodied_eval.codec import decode
     from embodied_eval.config import load_config
     from embodied_eval.stage4_pairs import verify

@@ -1,0 +1,35 @@
+{
+  "run_id": "mn-extension-openwam-arx-robodojo",
+  "model": {
+    "adapter": "openwam",
+    "options": {
+      "io_profile": "eef20_arx_absolute",
+      "repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/xpolicy-reference-mn",
+      "checkpoint_dir": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Model/OpenWAM-Alpha-Sim-RoboDojo"
+    }
+  },
+  "benchmark": {
+    "adapter": "robodojo",
+    "options": {
+      "repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/RoboDojo",
+      "protocol": "stack-bowls-arx-x5-native-v1",
+      "layout_index": 0,
+      "device": "cuda:3"
+    }
+  },
+  "episodes": [
+    {
+      "episode_id": "ep-0",
+      "seed": 0,
+      "budgets": {
+        "env_steps": 800,
+        "sim_time_s": null,
+        "model_calls": 800,
+        "tool_calls": null,
+        "wall_time_s": 3600
+      }
+    }
+  ],
+  "control_mode": "dual-pose-absolute@1",
+  "contract_version": "0.3"
+}

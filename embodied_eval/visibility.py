@@ -1,9 +1,9 @@
 """Allowlisted public snapshots. Never pass TaskSpec or StepResult to a model."""
 from copy import deepcopy
 from dataclasses import replace
-from . import contracts as c
+from . import _legacy_contracts as c
 from .codec import to_data
-from .validation import require, same_episode
+from ._legacy_validation import require, same_episode
 
 
 def public_task(task, policy):

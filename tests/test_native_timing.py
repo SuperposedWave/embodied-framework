@@ -4,13 +4,13 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from embodied_eval import contracts as c
+from embodied_eval import _legacy_contracts as c
 from embodied_eval.artifacts import ArtifactWriter
 from embodied_eval.codec import decode, dumps, loads, to_data
 from embodied_eval.compatibility import check_compatibility
 from embodied_eval.errors import AdapterError, ContractError
-from embodied_eval.runner import run_episode
-from embodied_eval.validation import validate_space, validate_task, validate_prediction, validate_step_result
+from tests.legacy_support.runner import run_episode
+from embodied_eval._legacy_validation import validate_space, validate_task, validate_prediction, validate_step_result
 from embodied_eval.visibility import build_model_input
 from examples.contract_sample import make_case, prediction, sequence
 

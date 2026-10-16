@@ -1,10 +1,11 @@
-"""python -m embodied_eval run --config ... --output ..."""
+"""Strict 0.3 run/check entry and explicit, offline legacy migration."""
 import argparse
 from datetime import datetime, timezone
+import json
 from pathlib import Path
 import sys
 from uuid import uuid4
-
+from .codec import loads, to_data
 from .config import load_config
 from .errors import ContractError
 from .runner import run
@@ -13,25 +14,35 @@ from .runner import run
 def main(argv=None):
     parser = argparse.ArgumentParser(prog="embodied_eval")
     commands = parser.add_subparsers(dest="command", required=True)
-    command = commands.add_parser("run", help="Run a registered model/benchmark pair.")
+    command = commands.add_parser("run", help="Run independent 0.3 adapters.")
     command.add_argument("--config", type=Path, required=True)
     command.add_argument("--output", type=Path)
-    preflight = commands.add_parser("check", help="GPU-free contract 0.2 structural and asset preflight.")
+    preflight = commands.add_parser("check", help="GPU-free 0.3 semantic and asset preflight.")
     preflight.add_argument("--config", type=Path, required=True)
-    preflight.add_argument("--verify-assets", action="store_true", help="Hash pinned local assets; no downloads or model inference.")
+    preflight.add_argument("--verify-assets", action="store_true", help="Hash local pinned assets; no downloads or inference.")
+    migration = commands.add_parser("migrate", help="Explicit offline legacy configuration conversion; never overwrites.")
+    migration.add_argument("--config", type=Path, required=True)
+    migration.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
+    if args.command == "migrate":
+        try:
+            from .v03.migration import migrate
+            config, receipt = migrate(loads(object, args.config.read_text(encoding="utf-8")))
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            with args.output.open("x", encoding="utf-8") as handle:
+                handle.write(json.dumps(to_data(config), ensure_ascii=False, allow_nan=False, indent=2) + "\n")
+            print(json.dumps({"config": str(args.output), "receipt": receipt}, ensure_ascii=False))
+            return 0
+        except (ValueError, OSError) as error:
+            print(f"Migration rejected: {error}", file=sys.stderr)
+            return 2
     try:
         config = load_config(args.config)
     except (ValueError, OSError) as error:
         print(f"Configuration rejected: {error}", file=sys.stderr)
         return 2
     if args.command == "check":
-        import json
-        from .mn.config import RunConfig as IndependentConfig
-        from .mn.preflight import check
-        if not isinstance(config, IndependentConfig):
-            print("check requires an explicit contract_version=0.2 configuration", file=sys.stderr)
-            return 2
+        from .v03.preflight import check
         try:
             result = check(config, verify_assets=args.verify_assets)
             print(json.dumps(result, ensure_ascii=False, allow_nan=False, indent=2))

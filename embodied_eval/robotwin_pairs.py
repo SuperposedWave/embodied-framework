@@ -1,8 +1,8 @@
 """Pinned RoboTwin pair registration and fail-closed preflight, not acceptance."""
 from pathlib import Path
 
-from . import contracts as c
-from .validation import require
+from . import _legacy_contracts as c
+from ._legacy_validation import require
 from .adapters import robotwin_spec as spec
 
 PAIRS = {("openwam_robotwin", "robotwin_openwam"), ("lingbot_robotwin", "robotwin_lingbot")}

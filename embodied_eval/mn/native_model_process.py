@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 import subprocess
 from ..errors import AdapterError
-from ..validation import require
+from .._legacy_validation import require
 from .native_catalog import model_options
 
 METHODS = ("begin_episode", "observe", "predict", "end_episode", "diagnostics", "close")

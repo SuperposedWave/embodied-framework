@@ -58,7 +58,7 @@ def main():
     import numpy as np
     import torch
     import torch.nn.functional as F
-    from embodied_eval import contracts as leaf
+    from embodied_eval import _legacy_contracts as leaf
     from embodied_eval.mn import contracts as c
     from embodied_eval.mn.additional_catalog import POLICIES, OPENPI_REVISION, ROBOLAB_REVISION
     from embodied_eval.mn.additional_models import JointPolicyModel

@@ -76,7 +76,7 @@ def compare_snapshot(raw, public, benchmark):
 def child(args):
     import numpy as np
     from dataclasses import replace
-    from embodied_eval import contracts as leaf
+    from embodied_eval import _legacy_contracts as leaf
     from embodied_eval.mn import contracts as c
     from embodied_eval.codec import decode, to_data
     from embodied_eval.mn.validation import validate_observation, validate_step

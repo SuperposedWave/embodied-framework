@@ -8,10 +8,10 @@ from pathlib import Path
 
 import numpy as np
 
-from .. import contracts as c
+from .. import _legacy_contracts as c
 from ..codec import decode
 from ..errors import AdapterError
-from ..validation import same_episode
+from .._legacy_validation import same_episode
 from .native_common import check_tick_budget, finite_array, native_module
 from . import vlabench_spec as spec
 
@@ -61,7 +61,7 @@ class VLABenchBenchmark:
         return self.space
 
     def enumerate_tasks(self, selection):
-        from ..config import EpisodeConfig
+        from .runtime_options import EpisodeConfig
         self._prepare()
         return [c.TaskSpec(task_id=f"{self.config.task_name}/episode_{self.config.trial_index:03d}",
             protocol_id=self.space.protocol_id, protocol_version=self.space.protocol_version,

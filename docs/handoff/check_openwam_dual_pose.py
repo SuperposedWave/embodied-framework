@@ -65,7 +65,7 @@ def pose_api(args):
 def run(args):
     import numpy as np
     import transforms3d as t3d
-    from embodied_eval import contracts as leaf
+    from embodied_eval import _legacy_contracts as leaf
     from embodied_eval.codec import decode, to_data
     from embodied_eval.config import load_config
     from embodied_eval.adapters.native_common import native_module

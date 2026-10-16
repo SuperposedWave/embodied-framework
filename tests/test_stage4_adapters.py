@@ -9,11 +9,11 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from embodied_eval import contracts as c
+from embodied_eval import _legacy_contracts as c
 from embodied_eval.adapters import openpi_libero_spec as pi, vlabench_spec as vla
 from embodied_eval.adapters import openpi_vlabench_spec as pivla
 from embodied_eval.compatibility import check_compatibility
-from embodied_eval.config import (BenchmarkConfig, EpisodeConfig, ModelConfig, ProfileConfig,
+from tests.legacy_support.config import (BenchmarkConfig, EpisodeConfig, ModelConfig, ProfileConfig,
                                   RunConfig, load_config, validate_config)
 from embodied_eval.errors import AdapterError, ContractError
 from embodied_eval.visibility import build_model_input

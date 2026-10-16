@@ -5,8 +5,8 @@ pair factory, policy server dispatcher or simulator dependency is imported.
 """
 from collections import deque
 import numpy as np
-from .. import contracts as leaf
-from ..validation import require
+from .. import _legacy_contracts as leaf
+from .._legacy_validation import require
 from ..adapters.native_common import native_module, finite_array
 from . import contracts as c
 from .native_catalog import model_options, capability

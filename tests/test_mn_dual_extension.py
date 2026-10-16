@@ -4,7 +4,7 @@ from dataclasses import replace
 from types import SimpleNamespace
 import unittest
 import numpy as np
-from embodied_eval import contracts as leaf
+from embodied_eval import _legacy_contracts as leaf
 from embodied_eval.errors import ContractError
 from embodied_eval.mn import contracts as c
 from embodied_eval.mn.binding import resolve, check_compatibility

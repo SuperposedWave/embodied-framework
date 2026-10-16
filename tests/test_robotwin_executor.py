@@ -2,7 +2,7 @@
 from types import SimpleNamespace
 import unittest
 
-from embodied_eval import contracts as c
+from embodied_eval import _legacy_contracts as c
 from embodied_eval.errors import AdapterError
 
 try:

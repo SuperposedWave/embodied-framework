@@ -43,8 +43,8 @@ def robotwin_conversion():
     """
     import numpy as np
     from types import SimpleNamespace
-    from embodied_eval import contracts as leaf
-    from embodied_eval.validation import require
+    from embodied_eval import _legacy_contracts as leaf
+    from embodied_eval._legacy_validation import require
     from embodied_eval.adapters.native_common import finite_array
     from embodied_eval.mn.native_catalog import DUAL_PROTOCOL
     source = ROOT / "embodied_eval/mn/native_benchmarks.py"

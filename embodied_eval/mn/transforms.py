@@ -1,8 +1,8 @@
 """Shared adapter utility for explicit physical frame conversion, not IK."""
 from dataclasses import replace
-from .. import contracts as leaf
+from .. import _legacy_contracts as leaf
 from ..geometry import compose, inverse, multiply_quaternions, rotate_vector
-from ..validation import require
+from .._legacy_validation import require
 
 
 def transform_between(space,view,source,target):

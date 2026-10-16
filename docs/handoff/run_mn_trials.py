@@ -1,4 +1,4 @@
-"""Supervised real single trials on independent 0.2 registrations.
+"""Supervised real single trials on independent 0.3 registrations.
 
 This diagnostic owns only its launched process groups. No GPU occupancy process
 is killed, no global proxy is changed, and no environment/secrets are serialized.
@@ -70,7 +70,7 @@ def stop_owned(process):
 
 def trial(path,target,server_gpu,simulator_gpu):
     from embodied_eval.config import load_config
-    from embodied_eval.mn.preflight import check
+    from embodied_eval.v03.preflight import check
     config=load_config(path)
     checked=check(config)
     if not checked["structurally_compatible"]:
@@ -134,7 +134,7 @@ def main():
     args=parser.parse_args()
     if args.child:
         from embodied_eval.config import load_config
-        from embodied_eval.mn.runner import run
+        from embodied_eval.v03.runner import run
         try:
             result=run(load_config(args.child),args.output)
             print("MN_TRIAL "+json.dumps({"exit_code":result.exit_code,"summary":str(args.output/"summary.json")}),flush=True)

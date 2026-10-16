@@ -4,11 +4,11 @@ from dataclasses import replace
 import math
 import time
 
-from .. import contracts as c
+from .. import _legacy_contracts as c
 from ..codec import decode
 from ..errors import AdapterError
 from ..geometry import apply_pose_delta, frame_transform, multiply_quaternions, rotate_vector, transform_pose
-from ..validation import require, same_episode
+from .._legacy_validation import require, same_episode
 from .mock_spec import make_case, IDENTITY
 
 
@@ -43,7 +43,7 @@ class MockBenchmark:
         return deepcopy(self.space)
 
     def enumerate_tasks(self, selection):
-        from ..config import EpisodeConfig
+        from .runtime_options import EpisodeConfig
         tasks = []
         self.seeds = {}
         for raw in selection["episodes"]:

@@ -45,7 +45,7 @@ def equal(a, b):
 
 def compare(case, configs, trials):
     from dataclasses import replace
-    from embodied_eval import contracts as old
+    from embodied_eval import _legacy_contracts as old
     from embodied_eval.codec import decode
     from embodied_eval.config import load_config
     from embodied_eval.mn import contracts as c

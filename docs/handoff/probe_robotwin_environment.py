@@ -14,9 +14,9 @@ CONFIGS = {"lingbot_robotwin": "stage4-lingbot-robotwin-adjust-bottle.json",
 def run(pair, output):
     from embodied_eval.config import load_config, make_adapters, make_profile
     from embodied_eval.codec import to_data
-    from embodied_eval import contracts as c
+    from embodied_eval import _legacy_contracts as c
     from embodied_eval.compatibility import check_compatibility
-    from embodied_eval.validation import validate_observation
+    from embodied_eval._legacy_validation import validate_observation
     from embodied_eval.visibility import build_model_input
     config = load_config(ROOT / "examples" / CONFIGS[pair])
     model, benchmark = make_adapters(config, output / "not-a-framework-run")

@@ -1,5 +1,4 @@
 {
-  "contract_version": "0.2",
   "run_id": "openwam-dual-wxyz-encoded-absolute-bounded",
   "model": {
     "adapter": "openwam",
@@ -24,31 +23,19 @@
       "trial_index": 0
     }
   },
-  "binding": {
-    "inputs": {
-      "head": "head_camera",
-      "left_wrist": "left_camera",
-      "right_wrist": "right_camera",
-      "instruction": "instruction",
-      "left_position": "left_eef_position",
-      "left_quaternion": "left_eef_quaternion",
-      "left_grip": "left_gripper_open_fraction",
-      "right_position": "right_eef_position",
-      "right_quaternion": "right_eef_quaternion",
-      "right_grip": "right_gripper_open_fraction"
-    },
-    "targets": {
-      "left_eef": "robot0/left_eef",
-      "left_grip": "robot0/left_grip",
-      "right_eef": "robot0/right_eef",
-      "right_grip": "robot0/right_grip"
-    },
-    "action_spec_ref": "dual-cartesian-native-gripper@1",
-    "frame_conversions": []
-  },
-  "episodes": [{
-    "episode_id": "adjust-bottle-clean-episode0",
-    "seed": 0,
-    "budgets": {"env_steps": 4, "model_calls": 4}
-  }]
+  "episodes": [
+    {
+      "episode_id": "adjust-bottle-clean-episode0",
+      "seed": 0,
+      "budgets": {
+        "env_steps": 4,
+        "sim_time_s": null,
+        "model_calls": 4,
+        "tool_calls": null,
+        "wall_time_s": null
+      }
+    }
+  ],
+  "control_mode": "dual-cartesian-native-gripper@1",
+  "contract_version": "0.3"
 }

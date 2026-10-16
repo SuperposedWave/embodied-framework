@@ -5,8 +5,8 @@ import json
 from pathlib import Path
 import subprocess
 
-from . import contracts as c
-from .validation import require
+from . import _legacy_contracts as c
+from ._legacy_validation import require
 from .adapters import openpi_libero_spec as pi, vlabench_spec as vla
 from .adapters import openpi_vlabench_spec as pivla
 from . import robotwin_pairs

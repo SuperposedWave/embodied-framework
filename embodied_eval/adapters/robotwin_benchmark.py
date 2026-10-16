@@ -14,10 +14,10 @@ import sys
 
 import numpy as np
 
-from .. import contracts as c
+from .. import _legacy_contracts as c
 from ..codec import decode
 from ..errors import AdapterError
-from ..validation import same_episode, schema_value
+from .._legacy_validation import same_episode, schema_value
 from .native_common import finite_array, native_module
 from .native_robotwin_executor import MeasuredRobotwinExecutor
 from . import robotwin_spec as spec
@@ -159,7 +159,7 @@ class RobotwinBenchmark:
         return self.space
 
     def enumerate_tasks(self, selection):
-        from ..config import EpisodeConfig
+        from .runtime_options import EpisodeConfig
         if self._task_created:
             raise AdapterError("benchmark", "single_trial_only", "rebuild adapter for a new trial")
         selected = [decode(EpisodeConfig, raw) for raw in selection["episodes"]]

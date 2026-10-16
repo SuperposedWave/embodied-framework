@@ -7,9 +7,9 @@ from dataclasses import dataclass, replace
 from pathlib import Path
 import sys
 from ..errors import AdapterError, ContractError
-from .. import contracts as leaf
+from .. import _legacy_contracts as leaf
 from ..codec import decode
-from ..validation import require
+from .._legacy_validation import require
 from ..adapters.native_common import native_module, finite_array
 from . import contracts as c
 from .assets_common import _revision, _hf_objects

@@ -134,7 +134,7 @@ def child(args):
             dist.barrier()
             record.update(real_model_request=True, passed=True)
         else:
-            from embodied_eval import contracts as leaf
+            from embodied_eval import _legacy_contracts as leaf
             from embodied_eval.codec import decode
             from embodied_eval.mn import contracts as c
             from embodied_eval.mn.additional_models import JointPolicyModel

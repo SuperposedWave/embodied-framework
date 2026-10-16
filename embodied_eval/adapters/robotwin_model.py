@@ -1,9 +1,9 @@
 """Registered RoboTwin policy boundary: public snapshots in, native row out."""
 import numpy as np
 
-from .. import contracts as c
+from .. import _legacy_contracts as c
 from ..errors import AdapterError
-from ..validation import same_episode
+from .._legacy_validation import same_episode
 from .native_common import finite_array, rgb_image
 from .native_robotwin_models import NativeEndpoint, OpenWAMRobotwinNativePolicy, LingbotRobotwinNativePolicy
 from .native_robotwin_executor import LingbotNativeActionCache

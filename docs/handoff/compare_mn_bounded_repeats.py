@@ -29,7 +29,7 @@ def main():
     args = parser.parse_args()
     import numpy as np
     from embodied_eval.mn.native_models import NativeActionModel
-    from embodied_eval import contracts as leaf
+    from embodied_eval import _legacy_contracts as leaf
     a, pa, ra = read_trial(args.first)
     b, pb, rb = read_trial(args.repeat)
     model = NativeActionModel("openpi", {"repo": "/not-imported", "checkpoint_dir": "/not-loaded", "io_profile": "arx_joint14"})

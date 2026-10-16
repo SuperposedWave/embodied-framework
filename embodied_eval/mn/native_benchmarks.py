@@ -7,11 +7,11 @@ from dataclasses import replace
 from contextlib import contextmanager, nullcontext
 import copy
 import numpy as np
-from .. import contracts as leaf
-from ..config import BenchmarkConfig, EpisodeConfig
+from .. import _legacy_contracts as leaf
+from ..adapters.runtime_options import BenchmarkConfig, EpisodeConfig
 from ..codec import to_data
 from ..errors import AdapterError
-from ..validation import require
+from .._legacy_validation import require
 from ..geometry import normalize_quaternion
 from ..adapters.robotwin_benchmark import RobotwinBenchmark, _RngDomain
 from ..adapters.native_robotwin_runtime import prewarm_native_cuda
