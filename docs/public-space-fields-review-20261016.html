@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EmbodiedEval 公共层完整字段与迁移评审稿</title>
+  <style>
+    :root { color-scheme:light dark; --canvas:#fafbff; --paper:#fff; --text:#242630; --muted:#666b7a; --accent:#354381; --tint:#eef0f8; --line:#dfe2ec; --code:#20232d; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--canvas); color:var(--text); font:16px/1.76 Inter,"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif; }
+    .report-shell { display:block; width:min(100% - 40px,820px); margin:32px auto 64px; }
+    main.report-content { min-width:0; padding:42px 48px; background:var(--paper); border:1px solid var(--line); border-radius:8px; counter-reset:section; }
+    h1 { margin:0 0 .7em; color:var(--accent); font-size:1.85em; line-height:1.25; scroll-margin-top:24px; }
+    h2 { margin:2em 0 .8em; padding-bottom:.35em; border-bottom:1px solid var(--line); font-size:1.42em; counter-increment:section; counter-reset:subsection; scroll-margin-top:24px; }
+    h2::before { content:counter(section,cjk-ideographic) "、"; color:var(--accent); }
+    h3 { margin:1.5em 0 .6em; font-size:1.18em; counter-increment:subsection; scroll-margin-top:24px; }
+    h3::before { content:counter(section) "." counter(subsection) " "; color:var(--accent); }
+    h1:target,h2:target,h3:target { border-radius:4px; background:var(--tint); box-shadow:0 0 0 6px var(--tint); }
+    p,ul,ol { margin:.8em 0; }
+    .lead { color:var(--muted); font-size:1.05em; }
+    .callout { margin:1.25em 0; padding:14px 16px; background:var(--tint); border-left:4px solid var(--accent); }
+    .table-wrap { overflow-x:auto; margin:1em 0; }
+    table { width:100%; border-collapse:collapse; font-size:.91em; }
+    th,td { padding:9px 10px; border:1px solid var(--line); text-align:left; vertical-align:top; overflow-wrap:anywhere; }
+    th { background:var(--tint); }
+    code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:.9em; overflow-wrap:anywhere; }
+    pre { overflow-x:auto; padding:16px; color:#f5f6fa; background:var(--code); border-radius:8px; font-size:.86em; line-height:1.6; }
+    pre code { overflow-wrap:normal; font-size:1em; }
+    a { color:var(--accent); text-underline-offset:2px; }
+    small,.muted { color:var(--muted); }
+    @media (max-width:760px) { body { font-size:15px; } .report-shell { width:100%; margin:0; } main.report-content { width:100%; margin:0; padding:58px 18px 48px; border:0; border-radius:0; } }
+    @media (prefers-color-scheme:dark) { :root { --canvas:#14161d; --paper:#1b1e27; --text:#e8eaf0; --muted:#aeb3c2; --accent:#aeb9ff; --tint:#282d42; --line:#383d4d; } }
+    @media print { :root { --canvas:#fff; --paper:#fff; --text:#111; --muted:#555; --accent:#222; --tint:#f2f2f2; --line:#bbb; } body,.report-shell,main.report-content { background:#fff; } .report-shell { width:100%; margin:0; } main.report-content { width:100%; padding:0; border:0; } a { color:inherit; } thead { display:table-header-group; } tr { break-inside:avoid; } }
+  </style>
+</head>
+<body>
+<div class="report-shell"><main class="report-content">
+  <h1 id="report-title">公共层完整字段与迁移评审稿</h1>
+  <p class="lead">EmbodiedEval · 2026-10-16 · 基于当前固定源码与实际声明盘点。先统一“字段叫什么、到底表示什么”，经用户确认后才实施。本文不是已上线的 0.3 契约，也不是阶段验收结论。</p>
+
+  <section aria-labelledby="decision">
+    <h2 id="decision">先说结论</h2>
+    <div class="callout"><strong>你的理解是对的。</strong>环境 Adapter 应把自己的相机、状态和执行接口翻译成固定公共格式；模型 Adapter 只认这个公共格式，再翻译成权重所需的格式。普通组合不应要求用户再逐对填写“环境字段 → 模型字段”的接线表。</div>
+    <p>建议新增 <code>0.3</code> 通路：这个版本号表示“统一公共名称和语义的新消息格式”。保留 0.1、0.2 的行为、配置和历史证据。独立 Adapter 架构已经存在，本轮要补的是<strong>公共字段命名及物理含义的一致性</strong>，不是再写一套模型与环境成对的 Adapter。</p>
+    <p>本方案的公共层由四部分组成：<strong>空间说明书</strong>定义字段含义；<strong>公共观测</strong>携带本次实际数据；<strong>公共动作</strong>表达要控制谁、如何控制；<strong>任务与结果</strong>记录公开指令、预算、计数及评分。不是把所有信息塞进一个固定长度数组。</p>
+    <p>本文里的英文名称都是拟采用的字段名，旁边均解释具体含义。<code>sensors.head</code> 读作“公共观测的 sensors 相机表里的 head 视角”；点号表示取下一层字段，不是另一套协议。必填指消息或声明必须包含；可选指有可靠数据才提供；预留指只约定语义，不代表本轮新增采集或执行能力。</p>
+    <p><strong>本轮已做：</strong>只读盘点 11 个具名模型输入输出配置、7 个环境协议声明和 23 份源码／证据摘要，未启动模型、仿真或下载。<strong>尚未做：</strong>修改运行代码、公共契约或迁移旧配置。完整盘点见<a href="../outputs/public-space-review-20261016-run1/current-public-space-inventory.json">当前字段、模型能力、环境空间与源码 SHA256 清单</a>。SHA256 是文件内容指纹，用于确认讨论基于哪份文件，不是模型成绩。</p>
+  </section>
+
+  <section aria-labelledby="current-gap">
+    <h2 id="current-gap">现在具体缺在哪里</h2>
+    <div class="table-wrap"><table><thead><tr><th>现状</th><th>具体证据</th><th>需要改成什么</th></tr></thead><tbody>
+      <tr><td>公共观测仍有环境原名</td><td><code>NativeSimulator._project</code> 直接传递 <code>obs.sensors</code>；RoboTwin 仍是 <code>head_camera / left_camera / right_camera</code>。</td><td>环境 Adapter 输出时已经叫 <code>head / left_wrist / right_wrist</code>。</td></tr>
+      <tr><td>统一名称出现得太晚</td><td><code>mn/binding.py::model_input</code> 先按显式绑定取数据，再改成模型逻辑槽名。</td><td>公共观测和发给模型的公开观测使用同名字段；模型特有变量名仅在模型 Adapter 内出现。</td></tr>
+      <tr><td>某些角色标签也不准确</td><td>LIBERO 单臂腕相机标成 left_wrist；VLABench 的场景 <code>right_rgb</code> 被接到模型名为 right_wrist 的输入槽。</td><td>单臂叫 wrist；真正的外部右视角叫 external_right。权重输入槽名字古怪，由模型具名配置处理，不能污染公共语义。</td></tr>
+      <tr><td>控制目标容易被误读成实测</td><td>RoboTwin 夹爪开度来自截断后的控制记录；14 维驱动状态混合了关节和夹爪。RoboDojo 夹爪字段来自 prev_control。</td><td>字段名明确带 target；拆开关节与夹爪；原生 14 维只在模型 Adapter 内重组。</td></tr>
+      <tr><td>位姿名称不能保证参考点一致</td><td>LIBERO 位置来自 grip_site，方向来自 right_hand；RoboTwin 的 get_ee_pose 也不是夹爪中心 get_tcp_pose。</td><td>坐标系、采集参考点、动作控制参考点都明示，不能只换一个 eef 名字就认定它们相同。</td></tr>
+    </tbody></table></div>
+    <p>依据：当前 <code>mn/contracts.py:120–142</code>、<code>mn/binding.py:120–139</code>、<code>mn/native_benchmarks.py::_project</code>、<code>mn/native_catalog.py::space</code> 及五个环境的声明。它们的实际字段、完整来源路径和文件摘要已经保存在<a href="../outputs/public-space-review-20261016-run1/current-public-space-inventory.json">只读盘点</a>中。以上是代码现状，不是对新方案已经完成的描述。</p>
+  </section>
+
+  <section aria-labelledby="ownership">
+    <h2 id="ownership">谁负责哪一段</h2>
+    <pre aria-label="独立适配数据流">环境原始数据
+  → 环境 Adapter：原生名称、单位、四元数 → 公共字段
+  → 公共观测：统一名称 + 数值 + 时间 + 真实来源
+  → 模型 Adapter：公共字段 → 原生输入、归一化、缓存、推理
+  → 模型 Adapter：原生输出 → 公共类型化动作
+  → 环境 Adapter：公共动作 → 原生控制器、逆运动学、仿真
+  → 公开执行反馈与独立评分结果</pre>
+    <p>逆运动学是“根据末端目标位置求各关节该转多少”，属于环境 Adapter。Runner 是通用调度循环，只管调用顺序、校验、预算、计数和证据；不负责缩图、补相机、四元数纠错、坐标标定或机器人控制。</p>
+    <div class="table-wrap"><table><thead><tr><th>放在哪里</th><th>应该包含</th><th>禁止包含</th></tr></thead><tbody>
+      <tr><td>环境具名协议</td><td>原生相机对应哪个公共角色；真实测量来源；关节顺序；坐标与控制器；初始化和官方评分。</td><td>根据当前模型名称改变相机含义、控制规则或评分。</td></tr>
+      <tr><td>模型具名输入输出配置</td><td>这个权重需要哪些公共字段；如何缩图、排列、归一化；训练沿用的特殊编码；动作解码与缓存。</td><td>检查 Benchmark 名称或接收环境对象后再选实现。</td></tr>
+      <tr><td>公共声明与通用预检查</td><td>检查字段、单位、维数、时间、参考点、坐标路径、动作类型和完整目标。</td><td>猜缺失的相机、把 6 关节补成 7 关节、把夹爪目标当测量、编造工具偏移。</td></tr>
+      <tr><td>普通运行配置</td><td>模型配置、环境协议、任务／种子／预算、产物位置。</td><td>必填的逐组合相机重命名表或成对 Python 工厂。</td></tr>
+    </tbody></table></div>
+    <p>模型配置是“这份权重的说明书”，环境协议是“这版仿真的说明书”。两边分别选择。同一模型可能有不同权重对应不同配置，但不以当前连接哪个环境作为分支条件。</p>
+  </section>
+
+  <section aria-labelledby="packets">
+    <h2 id="packets">公共消息的完整骨架</h2>
+    <h3 id="context-fields">每次数据的身份与观测字段</h3>
+    <div class="table-wrap"><table><thead><tr><th>消息／字段</th><th>人话含义</th><th>规则与状态</th></tr></thead><tbody>
+      <tr><td><code>Context.contract_version</code></td><td>这条消息按哪版公共规则解释。</td><td>新通路明确为 0.3；不自动把旧消息当新消息。</td></tr>
+      <tr><td><code>run_id / env_id / episode_id / message_id</code></td><td>哪次运行、哪个环境实例、哪一局、哪条消息。</td><td>必填；跨局、旧观测或串错实例的动作拒绝。</td></tr>
+      <tr><td><code>Observation.context / observation_id / spec_ref</code></td><td>消息身份、本帧编号、适用的空间说明书编号。</td><td>必填；说明书必须与当前环境一致。</td></tr>
+      <tr><td><code>env_step / sim_time_s</code></td><td>已经执行几次原生动作、现在的仿真时间。</td><td>必填；时间单位为秒，不是电脑墙上时钟。</td></tr>
+      <tr><td><code>sensors / states</code></td><td>相机等传感器数据表／机器人状态数据表。</td><td>必填容器；只提供声明且真实存在的字段；模型必需字段缺失则拒绝。</td></tr>
+      <tr><td><code>public_instruction</code></td><td>环境当前公开的任务文字。</td><td>可选；非空时更新任务文字；不删除原有公开目标图或目标位置。</td></tr>
+      <tr><td><code>frame_transforms</code></td><td>本次实际获得的动态坐标关系。</td><td>可为空；每条变换带自己的采集时间，不能假装全部与图像同时采集。</td></tr>
+      <tr><td><code>ModelInput</code></td><td>只交给模型的公开输入包。</td><td>保留 context、observation_id、sim_time_s、task_public、sensors、states、state_specs、frame_transforms；拟补充只读 sensor_specs 与 view_aliases，供解释相机角色。公开键名不再改成模型槽名。</td></tr>
+    </tbody></table></div>
+    <p>模型只看到声明需要的公开数据和解释这些数据所需的公开元数据。不会收到专家动作、隐藏目标状态、成功条件细节或环境实例。复制／筛选数据时仍保持相机字节、状态精度和原采集时间。</p>
+
+    <h3 id="space-fields">空间说明书 SpaceSpec</h3>
+    <p><code>SpaceSpec</code> 表示“这个环境能够提供和接受什么”，不是本帧数值。下面保留现有字段，并明确拟新增部分。</p>
+    <div class="table-wrap"><table><thead><tr><th>字段</th><th>具体内容</th><th>拟定要求</th></tr></thead><tbody>
+      <tr><td><code>spec_id / revision</code></td><td>公共空间定义编号／固定环境源码版本。</td><td>必填；变更公共解释必须产生新定义，不能回写历史。</td></tr>
+      <tr><td><code>protocol_id / protocol_version</code></td><td>环境初始化、控制、计数和评分的具名规则及版本。</td><td>必填；选择环境规则，不绑定模型。</td></tr>
+      <tr><td><code>timing_mode / control_period_s / physics_period_s</code></td><td>固定周期或原生变时长；控制周期；物理步周期。</td><td>时间模式必填；不能用固定控制周期冒充变时长的实际时间。</td></tr>
+      <tr><td><code>frames</code></td><td>坐标系及已知父子关系。</td><td>必须含 world；其他只提供有依据的关系。</td></tr>
+      <tr><td><code>robots</code></td><td>机器人实例、关节、末端和夹爪说明。</td><td>本轮一个被控实例 robot0，允许单臂或双臂；不扩展多机器人或全身控制。</td></tr>
+      <tr><td><code>sensors / state_fields</code></td><td>统一传感器定义／统一状态定义。</td><td>以本文的公共键命名；不能把环境原名留作主键。</td></tr>
+      <tr><td><code>view_aliases</code>（新增）</td><td>例如 main → head：环境协议选定的默认总览视角。</td><td>可选；只能引用已经存在的公共相机键，不能指向原生字段或形成别名链。</td></tr>
+      <tr><td><code>action_specs / controllers</code></td><td>实际实现的动作集合／具名原生控制器说明。</td><td>至少一个执行格式；未实现的类型不能只因公共类型存在就宣称支持。</td></tr>
+      <tr><td><code>required_action_targets / action_joint_modes</code></td><td>每种执行格式必须同时带上的目标；它支持位置、速度还是力矩。</td><td>完整目标检查；双臂不得静默只执行一边。</td></tr>
+      <tr><td><code>native_protocols</code></td><td>原生扩展名称与精确签名。</td><td>只与同协议执行端匹配，不等于跨环境通用。</td></tr>
+      <tr><td><code>contract_version</code></td><td>说明书对应的公共版本。</td><td>新通路 0.3；原 0.2 声明保留。</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section aria-labelledby="cameras">
+    <h2 id="cameras">相机字段如何真正统一</h2>
+    <h3 id="camera-names">统一相机名与主视角</h3>
+    <p>建议把 <code>head</code> 明确定义为<strong>工作区总览视角角色</strong>，不是“保证装在物理头部”的承诺。实际固定在场景、装在机身还是腕部，由 <code>mounted_on</code> 单独说明。这样能直接落实你说的“环境写 head，模型取 head”，也不会把场景相机误说成机械臂真的有头。</p>
+    <div class="table-wrap"><table><thead><tr><th>公共相机键</th><th>含义</th><th>不能怎么用</th></tr></thead><tbody>
+      <tr><td><code>head</code></td><td>环境协议指定的工作区总览 RGB 相机。</td><td>不能因为原生名字含 head 就跳过视角核实；不由此推断安装位置或光轴。</td></tr>
+      <tr><td><code>wrist</code></td><td>单臂机器人的腕部 RGB 相机。</td><td>单臂不是“默认左手”；不能为凑双臂同时复制成 left_wrist、right_wrist。</td></tr>
+      <tr><td><code>left_wrist / right_wrist</code></td><td>双臂机器人真正的左／右腕相机。</td><td>左右由机器人声明确定，不按图片中物体所在的左右判断。</td></tr>
+      <tr><td><code>external_front / external_left / external_right</code></td><td>相对机器人底座定义的前／左／右外部相机。</td><td>必须有安装位置与底座轴向依据；没核实则不凭 cam_1、cam_2 猜左右。</td></tr>
+      <tr><td><code>external_0 / external_1</code></td><td>外部相机身份明确、方位尚未核实时的稳定编号。</td><td>编号不声称左右；只接受编号的具名输入配置，不能冒充方向要求已满足。</td></tr>
+      <tr><td><code>view_aliases.main</code></td><td>“取环境协议的默认主视角”的公共别名，例如指向 head。</td><td>不是另一张图，不复制载荷；若环境有多个等价候选且未声明默认值，预检查报歧义。</td></tr>
+    </tbody></table></div>
+    <p>因此：模型明确需要总览 <code>head</code> 就取 <code>sensors.head</code>；模型只要求默认主视角，就让自己的 Adapter 通过公共 <code>main</code> 别名取图。这个默认值在环境协议里定义一次，不为每个模型重写。模型原生变量即使叫 <code>right_wrist</code>，也不表示它实际上一定来自右腕；真实语义在该权重的输入配置中写清楚。</p>
+    <p>这套名称固定的是角色和来源，不保证不同 Benchmark 的焦距、视角、背景完全相同；这些仍影响权重表现。图像缺失、视角不符合模型明确要求时拒绝，不能用另一张图自动顶替。</p>
+
+    <h3 id="sensor-declarations">每个传感器的说明与实际样本</h3>
+    <div class="table-wrap"><table><thead><tr><th>对象／字段</th><th>具体含义与约束</th></tr></thead><tbody>
+      <tr><td><code>SensorSpec.modality / role</code></td><td>数据种类／受限公共角色名。RGB 是彩色图像；depth 是深度；point_cloud 是三维点云；audio 是声音；tactile 是触觉。后四类只在可靠采集与模型支持时启用，不是本轮新增能力。</td></tr>
+      <tr><td><code>mounted_on / frame_id</code></td><td>实际安装对象／传感器坐标系。场景固定相机和腕相机必须区分；相机帧用公共 ID，例如 camera/head，而非照抄环境字段名。</td></tr>
+      <tr><td><code>tensor.dtype / shape / layout</code></td><td>数值类型／各维大小／排列。RGB 通常 uint8、[高度, 宽度, 3]、HWC；HWC 就是高、宽、通道依次排列。声明的 -1 表示该维接受不同正整数，不是实际图像的负维度。</td></tr>
+      <tr><td><code>unit / color_order / available_rate_hz</code></td><td>物理单位／色彩通道顺序／可用频率。公共彩色图像采用 RGB；深度若提供则用米。频率未知就不填，不能拿物理步频率冒充出图频率。</td></tr>
+      <tr><td><code>native_source</code>（新增来源元数据）</td><td>原生键名、固定来源版本和提取规则的标识。只供追溯；公共读取路径不得依赖它。</td></tr>
+      <tr><td><code>SensorSample.captured_at_s / frame_id</code></td><td>该图真正采集时的仿真秒数／该样本的传感器坐标系。</td></tr>
+      <tr><td><code>validity / invalid_reason / provenance</code></td><td>有效或无效／无效原因／来自传感器。无效图像不能伪造成一张正常的黑图。</td></tr>
+      <tr><td><code>payload</code></td><td>实际 Tensor 载荷；含 dtype、shape、layout、data 或 data_ref。data 是内联值；data_ref 是外部载荷指针，当前没有读取器，要求真实载荷时仍明确拒绝。</td></tr>
+      <tr><td><code>DataRef.storage / key / byte_length / sha256</code></td><td>存储类型／定位键／字节数／摘要。只保留现有声明，不借这次字段改造实现文件、共享内存或远程载荷读取。</td></tr>
+      <tr><td>标定信息</td><td>相机内参、畸变、外参只有被核实且所需模型使用时才增加具名说明。本文不补造数值。相机坐标统一建议为 x 向右、y 向下、z 向前；需要转换的 Adapter 必须有真实变换依据。</td></tr>
+    </tbody></table></div>
+    <p>环境输出保持原生图像内容；模型所需 resize（缩放）、裁剪、翻转、归一化、HWC 转其他排列都在模型 Adapter 内完成，且保留来源规则。别名解析不额外取图、不复制另一帧、不提前消费随机数。</p>
+  </section>
+
+  <section aria-labelledby="states">
+    <h2 id="states">机器人状态字段</h2>
+    <h3 id="state-naming">命名与单双臂规则</h3>
+    <p>继续使用 <code>Observation.states</code> 字典，避免为改名大规模重造层级。单臂直接用下表基础名；双臂加 <code>left_</code> 或 <code>right_</code> 前缀。例如 <code>left_joint_positions</code> 就是左臂的实际关节位置。一个字段到底属于谁，由声明中的 <code>robot_id</code> 和 <code>joint_ids / site_id</code> 明确指定。</p>
+    <div class="table-wrap"><table><thead><tr><th>基础字段名</th><th>含义／单位</th><th>可用条件及状态</th></tr></thead><tbody>
+      <tr><td><code>joint_positions</code></td><td>实际机械臂关节位置；转动关节用弧度 rad，移动关节用米 m。</td><td>不含夹爪；按显式 joint_ids 排列；现有部分环境可提供。</td></tr>
+      <tr><td><code>joint_drive_targets</code></td><td>给机械臂执行器的关节位置目标。</td><td>是 controller_target，不是 measurement；不混入夹爪。</td></tr>
+      <tr><td><code>joint_velocities / joint_efforts</code></td><td>实际关节速度／力矩或推力；rad/s、m/s、Nm 或 N。</td><td>预留；只有原生接口已可靠提供才启用，不通过差分或零值凭空补齐。</td></tr>
+      <tr><td><code>eef_position / eef_quaternion</code></td><td>实际末端参考点位置／参考部件方向；米／xyzw 四元数。</td><td>分别记录 site_id；只有参考点及部件一致或有已知关系时才组成同一个物理位姿。</td></tr>
+      <tr><td><code>tcp_position / tcp_quaternion</code></td><td>实际工具工作点的位置／方向。</td><td>可选。TCP 是夹爪中心、吸盘接触点等指定工具参考点；不知道偏移就不能从 eef 猜一个。</td></tr>
+      <tr><td><code>gripper_joint_positions</code></td><td>夹爪每根指爪关节的实测位置。</td><td>按夹爪 joint_ids 排列；LIBERO 的两个手指 qpos 属于这里。</td></tr>
+      <tr><td><code>gripper_width</code></td><td>实际两指间距，单位米。</td><td>必须有几何和测量依据；不能把两个手指 qpos 简单求和就默认正确。</td></tr>
+      <tr><td><code>gripper_open_fraction</code></td><td>实际开度，0 是闭合，1 是张开。</td><td>仅 measurement，需已知测量到开度的规则。RoboTwin 的控制记录不能填这里。</td></tr>
+      <tr><td><code>gripper_open_fraction_target</code></td><td>夹爪控制目标，0 到 1。</td><td>controller_target；RoboTwin 截断后的记录和 RoboDojo prev_control 在来源核实后进入这里。</td></tr>
+      <tr><td><code>gripper_width_target / gripper_joint_drive_targets / gripper_force_target</code></td><td>夹爪目标宽度／各指目标关节值／夹持力目标。</td><td>可选／预留；分别是米、逐关节单位、牛顿 N；不能跨模式冒充同一开度。</td></tr>
+      <tr><td><code>robot_base_position / robot_base_quaternion</code></td><td>机器人底座在 world 中的位置／方向。</td><td>全局字段，不加左右臂前缀；只提供已核实的值，方向未知不能填单位旋转。</td></tr>
+    </tbody></table></div>
+    <p>所有字段是“允许使用的统一词汇”，<strong>不是要求每个环境全部提供</strong>。本轮会先迁移已经可靠拥有的数据。一个模型需要的字段不存在，就说明缺什么；不会为了表格齐全去伪造。</p>
+
+    <h3 id="state-specs">状态说明和样本的必需元数据</h3>
+    <div class="table-wrap"><table><thead><tr><th>字段</th><th>具体含义</th><th>拟定规则</th></tr></thead><tbody>
+      <tr><td><code>StateSpec.semantic / unit / tensor / frame_id / origin</code></td><td>物理含义、单位、张量规格、表达坐标系、来源说明。</td><td>保留；semantic 增加与新规范字段相应的细分含义。关节／开度不强塞一个世界坐标。</td></tr>
+      <tr><td><code>robot_id / joint_ids / site_id</code>（新增）</td><td>属于哪台机器人；向量每项对应哪个关节；位置或方向测自哪个部件。</td><td>依字段类型条件必填。相同维数不等于相同关节顺序。</td></tr>
+      <tr><td><code>component_units</code>（新增，条件使用）</td><td>混有转动和移动关节时，每项自己的单位。</td><td>顺序与 joint_ids 一致；本轮不把关节和夹爪混成一种新“混合单位”。</td></tr>
+      <tr><td><code>provenance</code>（拟在声明中也约束）</td><td>这个字段只能是实测，还是只能是控制目标。</td><td>measurement 或 controller_target；声明与样本必须相符，不能仅靠读者看 origin 注释。</td></tr>
+      <tr><td><code>native_source</code>（新增）</td><td>固定原生接口、字段、版本及已核实转换的标识。</td><td>来源信息不是运行时改名路径，不泄漏隐藏评分数据。</td></tr>
+      <tr><td><code>StateSample.captured_at_s / payload / provenance</code></td><td>实际采集时刻／数值／实测或控制目标。</td><td>保留原精度与时间；不因为公共化统一转成 float32。</td></tr>
+      <tr><td><code>validity / invalid_reason</code>（拟补充）</td><td>状态本次是否有效，以及为什么无效。</td><td>默认有效；无效时不消费伪造 payload。该字段在旧 0.2 StateSample 中尚不存在。</td></tr>
+    </tbody></table></div>
+    <p>公共数值保持原生可表达精度；float32、float64 分别表示 32 位、64 位浮点数。六关节和七关节必须明确不同，不能补 0、截断或通过换名称“适配”。如要跨机器人重新规划关节运动，那是另一项能力，不是字段命名能解决的。</p>
+  </section>
+
+  <section aria-labelledby="geometry">
+    <h2 id="geometry">坐标、朝向与参考点</h2>
+    <div class="table-wrap"><table><thead><tr><th>公共对象／字段</th><th>统一约定</th><th>边界</th></tr></thead><tbody>
+      <tr><td><code>world</code></td><td>当前具名环境协议的右手世界坐标。位置米、角度弧度、时间秒。</td><td>不表示不同 Benchmark 的世界原点和朝向天然相同；轴向由各环境协议明确说明。</td></tr>
+      <tr><td><code>robot0/base</code></td><td>被控机器人底座坐标；拟统一 x 向前、y 向左、z 向上。</td><td>原生轴不同由环境 Adapter 转换。没有已核实底座姿态则不宣称已连通 world。</td></tr>
+      <tr><td><code>Pose.position_m / quaternion_xyzw / frame_id</code></td><td>某个明确参考点的位置、方向及其表达坐标。xyzw 表示向量 x、y、z 在前，实数 w 在后。</td><td>方向是该参考部件在 frame_id 中的朝向。位置和方向要属于同一刚性参考定义；不把原生四元数原样贴上 xyzw 标签。</td></tr>
+      <tr><td><code>Transform.translation_m / quaternion_xyzw</code></td><td>把子坐标系中的点转换到父坐标系中的刚体变换。</td><td>方向不能反着用；需要逆变换时显式计算，不猜。</td></tr>
+      <tr><td><code>FrameSpec.parent_id / static_transform / dynamic</code></td><td>父坐标系／已知静态变换／关系是否随时间变化。</td><td>未知时可以暂不连通；不能填零平移和单位旋转来假装已标定。</td></tr>
+      <tr><td><code>TimedTransform.transform / captured_at_s</code></td><td>本次动态变换及它真正采集的时刻。</td><td>必要路径缺失、太旧或来自未来均拒绝。图像不要求一定有全部相机外参，只有需要该变换的模型受此门禁约束。</td></tr>
+      <tr><td><code>site_id / control_site_id</code></td><td>测量参考点／执行器动作目标参考点。</td><td>控制参考点拟在末端声明中补充，不能把工具偏移藏进 Runner，也不能用名称相似代替已知变换。</td></tr>
+    </tbody></table></div>
+    <p>例如：四元数从 wxyz 排成 xyzw，只是换分量顺序；把世界坐标转换成底座坐标，是改变表达坐标系；把手腕位置换成夹爪中心，是换工具参考点。这是三件不同的事，要分别有依据。</p>
+    <p>四元数必须有限、非零且符合声明的单位长度容差；不静默修成“看起来合法”。比较朝向时，整体取反仍算同一方向，例如 [0,0,0,1] 与 [0,0,0,-1] 都表示无旋转。具体数值容差在实现前作为转换测试参数明确记录，不靠放宽任务评分掩盖误差。</p>
+    <p><strong>LIBERO 特别注意：</strong>现有位置 grip_site 和方向 right_hand 分别保留正确 site_id。匹配权重原来如何拼这两个输入，模型配置可继续按固定来源执行；但公共层不能因此声称它们已经是同一个通用工具位姿。</p>
+  </section>
+
+  <section aria-labelledby="actions">
+    <h2 id="actions">公共动作如何定义</h2>
+    <h3 id="action-targets">先说明控制谁</h3>
+    <p><code>target_id</code> 是实际控制目标的公共身份，不是环境原生变量名。<code>robot0</code> 表示本轮唯一被控机器人实例，不是某个厂家型号。关节编号按说明书固定次序从 0 开始，不能按字符串自行猜物理关节。</p>
+    <div class="table-wrap"><table><thead><tr><th>机器人形式</th><th>公共目标 ID</th><th>具体含义</th></tr></thead><tbody>
+      <tr><td>单臂</td><td><code>robot0/eef</code>、<code>robot0/grip</code>、<code>robot0/j0</code> 至实际最后一个关节</td><td>单臂末端、夹爪、各机械臂关节。</td></tr>
+      <tr><td>双臂</td><td><code>robot0/left_eef</code>、<code>robot0/right_eef</code>、<code>robot0/left_grip</code>、<code>robot0/right_grip</code></td><td>分别明确左右末端和夹爪。</td></tr>
+      <tr><td>双臂关节</td><td><code>robot0/left_j0</code> 等、<code>robot0/right_j0</code> 等</td><td>每个关节单独有 ID、单位、限位和来源；不能用一个含义不明的 14 维动作替代。</td></tr>
+    </tbody></table></div>
+    <p><code>RobotSpec</code> 保留 embodiment_id（真实机器人型号标签）、base_frame_id（底座坐标）、joints（关节说明）、end_effectors（末端说明）、grippers（夹爪说明）。<code>JointSpec</code> 保留 joint_type、position_unit、velocity_unit、effort_unit、position_limits；它们分别是关节类型、位置／速度／力的单位和位置限位。</p>
+    <p><code>EndEffectorSpec</code> 保留 frame_id、tcp_id、gripper_id，拟新增明确的 control_site_id；分别说明部件坐标、工具参考点、关联夹爪和控制目标参考点。<code>GripperSpec</code> 保留 modes、max_width_m、joint_ids，即可用控制模式、已知最大宽度和夹爪关节身份。未知最大宽度时不得擅自推导“开度 → 米”。</p>
+
+    <h3 id="command-types">每种命令说清楚做什么</h3>
+    <p>所有命令都有 <code>command_id / target_id / kind</code>，分别是本条命令编号、控制目标、动作类型。一个 Action 的 commands 是一组同时提交的命令；它不是模型整段动作缓存，缓存仍归模型 Adapter。</p>
+    <div class="table-wrap"><table><thead><tr><th>类型</th><th>专有字段和人话含义</th><th>严格条件</th></tr></thead><tbody>
+      <tr><td><code>joint_target</code></td><td><code>mode / value / unit</code>：位置、速度或力矩模式；目标数值及单位。</td><td>环境必须真有对应执行模式；关节目标不能靠坐标旋转变成另一台机器人的关节目标。</td></tr>
+      <tr><td><code>pose_target</code></td><td><code>pose</code>：position_m、quaternion_xyzw、frame_id，表示到达哪个绝对物理位姿。</td><td>控制参考点由目标声明确定；标准输出优先 world，其他已声明坐标由环境 Adapter 转换。</td></tr>
+      <tr><td><code>pose_delta</code></td><td><code>delta / frame_id / reference_policy / composition / reference_observation_id</code>：移动多少、在哪个坐标中、相对哪次状态、从哪侧组合。</td><td>chunk_start 指相对本段开始；step_observed 指相对本步测量；previous_command 指相对前一目标。pre/post_multiply 分别是从左／右复合变换；不能只写一个 dxyz 数组猜含义。</td></tr>
+      <tr><td><code>twist_command</code></td><td><code>twist.linear_m_s / angular_rad_s / frame_id</code>：线速度、角速度和表达坐标。</td><td>可表达不等于已有真实执行器；原生不支持则拒绝。</td></tr>
+      <tr><td><code>gripper_command</code></td><td><code>mode / value</code>：open_fraction 为 0 到 1 的目标开度；width_m 为米；joint_targets 为逐指关节目标；force_n 为牛顿。</td><td>模式不可互换；转换必须有标定依据。原生“1 表示闭合”在环境边界明确反转。</td></tr>
+      <tr><td><code>controller_command</code></td><td><code>controller_profile_ref / parameters / parameter_domain</code>：具名原生控制器、它的参数及“原生控制域”标识。</td><td>只允许签名完全一致的原生协议。归一化 OSC 数组、旧双臂含糊编码、先插值后截断夹爪请求不能伪装成普通物理位姿或合法开度。</td></tr>
+    </tbody></table></div>
+    <p><code>ActionSpec</code> 继续声明 command_kinds、target_ids、controller_refs，即允许哪些动作类型、哪些目标、哪些原生控制器。<code>ControllerSpec</code> 的 frame_id、parameter_schema、parameter_units、parameter_domain 分别定义坐标、参数结构、单位和原生域。原生协议名称相同但参数含义不同仍不兼容。</p>
+
+    <h3 id="action-envelope">动作包与预测的辅助字段</h3>
+    <div class="table-wrap"><table><thead><tr><th>字段</th><th>含义与保留规则</th></tr></thead><tbody>
+      <tr><td><code>Action.commands / acquire_observation_after</code></td><td>本次命令集合／执行后是否按模型原生节奏取新图。保留缓存和采样顺序；不为公共化多取图。</td></tr>
+      <tr><td><code>native_protocol / native_dtype</code></td><td>原生扩展身份／原生动作行的数值类型。扩展限制保留，不把 dtype 改成统一 float32。</td></tr>
+      <tr><td><code>source_euler_xyz_rad</code></td><td>可选的原始 xyz 欧拉角弧度表示，供避免反复转换舍入。必须验证它与公共四元数代表同一朝向；发生坐标转换就不能沿用旧提示。</td></tr>
+      <tr><td><code>Prediction.context / based_on_observation_id / action</code></td><td>预测身份、它基于哪次公共观测、实际动作。必须属于当前回合和有效观测。</td></tr>
+      <tr><td><code>model_forward_count / transformations</code></td><td>模型实际前向计算次数／本次经过哪些具名转换。服务器无法核实前向次数则为 null，不能以请求次数代替。</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section aria-labelledby="model-contract">
+    <h2 id="model-contract">模型如何只认公共字段</h2>
+    <h3 id="capability-fields">模型能力声明</h3>
+    <div class="table-wrap"><table><thead><tr><th>字段</th><th>含义和新通路变化</th></tr></thead><tbody>
+      <tr><td><code>model_id / source_revision / checkpoint_ref / normalization_ref</code></td><td>模型身份、固定源码、权重、匹配标准化统计。保留，不能因公共化偷换任一项。</td></tr>
+      <tr><td><code>io_profile_id</code>（拟显式写入能力）</td><td>这份权重使用的具名输入输出规则；包括特殊编码，不包括当前 Benchmark 名称。</td></tr>
+      <tr><td><code>inputs</code></td><td>所需公共输入列表。拟用 public_path 声明固定公共读取路径，如 sensors.left_wrist 或 states.joint_positions；原模型变量名仅在 Adapter 内使用。</td></tr>
+      <tr><td><code>InputSpec.kind / semantic / unit / tensor / max_age_s / frame_id</code></td><td>输入种类、物理含义、单位、维数／类型／排列、允许多旧、要求在哪个坐标表达。继续保留；拟补 required、provenance、site_id、joint_ids 等必要约束。</td></tr>
+      <tr><td><code>InputSpec.key</code></td><td>新通路只作声明项的稳定编号，不再作为跨环境模型槽重命名机制。public_path 才是公共取值地址；main 别名只按环境已声明的公共别名解析。</td></tr>
+      <tr><td><code>output.command_kinds / target_slots / joint_modes / gripper_modes</code></td><td>输出动作类型、目标身份、关节模式、夹爪模式。新通路目标直接采用公共目标 ID，并约束控制参考点；不再逐组合把 left_eef 接到另一个任意名字。</td></tr>
+      <tr><td><code>output.native_protocol / native_signature</code></td><td>确有原生扩展时保留其协议与精确含义。</td></tr>
+      <tr><td><code>supported_timing_modes / observation_update</code></td><td>支持固定周期还是原生变时长；每步更新观测还是动作段边界更新。</td></tr>
+      <tr><td><code>training_embodiments / contract_version</code></td><td>训练涉及的机器人标签／公共版本。训练覆盖不足单列提示，不当作结构接入白名单。</td></tr>
+    </tbody></table></div>
+    <p>模型的 55／80 维内部向量、图像输入变量名、rot6d 六维旋转编码、归一化统计索引、动作段长度均留在模型 Adapter。rot6d 是模型内部用六个数表达旋转的编码，不是公共朝向标准；进入公共层的方向仍为明确坐标中的 xyzw。</p>
+    <p>坐标转换由双方 Adapter 调用共同的几何函数完成：环境负责原生 ↔ 公共；模型负责公共 ↔ 该权重训练编码。通用预检查只验证关系有依据；Runner 不做这些变换。</p>
+
+    <h3 id="no-pair-binding">普通组合不再手填接线</h3>
+    <p>普通 0.3 配置只选择 <strong>model、benchmark、episodes、budgets</strong>，分别表示模型、环境、运行回合和预算，并保留 run_id 与版本。输入按模型声明的公共路径读取，目标按公共目标 ID 匹配，坐标按已知坐标树与目标要求转换。</p>
+    <p>现有 <code>BindingConfig</code> 和 <code>BoundProfile</code> 继续供 0.2 使用。新通路拟生成只读匹配回执，记录实际公共输入、选定执行格式、坐标路径和警告；不是让用户继续手填这些内容。若有两个同样匹配但行为不同的执行格式，必须由具名环境 control_mode（控制方式选项）明确选择，不能取列表第一项。</p>
+    <p>特殊实验如故意改用侧视角，可以有显式覆盖，但它是<strong>改变实验输入</strong>，必须记录并重新核验，不是接入常态。第一个实现批次不需要先开发复杂的覆盖语言。</p>
+  </section>
+
+  <section aria-labelledby="task-results">
+    <h2 id="task-results">任务、预算、结果和证据</h2>
+    <div class="table-wrap"><table><thead><tr><th>消息／字段组</th><th>具体含义与要求</th></tr></thead><tbody>
+      <tr><td><code>TaskSpec.task_id / episode_id / public</code></td><td>任务、回合和公开目标。PublicTask 含 instruction、goal_image、goal_location，即任务文字、可选目标图和可选目标位置。模型只见 public。</td></tr>
+      <tr><td><code>initialization_ref / evaluation_config_ref / evaluation_private</code></td><td>初始化依据、评分配置依据、私有评分参数。环境和证据可使用；私有字段不得进入模型。</td></tr>
+      <tr><td><code>budgets.env_steps / model_calls / tool_calls</code></td><td>允许的原生动作数、模型请求数、工具调用数。缓存取下一动作也按原有请求／前向区别计数。</td></tr>
+      <tr><td><code>budgets.sim_time_s / wall_time_s</code></td><td>仿真秒数预算／真实经过时间预算。变时长原生路径继续拒绝硬仿真时长上限；wall_time_s 只在调用边界协作检查，不是可中断的硬超时。</td></tr>
+      <tr><td><code>StepResult.observation / execution_feedback / terminated / truncated</code></td><td>执行后的公开数据、实际执行回执、环境结束、预算等导致的截断。结束不等于任务成功。</td></tr>
+      <tr><td><code>ExecutionFeedback.request_id / call_id / command_ids</code></td><td>对应哪条请求、可选工具调用及哪些具体命令。</td></tr>
+      <tr><td><code>status / code</code></td><td>执行、部分执行、拒绝、规划失败或执行失败，以及相应错误码。状态未知不能伪造成完全执行。</td></tr>
+      <tr><td><code>consumed_env_steps / consumed_physics_steps / elapsed_sim_time_s</code></td><td>本次实际消耗的原生动作次数、物理步数、仿真秒数。三者分别记录，不互相冒充。</td></tr>
+      <tr><td><code>ExecutionStatistics.env_steps / physics_steps / sim_time_s / model_calls / tool_calls / model_forward_count</code></td><td>整局累计计数；未知的内部前向次数、无法确认的物理步数不编造。</td></tr>
+      <tr><td><code>Metric.value / unit / source / valid / unavailable_reason</code></td><td>指标数值、单位、官方或声明的来源、是否有效、缺失原因。没评分器是 null 且无效，不是假装失败，也不是自造评分。</td></tr>
+      <tr><td>运行证据清单</td><td>记录双方版本、权重／统计身份、环境协议、完整公共字段声明、实际解析结果、转换来源、资产与服务身份核验、计数、错误和真实／合成标记。</td></tr>
+    </tbody></table></div>
+    <p>维持三种状态分开报告：<strong>结构可组合</strong>表示字段和执行接口满足；<strong>资产就绪</strong>表示固定文件及依赖通过核验；<strong>真实验证</strong>表示指定任务、起点、预算下实际运行。真实验证也不自动表示任务成功或全套 Benchmark 覆盖。</p>
+    <p>现有服务尚无可信权重身份回执，<code>server_identity_verified=false</code> 仍保留；本地权重摘要通过不能代替远端实际加载身份。DreamZero 待后续两张每卡 80GB H100 的真实动作验证；LingBot-VA 继续后置。本次公共字段方案不关闭这些外部缺口。</p>
+  </section>
+
+  <section aria-labelledby="example">
+    <h2 id="example">用一份例子看懂公共空间</h2>
+    <p>以下是<strong>拟定 0.3 的合成节选</strong>，用于解释字段；不是当前程序可直接加载的完整配置。这里的 head 图像实际安装在 scene（固定场景），仍可担任总览角色；左右夹爪仅有目标记录，不能因此提供“实际开度”。</p>
+    <pre data-example="public-description"><code>{
+  "contract_version": "0.3",
+  "view_aliases": {"main": "head"},
+  "sensors": {
+    "head": {"modality": "rgb", "role": "head", "mounted_on": "scene"},
+    "left_wrist": {"modality": "rgb", "role": "left_wrist", "mounted_on": "robot0/left_wrist"},
+    "right_wrist": {"modality": "rgb", "role": "right_wrist", "mounted_on": "robot0/right_wrist"}
+  },
+  "state_fields": {
+    "left_joint_positions": {
+      "provenance": "measurement", "unit": "rad",
+      "joint_ids": ["robot0/left_j0", "robot0/left_j1", "robot0/left_j2",
+                    "robot0/left_j3", "robot0/left_j4", "robot0/left_j5"]
+    },
+    "right_joint_positions": {
+      "provenance": "measurement", "unit": "rad",
+      "joint_ids": ["robot0/right_j0", "robot0/right_j1", "robot0/right_j2",
+                    "robot0/right_j3", "robot0/right_j4", "robot0/right_j5"]
+    },
+    "left_gripper_open_fraction_target": {"provenance": "controller_target"},
+    "right_gripper_open_fraction_target": {"provenance": "controller_target"}
+  }
+}</code></pre>
+    <p>模型 Adapter 若需要原生 14 维输入，就依自己的固定规则读取“左 6 关节目标 + 左夹爪目标 + 右 6 关节目标 + 右夹爪目标”，再在内部拼起来。若需要实测关节，改读 joint_positions；这两类输入不能混用。</p>
+    <p>下面是一条完整保留双臂和夹爪的公共动作节选。位置为米；[0,0,0,1] 是无旋转的 xyzw；目标 ID 对应说明书中的控制参考点。具体示例数值不是安全可执行轨迹。</p>
+    <pre data-example="public-action"><code>{
+  "commands": [
+    {"command_id": "left-pose", "target_id": "robot0/left_eef", "kind": "pose_target",
+     "pose": {"position_m": [0.3, 0.2, 0.4], "quaternion_xyzw": [0,0,0,1], "frame_id": "world"}},
+    {"command_id": "right-pose", "target_id": "robot0/right_eef", "kind": "pose_target",
+     "pose": {"position_m": [0.3,-0.2, 0.4], "quaternion_xyzw": [0,0,0,1], "frame_id": "world"}},
+    {"command_id": "left-grip", "target_id": "robot0/left_grip", "kind": "gripper_command",
+     "mode": "open_fraction", "value": 0.5},
+    {"command_id": "right-grip", "target_id": "robot0/right_grip", "kind": "gripper_command",
+     "mode": "open_fraction", "value": 0.5}
+  ],
+  "acquire_observation_after": true
+}</code></pre>
+    <p>需要保留“先插值后截断”的原生夹爪行为时，上例的两条普通 gripper_command 必须换成对应具名原生命令；不能先把超范围值截进 0 到 1 再声称与原生一致。</p>
+  </section>
+
+  <section aria-labelledby="migration">
+    <h2 id="migration">现有 Adapter 怎么迁移</h2>
+    <h3 id="benchmark-migration">五个环境分别改一次</h3>
+    <div class="table-wrap"><table><thead><tr><th>环境</th><th>相机公共化</th><th>状态与执行注意点</th></tr></thead><tbody>
+      <tr><td>LIBERO</td><td>agentview_image → head；robot0_eye_in_hand_image → wrist；main → head。</td><td>gripper_positions → gripper_joint_positions；位置与方向保留不同来源点。归一化 OSC7 仍为具名原生动作，不假装已有通用米／弧度执行器。</td></tr>
+      <tr><td>VLABench</td><td>forward_rgb → head；franka_wrist_rgb → wrist；right_rgb → external_right，方位需依固定相机配置核验；main → head。</td><td>保留已知 world 位姿与底座位置；公开开度保持 1 减原生闭合标志的已声明规则；控制仍为绝对位姿和物理夹爪宽度。</td></tr>
+      <tr><td>RoboTwin</td><td>head_camera → head；left_camera → left_wrist；right_camera → right_wrist；main → head。</td><td>拆开 14 维关节／夹爪目标；夹爪控制记录改为带 target 的公共键；保留实测关节。输入采集参考点和执行控制点分别核验；旧双臂原生协议不删除。</td></tr>
+      <tr><td>RoboDojo</td><td>cam_head → head；cam_left_wrist → left_wrist；cam_right_wrist → right_wrist；main → head。</td><td>left/right_gripper_target → 对应 gripper_open_fraction_target；保留实际 ee_link 来源和独立夹爪原生协议，不用 RoboTwin 同名含义替代。</td></tr>
+      <tr><td>DROID sim_evals</td><td>wrist_cam → wrist；两台 external_cam 根据固定安装与底座轴核实后改 external_left/right；未核实前只用 external_0/1。</td><td>arm_joint_positions → joint_positions，保留 7 关节顺序；保持测量开度转换和二值夹爪执行。现有相机坐标树不连通，不能补假外参。没有官方任务成功评分器。</td></tr>
+    </tbody></table></div>
+    <p>DROID 的固定源码中两台外部相机分别位于正、负 Y 侧；现有 Cosmos 配置和 DreamZero 原生变量的“左／右”称呼不一致。新环境按实际安装定义一次，DreamZero 的旧变量命名由其模型输入配置明确转换；不能让环境看模型名决定左右。</p>
+
+    <h3 id="model-migration">五类模型的十一份具名规则</h3>
+    <p>下面是当前真实注册元数据，不代表十一份都已经完成新版本迁移或真实运行。表中“输入／输出配置”是匹配特定权重的规则名。</p>
+    <div class="table-wrap"><table><thead><tr><th>模型／配置</th><th>新公共输入选择</th><th>输出与特殊规则</th></tr></thead><tbody>
+      <tr><td>OpenWAM · eef10_osc</td><td>head、wrist、末端位置／方向、手指实测关节、指令。</td><td>保持原生 OSC7 扩展；保留 grip_site 与 right_hand 的原生输入组合来源，不误标为通用 TCP。</td></tr>
+      <tr><td>OpenWAM · eef10_absolute</td><td>head、wrist、external_right、末端位姿分量、开度、底座位置、指令。</td><td>模型内部原生 right_wrist 槽读 external_right；输出世界绝对位姿＋宽度；保留旋转解码与原始欧拉提示。</td></tr>
+      <tr><td>OpenWAM · eef20_dual_legacy</td><td>head、左右腕、左右末端位姿分量、左右夹爪目标、指令。</td><td>保留旧歧义原生协议，明确标为非通用物理输出，不冒充修复版。</td></tr>
+      <tr><td>OpenWAM · eef20_dual_wxyz_encoded_absolute</td><td>与旧双臂配置相同的物理输入，但特殊训练编码只在模型内部处理。</td><td>公共 xyzw → 匹配权重的特殊输入编码；输出解码后明确转回物理 xyzw；夹爪保留具名原生请求。</td></tr>
+      <tr><td>OpenWAM · eef20_arx_absolute</td><td>双臂视角、末端位姿分量、夹爪目标与指令。</td><td>沿用独立 ARX 权重的绝对位姿解码；不能把它的成功当作旧双臂配置已修复。</td></tr>
+      <tr><td>π0.5/openpi · state8_osc</td><td>head、wrist、末端位置／方向、手指实测关节、指令。</td><td>模型内组装 8 维状态；保持 OSC 原生扩展及随机采样顺序。</td></tr>
+      <tr><td>π0.5/openpi · state7_absolute</td><td>head、wrist、external_right、末端位姿分量、开度、底座位置、指令。</td><td>环境右侧图与模型原生槽的含义写在本配置；输出绝对位姿和夹爪宽度。</td></tr>
+      <tr><td>π0.5/openpi · arx_joint14</td><td>双臂视角、左右 6 个实测关节、左右夹爪目标、指令。</td><td>内部拼原生输入；输出 12 个关节目标＋具名夹爪请求，不让 14 维原生行进入公共动作。</td></tr>
+      <tr><td>LingBot-VLA · joint14</td><td>双臂视角、左右关节驱动目标、左右夹爪目标、指令。</td><td>模型内还原原生 14 维驱动状态；与实测关节区别保留；动作段缓存和段边界取图不变。</td></tr>
+      <tr><td>Cosmos3 · nano-policy-droid-joint8</td><td>核实后的左右外部视角、单腕、7 个实测关节、实测开度、指令。</td><td>输出 7 个关节目标和夹爪开度；不因结构声明通过就声称所有环境已验证。</td></tr>
+      <tr><td>DreamZero · droid-joint8-causal</td><td>同样的公共角色，但模型原生左右变量按固定代码明确对应。</td><td>保留因果缓存和原生输入顺序；真实动作验证仍待用户后续硬件，不改量化、图像尺寸或采样来过门禁。</td></tr>
+    </tbody></table></div>
+    <p>来源：<a href="../outputs/public-space-review-20261016-run1/current-public-space-inventory.json">11 份能力与 7 份环境空间快照</a>，以及当前 <code>prepare_mn_extension.py</code> 的已声明绑定。此表是迁移目标；具体参考点、方位和匹配权重规则核验失败时，相关 0.3 配置保留阻塞，不猜测补齐。</p>
+  </section>
+
+  <section aria-labelledby="rollout">
+    <h2 id="rollout">确认后按什么顺序推进</h2>
+    <ol>
+      <li><strong>先锁定这份字段评审。</strong>确认公共命名、实测／目标、坐标与新版本兼容策略。此时只是在确认接口方案，不是正式冻结契约或阶段验收。</li>
+      <li><strong>先做公共声明与预检查。</strong>新增独立版本类型、规范键校验、身份和参考点校验、公开路径读取与确定性执行格式解析。保留旧版本分发；不改控制器或评分。</li>
+      <li><strong>先环境、再模型，各改一次。</strong>五个环境在边界产出规范字段；十一份模型规则读规范字段并保留内部编码。原生来源名只进入追溯元数据。</li>
+      <li><strong>离线对照所有已迁移输入输出。</strong>先确认同一份原始图和状态进入模型前完全符合旧权重规则，原生动作经公共层来回后位置、方向、夹爪与精度不变，再启动真实推理。</li>
+      <li><strong>集中有限步真实对照。</strong>先已就绪链路，再安排后置硬件。分别报告映射、重新推理差异、规划／执行差异和任务成功；不拿成功率替代映射核验。</li>
+      <li><strong>交接与后续覆盖。</strong>更新接入指引、示例、覆盖账本和证据报告。全任务、多起点、预算与评分扩展按既有覆盖评审另行确认，不因这次改名自动扩大评测协议。</li>
+    </ol>
+    <p>新增第三个组件时，只需要新组件自己的 Adapter、来源说明、具名规则和测试。无需修改 Runner，也无需改已有另一侧 Adapter。复杂机器人差异仍可能需要工作，但不能再通过每个组合额外写 Python 代码隐藏这些差异。</p>
+
+    <h3 id="acceptance-tests">要留下哪些能复查的证据</h3>
+    <div class="table-wrap"><table><thead><tr><th>检查层次</th><th>必须覆盖的内容</th><th>通过意味着什么</th></tr></thead><tbody>
+      <tr><td>合成架构</td><td>两模型×两环境四种交叉；再加第三个组件不改 Runner／另一侧；公共字段与模型输入键一致。</td><td>架构可独立组合，不是模型效果。</td></tr>
+      <tr><td>相机语义</td><td>原名不外泄为主键；单腕／双腕；场景右相机不能叫右腕；主视角歧义；缺图／无效／太旧／未来时间；不复制一只手冒充另一只。</td><td>字段不仅叫得一致，指的也是同一类数据。</td></tr>
+      <tr><td>状态与坐标</td><td>6／7 关节、顺序、单位、目标／实测、混合关节类型、参考点不一致、未知外参、动态变换时间。</td><td>不会靠填零、截断、猜测变换通过。</td></tr>
+      <tr><td>旋转转换</td><td>无旋转；三个轴各 90°、180°；一般旋转；四元数整体取反；非法输入；位置／方向来回转换；工具偏移与坐标变换分开验证。</td><td>物理朝向正确；不是两个错误刚好抵消。</td></tr>
+      <tr><td>保存的真实输入／动作</td><td>先复用已核验的 113 份 OpenWAM 双臂观测和 111 条动作；其余具名规则分别取现有证据，比较图像字节、状态、原生模型输入、动作转换、dtype 与夹爪规则。</td><td>新公共路径没有破坏匹配权重的输入输出。旧 113／111 通过不自动算新版本通过，必须重新跑检查。</td></tr>
+      <tr><td>缓存和计数</td><td>每局清空；动作段取图节奏；缓存命中与前向区别；原生动作、物理步、仿真秒数分别记；执行失败不盲重试。</td><td>公共化没有改变调用或仿真节奏。</td></tr>
+      <tr><td>旧版回归</td><td>现有 443 项测试全部通过；五组 CLI 退出码仍为 0／0／0／1／2；历史文件摘要不变。</td><td>新通路未破坏旧行为。CLI 指命令行入口；这五组含正常、评分错误和拒绝用例，不是五个真实成绩。</td></tr>
+      <tr><td>真实有限步</td><td>相同版本／权重／统计／起点／种子／预算；原生输入与公共映射分开；两侧视频及实际执行记录。</td><td>只证明已记录范围；自然规划随机性或严格轨迹差异仍单列。</td></tr>
+    </tbody></table></div>
+    <p>集中 GPU 验证仍沿用总体平均至少 20% 的目标，并单列占卡负载。字段设计、文档检查和合成测试不是 GPU 工作量，不能拿占卡数据冒充评测成绩。</p>
+  </section>
+
+  <section aria-labelledby="limits">
+    <h2 id="limits">边界、剩余缺口与需确认项</h2>
+    <p><strong>这次会改变哪些公共内容：</strong>相机／状态规范键、受限角色名、状态来源与参考点声明、ModelInput 不再重命名、普通配置无需必填 BindingConfig、自动生成只读匹配结果。新增的版本、字段和含义必须作为新通路实施；它们目前都还没有上线。</p>
+    <p><strong>这次不会顺带改变：</strong>模型权重、归一化统计、原生控制器、评分规则、固定任务协议、硬仿真时间限制、Runner 硬超时／并发／恢复、DataRef 读取、全身机器人或画面转动作系统。旧报告、Mac 路径和历史验收证据不回写。</p>
+    <p>字段统一不能自动解决：缺真实标定、未知工具参考点、缺匹配权重、DreamZero 显存、无官方评分器、原生规划器重复运行差异、未跑全任务及多随机起点。这些仍按具名缺口记录，结构通过不能抵扣。</p>
+    <div class="callout"><strong>建议你确认的是这一整套方向：</strong>新增 0.3；head 表示总览角色、安装位置另记；单臂 wrist、双臂左右腕明确分开；公共状态严格区分实测与目标；朝向统一 xyzw，参考点与坐标有据才转换；普通组合由双方 Adapter 各自完成转换，不再手填成对接线；旧版本原样保留。确认后再开始上述实现与验证。</div>
+    <p>无需逐项替项目选择关节顺序或调参；有固定来源依据的技术细节由实现方核实并留下证据。出现无法确定的物理含义、需要新控制方式或改变评测协议时，再提出具体缺口和影响。正式阶段验收和契约冻结仍另行提交。</p>
+  </section>
+
+  <section aria-labelledby="sources">
+    <h2 id="sources">复查材料与本轮证据</h2>
+    <ul>
+      <li><a href="../outputs/public-space-review-20261016-run1/current-public-space-inventory.json">本轮只读盘点</a>：当前 0.1／0.2 数据类的全部字段、11 份模型能力、7 份环境协议、23 份来源摘要。metadata-only 表示只构建声明；里面的占位资产路径不是资产就绪证明。</li>
+      <li><a href="contract-v0.2.md">当前正式使用的 0.2 契约说明</a>：用于对照“现在是什么”，不是将本文提案冒充现行契约。OpenWAM 双臂修正的后续事实以最新阶段状态和专项证据为准。</li>
+      <li><a href="stage-state.json">最新阶段状态</a>；<a href="adapter-onboarding.md">现有接入指引</a>；<a href="benchmark-coverage-review.md">待确认的全覆盖评审</a>。</li>
+      <li><a href="../outputs/onboarding-coverage-baseline-20261015-run1/baseline-check.json">10 月 15 日已完成的 443 项回归及五组 CLI 结果</a>。这是历史基线，不冒充本轮重跑结果。</li>
+      <li><a href="../outputs/public-space-review-baseline-20261016-run1/baseline-check.json">本轮文档提案后的实际回归回执</a>，独立新目录，不回写旧基线。</li>
+    </ul>
+    <p class="muted">本文基于本地固定源码，不依赖在线动态网页或下载。提案源码与审计脚本纳入独立 Git 分支；输出证据写新目录。浏览器预览只绑定实例本机，不发布公网；远程浏览需要平台端口转发。用户确认前，运行契约和生产 Adapter 保持原样。</p>
+  </section>
+</main></div>
+</body>
+</html>
