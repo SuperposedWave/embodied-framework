@@ -57,6 +57,7 @@ def main():
         assert old == path.read_bytes()
         protected_contracts[name] = hashlib.sha256(old).hexdigest()
     result = dict(kind='v03_current_metadata_and_history_integrity', at_utc=datetime.now(timezone.utc).isoformat(),
+        source_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         passed=True, current_contract='0.3', model_profiles=len(models), environment_protocols=len(benchmarks),
         metadata_cells=len(rows), structurally_compatible_cells=sum(row['structurally_compatible'] for row in rows),
         no_pair_specific_binding_required=True, runtime_pair_whitelist=False, no_GPU_modules_imported=True,

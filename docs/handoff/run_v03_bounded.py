@@ -79,9 +79,13 @@ def execute(args):
             target.mkdir()
             cfgpath = target / 'config.json'
             write(cfgpath, to_data(cfg))
-            write(target / 'preflight.json', check(cfg, verify_assets=True))
+            preflight = check(cfg, verify_assets=True)
+            write(target / 'preflight.json', preflight)
+            if not preflight['structurally_compatible'] or not preflight['assets_verified']:
+                raise ValueError('verified_structure_and_assets_required_before_server_start')
             command, cwd, client = server_spec(cfg)
             with socket.socket() as port:
+                port.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
                 port.bind(('127.0.0.1', args.port))
             env = dict(os.environ, HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1', HF_HUB_DISABLE_IMPLICIT_TOKEN='1',
                 PYTHONDONTWRITEBYTECODE='1', PYTHONUNBUFFERED='1', OMP_NUM_THREADS='4', OPENBLAS_NUM_THREADS='4',
@@ -134,6 +138,8 @@ def execute(args):
             write(target / 'receipt.json', row)
             print(json.dumps(row), flush=True)
         report['passed'] = all(row['passed'] for row in report['cases'])
+    except Exception as error:
+        report['supervisor_exception_chain'] = public_exception(error)
     finally:
         stop.set()
         monitor.join(timeout=30)
