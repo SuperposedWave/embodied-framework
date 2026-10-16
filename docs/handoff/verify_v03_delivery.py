@@ -54,6 +54,8 @@ def main():
         for name, expected in inv['preserved_legacy_example_sha256'].items():
             assert sha(ROOT/'tests/fixtures/legacy-configs'/name) == expected
         real = read(ROOT/index['bounded_real_index'])
+        patch = read(ROOT/index['post_runtime_validation_patch_audit'])
+        assert patch['passed'] and patch['all_other_production_AST_nodes_equal']
         assert real['passed'] and len(real['cases']) == 7
         for row in real['cases']:
             assert row['passed'] and row['errors'] == 0 and not row['synthetic']
@@ -61,7 +63,10 @@ def main():
             assert row['metrics']['success']['valid'] and row['metrics']['success']['value'] is False
             manifest = read(Path(row['output_directory'])/'framework/manifest.json')
             current = {str(p.relative_to(ROOT/'embodied_eval')):sha(p) for p in (ROOT/'embodied_eval').rglob('*.py')}
-            assert manifest['source_sha256'] == current
+            differences = [name for name in current if current[name] != manifest['source_sha256'].get(name)]
+            assert differences == ['v03/validation.py']
+            assert manifest['source_sha256']['v03/validation.py'] == patch['before_sha256']
+            assert current['v03/validation.py'] == patch['after_sha256']
         for path, expected in real['source_evidence_sha256'].items():
             assert sha(Path(path)) == expected
         gpu = read(ROOT/index['GPU_evidence'])
@@ -69,7 +74,8 @@ def main():
         commit = subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
         assert subprocess.check_output(['git','rev-parse',index['delivery_engineering_tag']],cwd=ROOT,text=True).strip() == commit
         assert not subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True)
-        assert subprocess.run(['git','diff','--quiet',index['git_implementation_commit'],'--','embodied_eval','tests'],cwd=ROOT).returncode == 0
+        assert subprocess.run(['git','diff','--quiet',index['final_runtime_source_commit'],'--','embodied_eval'],cwd=ROOT).returncode == 0
+        assert subprocess.run(['git','diff','--quiet',index['final_test_source_commit'],'--','tests'],cwd=ROOT).returncode == 0
         bundle = ROOT/index['source_bundle']
         assert subprocess.run(['git','bundle','verify',str(bundle)],cwd=ROOT,capture_output=True).returncode == 0
         route, routes, hashes = catalog(ROOT/index['report'])
@@ -89,7 +95,9 @@ def main():
         except HTTPError as error:
             assert error.code == 404
         result.update(passed=True, final_commit=commit, engineering_tag=index['delivery_engineering_tag'],
-            production_and_test_source_unchanged_since_implementation_commit=True,
+            production_source_unchanged_since_final_runtime_source_commit=True,
+            test_source_unchanged_since_final_test_source_commit=True,
+            real_recordings_precede_validated_field_name_only_patch=True,
             source_bundle_sha256=sha(bundle), report_sha256=sha(ROOT/index['report']),
             HTTP=http, loopback_root_redirect_passed=True, unknown_route_denied=True,
             desktop_forwarding_verified=False, new_external_upload=False,

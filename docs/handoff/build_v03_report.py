@@ -39,12 +39,15 @@ def main():
     parser.add_argument('--inventory', type=Path, required=True)
     parser.add_argument('--real', type=Path, required=True)
     parser.add_argument('--camera-audit', type=Path, required=True)
+    parser.add_argument('--validation-patch', type=Path, required=True)
     args = parser.parse_args()
     args.output = args.output.resolve()
     args.output.resolve().relative_to(ROOT / 'outputs')
     args.output.mkdir(parents=True, exist_ok=False)
     base, mapping, inv, real = [read(path) for path in (args.baseline, args.mapping, args.inventory, args.real)]
     assert base['passed'] and mapping['passed'] and inv['passed']
+    patch = read(args.validation_patch)
+    assert patch['passed'] and patch['all_other_production_AST_nodes_equal']
     secondary = read(args.secondary_baseline)
     assert secondary['passed'] and secondary['checks'][0]['tests_run'] == base['checks'][0]['tests_run']
     count = base['checks'][0]['tests_run']
@@ -136,6 +139,10 @@ def main():
         '<p>首个顺序监督器的OpenWAM/LIBERO四步已完成；准备下一条时，端口重绑预检查收到“地址占用”，监督器以失败结束，原回执保留。后续各条用独立端口，不把这个工具失败当作模型／环境执行失败，也不将原失败覆盖成通过。</p>'
         + '<p>预检查补了端口回收选项，并以自己创建的本地TCP连接复现关闭后的普通重绑拒绝与可回收重绑成功。TCP是本地网络连接协议。该复现不倒推证明原事件的唯一内部原因；当前Adapter、权重、控制器与评分没有因此改变。</p>'
         + '<p>两条已完成的π0.5启动日志命中“共享库”关键词分类，但客户端四步和退出均成功。该分类只是保留的关键词提示，不等同于运行错误；未保存原始日志，也不据此唯一认定某个库缺失或擅自更换依赖。</p>'))
+    pieces.append(section('final-guards','最后两处字段检查修正',
+        '<p>七条真实短跑之后补了两处错误输入检查：状态名不能同时带左、右两个前缀；传感器名称必须与其实际模态一致，不能把RGB（红绿蓝图像）挂在深度图名称下，或叠加多个模态后缀。现有真实链路的合法字段不变。</p>'
+        + '<p>最后版本重新执行了两套Python环境的软件回归和55份保存真实观测／44条动作的转换检查。七条新真实短跑仍是修正前的记录，没有说成修正后重跑。逐文件摘要和语法树比对确认：只有字段名校验改变，模型／环境Adapter、Runner、数值变换、缓存、控制和评分代码均与真实运行时相同；所有已跑公共字段的新旧检查结论一致。</p>'
+        + '<p>语法树比对就是按Python实际代码结构比较，忽略排版注释，而不是凭说明声称没有改数值。' + link(args.validation_patch,'补丁前后代码及七条记录的逐项审计') + '。为补齐检查，另主动中止并保留过一轮保存数据校验，最终通过的是后续新目录中的完整一轮。</p>'))
     pieces.append(section('use', '后续接入与运行怎么做',
         '<ol><li>固定新模型自己的源码、权重、归一化和输入输出示例；或固定新环境自己的版本、任务、控制器与评分。</li>'
         + '<li>在自己的Adapter中写清原生格式与公共字段的转换，声明输入路径、实际目标、单位、坐标和参考部位。已有公共键不能重新改成环境私有名。</li>'
