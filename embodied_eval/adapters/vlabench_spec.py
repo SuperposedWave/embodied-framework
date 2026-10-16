@@ -1,5 +1,5 @@
 """VLABench Franka native EE evaluation; control period is read from the environment."""
-from .. import _legacy_contracts as c
+from ..native import environment_records as c
 
 MODEL_REVISION = "48bd67b89d489b14d03b8d92bc66e65d306df32e"
 BENCHMARK_REVISION = "cf588fe60c0c7282174fe979f5913170cfe69017"

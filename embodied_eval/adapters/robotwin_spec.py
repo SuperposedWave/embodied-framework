@@ -1,5 +1,5 @@
 """Reviewed dual-arm native profiles; raw targets are not measured joint states."""
-from .. import _legacy_contracts as c
+from ..native import environment_records as c
 from .robotwin_identity import (OPENWAM_REVISION, OPENWAM_ROBOTWIN_REVISION,
                                     LINGBOT_REVISION, LINGBOT_ROBOTWIN_REVISION)
 

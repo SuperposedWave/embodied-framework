@@ -1,7 +1,7 @@
 """Internal parameters for reused environment loaders, NOT a run config."""
 from dataclasses import dataclass, field
 from typing import Literal
-from .. import _legacy_contracts as c
+from ..native import environment_records as c
 
 @dataclass(frozen=True, kw_only=True)
 class BenchmarkConfig:

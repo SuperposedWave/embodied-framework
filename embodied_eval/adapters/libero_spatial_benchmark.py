@@ -6,10 +6,10 @@ import tempfile
 import numpy as np
 import yaml
 
-from .. import _legacy_contracts as c
+from ..native import environment_records as c
 from ..codec import decode
 from ..errors import AdapterError
-from .._legacy_validation import same_episode
+from ..core.validation import same_episode
 from .openwam_libero_spec import CONTROLLER, EXTENSION, space
 
 

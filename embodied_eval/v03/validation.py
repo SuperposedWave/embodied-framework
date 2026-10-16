@@ -1,10 +1,9 @@
 """Strict canonical names, measured provenance and physical reference sites."""
-from dataclasses import fields
 import math
-from .. import _legacy_contracts as leaf
+from ..core import types as leaf
 from ..codec import decode
-from .._legacy_validation import require, quaternion, validate_tensor, shape_matches, target_table
-from .._legacy_validation import validate_space as validate_leaf_space
+from ..core.validation import require, quaternion, validate_tensor, shape_matches, target_table
+from ..core.validation import validate_structure
 from . import contracts as c
 
 CAMERAS = {"head", "wrist", "left_wrist", "right_wrist", "external_front", "external_left",
@@ -30,23 +29,6 @@ STATES = {
 }
 
 
-def leaf_space(space):
-    """Reuse structural geometry checks WITHOUT changing shared historical types."""
-    def project(cls, value):
-        return cls(**{f.name: getattr(value, f.name) for f in fields(cls)})
-    robots = {}
-    for rid, robot in space.robots.items():
-        robots[rid] = leaf.RobotSpec(embodiment_id=robot.embodiment_id, base_frame_id=robot.base_frame_id,
-            joints=robot.joints, grippers=robot.grippers,
-            end_effectors={key: project(leaf.EndEffectorSpec, value) for key, value in robot.end_effectors.items()})
-    return leaf.SpaceSpec(spec_id=space.spec_id, revision=space.revision,
-        protocol_id=space.protocol_id, protocol_version=space.protocol_version,
-        control_period_s=space.control_period_s, timing_mode=space.timing_mode,
-        physics_period_s=space.physics_period_s, frames=space.frames, robots=robots,
-        sensors={key: project(leaf.SensorSpec, value) for key, value in space.sensors.items()},
-        controllers=space.controllers, action_specs=space.action_specs)
-
-
 def tensor_matches(tensor, spec, path):
     validate_tensor(tensor)
     require(tensor.dtype == spec.dtype and tensor.layout == spec.layout and shape_matches(tensor.shape, spec.shape),
@@ -61,7 +43,7 @@ def state_base(key):
 
 def validate_space(space):
     decode(c.SpaceSpec, space)
-    validate_leaf_space(leaf_space(space))
+    validate_structure(space)
     require(set(space.robots) == {"robot0"}, "unsupported_robot_scope", "robots", "one explicitly controlled robot0, single or dual arm")
     require("world" in space.frames, "missing_frame", "world", "public world frame required")
     targets = target_table(space)
@@ -156,7 +138,7 @@ def validate_observation(obs, space):
 
 
 def validate_prediction(pred, request, obs, space, cap, profile):
-    from .._legacy_validation import schema_value, validate_gripper
+    from ..core.validation import schema_value, validate_gripper
     decode(c.Prediction, pred)
     same_episode(pred.context, request)
     require(pred.context.message_id == request.message_id, "wrong_request", "prediction", "response is not for pending request")
@@ -174,7 +156,7 @@ def validate_prediction(pred, request, obs, space, cap, profile):
     poses={cmd.target_id:cmd for cmd in action.commands if isinstance(cmd,leaf.PoseTarget)}
     require(set(action.source_euler_xyz_rad)<=set(poses),"rotation_hint_mismatch","source_euler_xyz_rad","hint must address a pose command")
     if action.source_euler_xyz_rad:
-        from ..mn.rotations import euler_quaternion_xyzw
+        from ..native.rotations import euler_quaternion_xyzw
         for target,euler in action.source_euler_xyz_rad.items():
             expected=euler_quaternion_xyzw(euler)
             actual=poses[target].pose.quaternion_xyzw

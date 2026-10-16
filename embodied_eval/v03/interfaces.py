@@ -1,6 +1,6 @@
 """Both sides receive only their own configuration and public data."""
 from typing import Protocol
-from .._legacy_contracts import Budgets, Metric, PublicTask
+from ..core.types import Budgets, Metric, PublicTask
 from .contracts import CapabilitySpec, SpaceSpec, Context, ResolvedProfile, ModelInput, Prediction, TaskSpec, Observation, Action, StepResult
 
 

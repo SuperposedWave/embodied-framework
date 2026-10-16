@@ -3,8 +3,8 @@ from dataclasses import replace
 import copy
 from ..codec import decode
 from ..errors import Issue
-from .._legacy_validation import require, shape_matches, target_table
-from ..mn.binding import CompatibilityReport
+from ..core.validation import require, shape_matches, target_table
+from ..core.compatibility import CompatibilityReport
 from . import contracts as c
 
 

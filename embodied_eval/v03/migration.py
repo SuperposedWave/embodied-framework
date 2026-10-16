@@ -4,8 +4,7 @@ Legacy pairing names are parsed only as historical metadata. Runtime adapters
 are still independently selected; no pair factory or simulator is constructed.
 """
 from ..codec import decode, to_data
-from .._legacy_validation import require
-from ..mn.migration import MODELS, BENCHMARKS
+from ..core.validation import require
 from .config import RunConfig, validate_config
 from .registry import default_registry
 from .matching import resolve
@@ -20,6 +19,7 @@ def migrate(raw):
         return validate_config(decode(RunConfig, raw)), {"from_version": version, "changed": False}
     require(version in ("0.1", "0.2"), "unsupported_config_version", "contract_version", "unknown source version")
     if version == "0.1":
+        from ..mn.migration import MODELS, BENCHMARKS
         require(set(raw) <= {"contract_version", "run_id", "model", "benchmark", "profile", "episodes"},
                 "unknown_field", "$", "unknown source fields cannot be discarded")
         model, bench = raw.get("model", {}), raw.get("benchmark", {})
@@ -58,7 +58,7 @@ def migrate(raw):
         # profile. Nonstandard experiments are not silently reset to defaults.
         require(model["adapter"] not in ("synthetic_policy_a", "synthetic_policy_b"),
                 "manual_migration_required", "model", "synthetic fixture identifiers/semantics changed; use the current fixture examples")
-        from ..mn.registry import default_registry as original_registry
+        from ..native.registry import default_registry as original_registry
         original = original_registry()
         old_cap = original.model(model["adapter"]).describe(model["options"])
         old_space = original.benchmark(bench["adapter"]).describe(bench["options"])

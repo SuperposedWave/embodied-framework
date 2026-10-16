@@ -1,5 +1,5 @@
 """Private native-codec context conversion, independent of both adapters."""
-from ..mn import contracts as native
+from ..native import contracts as native
 from . import contracts as c
 
 

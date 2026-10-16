@@ -1,0 +1,2080 @@
+{
+  "repository": "RoboDojo-Benchmark/RoboDojo",
+  "kind": "datasets",
+  "revision": "35efbc7dedfdbeeb6e95fb749bd885d73d483e41",
+  "scope": "source-defined stack_bowls ARX-X5 seed0 layouts only, no full-suite claim",
+  "asset_closure_verified_by_simulator": false,
+  "selected_prefixes": [
+    "Assets/Robots/x5",
+    "Assets/Object/RoboDojo/Rigid/bowl",
+    "Assets/Object/RoboDojo/Geometry/camera_stand",
+    "Assets/Room/Simple_Room_nolight",
+    "Assets/Material/Base",
+    "Assets/Material/material_0122",
+    "Assets/Material/material_0564",
+    "Assets/Background",
+    "Assets/Sensor"
+  ],
+  "objects": [
+    {
+      "relative": "Assets/Robots/x5/ARX.usd",
+      "size": 28300821,
+      "sha256": "5723a835bf5627a935a8dabb3a44447725bd1465243ce791e221b3e990121d63"
+    },
+    {
+      "relative": "Assets/Robots/x5/X5A.urdf",
+      "size": 9218,
+      "sha256": "7aaa308a1a5b6a213d914db86ba09ddd6252f25cb498ac9a148bfa6c7166a423"
+    },
+    {
+      "relative": "Assets/Robots/x5/configuration/ARX_base.usd",
+      "size": 28281338,
+      "sha256": "01a382332e3a60ee2fc61013d2ad13dd0df287d43142e2b854a6b3853e0c892b"
+    },
+    {
+      "relative": "Assets/Robots/x5/configuration/ARX_physics.usd",
+      "size": 5459,
+      "sha256": "96369690dd2a0bdc583f21e7a985e2a0c0d9a50e0f4c6d41d8dc4d9c918df53b"
+    },
+    {
+      "relative": "Assets/Robots/x5/configuration/ARX_robot.usd",
+      "size": 1843,
+      "sha256": "89b2d4349c05691d71d13007f7747e61b64ab5bf7707cca55fcb0e575f45a063"
+    },
+    {
+      "relative": "Assets/Robots/x5/configuration/ARX_sensor.usd",
+      "size": 643,
+      "sha256": "7dfddb8b25ea5ff43e327b63b22c496141bc727c89b616a06e022abcca847677"
+    },
+    {
+      "relative": "Assets/Robots/x5/configuration/X5A_temp_base.usd",
+      "size": 28282173,
+      "sha256": "18ac17e17edc1e6e1661f3b20cf59edd3ba4292150dfcb02c4f5c1def2a199ec"
+    },
+    {
+      "relative": "Assets/Robots/x5/configuration/X5A_temp_physics.usd",
+      "size": 5752,
+      "sha256": "71959c376a0cb79c9cfef3e7c6449c9aa204590095965bdc37a094c1dad9f1e5"
+    },
+    {
+      "relative": "Assets/Robots/x5/configuration/X5A_temp_robot.usd",
+      "size": 1843,
+      "sha256": "89b2d4349c05691d71d13007f7747e61b64ab5bf7707cca55fcb0e575f45a063"
+    },
+    {
+      "relative": "Assets/Robots/x5/configuration/X5A_temp_sensor.usd",
+      "size": 643,
+      "sha256": "7dfddb8b25ea5ff43e327b63b22c496141bc727c89b616a06e022abcca847677"
+    },
+    {
+      "relative": "Assets/Robots/x5/curobo_tmp.yml",
+      "size": 12526,
+      "sha256": "5eea08bf7ef276bf9dfd078ef9f69221e9a67c8cf6cd19fce5ef66d42e96b3f2"
+    },
+    {
+      "relative": "Assets/Robots/x5/meshes/base_link.STL",
+      "size": 1611284,
+      "sha256": "898dbe3af3a98857358ac5a3d74e085ec9c69946737e767dad139776761cbd92"
+    },
+    {
+      "relative": "Assets/Robots/x5/meshes/camera.glb",
+      "size": 15899328,
+      "sha256": "9833e436988bcd83f3113ab1071428427c80d6a1392d9e0b7cf35d2b6e949d7c"
+    },
+    {
+      "relative": "Assets/Robots/x5/meshes/camera_base.glb",
+      "size": 62332,
+      "sha256": "d771a24ab886166536ffe4a0719af1163e44fac4067e07110cf72a7a01d260b0"
+    },
+    {
+      "relative": "Assets/Robots/x5/meshes/link1.STL",
+      "size": 162184,
+      "sha256": "04a52b86a5b28c847377a9167e7effab0478fa591052e83b0b32cf8709bb3885"
+    },
+    {
+      "relative": "Assets/Robots/x5/meshes/link2.STL",
+      "size": 4353884,
+      "sha256": "2865da6a962c814abaf9251497bcf5f5e3b67610e3b657ddcaa9de8b3d45e83e"
+    },
+    {
+      "relative": "Assets/Robots/x5/meshes/link3.STL",
+      "size": 1052684,
+      "sha256": "3ac2411b0cbffcf4808cae4c215cfeab607f240cd124eeba209ac7986ac047c0"
+    },
+    {
+      "relative": "Assets/Robots/x5/meshes/link4.STL",
+      "size": 142784,
+      "sha256": "3447ddef920c22e4607b887e1cc588037dfb51c37825c4cac86a5391425469c4"
+    },
+    {
+      "relative": "Assets/Robots/x5/meshes/link5.STL",
+      "size": 679584,
+      "sha256": "934b3e70ce2987f8de999de29d8ef72c8370dced8e9fdf6f9ddd3e7e24c1e464"
+    },
+    {
+      "relative": "Assets/Robots/x5/meshes/link6.STL",
+      "size": 643784,
+      "sha256": "32dca4ededcf3215163207b9aea1046114ae59921555d1e068ee46fa6e53915e"
+    },
+    {
+      "relative": "Assets/Robots/x5/meshes/link7.STL",
+      "size": 65284,
+      "sha256": "ec3d40b39cccde0075ca3d16603f14f180fce41a46b446473d384def7a1b0be0"
+    },
+    {
+      "relative": "Assets/Robots/x5/meshes/link8.STL",
+      "size": 65284,
+      "sha256": "29f7a8379cad81797e82e4ba099455cc275ac6ac5bb9e264ce46719fd7d2bb60"
+    },
+    {
+      "relative": "Assets/Robots/x5/robot_config.yml",
+      "size": 794,
+      "sha256": "9de4f63b84c0f730623c09af7a2d530d84973981397280b6e4b626b50ba6f1c9"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00001/description.json",
+      "size": 6719,
+      "sha256": "b3d097d16e87ab1ab90459c203d53b6b3fd959cc76f79412954239c4d4e74ca1"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00001/metadata.json",
+      "size": 3488,
+      "sha256": "2c77406500e880e856f6600254dbf0233d234698646eef5ca0e2bd0de444f52b"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00001/object.usdz",
+      "size": 41955422,
+      "sha256": "86bfd510726f18e6db20d421ee6cdbeabd8c7aaa84c1c579d55d7c3dc671a727"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00002/description.json",
+      "size": 7189,
+      "sha256": "0eb45cd48a14b962bd8cf11cdcc6d946494a977fb01c35fb4418c6068db4f093"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00002/metadata.json",
+      "size": 3473,
+      "sha256": "ab9defaace74b8699827995a0f8779de2f3c6ad9517597eaf2b5604af4f4e01a"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00002/object.usdz",
+      "size": 41955422,
+      "sha256": "7d470f07fe87b02b323c4b0e87a59913f3766b06b48058051332370ae0bcdd73"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00003/description.json",
+      "size": 6471,
+      "sha256": "321cc939142366cc99586c04f7fb8025090499dd92dba3a25b2a77005cdbdad3"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00003/metadata.json",
+      "size": 3479,
+      "sha256": "60523a5f610be39311c3903894a11fa9408fc4221745699bd632d1f24e2b5fb8"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00003/object.usdz",
+      "size": 6335297,
+      "sha256": "f99d6ce01a551e1d04664232aa7647701912f9b4da881e84c22d2f1c637595b7"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00005/description.json",
+      "size": 8020,
+      "sha256": "289ab5f4b4741bc90329a68fb52447afea5ea976833ad1819c2c8c627f910ded"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00005/metadata.json",
+      "size": 3493,
+      "sha256": "4388b895fac62bbe16a63b83ca06df8fd37316238034db496f8361ec5c7c8642"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00005/object.usdz",
+      "size": 30300260,
+      "sha256": "83698d648317ccbb96b68a4948361d392684ec0a293b4aa3a0ba7cdcfbb0d560"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00007/description.json",
+      "size": 6604,
+      "sha256": "bd7450e6b80ed39a1a67934e9610dda34cb5e1ba277f2ffe735f445840070965"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00007/metadata.json",
+      "size": 3483,
+      "sha256": "488962705e39a4cb216bd5103678f14b28c1a10a1ff71e4b0d7691ed0e4a4480"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00007/object.usdz",
+      "size": 5526859,
+      "sha256": "bbc09f450a687e5dbc46ec6e8fe4a3217b0f593facea011ea2b576d47b835ff3"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00008/description.json",
+      "size": 6990,
+      "sha256": "ff814eb4b7cf32ac0feedc6611db6ba59668b82fd5abfdeb13b194c21ab6e7a8"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00008/metadata.json",
+      "size": 3480,
+      "sha256": "1053f1a3936816629dde4598a3feeee42c1e133f8c98e1ac76bbdee58585ad03"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00008/object.usdz",
+      "size": 5176155,
+      "sha256": "9d831f2b3bd05b30198cfbb7b7c351e2eeddef469bf175e769907aee42659b9e"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00009/description.json",
+      "size": 6466,
+      "sha256": "b3b2f78ed1cc4363b5d532234f28300198db26a79b3d7b216f07cbd962ac1135"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00009/metadata.json",
+      "size": 3451,
+      "sha256": "785aa052e8aae48bba0636c92bb6503a0ac0153cae956bf177539ceafef043fb"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00009/object.usdz",
+      "size": 5136768,
+      "sha256": "b31ce3031f173faf9810e43fa5c7e3e2daae61823914a46a88cc51d33290c21f"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00010/description.json",
+      "size": 7302,
+      "sha256": "10b99d69caca8ceb2d164277edeaf03513c713a9f454e52f2908600b2d668442"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00010/metadata.json",
+      "size": 3483,
+      "sha256": "e6c6fd201b871a8c57661c027b5ad5d50f71a9b62543515b9bb26ee1513493a5"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00010/object.usdz",
+      "size": 21789731,
+      "sha256": "cc8ad8ca44c288f8887f0b344ddee3fc01d90aa5bd4da9e433caba6cb3909ba5"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00011/description.json",
+      "size": 6452,
+      "sha256": "0996f7699d49026da2f87764fb99675bc424f420f6298029cdeecfaed4e99afe"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00011/metadata.json",
+      "size": 3470,
+      "sha256": "32dc76ba75256e0b87d39aaf40dea3b6bc4cf9c7a5ba79cc190bb79a97406699"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00011/object.usdz",
+      "size": 5663351,
+      "sha256": "f0201cd983d79f57a0c9920ea04872f56595936030d07188f76fea1fda6a887c"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00012/description.json",
+      "size": 7423,
+      "sha256": "ef97a4b26a361d53d7cbfc7788cbb662be53ff4c5d62a48e33959b50fb4ea71a"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00012/metadata.json",
+      "size": 3491,
+      "sha256": "235f0b69be6119818a632e0c4b991f7d226baf3e43a52119aad867551fc09ae5"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00012/object.usdz",
+      "size": 23236810,
+      "sha256": "69edf6c86f287b5d7c1d7710afb4cc9cec15d36128067f3f173873bd15858a71"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00013/description.json",
+      "size": 7464,
+      "sha256": "84f10cb722b45cd90d000f7a3c5086ab6815b42ef44ecc8e97e1ff4e1a92e4db"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00013/metadata.json",
+      "size": 3485,
+      "sha256": "a0da390a2fd18b0e3e7247dafce83319eba1861faf618c7edf77cba22194563d"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00013/object.usdz",
+      "size": 16738064,
+      "sha256": "d9f7bf2bed86cbbfdf8370897df2bb1296c43ae05ab3d8e3b6c115d30caf8cce"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00014/description.json",
+      "size": 7281,
+      "sha256": "b669e005c6870df9d5eddb7c9eef5e84d01d8192a6d217328f7276088209f7f4"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00014/metadata.json",
+      "size": 3466,
+      "sha256": "59a3ea17af819de37dd4a85ae0aa9678d5ea6142971af595764568de9196176c"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00014/object.usdz",
+      "size": 21789731,
+      "sha256": "5f6fe31c497843e4c30f16927093c4f00995ffe52c8c1fb6944c748d4af09ee1"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00015/description.json",
+      "size": 7420,
+      "sha256": "1068ef743acf0d6cfb462d3633583b000ed0678585ab37231c1559284add1ecb"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00015/metadata.json",
+      "size": 3493,
+      "sha256": "e9cf91c48c307f6907849108e009c1dfb362b9606c2b32bfa4542b72c7b5505a"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Rigid/bowl/00015/object.usdz",
+      "size": 27345638,
+      "sha256": "718348780a3127e6314f908c33c49fec2d5e031842dbaf01376563a40f36f8c2"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Geometry/camera_stand/00000/metadata.json",
+      "size": 2414,
+      "sha256": "981392df89e5a45a28c0240ef0cb289b778550ec7ad49e98419a813865bb3d30"
+    },
+    {
+      "relative": "Assets/Object/RoboDojo/Geometry/camera_stand/00000/object.usd",
+      "size": 8103315,
+      "sha256": "6c4b9ec4cd325f6e47d862b87e7dddbe9adc5e9a5aa0f04224c47d0f16a600a8"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/.thumbs/256x256/SimpleRoom.usd.png",
+      "size": 54337,
+      "sha256": "26aa63c797b2b85bec13865521c60f7f34f15f8bffa34799ae0678aa44b85668"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/SimpleRoom.json",
+      "size": 416,
+      "sha256": "ea5adc9b0a1602b1a4c301c01c386a1adf7e49dc18e1239080ebe4a04bda73d2"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/SimpleRoom.png",
+      "size": 871,
+      "sha256": "e33c865a2910f9553952368c6a315538779efd5aae47b85206ffb0020d0d1b58"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/SimpleRoom_room001.json",
+      "size": 28181,
+      "sha256": "a6226f57d18aeb57a70c5e76d951fdb242231ff8d3747c7dd18c77bfe264c09f"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice000.png",
+      "size": 901,
+      "sha256": "88fd176941a815caa5b7c43a714d571952c839ab906495e43bca9142ffa56f7f"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice001.png",
+      "size": 901,
+      "sha256": "88fd176941a815caa5b7c43a714d571952c839ab906495e43bca9142ffa56f7f"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice002.png",
+      "size": 901,
+      "sha256": "88fd176941a815caa5b7c43a714d571952c839ab906495e43bca9142ffa56f7f"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice003.png",
+      "size": 901,
+      "sha256": "88fd176941a815caa5b7c43a714d571952c839ab906495e43bca9142ffa56f7f"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice004.png",
+      "size": 879,
+      "sha256": "463907aca0e35cfe142d49e893289710e7fb47d87b539b8bf8a0ad871d10a2cd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice005.png",
+      "size": 879,
+      "sha256": "463907aca0e35cfe142d49e893289710e7fb47d87b539b8bf8a0ad871d10a2cd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice006.png",
+      "size": 879,
+      "sha256": "463907aca0e35cfe142d49e893289710e7fb47d87b539b8bf8a0ad871d10a2cd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice007.png",
+      "size": 879,
+      "sha256": "463907aca0e35cfe142d49e893289710e7fb47d87b539b8bf8a0ad871d10a2cd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice008.png",
+      "size": 879,
+      "sha256": "463907aca0e35cfe142d49e893289710e7fb47d87b539b8bf8a0ad871d10a2cd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice009.png",
+      "size": 879,
+      "sha256": "463907aca0e35cfe142d49e893289710e7fb47d87b539b8bf8a0ad871d10a2cd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice010.png",
+      "size": 879,
+      "sha256": "463907aca0e35cfe142d49e893289710e7fb47d87b539b8bf8a0ad871d10a2cd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice011.png",
+      "size": 879,
+      "sha256": "463907aca0e35cfe142d49e893289710e7fb47d87b539b8bf8a0ad871d10a2cd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice012.png",
+      "size": 879,
+      "sha256": "463907aca0e35cfe142d49e893289710e7fb47d87b539b8bf8a0ad871d10a2cd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice013.png",
+      "size": 879,
+      "sha256": "463907aca0e35cfe142d49e893289710e7fb47d87b539b8bf8a0ad871d10a2cd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice014.png",
+      "size": 877,
+      "sha256": "89b76b36c06b662fdda3033ecc4cb229b89c48f31c2c434995601f30401d7e5b"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice015.png",
+      "size": 877,
+      "sha256": "89b76b36c06b662fdda3033ecc4cb229b89c48f31c2c434995601f30401d7e5b"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice016.png",
+      "size": 877,
+      "sha256": "89b76b36c06b662fdda3033ecc4cb229b89c48f31c2c434995601f30401d7e5b"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice017.png",
+      "size": 877,
+      "sha256": "89b76b36c06b662fdda3033ecc4cb229b89c48f31c2c434995601f30401d7e5b"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice018.png",
+      "size": 877,
+      "sha256": "89b76b36c06b662fdda3033ecc4cb229b89c48f31c2c434995601f30401d7e5b"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice019.png",
+      "size": 877,
+      "sha256": "89b76b36c06b662fdda3033ecc4cb229b89c48f31c2c434995601f30401d7e5b"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice020.png",
+      "size": 877,
+      "sha256": "89b76b36c06b662fdda3033ecc4cb229b89c48f31c2c434995601f30401d7e5b"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice021.png",
+      "size": 877,
+      "sha256": "89b76b36c06b662fdda3033ecc4cb229b89c48f31c2c434995601f30401d7e5b"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice022.png",
+      "size": 877,
+      "sha256": "89b76b36c06b662fdda3033ecc4cb229b89c48f31c2c434995601f30401d7e5b"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice023.png",
+      "size": 878,
+      "sha256": "94a02b1f801a04be5c2c321d74c12d94f54c6d96c6971fdcb23203ef5f892eea"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice024.png",
+      "size": 878,
+      "sha256": "94a02b1f801a04be5c2c321d74c12d94f54c6d96c6971fdcb23203ef5f892eea"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice025.png",
+      "size": 878,
+      "sha256": "94a02b1f801a04be5c2c321d74c12d94f54c6d96c6971fdcb23203ef5f892eea"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice026.png",
+      "size": 878,
+      "sha256": "94a02b1f801a04be5c2c321d74c12d94f54c6d96c6971fdcb23203ef5f892eea"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice027.png",
+      "size": 878,
+      "sha256": "94a02b1f801a04be5c2c321d74c12d94f54c6d96c6971fdcb23203ef5f892eea"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice028.png",
+      "size": 878,
+      "sha256": "94a02b1f801a04be5c2c321d74c12d94f54c6d96c6971fdcb23203ef5f892eea"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice029.png",
+      "size": 882,
+      "sha256": "d4723cea179d0b1e37107c97aa58684bce13a575e65957eb75ca5d4b09a0fd43"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice030.png",
+      "size": 882,
+      "sha256": "d4723cea179d0b1e37107c97aa58684bce13a575e65957eb75ca5d4b09a0fd43"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice031.png",
+      "size": 882,
+      "sha256": "d4723cea179d0b1e37107c97aa58684bce13a575e65957eb75ca5d4b09a0fd43"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice032.png",
+      "size": 880,
+      "sha256": "70a66b17f2b8f7cbab7f9fdad53382b9eed17c2e2c7d83e2edd79602ed5a29a4"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice033.png",
+      "size": 880,
+      "sha256": "70a66b17f2b8f7cbab7f9fdad53382b9eed17c2e2c7d83e2edd79602ed5a29a4"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice034.png",
+      "size": 880,
+      "sha256": "70a66b17f2b8f7cbab7f9fdad53382b9eed17c2e2c7d83e2edd79602ed5a29a4"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice035.png",
+      "size": 880,
+      "sha256": "70a66b17f2b8f7cbab7f9fdad53382b9eed17c2e2c7d83e2edd79602ed5a29a4"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice036.png",
+      "size": 880,
+      "sha256": "70a66b17f2b8f7cbab7f9fdad53382b9eed17c2e2c7d83e2edd79602ed5a29a4"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice037.png",
+      "size": 880,
+      "sha256": "70a66b17f2b8f7cbab7f9fdad53382b9eed17c2e2c7d83e2edd79602ed5a29a4"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice038.png",
+      "size": 880,
+      "sha256": "69c0c10bdf3766d1e1b43d17b1218c28420047e0494f21d8bf01c483b53223f1"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice039.png",
+      "size": 880,
+      "sha256": "69c0c10bdf3766d1e1b43d17b1218c28420047e0494f21d8bf01c483b53223f1"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice040.png",
+      "size": 880,
+      "sha256": "69c0c10bdf3766d1e1b43d17b1218c28420047e0494f21d8bf01c483b53223f1"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice041.png",
+      "size": 880,
+      "sha256": "69c0c10bdf3766d1e1b43d17b1218c28420047e0494f21d8bf01c483b53223f1"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice042.png",
+      "size": 880,
+      "sha256": "69c0c10bdf3766d1e1b43d17b1218c28420047e0494f21d8bf01c483b53223f1"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice043.png",
+      "size": 880,
+      "sha256": "69c0c10bdf3766d1e1b43d17b1218c28420047e0494f21d8bf01c483b53223f1"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice044.png",
+      "size": 880,
+      "sha256": "69c0c10bdf3766d1e1b43d17b1218c28420047e0494f21d8bf01c483b53223f1"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice045.png",
+      "size": 880,
+      "sha256": "69c0c10bdf3766d1e1b43d17b1218c28420047e0494f21d8bf01c483b53223f1"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice046.png",
+      "size": 880,
+      "sha256": "69c0c10bdf3766d1e1b43d17b1218c28420047e0494f21d8bf01c483b53223f1"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice047.png",
+      "size": 880,
+      "sha256": "69c0c10bdf3766d1e1b43d17b1218c28420047e0494f21d8bf01c483b53223f1"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice048.png",
+      "size": 902,
+      "sha256": "27bfe7c7e69352e3d7b76f090d99336c9a085171050df06428abf0c77b5d00dd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice049.png",
+      "size": 902,
+      "sha256": "27bfe7c7e69352e3d7b76f090d99336c9a085171050df06428abf0c77b5d00dd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice050.png",
+      "size": 902,
+      "sha256": "27bfe7c7e69352e3d7b76f090d99336c9a085171050df06428abf0c77b5d00dd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice051.png",
+      "size": 902,
+      "sha256": "53cabbf69d4eb817315198ef19be6b3171f1ed2ec73f9203e02152e01e436e4c"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice052.png",
+      "size": 902,
+      "sha256": "53cabbf69d4eb817315198ef19be6b3171f1ed2ec73f9203e02152e01e436e4c"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice053.png",
+      "size": 903,
+      "sha256": "ee32043a3662e1b91209b247c21b38cb9b7fd4b906a758e19f34e7579a9475ca"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice054.png",
+      "size": 903,
+      "sha256": "ee32043a3662e1b91209b247c21b38cb9b7fd4b906a758e19f34e7579a9475ca"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice055.png",
+      "size": 907,
+      "sha256": "67efc49c6554776e7b2e0c6c4dbbe46697dfb5a403c0b6af5ccc3b89ba4d4e3f"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice056.png",
+      "size": 907,
+      "sha256": "67efc49c6554776e7b2e0c6c4dbbe46697dfb5a403c0b6af5ccc3b89ba4d4e3f"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice057.png",
+      "size": 907,
+      "sha256": "67efc49c6554776e7b2e0c6c4dbbe46697dfb5a403c0b6af5ccc3b89ba4d4e3f"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/room_boundaries/room001/SimpleRoom_slice058.png",
+      "size": 905,
+      "sha256": "4c2ac213ba37ca8a68357b52b4e8e1e24c0f6ebe6ae8c5b9d819e3d6a600a6b7"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice000.png",
+      "size": 885,
+      "sha256": "6eca35c75aab7f66c9c90db8ebfe5b35d412ba17003763eadd85426410209683"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice001.png",
+      "size": 885,
+      "sha256": "6eca35c75aab7f66c9c90db8ebfe5b35d412ba17003763eadd85426410209683"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice002.png",
+      "size": 885,
+      "sha256": "6eca35c75aab7f66c9c90db8ebfe5b35d412ba17003763eadd85426410209683"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice003.png",
+      "size": 885,
+      "sha256": "fb8321cc6d9add94513f92c40c73097b8ff20ac86250ff049c3745dd1970f57c"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice004.png",
+      "size": 860,
+      "sha256": "1e747c42e4ce57ad9f745b77d230d34ae2ecfb6c0b74e77043729b08afbf485b"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice005.png",
+      "size": 860,
+      "sha256": "1e747c42e4ce57ad9f745b77d230d34ae2ecfb6c0b74e77043729b08afbf485b"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice006.png",
+      "size": 856,
+      "sha256": "b2569b5d8fbcac96e887d1a9804298c022edf102cd536a77ab51dcb6eb7d2a40"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice007.png",
+      "size": 856,
+      "sha256": "b2569b5d8fbcac96e887d1a9804298c022edf102cd536a77ab51dcb6eb7d2a40"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice008.png",
+      "size": 856,
+      "sha256": "b2569b5d8fbcac96e887d1a9804298c022edf102cd536a77ab51dcb6eb7d2a40"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice009.png",
+      "size": 856,
+      "sha256": "b2569b5d8fbcac96e887d1a9804298c022edf102cd536a77ab51dcb6eb7d2a40"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice010.png",
+      "size": 856,
+      "sha256": "b2569b5d8fbcac96e887d1a9804298c022edf102cd536a77ab51dcb6eb7d2a40"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice011.png",
+      "size": 856,
+      "sha256": "b2569b5d8fbcac96e887d1a9804298c022edf102cd536a77ab51dcb6eb7d2a40"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice012.png",
+      "size": 855,
+      "sha256": "985c786f2e4c1adbcaca0eb00ed3ac003a573b5b50e0bea3df6dad29b3f22fa9"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice013.png",
+      "size": 855,
+      "sha256": "985c786f2e4c1adbcaca0eb00ed3ac003a573b5b50e0bea3df6dad29b3f22fa9"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice014.png",
+      "size": 862,
+      "sha256": "d61969d1e1a025f3c48f504e2e2e507f2e6cb45a496c60a90e9ce212d8134f04"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice015.png",
+      "size": 862,
+      "sha256": "d61969d1e1a025f3c48f504e2e2e507f2e6cb45a496c60a90e9ce212d8134f04"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice016.png",
+      "size": 862,
+      "sha256": "d61969d1e1a025f3c48f504e2e2e507f2e6cb45a496c60a90e9ce212d8134f04"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice017.png",
+      "size": 862,
+      "sha256": "d61969d1e1a025f3c48f504e2e2e507f2e6cb45a496c60a90e9ce212d8134f04"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice018.png",
+      "size": 862,
+      "sha256": "d61969d1e1a025f3c48f504e2e2e507f2e6cb45a496c60a90e9ce212d8134f04"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice019.png",
+      "size": 862,
+      "sha256": "d61969d1e1a025f3c48f504e2e2e507f2e6cb45a496c60a90e9ce212d8134f04"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice020.png",
+      "size": 862,
+      "sha256": "d61969d1e1a025f3c48f504e2e2e507f2e6cb45a496c60a90e9ce212d8134f04"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice021.png",
+      "size": 862,
+      "sha256": "d61969d1e1a025f3c48f504e2e2e507f2e6cb45a496c60a90e9ce212d8134f04"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice022.png",
+      "size": 862,
+      "sha256": "d61969d1e1a025f3c48f504e2e2e507f2e6cb45a496c60a90e9ce212d8134f04"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice023.png",
+      "size": 865,
+      "sha256": "947c91f85994d2f0f2349e0abe56168006e20cacb6e6c8a0a6bd1a7ca42e17a7"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice024.png",
+      "size": 865,
+      "sha256": "947c91f85994d2f0f2349e0abe56168006e20cacb6e6c8a0a6bd1a7ca42e17a7"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice025.png",
+      "size": 865,
+      "sha256": "947c91f85994d2f0f2349e0abe56168006e20cacb6e6c8a0a6bd1a7ca42e17a7"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice026.png",
+      "size": 865,
+      "sha256": "947c91f85994d2f0f2349e0abe56168006e20cacb6e6c8a0a6bd1a7ca42e17a7"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice027.png",
+      "size": 865,
+      "sha256": "947c91f85994d2f0f2349e0abe56168006e20cacb6e6c8a0a6bd1a7ca42e17a7"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice028.png",
+      "size": 865,
+      "sha256": "947c91f85994d2f0f2349e0abe56168006e20cacb6e6c8a0a6bd1a7ca42e17a7"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice029.png",
+      "size": 869,
+      "sha256": "94fbc396548542a0bf45f57a11f045ea45b415712069e0b31345a70f227b0856"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice030.png",
+      "size": 869,
+      "sha256": "94fbc396548542a0bf45f57a11f045ea45b415712069e0b31345a70f227b0856"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice031.png",
+      "size": 869,
+      "sha256": "94fbc396548542a0bf45f57a11f045ea45b415712069e0b31345a70f227b0856"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice032.png",
+      "size": 869,
+      "sha256": "da2650c156624d79878519469eb25cfa00629fe6274855d2497ec91665039c60"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice033.png",
+      "size": 869,
+      "sha256": "da2650c156624d79878519469eb25cfa00629fe6274855d2497ec91665039c60"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice034.png",
+      "size": 869,
+      "sha256": "da2650c156624d79878519469eb25cfa00629fe6274855d2497ec91665039c60"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice035.png",
+      "size": 869,
+      "sha256": "da2650c156624d79878519469eb25cfa00629fe6274855d2497ec91665039c60"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice036.png",
+      "size": 869,
+      "sha256": "da2650c156624d79878519469eb25cfa00629fe6274855d2497ec91665039c60"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice037.png",
+      "size": 869,
+      "sha256": "da2650c156624d79878519469eb25cfa00629fe6274855d2497ec91665039c60"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice038.png",
+      "size": 871,
+      "sha256": "e33c865a2910f9553952368c6a315538779efd5aae47b85206ffb0020d0d1b58"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice039.png",
+      "size": 871,
+      "sha256": "e33c865a2910f9553952368c6a315538779efd5aae47b85206ffb0020d0d1b58"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice040.png",
+      "size": 871,
+      "sha256": "e33c865a2910f9553952368c6a315538779efd5aae47b85206ffb0020d0d1b58"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice041.png",
+      "size": 871,
+      "sha256": "e33c865a2910f9553952368c6a315538779efd5aae47b85206ffb0020d0d1b58"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice042.png",
+      "size": 871,
+      "sha256": "e33c865a2910f9553952368c6a315538779efd5aae47b85206ffb0020d0d1b58"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice043.png",
+      "size": 871,
+      "sha256": "e33c865a2910f9553952368c6a315538779efd5aae47b85206ffb0020d0d1b58"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice044.png",
+      "size": 871,
+      "sha256": "e33c865a2910f9553952368c6a315538779efd5aae47b85206ffb0020d0d1b58"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice045.png",
+      "size": 871,
+      "sha256": "e33c865a2910f9553952368c6a315538779efd5aae47b85206ffb0020d0d1b58"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice046.png",
+      "size": 871,
+      "sha256": "e33c865a2910f9553952368c6a315538779efd5aae47b85206ffb0020d0d1b58"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice047.png",
+      "size": 871,
+      "sha256": "e33c865a2910f9553952368c6a315538779efd5aae47b85206ffb0020d0d1b58"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice048.png",
+      "size": 895,
+      "sha256": "d20e10ba6fa7e608db3a236ac385a990d79cd64f3bbc3daf5def64b70c8e6e2a"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice049.png",
+      "size": 895,
+      "sha256": "d20e10ba6fa7e608db3a236ac385a990d79cd64f3bbc3daf5def64b70c8e6e2a"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice050.png",
+      "size": 895,
+      "sha256": "d20e10ba6fa7e608db3a236ac385a990d79cd64f3bbc3daf5def64b70c8e6e2a"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice051.png",
+      "size": 892,
+      "sha256": "e0693626ccad288973567af279978e379b9f910d0254cb8c841c10a2442c7eca"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice052.png",
+      "size": 892,
+      "sha256": "e0693626ccad288973567af279978e379b9f910d0254cb8c841c10a2442c7eca"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice053.png",
+      "size": 891,
+      "sha256": "b0adca0340da745695f9d18ff927fdb5f016a49dc15f89a001edf0a8ee91e696"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice054.png",
+      "size": 891,
+      "sha256": "b0adca0340da745695f9d18ff927fdb5f016a49dc15f89a001edf0a8ee91e696"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice055.png",
+      "size": 892,
+      "sha256": "a4260b45cccbff6d80e9178b8f4ffeda6ff5865586cad5a310a98b73e1352cbf"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice056.png",
+      "size": 892,
+      "sha256": "a4260b45cccbff6d80e9178b8f4ffeda6ff5865586cad5a310a98b73e1352cbf"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice057.png",
+      "size": 892,
+      "sha256": "a4260b45cccbff6d80e9178b8f4ffeda6ff5865586cad5a310a98b73e1352cbf"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/Annotation/scene_slices/SimpleRoom_slice058.png",
+      "size": 885,
+      "sha256": "8308fb4d1fedf684c85a4b7aa3d7262f5de814bf465945ccf164e322ab2e24c4"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/DefaultMaterial_Base_Color.png",
+      "size": 309606,
+      "sha256": "49a93f3124cc628d579ac7ad39708ef1692c642668fd9ae784264dd728069bfd"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/DefaultMaterial_Mixed_AO.png",
+      "size": 1110839,
+      "sha256": "1a53593fa84590c8339714c247a7b5b71bd578ce72fc0168b1e335efb0a17cd5"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/DefaultMaterial_Normal_DirectX.png",
+      "size": 2052839,
+      "sha256": "12aec50406cf9ba8f5c32cb27d35dd1af367433a7cd91de5d191fe0ddec57009"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/DefaultMaterial_Roughness.png",
+      "size": 87313,
+      "sha256": "0ab8364b5adfab4bd74ac4df359eb271595b3f0593eaf7e50ffd539b6155ad7c"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/Parquet_AO.png",
+      "size": 100361,
+      "sha256": "8917fc3f37e3e5985823f01339d5009eb2094ba3156f6f1326cd3ada0e9836c3"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/Parquet_Color.png",
+      "size": 17770200,
+      "sha256": "c67a4b0c0d77134cbe667af01b81861b5c157a738d7659fb3d348dabc204fe2f"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/Parquet_Normal.png",
+      "size": 9157075,
+      "sha256": "ef2d766ab27ff02e3b519a9438746d94264dc130bdc23f6ddddd89fed57e8c81"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/Parquet_Rough.png",
+      "size": 7945746,
+      "sha256": "dd7abcbf1627299aaddc730f4399683a51dbae4dca8180e683d71e4533d67b96"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/WallWood_Color.png",
+      "size": 22115990,
+      "sha256": "5890ba4255bf7ce41465c5ec8131d02aa04853480ceafa99dbee2106bdc15906"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/WallWood_Normal.png",
+      "size": 11588550,
+      "sha256": "9082f2f18db24a5e9d92282aab6b01c930d9d1d1d97825540e7cb7465f561b94"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/WallWood_Rough.png",
+      "size": 7578363,
+      "sha256": "52246dd49107cec33307654ae1021b88cd65af53069b9e235f703aa34f90be7b"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/WhitePlastic_Color.png",
+      "size": 4639472,
+      "sha256": "f1705e778fe56e1b22f86d7e4fb8e12def7e5e0a1c053be46db5100fec093861"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/WhitePlastic_Normal.png",
+      "size": 304449,
+      "sha256": "67eac4ffbea3538fcf40a44c63abfa432517c78895c5537396dea7b87cca7f7c"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/WhitePlastic_Rough.png",
+      "size": 8055045,
+      "sha256": "9f94f83edcfb93a03f79df531db6f5237fceb20eacee46c0cb8c07c1ed66c86e"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/SubUSDs/textures/abandoned_parking_4k.hdr",
+      "size": 25661358,
+      "sha256": "3797789e0e71990f3129c5ebdd052883c458b5834845a239d8c822f5a577a389"
+    },
+    {
+      "relative": "Assets/Room/Simple_Room_nolight/simple_room_nolight.usd",
+      "size": 2206556,
+      "sha256": "699c27f4a28af012a8e6fb7e5daaab9f87e0a6fcb6fa874912e73a70fe48e88d"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/138x108/FlatPatch_3x.thumbnail.usd.auto.png",
+      "size": 9627,
+      "sha256": "89017f498b764ae4bdba518b65bdd6321678f806b816c581d55f16a3f310fb5e"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/Asphalt.mdl.png",
+      "size": 180855,
+      "sha256": "47a60ca4a9c7720599a5db59e1d84f94d08aa1f471115ad3a1f06ec7982894e4"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/Dirt.mdl.png",
+      "size": 212069,
+      "sha256": "7269fdb0116d0707f44137211b4043d9bb84ae9b9f4399c8e8ba474ee8e49d91"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/FlatPatch_3x.thumbnail.usd.auto.png",
+      "size": 33347,
+      "sha256": "fcbdbbf0cf5a49b01e1766b1874e3d03d5131a7181b9e1ecb6ce843ecf17ff30"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/FlatPatch_3x.thumbnail.usd.png",
+      "size": 104753,
+      "sha256": "5864a24799fe98c368b578a311df1296fd7fb249ab7c7d4c6c0991355f2327ac"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/Grass_Countryside.mdl.png",
+      "size": 169132,
+      "sha256": "f28b8e6ef69278b7231bb2f366f66d97745e561aa5b52079ece1bade7359df75"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/Grass_Cut.mdl.png",
+      "size": 170292,
+      "sha256": "3cb0ab05a1aa45b739ecfb562efeb993905cf0529db193c641f01248fac72c21"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/Grass_Winter.mdl.png",
+      "size": 228319,
+      "sha256": "06b19ff90d0a25c8c1400c91a44849d4cc8891d682186a1c67783386f94cdc59"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/Leaves.mdl.png",
+      "size": 220076,
+      "sha256": "f0105598b57962fa2206336776ff66487ac51a89c6af5ee4e595ee523207d5d1"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/Mulch_Brown.mdl.png",
+      "size": 211359,
+      "sha256": "287221ef021d73866212fa845f6f1f5773b40f7681689616bac923793cad4fdc"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/Sand.mdl.png",
+      "size": 150336,
+      "sha256": "8ff9db9cd62ddcf46db8f6f3cc961ca2616ca331a8960051b986272ee596028b"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/Soil_Rocky.mdl.png",
+      "size": 195737,
+      "sha256": "dfa0743aba7c4ef9a944c66efca32d95a42ec86fa0be2904bb6cc67fc170d51e"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/Water.mdl.png",
+      "size": 40281,
+      "sha256": "fb290b516b8707430a264556772d9ab30c22f0b0f3f4820e38908ec6cf745133"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/.thumbs/256x256/Water_Opaque.mdl.png",
+      "size": 107651,
+      "sha256": "17470f9d159029d6c4c25f1a7161c3817286e268b57a125e366ce6ae0537bf9d"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/Water.mdl",
+      "size": 615,
+      "sha256": "5a5d9c44846a7ea56b5e836edb89062f499725cd144a0a4ed06f6cb2645943ca"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/Water/.thumbs/138x108/Water_Normal.png.png",
+      "size": 14337,
+      "sha256": "ffd80974f9fa53e1fb31e881d495d4bb7b1fe78911fba58a28df387ffbc0a3fc"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/Water/.thumbs/256x256/Water_Normal.png.png",
+      "size": 68853,
+      "sha256": "e9dd61fb1299a71d2d4365c570e7515c4f8d91d0818ac5e22dc6b24f5c75107e"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/Water/Water_Normal.png",
+      "size": 1647671,
+      "sha256": "af668cd9f0017237cf52ec4e838928f03c66529c7b293a2bf1fa4626fb271892"
+    },
+    {
+      "relative": "Assets/Material/Base/Natural/Water_Opaque.mdl",
+      "size": 1369,
+      "sha256": "1e6cb2a304d61b09527561289745161da7934876bf9e43ca6d2003150a4fa6d9"
+    },
+    {
+      "relative": "Assets/Material/Base/Templates/GlassUtils.mdl",
+      "size": 2417,
+      "sha256": "18baaa8cd508d85075148b80097c56c4924212928bb196f2d9ee2352d5c618a4"
+    },
+    {
+      "relative": "Assets/Material/Base/Templates/GlassWithVolume.mdl",
+      "size": 4906,
+      "sha256": "54f4f99e1bd8c6cde022dd246a954b9efe9b251a169854f49f582501a9bdf089"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/138x108/Textiles_Thick.thumbnail.usd.auto.png",
+      "size": 9001,
+      "sha256": "c7e958e397e078a3e4c32d2f7114d32fb40d80eb7dec8df33d5a1e019696539e"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Cloth_Black.mdl.png",
+      "size": 68417,
+      "sha256": "9f5ea823c706b1d44775dae326fe4fb0f6f0f02d0d860cfa0f815a64f31e75d9"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Cloth_Gray.mdl.png",
+      "size": 83900,
+      "sha256": "8ecb220268eab2653acc3c8f842befa0871d0275f5e0d476e0ab1020e16ad4a0"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Coth_Gray.mdl.png",
+      "size": 102916,
+      "sha256": "209d83a20967483fea14f8b2b407aec626acac6d89b4a0e8011d5c8a06ab0e39"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Leather_Black.mdl.png",
+      "size": 85705,
+      "sha256": "85e14b1e13207b691f9b3636cb5e522fc0ec4415bade9b474e246083ec6d130f"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Leather_Brown.mdl.png",
+      "size": 93399,
+      "sha256": "33ee9013c84b2705925322fdc717d29cc6257d58d1f6b8ca9959373e2debe086"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Leather_Pumpkin.mdl.png",
+      "size": 6099,
+      "sha256": "337737faa040309acecb7ff531b7a38f437e8379d290fa9a6ad797e4949db39a"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Linen_Beige.mdl.png",
+      "size": 82412,
+      "sha256": "bec9f63b2bad9bef7ec42724a89cc19e9f5894dbbd4008d35505b0b21ac70e05"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Linen_Black.mdl.png",
+      "size": 70371,
+      "sha256": "e7b317d7cd37ca99b2ff1d792295a60473f4b9f57ebeb084fe827deb534db73b"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Linen_Blue.mdl.png",
+      "size": 96085,
+      "sha256": "6cbf301bae1275ff3f8c2e03dd1566285f6edf8112dbff78e3840fb2d30f6bc3"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Linen_Brown.mdl.png",
+      "size": 70371,
+      "sha256": "e7b317d7cd37ca99b2ff1d792295a60473f4b9f57ebeb084fe827deb534db73b"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Linen_White.mdl.png",
+      "size": 78037,
+      "sha256": "36ba2fa26168f268f44515b949289dd2d88d11c3a07258a31948b4d56260a3c3"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Textiles.thumbnail.usd.png",
+      "size": 55349,
+      "sha256": "4b5f4a935d1c2083203326fc800df93f6e39bf4d2e9c614785b15c51e6a3b341"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Textiles_Thick.thumbnail.usd.auto.png",
+      "size": 31291,
+      "sha256": "6b356cb6a5b73b1475056d0013a8b42d8db770613a1f63073dff9974e9182f33"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/.thumbs/256x256/Textiles_Thick.thumbnail.usd.png",
+      "size": 58475,
+      "sha256": "74e5e7dc43aa5d0ac6eb13de59100f2320c76c8f12645eb77b24fc2d9c952118"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Black.mdl",
+      "size": 1753,
+      "sha256": "02ab2528ff9185036efbb8e5bdcca72e568f10c49eae1392a73ba6ca2ff8af62"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Black/.thumbs/138x108/Leather_Black_BaseColor.png.png",
+      "size": 8516,
+      "sha256": "53e5dfe393855b65cfa5cf52a1dbb86e57fc35687e90e50cb9dc9c2874a576d1"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Black/.thumbs/138x108/Leather_Black_N.png.png",
+      "size": 6726,
+      "sha256": "6ecbb6aef1fae75e91fc0b097dd859fa45c27a4e3ced817ec086fcbac608b01c"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Black/.thumbs/138x108/Leather_Black_ORM.png.png",
+      "size": 6615,
+      "sha256": "4c473290ce0c073b6c3c29c839b5806e7e2ac87b0b2ea4eb1e2c47895709faf0"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Black/.thumbs/256x256/Leather_Black_BaseColor.png.png",
+      "size": 54211,
+      "sha256": "51de10ecbef6cb12a3ef4b1041e34a496bf5159933a8573e33cdaaa95e315311"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Black/.thumbs/256x256/Leather_Black_N.png.png",
+      "size": 51077,
+      "sha256": "6e8037164154a1dc652433f446c9e8b80a1f8d4606e46b6b757a7ed0a12a1eeb"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Black/.thumbs/256x256/Leather_Black_ORM.png.png",
+      "size": 46833,
+      "sha256": "73fc7c8fdc112350e3e00c5aabcc264166f7c78a6d4198b1ee66ce0d98ea3a8c"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Black/Leather_Black_BaseColor.png",
+      "size": 24180197,
+      "sha256": "ec625975acf04611dd213178c5332a915daf3e21a61b62e5c8d6883c69f6f795"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Black/Leather_Black_N.png",
+      "size": 22560250,
+      "sha256": "6f3f45d7ec9be281a55b0967b648887c11a9e4f7a69e5934bd55a7ff55a44acf"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Black/Leather_Black_ORM.png",
+      "size": 11860089,
+      "sha256": "e494958731c917a6ba5c901392aa3bcc4b535aab3e710c4fcdd2902c79dc1227"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Brown.mdl",
+      "size": 1753,
+      "sha256": "19277908383d3c0f6077789ca498f070027ebfc9fb0cb9d462e7e8b91da13ff8"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Brown/.thumbs/138x108/Leather_Brown_BaseColor.png.png",
+      "size": 9529,
+      "sha256": "1e59a3b4b7c1c6827832889023b33948fc8edb68efb7ada5072ea04bd7823686"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Brown/.thumbs/138x108/Leather_Brown_N.png.png",
+      "size": 7931,
+      "sha256": "2dcec2f5e5499031558888b46d2b5b3f21fdc3cea52ae95bac6b7051e6c4c1d6"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Brown/.thumbs/138x108/Leather_Brown_ORM.png.png",
+      "size": 5775,
+      "sha256": "f94888358cef1eaa129170f08f9eafdf0e46e6d2db701b69df9bc6a775f76848"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Brown/.thumbs/256x256/Leather_Brown_BaseColor.png.png",
+      "size": 58251,
+      "sha256": "179d310ca88b78cf0242f312937d3939d0cb7dad0d3caa3da3b4e881049ae6bc"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Brown/.thumbs/256x256/Leather_Brown_N.png.png",
+      "size": 68035,
+      "sha256": "fc186469a31fc88c64099c5fc021d6d7432b96aa970266e0fb55343cbb572be2"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Brown/.thumbs/256x256/Leather_Brown_ORM.png.png",
+      "size": 40423,
+      "sha256": "14b1411faad45eec693608d19d9bb2d802e38cdeb41d34b5db27ba22d35948bf"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Brown/Leather_Brown_BaseColor.png",
+      "size": 6210642,
+      "sha256": "03612a9987b68f7c2912d85b33470b24bd3a1f2412ae86c1de213f286294e345"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Brown/Leather_Brown_N.png",
+      "size": 23691175,
+      "sha256": "2fb39c1e82b2965699faca4f47d2022573f90c8d03ef6f4a737a119a10ede870"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Brown/Leather_Brown_ORM.png",
+      "size": 4838867,
+      "sha256": "3d6e543d993bb1f4211aac6c3ee6c7bdaf333f361126caa62323e1044b6fa06b"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Pumpkin.mdl",
+      "size": 1605,
+      "sha256": "779c139adb3d9361441ddaf3007d43f917a0969e969e25a913f5ce9d06ddb5c6"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Pumpkin/.thumbs/138x108/Leather_Pumpkin_BaseColor.png.png",
+      "size": 7841,
+      "sha256": "eaf087e3f23e776fdbe20fccfa816bdf6018155c6d0ae84f44938f4e0922b472"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Pumpkin/.thumbs/256x256/Leather_Pumpkin_BaseColor.png.png",
+      "size": 50512,
+      "sha256": "56c693b02ce4b0f5685f7e956f9ecff4ef9c1ea8105ee969e852ee62f595cd77"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Pumpkin/Leather_Brown_N.png",
+      "size": 23691175,
+      "sha256": "2fb39c1e82b2965699faca4f47d2022573f90c8d03ef6f4a737a119a10ede870"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Pumpkin/Leather_Brown_ORM.png",
+      "size": 4838867,
+      "sha256": "3d6e543d993bb1f4211aac6c3ee6c7bdaf333f361126caa62323e1044b6fa06b"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Leather_Pumpkin/Leather_Pumpkin_BaseColor.png",
+      "size": 2431331,
+      "sha256": "db5d8d6f502c293a2e53df0caf0281cdbd5870572c2c4df0e5ccf15455dc598b"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue.mdl",
+      "size": 1714,
+      "sha256": "d99be241427d52acf4e7b4d59c795a48931fe2b284c08e7cf0d127fa5b515435"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue/.thumbs/138x108/Linen_Blue_BaseColor.png.png",
+      "size": 13123,
+      "sha256": "5d69006d753d34e186287fd4fbe977bbb76be2485f4618283985f4621d268f3a"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue/.thumbs/138x108/Linen_Blue_DN.png.png",
+      "size": 2466,
+      "sha256": "679fdca1276ac596910c42fab724ac3fdd02d5a82977ed822a9abc7977720b85"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue/.thumbs/138x108/Linen_Blue_N.png.png",
+      "size": 14401,
+      "sha256": "0c1ffa77fd043ad797de64764160ec1ec8e259e9149b84a8603862c48d108f2c"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue/.thumbs/138x108/Linen_Blue_ORM.png.png",
+      "size": 3887,
+      "sha256": "b1ad2c8a774d1ab0cd6fbdccc9e602a176b431261f8ba55e28059c9429b276be"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue/.thumbs/256x256/Linen_Blue_BaseColor.png.png",
+      "size": 66461,
+      "sha256": "ecddee52d79a1d57f5c2dde5892daa1fe921f6cd95abbf5772a9f5000bc66520"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue/.thumbs/256x256/Linen_Blue_DN.png.png",
+      "size": 31441,
+      "sha256": "00dd8486b7545d889a9ab496f1c12bd43a2fd4c4dc8734d839c5a56249b10a06"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue/.thumbs/256x256/Linen_Blue_N.png.png",
+      "size": 97594,
+      "sha256": "d4555faf446113db7743e4bcde34dfb04de0fc0098bbc055dfb5d3b199a5c3da"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue/.thumbs/256x256/Linen_Blue_ORM.png.png",
+      "size": 18455,
+      "sha256": "6199d917b689acec3e2d9e88cc5525eb225474443b5856816788f9c180107363"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue/Linen_Blue_BaseColor.png",
+      "size": 1259856,
+      "sha256": "879b88c315491d4d5639dfc2078c79648d9db084c592c7603d1ee689de932901"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue/Linen_Blue_DN.png",
+      "size": 426540,
+      "sha256": "01539c4dc33c314a174e508ed54ad4c6e0cec679c94083e77430d23fa18a89db"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue/Linen_Blue_N.png",
+      "size": 1602817,
+      "sha256": "fa714886c449b08620be0b21d56b49cbc1a65dbe50a0c6011ffd6178e3813e52"
+    },
+    {
+      "relative": "Assets/Material/Base/Textiles/Linen_Blue/Linen_Blue_ORM.png",
+      "size": 4872184,
+      "sha256": "44086ab0178b69e15a1bef7e53aef40fe64f8aa20c21f7b2508862850df898da"
+    },
+    {
+      "relative": "Assets/Material/material_0122/Mahogany_Planks.mdl",
+      "size": 1940,
+      "sha256": "c3c19fec59419b77a73deb0dfca6f8303fa6629af1ad93b8f4d792da8131b4cb"
+    },
+    {
+      "relative": "Assets/Material/material_0122/Mahogany_Planks_BaseColor.png",
+      "size": 5750346,
+      "sha256": "d3e69dacd264d481738b2a995ad793531515a153ec8a168e5c4b6d5a4dfb38ec"
+    },
+    {
+      "relative": "Assets/Material/material_0122/Mahogany_Planks_N.png",
+      "size": 5656449,
+      "sha256": "04b0e9d1611c4e1722085e15299197c69d9f813f0b77e96b476fc04b38407edb"
+    },
+    {
+      "relative": "Assets/Material/material_0122/Mahogany_Planks_ORM.png",
+      "size": 6246551,
+      "sha256": "5fe20889ad4737833ca2a4425aedf28c1bf34a0d1730827bf4f0403482404797"
+    },
+    {
+      "relative": "Assets/Material/material_0564/Wood_Tiles_Fineline.mdl",
+      "size": 123967,
+      "sha256": "60ca84bd62482b1f444f5fefab4ae74a2fa4e6b3304a08142accc50575d6be31"
+    },
+    {
+      "relative": "Assets/Material/material_0564/brickbond_R_edgewear_G_gaps_B_gaps_rough.jpg",
+      "size": 5190594,
+      "sha256": "72708e20c100534f06761e90010e339b21807c03ab5339fdc0f6c70298aa34b2"
+    },
+    {
+      "relative": "Assets/Material/material_0564/brickbond_R_id_G_offs_B_rotation.png",
+      "size": 61671,
+      "sha256": "9fd00d71ac34a2bc3ae995a93f3b3b4bef47c4a9b672ed5eec66c1a8af8b8894"
+    },
+    {
+      "relative": "Assets/Material/material_0564/brickbond_norm.png",
+      "size": 5097857,
+      "sha256": "36f065ec0cc3be3632cd9855942e0022e651ea2704c5eb4b3c93914679eaac46"
+    },
+    {
+      "relative": "Assets/Material/material_0564/chantilly_R_edgewear_G_gaps_B_gaps_rough.jpg",
+      "size": 5192773,
+      "sha256": "2e0cabf2d39d63984f8dc6b45304b1d6dce0fa7b462ba5cda17a564c63c13ba2"
+    },
+    {
+      "relative": "Assets/Material/material_0564/chantilly_R_id_G_offs_B_rotation.png",
+      "size": 165856,
+      "sha256": "3eac1bf2d9fefaba86c8160cdc1413206682c7eee1b92ae78e790ac7fcf49dd8"
+    },
+    {
+      "relative": "Assets/Material/material_0564/chantilly_norm.png",
+      "size": 5219533,
+      "sha256": "a49b4ddd3eb9d1aca27491dc5a46ee821f26adebc8c50a5d7c04d8cf8d4d7bb4"
+    },
+    {
+      "relative": "Assets/Material/material_0564/chevron_R_edgewear_G_gaps_B_gaps_rough.jpg",
+      "size": 5561847,
+      "sha256": "3a7cded4f69a5bf02630fbd6e68d177d6ca31f73dcafe5125efdf3ed77d8f235"
+    },
+    {
+      "relative": "Assets/Material/material_0564/chevron_R_id_G_offs_B_rotation.png",
+      "size": 253093,
+      "sha256": "a8672aa9e976b6f1f4414269e05b09eef306c75d8ac8e711f8daa2b617213c3f"
+    },
+    {
+      "relative": "Assets/Material/material_0564/chevron_norm.png",
+      "size": 7660298,
+      "sha256": "efcf37cdd9bd301b9e3513f3df53cbc9f0e74ca6ec7db8d2be6047ae893b6257"
+    },
+    {
+      "relative": "Assets/Material/material_0564/cubes_R_edgewear_G_gaps_B_gaps_rough.jpg",
+      "size": 5282713,
+      "sha256": "7903a3bf94df642d678feec55c7798a16fd18bb8e3f50dff1873b4ebc7068400"
+    },
+    {
+      "relative": "Assets/Material/material_0564/cubes_R_id_G_offs_B_rotation.png",
+      "size": 188376,
+      "sha256": "9bdd0f5580f45c8112000f0ce338d0bf95cf9a91cf3851adddcff2ee7c42a53b"
+    },
+    {
+      "relative": "Assets/Material/material_0564/cubes_norm.png",
+      "size": 5932734,
+      "sha256": "bc8219f0ac1573a4871777d26a773bccd4084e850f88e30a4b03fd1cec0f07be"
+    },
+    {
+      "relative": "Assets/Material/material_0564/diagonal_R_edgewear_G_gaps_B_gaps_rough.jpg",
+      "size": 5507965,
+      "sha256": "ec63497a0ed3753608d8904a91abbad0bff232d1fa51ab5d2f7598a2e53f1481"
+    },
+    {
+      "relative": "Assets/Material/material_0564/diagonal_R_id_G_offs_B_rotation.png",
+      "size": 278035,
+      "sha256": "95db350abe05f308e61f9e8ee81e8bfd926ae4a44105248b03dd2120fd2a551f"
+    },
+    {
+      "relative": "Assets/Material/material_0564/diagonal_norm.png",
+      "size": 7421414,
+      "sha256": "0708f89b7dc534c9681783946bb01386a49d4d16afb417e16ac27b16f06e9c92"
+    },
+    {
+      "relative": "Assets/Material/material_0564/fineline_diff.jpg",
+      "size": 2216725,
+      "sha256": "36f485d03362d1f853e73c617005e44e800608cb3616a71c8c7fd92e565ba605"
+    },
+    {
+      "relative": "Assets/Material/material_0564/fineline_norm.jpg",
+      "size": 2748933,
+      "sha256": "991f65d02adcb3c0b1fa285531dd478bfda2480bbc07009e7f1f44fb06c49bdb"
+    },
+    {
+      "relative": "Assets/Material/material_0564/fineline_rough_detail.jpg",
+      "size": 2583516,
+      "sha256": "882f61d1a41796829c3b8f919ec316331d7444b79f21341140ef567ecda71b2e"
+    },
+    {
+      "relative": "Assets/Material/material_0564/fineline_rough_grain.jpg",
+      "size": 1592267,
+      "sha256": "534d2005cb09b2eb8c9ab730ead8483ac838aa204c3cf250650184ab70a0c038"
+    },
+    {
+      "relative": "Assets/Material/material_0564/herringbone_R_edgewear_G_gaps_B_gaps_rough.jpg",
+      "size": 5509842,
+      "sha256": "f6d1d4db4b5d09f95f27e90fb17dbe60b8f4a9ab266d98bcd4ee9b0506480962"
+    },
+    {
+      "relative": "Assets/Material/material_0564/herringbone_R_id_G_offs_B_rotation.png",
+      "size": 304083,
+      "sha256": "d9c4f7944ddcb9e6c919e4f2f044ab1efe9660042a568f142365e08a424194fd"
+    },
+    {
+      "relative": "Assets/Material/material_0564/herringbone_norm.png",
+      "size": 7592872,
+      "sha256": "e7b5c153686bfdfe25af7ed9820b2ae2bbd9b73986d51e85f326d7bde2d67b58"
+    },
+    {
+      "relative": "Assets/Material/material_0564/mosaic_R_edgewear_G_gaps_B_gaps_rough.jpg",
+      "size": 5345943,
+      "sha256": "b6b9fb4c15e1ad3fe24783be2897c00447f3374433fd923e7a42bf4920fcf8ba"
+    },
+    {
+      "relative": "Assets/Material/material_0564/mosaic_R_id_G_offs_B_rotation.png",
+      "size": 74735,
+      "sha256": "1c4f6877c6be7b39bb705ee1a53c65691e23de2f66d5be524bac2b0890d7859a"
+    },
+    {
+      "relative": "Assets/Material/material_0564/mosaic_norm.png",
+      "size": 5988778,
+      "sha256": "fdf922e6866e7e39fd4aa23e7f82374c1fcd5f1b65c17ffde7aa18eba457d8ec"
+    },
+    {
+      "relative": "Assets/Material/material_0564/stackbond_R_edgewear_G_gaps_B_gaps_rough.jpg",
+      "size": 5339370,
+      "sha256": "361f1c0bcd09e62fdce1fade132a4129e660efe17f3c610ecbff83a6c72a2b09"
+    },
+    {
+      "relative": "Assets/Material/material_0564/stackbond_R_id_G_offs_B_rotation.png",
+      "size": 622237,
+      "sha256": "fb0d4cdde31299ff9b1c3a7ef65eb7b29a2c7c1e881f33f70131c37493a9b4f1"
+    },
+    {
+      "relative": "Assets/Material/material_0564/stackbond_norm.png",
+      "size": 5205492,
+      "sha256": "083c1c77a805a98d962d9c3d9066b8121c9513cb8bca941d2f1a20a7d012459e"
+    },
+    {
+      "relative": "Assets/Material/material_0564/tiles_wood_R_rough_G_dents_B_spots.jpg",
+      "size": 5318464,
+      "sha256": "73f07f9f0053a64f77123e0c2c6b7c04fb13c6c3845fbdb73a899c13e1416ad0"
+    },
+    {
+      "relative": "Assets/Material/material_0564/tiles_wood_orangepeel_norm.jpg",
+      "size": 583443,
+      "sha256": "14b18dba2a5e4978a8d14cb1efd17e3a7a8c7ad5e5b3438ddc7d025c6453fbfe"
+    },
+    {
+      "relative": "Assets/Material/material_0564/versailles_R_edgewear_G_gaps_B_gaps_rough.jpg",
+      "size": 5489803,
+      "sha256": "7bf177cbb47fb36b44923ad36bad818f405604b6e1113119314f4e8291800cf1"
+    },
+    {
+      "relative": "Assets/Material/material_0564/versailles_R_id_G_offs_B_rotation.png",
+      "size": 164987,
+      "sha256": "bb6e5627e4bd516c16a2e14ee94b05e2e527697a7d7139dd87bdc79ac3f175e8"
+    },
+    {
+      "relative": "Assets/Material/material_0564/versailles_norm.png",
+      "size": 6678546,
+      "sha256": "bd57efebab075c03b8f290d7c47651eee8650d04c650d0ca3fdd33b1e662d006"
+    },
+    {
+      "relative": "Assets/Material/material_0564/woodstrip_R_edgewear_G_gaps_B_gaps_rough.jpg",
+      "size": 5342612,
+      "sha256": "5fbe05e89f160fb283e17f621a33844ecc6b3abd555b43e94a1ff8f3b9d8a336"
+    },
+    {
+      "relative": "Assets/Material/material_0564/woodstrip_R_id_G_offs_B_rotation.png",
+      "size": 525457,
+      "sha256": "f57463c41a8cb21a1b69253d37c0d33b808d367f789765b2290d8fbff3e18c73"
+    },
+    {
+      "relative": "Assets/Material/material_0564/woodstrip_norm.png",
+      "size": 5122769,
+      "sha256": "ff6c49a20fca5088736b8fa0cc2612a2f8225466824189af7f96df818481511a"
+    },
+    {
+      "relative": "Assets/Background/brown_photostudio_02_4k.hdr",
+      "size": 25433817,
+      "sha256": "368251c254a47dc7aaf532a515c0bd9ad3708ce5a3c5bb520b1628bcb9a37bc0"
+    },
+    {
+      "relative": "Assets/Sensor/Camera/.thumbs/256x256/kinect.usd.png",
+      "size": 14710,
+      "sha256": "b84af20b4bc69fe97f899f3c5b051ed0fbd054afddfaa52da09727e3801185e3"
+    },
+    {
+      "relative": "Assets/Sensor/Camera/d435/configuration/d435_base.usd",
+      "size": 16722445,
+      "sha256": "ae411320e9dfee5a9105802ba82fcdb4ab62d4c36912fc55ae33f488a0c97107"
+    },
+    {
+      "relative": "Assets/Sensor/Camera/d435/configuration/d435_physics.usd",
+      "size": 1262,
+      "sha256": "35e2166c1eff8bb1cdf6114ca45176d31f0f486fc682c301253177da5002c813"
+    },
+    {
+      "relative": "Assets/Sensor/Camera/d435/configuration/d435_robot.usd",
+      "size": 1092,
+      "sha256": "a9f55686fcf197a1819f592fc025b79abc9d388fd3ce1889acf4ab5bb1160c51"
+    },
+    {
+      "relative": "Assets/Sensor/Camera/d435/configuration/d435_sensor.usd",
+      "size": 657,
+      "sha256": "1855185cfd6c99ec7c07d11c1830a1192f6c6fca440222a2cf74b0f2c0c9a927"
+    },
+    {
+      "relative": "Assets/Sensor/Camera/d435/d435.usd",
+      "size": 3983,
+      "sha256": "e362c184d7dc445510b2513d1b8d379131af1a23708866cffdd1632175c5b65b"
+    },
+    {
+      "relative": "Assets/Sensor/Camera/kinect.usd",
+      "size": 6296680,
+      "sha256": "eef0dbe023189bd36454d9bc28eaeb9a72a0e03438ae5af67453cc580498df64"
+    },
+    {
+      "relative": "Assets/Sensor/Camera/realsense.usd",
+      "size": 4452170,
+      "sha256": "faa959e07afe6acfb53e2330cc5aca5643ab6e950503ce782c1304552d393594"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_0.json",
+      "size": 5052,
+      "sha256": "8ec7c160815f8955b5dd1af1a042673140cc2b6ac4b7536ee7fa9057e8a978f5"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_1.json",
+      "size": 5242,
+      "sha256": "a128f6bb0abeac53fac7d203398d5518a8e043d708e6e93c9d8067b1b7e90828"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_10.json",
+      "size": 5056,
+      "sha256": "a8aa936a79c1797d2e21123cd68f4df42ae7b3109924204133d31ea0cdc980c1"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_11.json",
+      "size": 5054,
+      "sha256": "bdf5664e36a29355d17df28bfeebdb121952da836b546b063c0e1ed21310dbc9"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_12.json",
+      "size": 5056,
+      "sha256": "86bec296b6c02bf7f1ddbfccfb10d5bb19a1c527ae531f23658db516d8eff06e"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_13.json",
+      "size": 5054,
+      "sha256": "aa129f5f41e7b963b63040f67153bed85a835c2cad91d568b85d1353e785d551"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_14.json",
+      "size": 5055,
+      "sha256": "58be020604c8ed4ded1ebc6f231fbe59ead475f62b131182564ff124f6d9f586"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_15.json",
+      "size": 5239,
+      "sha256": "2741234e4785c3148e977270c59574c8bcc3d208c1d88fbaee90bd184ed7b621"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_16.json",
+      "size": 5241,
+      "sha256": "c7c2a2f8f7194cdf397d376090800ff19876245d8bcf763a7a97ab6d8bebd83c"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_17.json",
+      "size": 5055,
+      "sha256": "14fde29d2b48e53a5e520c85805c0f8311a71a88399284a4026bd4bd81d63385"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_18.json",
+      "size": 5250,
+      "sha256": "7a4629bcc5d32d367db2d585c20b6eb63c8dd0e6b614a0e6df54c12640b00f26"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_19.json",
+      "size": 5054,
+      "sha256": "29387b3f022efe277553030b7ed2c8496da3d7485559338a588ad2bf7c395764"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_2.json",
+      "size": 5245,
+      "sha256": "99a2f67022ba504bbed5420d6e61b79ed95b80aa69076576e0fd5574d119001d"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_20.json",
+      "size": 5245,
+      "sha256": "b46af01f7cc027cf7e30122da9d1fb527c3f86c7d4a20b6945158f109bd98054"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_21.json",
+      "size": 5048,
+      "sha256": "19f00f56baad64449af6aa1058057422cf67aa764936d29168facb88acda74e9"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_22.json",
+      "size": 5053,
+      "sha256": "92a56963d37dec71dc31da9f50459b42781b00b3fb1651e23ee2e66d8a574349"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_23.json",
+      "size": 5052,
+      "sha256": "383d71cffc5e4c08e73d7aa68d341a107bdc16ce11974349b9248c7537d0c65e"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_24.json",
+      "size": 5056,
+      "sha256": "0db8865f27125674825b4ff41472e827c849caa58d87d501e0b2f9e6d763eee4"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_25.json",
+      "size": 5244,
+      "sha256": "b9bc3ef29a126a2072aa65cc9296c38c8e6af0b281c60eab4eb14dcc80c677a0"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_26.json",
+      "size": 5245,
+      "sha256": "ed592b6e83ffd22e808e04f4e0d9d164ad9edbfb06e44b8b1b7566d061ac945c"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_27.json",
+      "size": 5245,
+      "sha256": "775132347e9535fa5ce74d97f5a2e208053c4d7f53c359b5a38b1d435646b5d1"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_28.json",
+      "size": 5241,
+      "sha256": "1976af0731c6926283b3c15c3b3c8aa78d4b5316b00b9d9ba35ea1a16a8ea19d"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_29.json",
+      "size": 5050,
+      "sha256": "7ef168784a2be4318dcb7ec2bc5ceda33e53291df4c2b3902be7b33eb710956f"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_3.json",
+      "size": 5251,
+      "sha256": "f55388c0f852a8d4f0c5ca34a0e3d9f2872b6fd4ae125d742ba62f626533248f"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_30.json",
+      "size": 5240,
+      "sha256": "e4d41945d4de3e55200f9e824e50f59ecca5eeca29c8bb336493b2179c22173e"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_31.json",
+      "size": 5240,
+      "sha256": "a590d49ab38de1a205fb8a04ba020b861f167a3940fadfcac40b7b85e69c8094"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_32.json",
+      "size": 5054,
+      "sha256": "25e69b6243c385f0409865a5bee319dad612defa25b1e33ff427e04a03728026"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_33.json",
+      "size": 5243,
+      "sha256": "72685e9820c78e923497846b38c95d68a4ba48eb926eef67bf6cbdca8a795143"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_34.json",
+      "size": 5054,
+      "sha256": "f08cc4af009f983ef7da518794f85b59e5a8421d364a0880fcedc4bff9abc57b"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_35.json",
+      "size": 5055,
+      "sha256": "deb69331fb7b5131f5dedc2be3df4f9701b47c797b7d8c9197cfaed8c6f96a8f"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_36.json",
+      "size": 5239,
+      "sha256": "94a3da6501b18d74e9c9075e70279b89291c07e7f8503f30c3b2fb4c5048e93c"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_37.json",
+      "size": 5052,
+      "sha256": "d57e33334ced606fcbf578a6c121f0f6b251a501721805e5fd5f2c34159aff36"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_38.json",
+      "size": 5049,
+      "sha256": "56d485fe4d1418f74f69be9ef2335edcd33b62c0c5f6946c398fe87650a93b85"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_39.json",
+      "size": 5239,
+      "sha256": "84e6fd5b1289bdab917388ecb8d01b00d5cdb8a1d59c70e412a297e3da7c7248"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_4.json",
+      "size": 5244,
+      "sha256": "6b92f99b9c35d6ec0e0176df3ee0d574f98dae58a8dc7a8769c9011bba16720d"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_40.json",
+      "size": 5056,
+      "sha256": "f49d4cf51f31fa7b7a947353eeb73f5a6b37743ab5f8a9e3d6efa63915233acb"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_41.json",
+      "size": 5243,
+      "sha256": "79b7a451f6853fe5dc6b374b3c102ae18615f878af2b01f4aa339e6b931bd386"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_42.json",
+      "size": 5242,
+      "sha256": "10ebfcc03b15a51b26b51f277116a92f2742f3938b65022ecbd62d48ac1ee971"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_43.json",
+      "size": 5241,
+      "sha256": "d8bdac05d4dcf9014535ee015c17692f25d73ae8165e9c00257df042cd4b2c5b"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_44.json",
+      "size": 5052,
+      "sha256": "1beec15727cf910c37369984193ad6f26a8649f70947c4c92a8541171ca5ea84"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_45.json",
+      "size": 5250,
+      "sha256": "af0a0427385eb7fc472dc693faee15ae906eb42d19af25097f9453bb4f43da89"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_46.json",
+      "size": 5244,
+      "sha256": "51292c4c46f7d5764134c2c9bad85dda604aa202b6cffa02a847f3d10ced18aa"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_47.json",
+      "size": 5251,
+      "sha256": "162e2a6d65686e25c201094bf94ecd59e43fb77e8af8bf64476563abda452b28"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_48.json",
+      "size": 5055,
+      "sha256": "dc58ecbf78c5ab0ec81ec255db157547f492edabaa12995f206a2a6aeb9db37f"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_49.json",
+      "size": 5053,
+      "sha256": "19bca4334e8e7f017641eef2cda170efd0e601a5806fa88ce15d4da231c44db9"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_5.json",
+      "size": 5244,
+      "sha256": "212e2745b47d0839e0d469a75d24b996a21bffaf6cb45f74a65d1d7dc3ff2823"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_50.json",
+      "size": 5055,
+      "sha256": "e6cff0e42a91c578924d7698fe34767a7650a3ce4c47a82759331bfc6007bd10"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_51.json",
+      "size": 5055,
+      "sha256": "f7503864569bcb1c3a367260090e14e6236c094e148920a28f643b5ccd3ae3a4"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_52.json",
+      "size": 5241,
+      "sha256": "8b6e293c417e5ab2004483a1b9bfbe7bc2eb10d405e401d599fa5d18197ee8be"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_53.json",
+      "size": 5052,
+      "sha256": "5068d00b2aa1cf1df7e80915078561585d7a3f6fd34f3c9bd5719075d59f182a"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_54.json",
+      "size": 5250,
+      "sha256": "3e87c082cc4b6b83367c337461f4a8e61ffb15d0be255ce6e134e205ae30a97e"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_6.json",
+      "size": 5055,
+      "sha256": "cb2dea72a9a70f8bf2428481d287d11d26c5529d9afa879f79499ec80f159d66"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_7.json",
+      "size": 5243,
+      "sha256": "62b0df224077e22279dfd3da5d2549dac03c3fd4a7f20d840541d314f47efec9"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_8.json",
+      "size": 5054,
+      "sha256": "d0be23c650e7db6e5dc83ad513b1dc99c7dd31b8350a33189e89e33dc0909d3d"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_9.json",
+      "size": 5250,
+      "sha256": "b262fcaafdcb9c515a62a7b75b94985d81d3b06590702d180add3f615e9eb2c1"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_0.json",
+      "size": 16470,
+      "sha256": "5d52b98d362d52ebc274fb9a3b29febbc6a8ea5a1f51617911dda7502783f678"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_1.json",
+      "size": 15934,
+      "sha256": "b894dd328142a65a02c9b5f489968561b7caf7c692455bf9487d6c64185fd031"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_10.json",
+      "size": 15198,
+      "sha256": "1ac5a7e239227df34b89fa48a281e2992f215480c2e72ed1c7cac5cf3c6f58ea"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_11.json",
+      "size": 16350,
+      "sha256": "b5583b976aa78cffdc2dd6dd2680f2af0d834c3346aca902618e383976a6ed15"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_12.json",
+      "size": 15262,
+      "sha256": "6dbfc8bd4334f1d8399aa4020af9a5b0f62a1eb1c5c304bf2f1a58f7c8a02d2a"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_13.json",
+      "size": 15057,
+      "sha256": "6f9f5d4ae12916b38e798f9c73294bfb5a7398a3eef7ebd4c48c51a52dbe6d19"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_14.json",
+      "size": 17107,
+      "sha256": "599fe9e97e10928d96a209185790c533c7140c40d3f4eb18ba8c8f9f18478e9f"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_15.json",
+      "size": 17146,
+      "sha256": "8c7142dc7cc72edf79fc47e80ea6bfe184ce4d9759ae5a3c3cd86e20b1a766f7"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_16.json",
+      "size": 16271,
+      "sha256": "a6a80b24de3e3f5b0f6f8a36526c888d7a05ebb9650109eb27d13018325c2c1c"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_17.json",
+      "size": 16515,
+      "sha256": "8be69632866b9e4a38ebc53ed879ef0f214d09fe79fe61c993eaf59f476be770"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_18.json",
+      "size": 15154,
+      "sha256": "a302ccbdaeeb1a638ac165ba5a33359f6294042bf43da2e762b6c52b4e9dbace"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_19.json",
+      "size": 15783,
+      "sha256": "0062f18c647dd227c9698e45e016563434ed40f943916ba1efa5e2c14f06d4f8"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_2.json",
+      "size": 15256,
+      "sha256": "adbcdfe6b5a6031fda2bbfae4d67ffbe6221aa1045e2455082158fa962b96eef"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_20.json",
+      "size": 16457,
+      "sha256": "aae8c63fcfb81a9e06e59681f54c772f7ed15b7d24bf211a884483ffaa0ea449"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_21.json",
+      "size": 15810,
+      "sha256": "5a8eb6a516f50d75aab3ddcf51b9c194fd2b24f530f009a7da8f9ca7bec6037b"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_22.json",
+      "size": 17136,
+      "sha256": "528697148f19183444ff4b999be43954f9414fda52c8e98ed5ba32aefbff6da0"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_23.json",
+      "size": 16441,
+      "sha256": "e1e379777354a2616ead6945e8ece0b80179637a0db36d3bb709365894328f09"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_24.json",
+      "size": 15921,
+      "sha256": "71d9a182f18cf65bc7d1438a581292b27889a4dd98b0a4c1811c056918362a38"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_25.json",
+      "size": 15089,
+      "sha256": "d4a32f0131fec83d6d3f6977b4268f344b54675a4cf3c66b2db77735670d2c05"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_26.json",
+      "size": 16104,
+      "sha256": "508b6ce34a243932f754ba39f402370bd67c9a15510b7bfcbe47af3bfb0891d3"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_27.json",
+      "size": 16864,
+      "sha256": "2ab0a5935a11eb262906ccf06ffd64d51583957429bcb447254800604aeb41e0"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_28.json",
+      "size": 16131,
+      "sha256": "6ea335cc3e98d0e1a3551d594ef141c877d6d461b8ff5eb4c4e618c2707da535"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_29.json",
+      "size": 16519,
+      "sha256": "3424a8bbb3af578927d0fa78df7af502a0fc6c43a69fb0ed5982a51ef945b22c"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_3.json",
+      "size": 16527,
+      "sha256": "caf62d3cd0f14fdd1e7a823d96fa63b88ab70776cda1f1ea6dda408f8fead6c3"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_4.json",
+      "size": 15725,
+      "sha256": "be9916373af93cc3483dcb776dc7bc898fa8049208d72c6459133d44f45ddd78"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_5.json",
+      "size": 15811,
+      "sha256": "9e6a6dde72377ed16f42c4a56200fdb99a0ae4f25597037aa9e2962ffd05c6f9"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_6.json",
+      "size": 16471,
+      "sha256": "f958576c48130d1ed8a4aa37902030691c3fe4ec17eb3953ebdfea8ba09be7be"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_7.json",
+      "size": 17101,
+      "sha256": "4afb92f4905505c96c6903c9e6e8c39c8aa3e58481db5ba19b81d20de5498219"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_8.json",
+      "size": 16621,
+      "sha256": "0cb280ecfd4c194e18bd9fa3d845abb35feeca4d323ac9a43d8da49f10b233a3"
+    },
+    {
+      "relative": "Assets/Eval_Layout/RoboDojo/arx_x5/0/stack_bowls_random_9.json",
+      "size": 16490,
+      "sha256": "f85e84f6bcc497f7eefde91aa7a52cddbfb1c5582a938735f0196072e21d4488"
+    }
+  ]
+}

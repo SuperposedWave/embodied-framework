@@ -5,12 +5,11 @@ codecs is intentional: it preserves released preprocessing, precision and RNG.
 The old logical slot names exist only in this model-private encoding boundary.
 """
 from dataclasses import fields, replace
-from .. import _legacy_contracts as leaf
-from ..mn import contracts as native
-from .._legacy_validation import require
+from ..core import types as leaf
+from ..native import contracts as native
+from ..core.validation import require
 from . import contracts as c
 from .context import native_context
-from .validation import leaf_space
 
 STATE_PATHS = {"position": "eef_position", "quaternion": "eef_quaternion",
     "fingers": "gripper_joint_positions", "grip": "gripper_open_fraction",
@@ -89,7 +88,13 @@ def native_state_spec(spec):
 
 
 def private_space(space, original, paths):
-    projected = leaf_space(space)
+    def project(cls, value):
+        return cls(**{f.name: getattr(value, f.name) for f in fields(cls)})
+    robots = {rid: leaf.RobotSpec(embodiment_id=r.embodiment_id, base_frame_id=r.base_frame_id,
+        joints=r.joints, grippers=r.grippers,
+        end_effectors={key: project(leaf.EndEffectorSpec, end) for key, end in r.end_effectors.items()})
+        for rid, r in space.robots.items()}
+    sensors = {key: project(leaf.SensorSpec, sensor) for key, sensor in space.sensors.items()}
     states = {key: native_state_spec(value) for key, value in space.state_fields.items()}
     if any(req.key == "drive_targets" for req in original.inputs):
         states["model/drive_targets"] = native.StateSpec(semantic="joint_drive_target", unit="rad_and_open_fraction", frame_id=None,
@@ -98,7 +103,7 @@ def private_space(space, original, paths):
     return native.SpaceSpec(spec_id=space.spec_id, revision=space.revision, protocol_id=space.protocol_id,
         protocol_version=space.protocol_version, timing_mode=space.timing_mode,
         control_period_s=space.control_period_s, physics_period_s=space.physics_period_s,
-        frames=projected.frames, robots=projected.robots, sensors=projected.sensors, state_fields=states,
+        frames=space.frames, robots=robots, sensors=sensors, state_fields=states,
         action_specs=space.action_specs, controllers=space.controllers, native_protocols=space.native_protocols,
         required_action_targets=space.required_action_targets, action_joint_modes=space.action_joint_modes)
 
@@ -154,7 +159,7 @@ class CanonicalModel:
     def predict(self, context):
         result = self.engine.predict(native_context(context))
         return c.Prediction(context=context, based_on_observation_id=result.based_on_observation_id,
-            action=c.Action(**{f.name: getattr(result.action, f.name) for f in fields(c.Action)}),
+            action=result.action,
             model_forward_count=result.model_forward_count,
             transformations=result.transformations + ("canonical-v03-to-weight-private-encoding",))
 

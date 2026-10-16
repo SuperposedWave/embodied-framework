@@ -4,9 +4,9 @@ Existing environment-only loaders/executors retain pinned controller/scoring
 behavior. Native field names appear only here and in source metadata.
 """
 from dataclasses import fields, replace
-from .. import _legacy_contracts as leaf
-from ..mn import contracts as native
-from .._legacy_validation import require
+from ..core import types as leaf
+from ..native import contracts as native
+from ..core.validation import require
 from . import contracts as c
 from .context import native_context, public_context
 
@@ -171,8 +171,7 @@ class CanonicalBenchmark:
     def advance(self, action, context, remaining):
         from .transforms import action_for_environment
         converted = action_for_environment(action, self.space, self.latest)
-        private = native.Action(**{f.name: getattr(converted, f.name) for f in fields(native.Action)})
-        result = self.engine.advance(private, native_context(context), remaining)
+        result = self.engine.advance(converted, native_context(context), remaining)
         self.latest = canonical_observation(self.family, self.native_space, result.observation, self.space)
         return c.StepResult(observation=self.latest, execution_feedback=result.execution_feedback,
                            terminated=result.terminated, truncated=result.truncated)

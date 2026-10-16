@@ -14,10 +14,10 @@ import sys
 
 import numpy as np
 
-from .. import _legacy_contracts as c
+from ..native import environment_records as c
 from ..codec import decode
 from ..errors import AdapterError
-from .._legacy_validation import same_episode, schema_value
+from ..core.validation import same_episode, schema_value
 from .native_common import finite_array, native_module
 from .native_robotwin_executor import MeasuredRobotwinExecutor
 from . import robotwin_spec as spec

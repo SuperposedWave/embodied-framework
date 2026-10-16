@@ -3,7 +3,7 @@ import importlib
 from pathlib import Path
 import sys
 
-from .. import _legacy_contracts as c
+from ..native import environment_records as c
 from ..errors import AdapterError
 
 

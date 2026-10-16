@@ -1,6 +1,6 @@
 """Explicit physical transforms; never apply controller scaling here."""
 import math
-from ._legacy_contracts import Pose, Transform
+from .core.types import Pose, Transform
 from .errors import ContractError
 
 

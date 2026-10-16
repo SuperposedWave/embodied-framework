@@ -1,9 +1,9 @@
 """Adapter-owned coordinate math; never a Runner responsibility."""
 from dataclasses import replace
-from .. import _legacy_contracts as leaf
+from ..core import types as leaf
 from ..geometry import compose, multiply_quaternions, rotate_vector
-from ..mn.transforms import transform_between
-from .._legacy_validation import require, target_table
+from ..core.transforms import transform_between
+from ..core.validation import require, target_table
 from .matching import input_key
 
 

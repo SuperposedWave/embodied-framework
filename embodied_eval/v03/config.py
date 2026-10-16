@@ -4,8 +4,8 @@ from pathlib import Path
 from typing import Literal
 import re
 from ..codec import decode, loads, to_data
-from .._legacy_contracts import Budgets
-from .._legacy_validation import require
+from ..core.types import Budgets
+from ..core.validation import require
 
 
 @dataclass(frozen=True, kw_only=True)

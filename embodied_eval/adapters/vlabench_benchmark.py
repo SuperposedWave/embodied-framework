@@ -8,10 +8,10 @@ from pathlib import Path
 
 import numpy as np
 
-from .. import _legacy_contracts as c
+from ..native import environment_records as c
 from ..codec import decode
 from ..errors import AdapterError
-from .._legacy_validation import same_episode
+from ..core.validation import same_episode
 from .native_common import check_tick_budget, finite_array, native_module
 from . import vlabench_spec as spec
 

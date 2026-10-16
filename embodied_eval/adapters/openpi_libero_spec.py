@@ -1,6 +1,6 @@
 """Official pi05_libero native evaluation, separate from the OpenWAM protocol."""
 from dataclasses import replace
-from .. import _legacy_contracts as c
+from ..native import environment_records as c
 from . import openwam_libero_spec as base
 
 MODEL_REVISION = "215abfb217dbac7d5f1273282331b9b1866c0479"

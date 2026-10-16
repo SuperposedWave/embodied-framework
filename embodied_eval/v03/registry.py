@@ -1,6 +1,6 @@
 """Independent registrations; native factories are never invoked by describe."""
-from ..mn.registry import AdapterRegistry, ModelRegistration, BenchmarkRegistration
-from ..mn.registry import default_registry as native_registry
+from ..core.registry import AdapterRegistry, ModelRegistration, BenchmarkRegistration
+from ..native.registry import default_registry as native_registry
 from .models import CanonicalModel, capability
 from .benchmarks import CanonicalBenchmark, canonical_space
 

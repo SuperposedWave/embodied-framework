@@ -5,7 +5,8 @@ the existing SI/xyzw semantics; native vectors never become untyped poses.
 """
 from dataclasses import dataclass, field
 from typing import Literal
-from .. import _legacy_contracts as leaf
+from ..core import types as leaf
+from ..core.types import Action
 
 VERSION = "0.3"
 
@@ -175,13 +176,6 @@ class ModelInput:
     frame_transforms: dict[str, leaf.TimedTransform] = field(default_factory=dict)
 
 
-@dataclass(frozen=True, kw_only=True)
-class Action:
-    commands: tuple[leaf.Command, ...]
-    acquire_observation_after: bool = True
-    native_protocol: str | None = None
-    native_dtype: Literal["float32", "float64", "int32", "int64"] | None = None
-    source_euler_xyz_rad: dict[str, tuple[float, float, float]] = field(default_factory=dict)
 
 
 @dataclass(frozen=True, kw_only=True)

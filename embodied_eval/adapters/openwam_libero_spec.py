@@ -1,5 +1,5 @@
 """Versioned metadata for the narrow OpenWAM-alpha / LIBERO spatial pilot."""
-from .. import _legacy_contracts as c
+from ..native import environment_records as c
 
 EXTENSION = "libero.native_proprio.v1"
 ACTION = "libero-osc7@1"

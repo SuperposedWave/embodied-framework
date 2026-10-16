@@ -3,24 +3,11 @@ from dataclasses import dataclass, replace
 import copy
 from ..codec import decode
 from ..errors import Issue
+from ..core.compatibility import CompatibilityReport
 from .._legacy_validation import require, shape_matches, target_table
 from . import contracts as c
 
 
-@dataclass(frozen=True)
-class CompatibilityReport:
-    issues: tuple[Issue, ...]
-    warnings: tuple[str, ...]
-
-    @property
-    def compatible(self):
-        return not self.issues
-
-    def require_compatible(self):
-        if self.issues:
-            from ..errors import ContractError
-            i = self.issues[0]
-            raise ContractError(i.code, i.path, i.message)
 
 
 def check_compatibility(space, cap, binding):

@@ -1,11 +1,11 @@
 """Explicit SYNTHETIC fixtures for canonical architecture and CLI regression."""
 from dataclasses import dataclass, replace
 from typing import Literal
-from .. import _legacy_contracts as leaf
+from ..core import types as leaf
 from ..codec import decode
 from ..errors import AdapterError
-from .._legacy_validation import require
-from ..mn.registry import ModelRegistration, BenchmarkRegistration
+from ..core.validation import require
+from ..core.registry import ModelRegistration, BenchmarkRegistration
 from . import contracts as c
 
 

@@ -1,5 +1,5 @@
 """Current 0.3 public API. Historical structures are private to native codecs."""
-from ._legacy_contracts import (
+from .core.types import (
     Transform, Pose, Twist, FrameSpec, TimedTransform, TensorSpec, DataRef, Tensor,
     JointSpec, GripperSpec, ControllerSpec, ActionSpec, Budgets, PublicTask,
     SensorSample, JointTarget, PoseTarget, PoseDelta, TwistCommand,
