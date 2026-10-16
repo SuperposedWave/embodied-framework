@@ -104,18 +104,28 @@ def handler_for(report_route, routes):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--also-report", type=Path, action="append", default=[],
+                        help="Preserve an explicitly selected prior report and its linked attachments")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--receipt", type=Path, required=True, help="New preview lifecycle receipt")
     args = parser.parse_args()
     if not 1 <= args.port <= 65535:
         raise ValueError("port must be 1..65535")
     route, routes, hashes = catalog(args.report)
+    for additional in args.also_report:
+        _, selected, selected_hashes = catalog(additional)
+        for path in routes.keys() & selected.keys():
+            if routes[path] != selected[path]:
+                raise ValueError("inconsistent explicitly selected report attachment: " + path)
+        routes.update(selected)
+        hashes.update(selected_hashes)
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
     with args.receipt.open("x") as record:
         with ThreadingHTTPServer(("127.0.0.1", args.port), handler_for(route, routes)) as server:
             receipt = {"kind": "loopback_report_preview_not_public_hosting", "at_utc": datetime.now(timezone.utc).isoformat(),
                 "pid": os.getpid(), "bind": "127.0.0.1", "port": args.port, "status": "listening",
                 "report": str(args.report.resolve()), "instance_local_url": f"http://127.0.0.1:{args.port}{quote(route, safe='/')}",
+                "additional_reports": [str(path.resolve()) for path in args.also_report],
                 "remote_browser_requires_port_forwarding": True, "external_upload_performed": False,
                 "historical_report_rewritten": False, "exposed_file_sha256": hashes, "directory_listing": False}
             record.write(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n")

@@ -12,7 +12,7 @@ Adapter指负责某一侧格式转换的适配器。Runner指只负责调用顺�
 
 ## 类型和入口
 
-公共入口：`embodied_eval.contracts`、`embodied_eval.interfaces`、`embodied_eval.config`、`embodied_eval.validation`、`embodied_eval.runner`。实现与注册：`embodied_eval/v03/`。`_legacy_contracts.py`、`_legacy_validation.py` 以及 `mn/` 保留给共享物理类型、纯数学和已核验的原生组件私有编码使用；不是当前配置回退通道。
+公共入口：`embodied_eval.contracts`、`embodied_eval.interfaces`、`embodied_eval.config`、`embodied_eval.validation`、`embodied_eval.runner`。公共实现与注册：`embodied_eval/v03/`；版本无关的物理类型、结构校验、坐标路径与注册容器：`embodied_eval/core/`；原生模型编码、环境执行封装及资产核验：`embodied_eval/native/`。`native/contracts.py` 与 `native/environment_records.py` 中的冻结私有消息仅衔接原生组件和历史解码，不是旧版运行入口。`mn/` 中迁出组件的旧路径保留导入别名；历史Runner、配置和协议校验不参与当前通路。此处仅更新内部源码归属，公共字段、默认值和协议语义不变。
 
 消息严格校验未知字段、版本、重复JSON键、非有限数、跨轮次和不完整目标。JSON是配置与证据使用的文本数据格式。版本字符串必须为 `"0.3"`。
 
