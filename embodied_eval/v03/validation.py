@@ -66,10 +66,9 @@ def validate_space(space):
     require("world" in space.frames, "missing_frame", "world", "public world frame required")
     targets = target_table(space)
     for key, spec in space.sensors.items():
-        role = key
-        for suffix in ("_depth", "_point_cloud", "_audio", "_tactile"):
-            role = role.removesuffix(suffix)
-        require(role in CAMERAS and spec.role == role, "noncanonical_sensor", key, "use a canonical public camera role")
+        expected = spec.role + ("" if spec.modality == "rgb" else "_" + spec.modality)
+        require(spec.role in CAMERAS and key == expected, "noncanonical_sensor", key,
+                "use one canonical role and its actual modality, not compound or misleading suffixes")
         require(bool(spec.native_source), "missing_provenance", key, "declared source required")
     require(set(space.view_aliases) <= {"main"}, "unknown_view_alias", "view_aliases", "only the explicit main alias is standardized")
     require(all(key in space.sensors for key in space.view_aliases.values()), "missing_view", "view_aliases", "alias must address an actual public sensor, never another alias")

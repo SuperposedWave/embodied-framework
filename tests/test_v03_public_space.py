@@ -144,6 +144,12 @@ class CanonicalValidationTests(unittest.TestCase):
         s = replace(self.space, sensors={'head': replace(self.space.sensors['head'], role='agentview')})
         with self.assertRaises(ContractError):
             validate_space(s)
+        for key in ('head_depth', 'head_point_cloud_depth', 'head_audio_depth'):
+            with self.assertRaises(ContractError):
+                validate_space(replace(self.space, sensors={key: self.space.sensors['head']}, view_aliases={'main': key}))
+        depth = replace(self.space.sensors['head'], modality='depth', unit='m', color_order=None,
+            tensor=leaf.TensorSpec(dtype='float32', shape=(2, 2), layout='HW'))
+        validate_space(replace(self.space, sensors={'head_depth': depth}, view_aliases={'main': 'head_depth'}))
 
     def test_missing_head_does_not_use_wrist(self):
         s = replace(self.space, sensors={'wrist': replace(self.space.sensors['head'], role='wrist')}, view_aliases={'main': 'wrist'})
