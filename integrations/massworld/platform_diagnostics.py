@@ -3,6 +3,14 @@ import re
 from pathlib import Path
 
 
+def benchmark_imports(family):
+    # VLABench's simulator client deliberately has no torch; inference runs in
+    # its independent model process. LIBERO needs CPU torch for init states.
+    return {'libero': ['torch', 'cv2', 'mujoco'],
+            'vlabench': ['cv2', 'mujoco'],
+            'robotwin': ['torch', 'cv2', 'sapien', 'mplib']}[family]
+
+
 def dependency_facts(text):
     libraries = set()
     for pattern in (

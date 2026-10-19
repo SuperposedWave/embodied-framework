@@ -44,7 +44,7 @@ def main(args):
         'lingbot-stage4': ['torch', 'cv2', 'transformers'],
         'libero': ['torch', 'google_crc32c', 'cv2', 'mujoco', 'robosuite'],
         'libero-openpi-stage4': ['torch', 'google_crc32c', 'cv2', 'mujoco', 'robosuite'],
-        'vlabench-stage4': ['torch', 'cv2', 'mujoco', 'dm_control'],
+        'vlabench-stage4': ['cv2', 'mujoco', 'dm_control'],
         'robotwin-stage4': ['torch', 'cv2', 'sapien', 'mplib', 'curobo'],
     }
     environment = dict(os.environ, PYTHONPATH=os.pathsep.join((str(ROOT), str(args.overlay.resolve()))),

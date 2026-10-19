@@ -19,6 +19,11 @@ cachespec.loader.exec_module(model_cache)
 
 
 class DependencyFactsTest(unittest.TestCase):
+    def test_simulator_dependencies_are_not_model_dependencies(self):
+        self.assertNotIn('torch', diagnostics.benchmark_imports('vlabench'))
+        self.assertIn('torch', diagnostics.benchmark_imports('libero'))
+        self.assertIn('torch', diagnostics.benchmark_imports('robotwin'))
+
     def test_named_import_and_traceback_without_arbitrary_text(self):
         text = "File \"/outside/pkg/check.py\", line 12, in load\nImportError: cannot import name 'Policy' from 'package.module'\nAuthorization: Bearer synthetic-secret"
         self.assertEqual(diagnostics.import_failure_details(text), {

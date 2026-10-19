@@ -89,7 +89,7 @@ def execute(args):
     # The supervisor itself verifies assets (including CRC), before children.
     # Make the pre-staged overlay available to this process as well.
     sys.path.insert(1, str(args.overlay.resolve()))
-    from platform_diagnostics import dependency_facts, import_failure_details
+    from platform_diagnostics import dependency_facts, import_failure_details, benchmark_imports
     from platform_libraries import environment as library_environment
     from embodied_eval.config import load_config
     from embodied_eval.v03.preflight import check
@@ -142,7 +142,7 @@ def execute(args):
         # Fail cheaply on missing OS/Python dependencies before hashing large
         # checkpoints or launching a model. No weights or actions in this gate.
         report['runtime_dependency_checks'] = []
-        simulator_modules = ['torch', 'cv2', 'sapien', 'mplib'] if config.benchmark.adapter == 'robotwin' else ['torch', 'cv2', 'mujoco']
+        simulator_modules = benchmark_imports(config.benchmark.adapter)
         for role, python, modules in [('model', command[0], ['torch', 'cv2']), ('benchmark', str(client), simulator_modules)]:
             result = subprocess.run([python, str(Path(__file__).with_name('probe_platform_runtime.py')), '--child', '--modules', *modules],
                                     env=environment, capture_output=True, text=True, timeout=180)
