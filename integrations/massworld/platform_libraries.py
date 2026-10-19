@@ -35,7 +35,13 @@ def environment(base, manifest):
         if not path.resolve().is_relative_to(directory.resolve()) or digest(path) != item['sha256']:
             raise ValueError('private runtime library checksum mismatch')
     result = dict(base)
-    result['LD_LIBRARY_PATH'] = str(directory) + (':' + result['LD_LIBRARY_PATH'] if result.get('LD_LIBRARY_PATH') else '')
+    # NGC's image paths can contain Python3.12/PyTorch/CUDA libraries. These
+    # must not override another venv's own wheels (Python310 CPU torch, cu121,
+    # cu126 and cu128 are all intentionally separate in this project).
+    # Keep only the staged neutral GL dependencies and standard driver mounts;
+    # wheel RPATHs resolve the native model/simulator's intended CUDA stack.
+    drivers = [path for path in ('/usr/local/nvidia/lib', '/usr/local/nvidia/lib64') if Path(path).is_dir()]
+    result['LD_LIBRARY_PATH'] = ':'.join([str(directory), *drivers])
     return result
 
 

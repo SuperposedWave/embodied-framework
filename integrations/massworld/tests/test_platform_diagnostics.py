@@ -59,7 +59,8 @@ class DependencyFactsTest(unittest.TestCase):
             base = {'LD_LIBRARY_PATH': '/existing', 'keep': 'original'}
             with patch.object(libraries, 'ROOT', root):
                 result = libraries.environment(base, manifest)
-                self.assertEqual(result['LD_LIBRARY_PATH'], str(directory) + ':/existing')
+                self.assertTrue(result['LD_LIBRARY_PATH'].split(':')[0] == str(directory))
+                self.assertNotIn('/existing', result['LD_LIBRARY_PATH'].split(':'))
                 self.assertEqual(base['LD_LIBRARY_PATH'], '/existing')
                 binary.write_bytes(b'changed')
                 with self.assertRaises(ValueError):
