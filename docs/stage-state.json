@@ -33,6 +33,7 @@
     "automatic_padding_or_warmup": false,
     "GPU_average_newly_measured": false,
     "existing_strict_reproduction_gaps_closed": false,
+    "preexisting_identical_duplicate_stage_flag_removed": true,
     "preview_port": 8768,
     "instance_HTTP_verified": true,
     "remote_port_forwarding_verified": false,
@@ -916,7 +917,6 @@
     "same_physical_gpu_across_instance_continuation_claimed": false,
     "global_proxy_or_shared_driver_changed": false,
     "formal_stage4_acceptance": false,
-    "contract_frozen": false,
     "previous_runtime_report_is_a_static_snapshot": true
   },
   "mn_runtime_20261008": {
