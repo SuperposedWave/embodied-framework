@@ -88,7 +88,7 @@ def execute(args):
     # The supervisor itself verifies assets (including CRC), before children.
     # Make the pre-staged overlay available to this process as well.
     sys.path.insert(1, str(args.overlay.resolve()))
-    from platform_diagnostics import dependency_facts
+    from platform_diagnostics import dependency_facts, import_failure_details
     from platform_libraries import environment as library_environment
     from embodied_eval.config import load_config
     from embodied_eval.v03.preflight import check
@@ -202,7 +202,8 @@ def execute(args):
                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
                     out, err = worker.communicate(timeout=1200)
                     row.update(exit_code=worker.returncode, failure_categories=categories((out + err).decode(errors='replace')),
-                               dependency_facts=dependency_facts((out + err).decode(errors='replace')))
+                               dependency_facts=dependency_facts((out + err).decode(errors='replace')),
+                               import_failure_details=import_failure_details((out + err).decode(errors='replace')))
                     backend = target if mode == 'direct' else target / 'backend'
                     summary = backend / 'summary.json'
                     if summary.is_file():
@@ -219,6 +220,7 @@ def execute(args):
                         out, err = logs.result(timeout=30)
                         row['server_failure_categories'] = categories((out + err).decode(errors='replace'))
                         row['server_dependency_facts'] = dependency_facts((out + err).decode(errors='replace'))
+                        row['server_import_failure_details'] = import_failure_details((out + err).decode(errors='replace'))
             report['cases'].append(row)
             write(args.output / (mode + '-receipt.json'), row)
             print(json.dumps(row), flush=True)

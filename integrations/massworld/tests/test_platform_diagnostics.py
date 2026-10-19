@@ -19,6 +19,13 @@ cachespec.loader.exec_module(model_cache)
 
 
 class DependencyFactsTest(unittest.TestCase):
+    def test_named_import_and_traceback_without_arbitrary_text(self):
+        text = "File \"/outside/pkg/check.py\", line 12, in load\nImportError: cannot import name 'Policy' from 'package.module'\nAuthorization: Bearer synthetic-secret"
+        self.assertEqual(diagnostics.import_failure_details(text), {
+            'failed_named_imports': [{'name': 'Policy', 'module': 'package.module'}],
+            'undefined_symbols': [],
+            'traceback_locations': [{'file': 'check.py', 'line': 12, 'function': 'load'}]})
+
     def test_library_and_module_names_only(self):
         text = "ImportError: libGL.so.1: cannot open shared object file\nModuleNotFoundError: No module named 'google_crc32c'"
         self.assertEqual(diagnostics.dependency_facts(text), {
