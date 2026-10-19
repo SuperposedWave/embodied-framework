@@ -13,6 +13,9 @@ spec.loader.exec_module(diagnostics)
 libspec = importlib.util.spec_from_file_location('platform_libraries', Path(__file__).resolve().parents[1] / 'platform_libraries.py')
 libraries = importlib.util.module_from_spec(libspec)
 libspec.loader.exec_module(libraries)
+cachespec = importlib.util.spec_from_file_location('platform_model_cache', Path(__file__).resolve().parents[1] / 'platform_model_cache.py')
+model_cache = importlib.util.module_from_spec(cachespec)
+cachespec.loader.exec_module(model_cache)
 
 
 class DependencyFactsTest(unittest.TestCase):
@@ -54,6 +57,21 @@ class DependencyFactsTest(unittest.TestCase):
                 binary.write_bytes(b'changed')
                 with self.assertRaises(ValueError):
                     libraries.environment(base, manifest)
+
+    def test_public_tokenizer_cache_verified_without_copying_home(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            cache = root / 'outputs/public-cache'
+            tokenizer = cache / model_cache.RELATIVE
+            tokenizer.parent.mkdir(parents=True)
+            tokenizer.write_bytes(b'synthetic-tokenizer')
+            manifest = cache / 'manifest.json'
+            manifest.write_text(json.dumps({'relative': str(model_cache.RELATIVE), 'sha256': hashlib.sha256(tokenizer.read_bytes()).hexdigest()}))
+            with patch.object(model_cache, 'ROOT', root):
+                self.assertEqual(model_cache.environment({}, manifest)['OPENPI_DATA_HOME'], str(cache))
+                tokenizer.write_bytes(b'changed')
+                with self.assertRaises(ValueError):
+                    model_cache.environment({}, manifest)
 
 
 if __name__ == '__main__':

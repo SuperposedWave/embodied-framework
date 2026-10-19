@@ -131,6 +131,12 @@ def execute(args):
         if args.library_manifest:
             environment = library_environment(environment, args.library_manifest)
             report['library_manifest_sha256'] = hashlib.sha256(args.library_manifest.read_bytes()).hexdigest()
+        if config.model.adapter == 'openpi':
+            if not args.model_cache_manifest:
+                raise ValueError('offline OpenPI tokenizer manifest is required')
+            from platform_model_cache import environment as cache_environment
+            environment = cache_environment(environment, args.model_cache_manifest)
+            report['model_cache_manifest_sha256'] = hashlib.sha256(args.model_cache_manifest.read_bytes()).hexdigest()
         command, cwd, client = server_spec(config)
         # Fail cheaply on missing OS/Python dependencies before hashing large
         # checkpoints or launching a model. No weights or actions in this gate.
@@ -244,6 +250,7 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--overlay', type=Path)
     parser.add_argument('--library-manifest', type=Path)
+    parser.add_argument('--model-cache-manifest', type=Path)
     parser.add_argument('--child', choices=('direct', 'bridge'))
     args = parser.parse_args()
     if not args.child and args.overlay is None:

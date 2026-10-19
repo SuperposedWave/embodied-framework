@@ -28,6 +28,8 @@ def main():
     parser.add_argument('--runtime-manifest', type=Path, required=True)
     parser.add_argument('--library-manifest', type=Path, required=True,
                         help='Pre-staged, checksum-verified user-space libraries; no driver replacement')
+    parser.add_argument('--model-cache-manifest', type=Path,
+                        help='Pre-staged public tokenizer; required for OpenPI cases')
     parser.add_argument('--cases', nargs='+', choices=['openwam_libero','openpi_libero','openwam_vlabench','openpi_vlabench','openwam_robotwin','lingbot_robotwin','openwam_dual_physical'])
     args = parser.parse_args()
     from embodied_eval.v03.migration import migrate
@@ -73,6 +75,12 @@ def main():
         invocation = [python, 'integrations/massworld/run_qz_bounded_validation.py', '--config', row['config'],
                       '--overlay', str(args.overlay.resolve()), '--library-manifest', str(args.library_manifest.resolve()),
                       '--output', str((folder / 'runtime').resolve())]
+        if cfg.model.adapter == 'openpi':
+            if not args.model_cache_manifest:
+                raise ValueError('OpenPI cases require a pre-staged public tokenizer manifest')
+            from platform_model_cache import environment as cache_environment
+            cache_environment({}, args.model_cache_manifest)
+            invocation.extend(['--model-cache-manifest', str(args.model_cache_manifest.resolve())])
         command = 'cd ' + shlex.quote(str(ROOT)) + ' && '
         version = {'openpi': '3.11', 'lingbot_vla': '3.12'}.get(cfg.model.adapter)
         if version:
