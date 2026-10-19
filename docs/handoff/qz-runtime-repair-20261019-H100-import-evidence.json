@@ -1,0 +1,530 @@
+{
+  "kind": "actual_H100_dependency_diagnosis_and_fix_not_policy_evaluation",
+  "original": {
+    "kind": "offline_task_runtime_import_probe_not_evaluation",
+    "at_utc": "2026-10-19T12:55:01.669629+00:00",
+    "model_weights_loaded": false,
+    "actions_executed": false,
+    "native_logs_saved": false,
+    "private_library_overlay_used": false,
+    "environments": [
+      {
+        "environment": "openwam-py310",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "torch",
+            "passed": true,
+            "version": "2.7.1+cu128",
+            "cuda_available": true,
+            "cuda_add_passed": true
+          },
+          {
+            "module": "cv2",
+            "passed": false,
+            "error_type": "ImportError",
+            "missing_shared_libraries": [
+              "libxcb.so.1"
+            ],
+            "missing_modules": [],
+            "exception_types": []
+          },
+          {
+            "module": "scipy",
+            "passed": true
+          },
+          {
+            "module": "transformers",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "environment": "openpi-stage4",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "torch",
+            "passed": true,
+            "version": "2.7.1+cu126",
+            "cuda_available": true,
+            "cuda_add_passed": true
+          },
+          {
+            "module": "cv2",
+            "passed": false,
+            "error_type": "ImportError",
+            "missing_shared_libraries": [
+              "libGL.so.1"
+            ],
+            "missing_modules": [],
+            "exception_types": []
+          },
+          {
+            "module": "jax",
+            "passed": true
+          },
+          {
+            "module": "openpi.policies.policy_config",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "environment": "openpi-vlabench-stage4",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "torch",
+            "passed": true,
+            "version": "2.7.1+cu126",
+            "cuda_available": true,
+            "cuda_add_passed": true
+          },
+          {
+            "module": "cv2",
+            "passed": true
+          },
+          {
+            "module": "jax",
+            "passed": true
+          },
+          {
+            "module": "openpi.policies.policy_config",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "environment": "lingbot-stage4",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "torch",
+            "passed": true,
+            "version": "2.8.0+cu128",
+            "cuda_available": true,
+            "cuda_add_passed": true
+          },
+          {
+            "module": "cv2",
+            "passed": true
+          },
+          {
+            "module": "transformers",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "environment": "libero",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "google_crc32c",
+            "passed": true
+          },
+          {
+            "module": "cv2",
+            "passed": false,
+            "error_type": "ImportError",
+            "missing_shared_libraries": [
+              "libGL.so.1"
+            ],
+            "missing_modules": [],
+            "exception_types": []
+          },
+          {
+            "module": "mujoco",
+            "passed": false,
+            "error_type": "ArgumentError",
+            "missing_shared_libraries": [],
+            "missing_modules": [],
+            "exception_types": [
+              "AttributeError"
+            ]
+          },
+          {
+            "module": "robosuite",
+            "passed": false,
+            "error_type": "ImportError",
+            "missing_shared_libraries": [
+              "libGL.so.1"
+            ],
+            "missing_modules": [],
+            "exception_types": []
+          }
+        ]
+      },
+      {
+        "environment": "libero-openpi-stage4",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "google_crc32c",
+            "passed": true
+          },
+          {
+            "module": "cv2",
+            "passed": false,
+            "error_type": "ImportError",
+            "missing_shared_libraries": [
+              "libGL.so.1"
+            ],
+            "missing_modules": [],
+            "exception_types": []
+          },
+          {
+            "module": "mujoco",
+            "passed": false,
+            "error_type": "ArgumentError",
+            "missing_shared_libraries": [],
+            "missing_modules": [],
+            "exception_types": [
+              "AttributeError"
+            ]
+          },
+          {
+            "module": "robosuite",
+            "passed": false,
+            "error_type": "ImportError",
+            "missing_shared_libraries": [
+              "libGL.so.1"
+            ],
+            "missing_modules": [],
+            "exception_types": []
+          }
+        ]
+      },
+      {
+        "environment": "vlabench-stage4",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "cv2",
+            "passed": true
+          },
+          {
+            "module": "mujoco",
+            "passed": false,
+            "error_type": "ArgumentError",
+            "missing_shared_libraries": [],
+            "missing_modules": [],
+            "exception_types": [
+              "AttributeError"
+            ]
+          },
+          {
+            "module": "dm_control",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "environment": "robotwin-stage4",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "cv2",
+            "passed": false,
+            "error_type": "ImportError",
+            "missing_shared_libraries": [
+              "libGL.so.1"
+            ],
+            "missing_modules": [],
+            "exception_types": []
+          },
+          {
+            "module": "sapien",
+            "passed": false,
+            "error_type": "ImportError",
+            "missing_shared_libraries": [
+              "libX11.so.6"
+            ],
+            "missing_modules": [],
+            "exception_types": []
+          },
+          {
+            "module": "mplib",
+            "passed": true
+          },
+          {
+            "module": "curobo",
+            "passed": true
+          }
+        ]
+      }
+    ]
+  },
+  "fixed": {
+    "kind": "offline_task_runtime_import_probe_not_evaluation",
+    "at_utc": "2026-10-19T12:55:01.860690+00:00",
+    "model_weights_loaded": false,
+    "actions_executed": false,
+    "native_logs_saved": false,
+    "private_library_overlay_used": true,
+    "environments": [
+      {
+        "environment": "openwam-py310",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "torch",
+            "passed": true,
+            "version": "2.7.1+cu128",
+            "cuda_available": true,
+            "cuda_add_passed": true
+          },
+          {
+            "module": "cv2",
+            "passed": true
+          },
+          {
+            "module": "scipy",
+            "passed": true
+          },
+          {
+            "module": "transformers",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "environment": "openpi-stage4",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "torch",
+            "passed": true,
+            "version": "2.7.1+cu126",
+            "cuda_available": true,
+            "cuda_add_passed": true
+          },
+          {
+            "module": "cv2",
+            "passed": true
+          },
+          {
+            "module": "jax",
+            "passed": true
+          },
+          {
+            "module": "openpi.policies.policy_config",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "environment": "openpi-vlabench-stage4",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "torch",
+            "passed": true,
+            "version": "2.7.1+cu126",
+            "cuda_available": true,
+            "cuda_add_passed": true
+          },
+          {
+            "module": "cv2",
+            "passed": true
+          },
+          {
+            "module": "jax",
+            "passed": true
+          },
+          {
+            "module": "openpi.policies.policy_config",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "environment": "lingbot-stage4",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "torch",
+            "passed": true,
+            "version": "2.8.0+cu128",
+            "cuda_available": true,
+            "cuda_add_passed": true
+          },
+          {
+            "module": "cv2",
+            "passed": true
+          },
+          {
+            "module": "transformers",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "environment": "libero",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "google_crc32c",
+            "passed": true
+          },
+          {
+            "module": "cv2",
+            "passed": true
+          },
+          {
+            "module": "mujoco",
+            "passed": true
+          },
+          {
+            "module": "robosuite",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "environment": "libero-openpi-stage4",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "google_crc32c",
+            "passed": true
+          },
+          {
+            "module": "cv2",
+            "passed": true
+          },
+          {
+            "module": "mujoco",
+            "passed": true
+          },
+          {
+            "module": "robosuite",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "environment": "vlabench-stage4",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "cv2",
+            "passed": true
+          },
+          {
+            "module": "mujoco",
+            "passed": true
+          },
+          {
+            "module": "dm_control",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "environment": "robotwin-stage4",
+        "exit_code": 0,
+        "stderr_facts": {
+          "missing_shared_libraries": [],
+          "missing_modules": [],
+          "exception_types": []
+        },
+        "imports": [
+          {
+            "module": "cv2",
+            "passed": true
+          },
+          {
+            "module": "sapien",
+            "passed": true
+          },
+          {
+            "module": "mplib",
+            "passed": true
+          },
+          {
+            "module": "curobo",
+            "passed": true
+          }
+        ]
+      }
+    ]
+  }
+}
+

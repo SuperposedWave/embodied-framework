@@ -1,6 +1,32 @@
 {
-  "last_update_utc": "2026-10-19T09:19:06.543Z",
-  "review_status": "qz_user_confirmed_child_project_seven_offline_single_H100_tasks_accepted_queued_not_evaluated",
+  "last_update_utc": "2026-10-19T12:55:36.265Z",
+  "review_status": "qz_runtime_dependency_repair_after_seven_failed_jobs_in_progress",
+  "qz_runtime_repair_20261019": {
+    "status": "dependency_repairs_verified_in_all_eight_H100_environments_seven_fresh_real_retests_submitted_pending",
+    "index": "docs/handoff/qz-runtime-repair-20261019-index.json",
+    "old_failed_jobs": 7,
+    "old_bridge_comparisons_completed": 0,
+    "GPU_limit": 32,
+    "H100_fixed_runtime_environments": 8,
+    "H100_fixed_import_checks": 30,
+    "H100_fixed_import_checks_passed": true,
+    "diagnostic_jobs_completed": 2,
+    "old_image_control_expected_failed": true,
+    "fixed_image_probe_succeeded": true,
+    "fresh_real_retests_submitted": 7,
+    "requested_real_retest_GPUs_including_queue": 7,
+    "software_base_tests": 515,
+    "bridge_and_diagnostic_tests": 32,
+    "CLI_exit_codes": [
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "full_real_retest_passed": 0,
+    "stage4_accepted": false
+  },
   "qz_validation_submission_20261019": {
     "status": "user_confirmed_child_project_seven_offline_single_H100_jobs_accepted_and_queued_not_evaluated",
     "index": "docs/handoff/qz-validation-submission-20261019-index.json",

@@ -1,0 +1,397 @@
+{
+  "kind": "offline_task_dependencies_repaired_all_eight_H100_environments_passed_seven_real_retests_submitted_pending",
+  "at_utc": "2026-10-19T12:57:12.127Z",
+  "user_request": "检查失败原因并修复",
+  "branch": "feat/massworld-integration",
+  "project": "世界模型评测",
+  "workspace": "分布式训练空间",
+  "GPU_limit": 32,
+  "original_failed_jobs": [
+    {
+      "case": "openwam_libero",
+      "job_id": "job-56654986-b9f5-484f-8e99-d9765fbeade6",
+      "platform_status": "job_failed",
+      "cause": "model_server_startup_reports_missing_shared_library",
+      "old_receipt": "outputs/worldeval-qz-batch-20261019-run1/openwam_libero/runtime/receipt.json",
+      "model_server_listening_observed": false,
+      "direct_completed": false,
+      "bridge_attempted": false,
+      "exact_missing_library_recoverable_from_old_receipt": false,
+      "historical_receipt_preserved": true
+    },
+    {
+      "case": "openwam_vlabench",
+      "job_id": "job-809627d8-0147-4cb6-9ff1-9dfd226a1621",
+      "platform_status": "job_failed",
+      "cause": "model_server_startup_reports_missing_shared_library",
+      "old_receipt": "outputs/worldeval-qz-batch-20261019-run1/openwam_vlabench/runtime/receipt.json",
+      "model_server_listening_observed": false,
+      "direct_completed": false,
+      "bridge_attempted": false,
+      "exact_missing_library_recoverable_from_old_receipt": false,
+      "historical_receipt_preserved": true
+    },
+    {
+      "case": "openpi_vlabench",
+      "job_id": "job-a7a8459a-c379-480d-b1a5-e970a5d97c48",
+      "platform_status": "job_failed",
+      "cause": "model_server_timeout_with_missing_shared_library_signal_not_fully_isolated",
+      "old_receipt": "outputs/worldeval-qz-batch-20261019-run1/openpi_vlabench/runtime/receipt.json",
+      "model_server_listening_observed": false,
+      "direct_completed": false,
+      "bridge_attempted": false,
+      "exact_missing_library_recoverable_from_old_receipt": false,
+      "historical_receipt_preserved": true
+    },
+    {
+      "case": "openwam_robotwin",
+      "job_id": "job-40afa45c-74b4-4ceb-9520-941bdbae18ed",
+      "platform_status": "job_failed",
+      "cause": "model_server_startup_reports_missing_shared_library",
+      "old_receipt": "outputs/worldeval-qz-batch-20261019-run1/openwam_robotwin/runtime/receipt.json",
+      "model_server_listening_observed": false,
+      "direct_completed": false,
+      "bridge_attempted": false,
+      "exact_missing_library_recoverable_from_old_receipt": false,
+      "historical_receipt_preserved": true
+    },
+    {
+      "case": "lingbot_robotwin",
+      "job_id": "job-8506a26e-93aa-481b-ada9-a2ac43779750",
+      "platform_status": "job_failed",
+      "cause": "benchmark_client_startup_reports_missing_shared_library",
+      "old_receipt": "outputs/worldeval-qz-batch-20261019-run1/lingbot_robotwin/runtime/receipt.json",
+      "model_server_listening_observed": true,
+      "direct_completed": false,
+      "bridge_attempted": false,
+      "exact_missing_library_recoverable_from_old_receipt": false,
+      "historical_receipt_preserved": true
+    },
+    {
+      "case": "openwam_dual_physical",
+      "job_id": "job-064357ff-4493-4f03-938a-efef098b729d",
+      "platform_status": "job_failed",
+      "cause": "model_server_startup_reports_missing_shared_library",
+      "old_receipt": "outputs/worldeval-qz-batch-20261019-run1/openwam_dual_physical/runtime/receipt.json",
+      "model_server_listening_observed": false,
+      "direct_completed": false,
+      "bridge_attempted": false,
+      "exact_missing_library_recoverable_from_old_receipt": false,
+      "historical_receipt_preserved": true
+    },
+    {
+      "case": "openpi_libero",
+      "job_id": "job-9057248f-f5f7-449b-a415-b21e08338327",
+      "platform_status": "job_failed",
+      "cause": "asset_verifier_process_cannot_import_pre_staged_google_crc32c",
+      "old_receipt": "outputs/worldeval-qz-batch-20261019-run2/openpi_libero/runtime/receipt.json",
+      "model_server_listening_observed": false,
+      "direct_completed": false,
+      "bridge_attempted": false,
+      "exact_missing_library_recoverable_from_old_receipt": false,
+      "historical_receipt_preserved": true
+    }
+  ],
+  "proven_findings": [
+    {
+      "finding": "supervisor_cannot_import_pre_staged_google_crc32c",
+      "evidence": "old openpi_libero runtime/preflight.json; cold Python310 import before/after overlay; CRC32C known-vector test",
+      "repair": "insert staged dependency overlay in supervisor process before asset verification",
+      "verified_locally": true
+    },
+    {
+      "finding": "image_missing_libxcb_so_1_for_OpenWAM_OpenCV",
+      "evidence": "outputs/worldeval-qz-fix-evidence-20261019-run1/H100-dependency-partial.json",
+      "repair": "SHA-verified private user-space library closure",
+      "verified_on_H100_imports_and_CUDA": true
+    },
+    {
+      "finding": "image_missing_libGL_so_1_for_OpenPI_OpenCV",
+      "evidence_jobs": [
+        "job-0a3ab234-e845-4009-a53b-cf106ea8640d",
+        "job-0af0f70d-bcc3-42d5-8b9e-b397281e28ac"
+      ],
+      "repair": "same private library closure",
+      "verified_on_H100_imports_and_CUDA": true
+    },
+    {
+      "finding": "OpenPI public tokenizer previously only in private host cache",
+      "basis": "fixed upstream download.py and tokenizer.py; exact existing file copied and SHA matched",
+      "repair": "explicit shared OPENPI_DATA_HOME with named tokenizer SHA; no credential cache or new weights",
+      "original_timeout_unique_cause_proven": false
+    },
+    {
+      "finding": "RoboTwin_SAPIEN_import_missing_libX11_so_6",
+      "repair": "same private library closure",
+      "verified_on_H100": true
+    }
+  ],
+  "modified_scope": "task preparation, diagnostics and process-local dependency paths only; no public contract/Adapter/Runner/controller/normalization/score changes",
+  "library_manifest": "outputs/worldeval-platform-libraries-20261019-run1/manifest.json",
+  "public_tokenizer_manifest": "outputs/worldeval-openpi-public-cache-20261019-run1/manifest.json",
+  "software_evidence": "outputs/worldeval-qz-fix-evidence-20261019-run1/software-check-final.json",
+  "base_tests": 515,
+  "bridge_and_diagnostic_tests": 32,
+  "CLI_exit_codes": [
+    0,
+    0,
+    0,
+    1,
+    2
+  ],
+  "diagnostic_jobs": [
+    {
+      "job_id": "job-0a3ab234-e845-4009-a53b-cf106ea8640d",
+      "purpose": "original image dependency diagnosis",
+      "output": "outputs/worldeval-qz-runtime-probe-20261019-124356/runtime/receipt.json"
+    },
+    {
+      "job_id": "job-0af0f70d-bcc3-42d5-8b9e-b397281e28ac",
+      "purpose": "image dependency fix verification",
+      "output": "outputs/worldeval-qz-runtime-probe-20261019-124356-fixed/runtime/receipt.json"
+    }
+  ],
+  "manual_fresh_retest_jobs": [
+    {
+      "case": "openwam_libero",
+      "name": "worldeval-openwam-libero-20261019124852",
+      "job_id": "job-5fde3b57-5a8f-429c-a93e-97f36e374fb3",
+      "config": "outputs/worldeval-qz-batch-20261019-run3/openwam_libero/config.json",
+      "request": "outputs/worldeval-qz-batch-20261019-run3/openwam_libero/job-request.json",
+      "submitted_at_utc": "2026-10-19T12:52:02.811Z",
+      "requested_gpus": 1,
+      "id": "job-5fde3b57-5a8f-429c-a93e-97f36e374fb3",
+      "status": "job_running",
+      "nodes": 1,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414322000",
+        "resource_prepared": "1792414581000",
+        "run": "1792414581000"
+      }
+    },
+    {
+      "case": "lingbot_robotwin",
+      "name": "worldeval-lingbot-robotwin-20261019124852",
+      "job_id": "job-b486602d-3fb5-4b5a-8493-ea10a2e63895",
+      "config": "outputs/worldeval-qz-batch-20261019-run3/lingbot_robotwin/config.json",
+      "request": "outputs/worldeval-qz-batch-20261019-run3/lingbot_robotwin/job-request.json",
+      "submitted_at_utc": "2026-10-19T12:52:03.043Z",
+      "requested_gpus": 1,
+      "id": "job-b486602d-3fb5-4b5a-8493-ea10a2e63895",
+      "status": "job_running",
+      "nodes": 1,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414323000",
+        "resource_prepared": "1792414575000",
+        "run": "1792414596000"
+      }
+    },
+    {
+      "case": "openpi_libero",
+      "name": "worldeval-openpi-libero-20261019124852",
+      "job_id": "job-c1ded489-7e23-4b80-9756-c21142e6d7ae",
+      "config": "outputs/worldeval-qz-batch-20261019-run3/openpi_libero/config.json",
+      "request": "outputs/worldeval-qz-batch-20261019-run3/openpi_libero/job-request-cache-fixed.json",
+      "submitted_at_utc": "2026-10-19T12:56:29.052Z",
+      "requested_gpus": 1,
+      "id": "job-c1ded489-7e23-4b80-9756-c21142e6d7ae",
+      "status": "job_queuing",
+      "nodes": 0,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414589000"
+      }
+    },
+    {
+      "case": "openwam_vlabench",
+      "name": "worldeval-openwam-vlabench-20261019124852",
+      "job_id": "job-9ca3ce5e-5200-4b63-b25b-90462ab117c2",
+      "config": "outputs/worldeval-qz-batch-20261019-run3/openwam_vlabench/config.json",
+      "request": "outputs/worldeval-qz-batch-20261019-run3/openwam_vlabench/job-request.json",
+      "submitted_at_utc": "2026-10-19T12:56:29.297Z",
+      "requested_gpus": 1,
+      "id": "job-9ca3ce5e-5200-4b63-b25b-90462ab117c2",
+      "status": "job_queuing",
+      "nodes": 0,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414589000"
+      }
+    },
+    {
+      "case": "openpi_vlabench",
+      "name": "worldeval-openpi-vlabench-20261019124852",
+      "job_id": "job-36667124-691e-4d58-865b-41fb7d35f042",
+      "config": "outputs/worldeval-qz-batch-20261019-run3/openpi_vlabench/config.json",
+      "request": "outputs/worldeval-qz-batch-20261019-run3/openpi_vlabench/job-request-cache-fixed.json",
+      "submitted_at_utc": "2026-10-19T12:56:29.509Z",
+      "requested_gpus": 1,
+      "id": "job-36667124-691e-4d58-865b-41fb7d35f042",
+      "status": "job_queuing",
+      "nodes": 0,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414589000"
+      }
+    },
+    {
+      "case": "openwam_robotwin",
+      "name": "worldeval-openwam-robotwin-20261019124852",
+      "job_id": "job-1eeb3152-e069-4e03-815a-f4625b29a34b",
+      "config": "outputs/worldeval-qz-batch-20261019-run3/openwam_robotwin/config.json",
+      "request": "outputs/worldeval-qz-batch-20261019-run3/openwam_robotwin/job-request.json",
+      "submitted_at_utc": "2026-10-19T12:56:29.734Z",
+      "requested_gpus": 1,
+      "id": "job-1eeb3152-e069-4e03-815a-f4625b29a34b",
+      "status": "job_queuing",
+      "nodes": 0,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414589000"
+      }
+    },
+    {
+      "case": "openwam_dual_physical",
+      "name": "worldeval-openwam-dual-physical-20261019124852",
+      "job_id": "job-8f93f9d9-91a7-4e3f-8ce6-46e41aa1beea",
+      "config": "outputs/worldeval-qz-batch-20261019-run3/openwam_dual_physical/config.json",
+      "request": "outputs/worldeval-qz-batch-20261019-run3/openwam_dual_physical/job-request.json",
+      "submitted_at_utc": "2026-10-19T12:56:29.959Z",
+      "requested_gpus": 1,
+      "id": "job-8f93f9d9-91a7-4e3f-8ce6-46e41aa1beea",
+      "status": "job_queuing",
+      "nodes": 0,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414589000"
+      }
+    }
+  ],
+  "prepared_not_submitted_remaining": [],
+  "real_closed_loop_after_fixes_passed": 0,
+  "original_reports_outputs_and_failed_receipts_rewritten": false,
+  "no_automatic_fault_tolerance_or_action_retry": true,
+  "no_network_task_downloads_or_new_large_weights": true,
+  "no_global_proxy_or_driver_changes": true,
+  "original_openpi_vlabench_startup_timeout_still_requires_full_retest": true,
+  "stage4_accepted": false,
+  "contract_frozen": false,
+  "H100_dependency_probes": {
+    "original_expected_missing_libraries": [
+      "libxcb.so.1",
+      "libGL.so.1",
+      "libX11.so.6"
+    ],
+    "fixed_environments": 8,
+    "fixed_import_checks": 30,
+    "fixed_import_checks_passed": true,
+    "model_environments_CUDA_add_passed": 4,
+    "probes_not_model_or_action_evaluation": true,
+    "unmodified_control_job_expected_to_fail": true,
+    "original_receipt": "outputs/worldeval-qz-runtime-probe-20261019-124356/runtime/receipt.json",
+    "fixed_receipt": "outputs/worldeval-qz-runtime-probe-20261019-124356-fixed/runtime/receipt.json"
+  },
+  "local_runtime_probe": {
+    "receipt": "outputs/worldeval-local-runtime-probe-20261019-run1/receipt.json",
+    "one_environment_import_timeout": "openpi-stage4",
+    "all_local_import_checks_passed": false,
+    "same_environment_passed_in_actual_H100_task": true
+  },
+  "conservative_requested_GPU_count_including_recent_probe_retention": 9,
+  "current_nonterminal_GPU_requests": 7,
+  "latest_states": [
+    {
+      "id": "job-0a3ab234-e845-4009-a53b-cf106ea8640d",
+      "status": "job_failed",
+      "nodes": 0,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792413849000",
+        "finished": "1792414579000",
+        "resource_prepared": "1792414136000",
+        "run": "1792414136000"
+      }
+    },
+    {
+      "id": "job-0af0f70d-bcc3-42d5-8b9e-b397281e28ac",
+      "status": "job_succeeded",
+      "nodes": 0,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414046000",
+        "finished": "1792414579000",
+        "resource_prepared": "1792414159000",
+        "run": "1792414159000"
+      }
+    },
+    {
+      "id": "job-5fde3b57-5a8f-429c-a93e-97f36e374fb3",
+      "status": "job_running",
+      "nodes": 1,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414322000",
+        "resource_prepared": "1792414581000",
+        "run": "1792414581000"
+      }
+    },
+    {
+      "id": "job-b486602d-3fb5-4b5a-8493-ea10a2e63895",
+      "status": "job_running",
+      "nodes": 1,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414323000",
+        "resource_prepared": "1792414575000",
+        "run": "1792414596000"
+      }
+    },
+    {
+      "id": "job-c1ded489-7e23-4b80-9756-c21142e6d7ae",
+      "status": "job_queuing",
+      "nodes": 0,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414589000"
+      }
+    },
+    {
+      "id": "job-9ca3ce5e-5200-4b63-b25b-90462ab117c2",
+      "status": "job_queuing",
+      "nodes": 0,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414589000"
+      }
+    },
+    {
+      "id": "job-36667124-691e-4d58-865b-41fb7d35f042",
+      "status": "job_queuing",
+      "nodes": 0,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414589000"
+      }
+    },
+    {
+      "id": "job-1eeb3152-e069-4e03-815a-f4625b29a34b",
+      "status": "job_queuing",
+      "nodes": 0,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414589000"
+      }
+    },
+    {
+      "id": "job-8f93f9d9-91a7-4e3f-8ce6-46e41aa1beea",
+      "status": "job_queuing",
+      "nodes": 0,
+      "configured_gpus": 1,
+      "timeline": {
+        "created": "1792414589000"
+      }
+    }
+  ]
+}
