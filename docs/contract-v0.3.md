@@ -90,10 +90,43 @@ LIBERO现有位置来自grip_site、朝向来自right_hand，它们保持两个�
 
 ## 配置与显式迁移
 
+### 可选观测时间扩展：observation-timing@1
+
+2026-10-20用户在时间方案评审后授权推进首轮：时间需求声明、真实历史选帧、严格预检查；不包含动作重采样、统一接管原生缓存、实时异步执行或新的硬仿真时间预算。此扩展保留版本字符串0.3，以具名扩展和显式配置识别；不是冻结或阶段4验收。
+
+| 类型／字段 | 具体含义 |
+| --- | --- |
+| `RunConfig.temporal` / `TemporalPolicy` | 默认 `mode=native`，即保留原生行为且不声称时间已核实；显式 `observation_aligned` 只开启观测历史对齐，不代表动作时间也已对齐 |
+| `TemporalPolicy.allow_approximate` | 默认false；使用最近帧或不晚于目标的帧时，必须由运行配置显式允许近似 |
+| `TemporalPolicy.max_samples_per_input` | 每个输入历史缓冲的最大实际采集样本数，默认64、范围1至4096；不是要求给模型的帧数，内存仍取决于图像大小 |
+| `InputSpec.history` / `HistoryRequirement` | 模型每个图像／状态输入独立声明所需的历史；没有该字段仍是原有当前样本接口 |
+| `offsets_s` | 相对当前决策仿真时间、从旧到新排列的非正秒数，最后一项必须为0，例如 `[-0.2,-0.1,0]` 是0.2秒前、0.1秒前和现在 |
+| `selection` / `tolerance_s` | `exact` 为精确匹配且容差必须为0；`nearest` 取已可用帧中距目标最近者，等距取较早者；`previous` 只取不晚于目标者。后两者须显式允许近似并满足声明的最大时间误差 |
+| `startup` | 默认 `reject`：无法提供重置前历史就提前拒绝。只有有来源的模型配置可声明 `available_prefix`：启动阶段仅使用真实可用的较短历史，不复制图、不额外运动，且逐项记录缺失偏移。中途缺帧不能借此忽略 |
+| `provenance` | 模型历史、启动规则及环境采集规则的来源；具备声明不等于已经验证对应真实权重 |
+| `SpaceSpec.sample_timing` / `SampleTiming` | 按 `sensors.head`、`states.eef_position` 等公共路径声明采集：`uniform` 是有依据的等间隔，`event` 是事件触发，`unknown` 是尚未核实；只有uniform可以填正的 `period_s`。不是物理步长、视频编码帧率或服务调用频率 |
+| `CapabilitySpec.temporal` / `ModelTiming` | 记录模型动作间隔及原生缓存归属；`native_action_period_s=null` 是未核实，不继承环境周期。`replanning_owner` 的adapter／server表示缓存由模型适配器／服务管理，本轮不接管 |
+| `ModelInput.history` / `HistorySelection` | 按同一公共路径返回历史原样本，保留目标时间 `requested_at_s`、原采集时间 `sample.captured_at_s`、首次进入公共观测的仿真时间 `available_at_s`、来源观测编号及同采集时刻的动态坐标变换 |
+| `history_missing_offsets_s` | 仅记录模型明确允许的启动缺口；不是已补齐的帧，不能当作完整历史输入 |
+
+算法只消费原有reset／advance返回的公开样本，不调用额外get_obs，不改变原生随机数消耗、动作缓存或取图节奏。多次反馈复用同一采集时间的数据只记一次；相同采集时间却出现不同值则拒绝。不同采集时间但画面恰好相同仍是两次真实采集。
+
+只选择在本次决策时已经采集且已经可用的数据，不使用未来帧。数值时钟误差容限为十亿分之一秒，不能拿它替代采样近似授权。近似匹配保留真实时间，不将0.08秒的图改写成0.1秒；同一采集不能满足两个不同历史偏移。采集网格与当前单样本反馈接口的实际交付网格均须匹配，不能按相机宣称的帧率补出接口从未返回的中间图片。
+
+历史状态可以使用原有公共几何工具转换，但动态坐标变换必须来自该历史采集时刻，缺少就拒绝，不使用最新姿态代替。当前样本的新鲜度要求与历史时间窗是两种约束；要求0.2秒前的真实历史不等于允许当前输入无限过旧。
+
+预检查不启动模型或仿真工厂，输出 `temporal` 回执；运行另保存 `temporal-plan.json` 与每轮的 `observation_alignment.internal.jsonl`。`exact_grid_declared`只表示声明网格满足要求，仍需运行时核验实际采集；`approximate_authorized`表示已明确授权近似，不等于物理轨迹等价或任务成功。回执明确 `scope=observation_only`、不检查动作跨频率等价、不重采样动作、不改变推理节奏。
+
+现有原生模型配置继续保留当前画面编码和原生缓存，不擅自增加历史输入；它们的动作时间仍明确未核实。VLABench静态describe里的0.002秒占位不作为相机周期，只有加载环境读取实际周期后才声明运行时等间隔采集；RoboTwin仍为事件取图，不能冒充固定间隔。DROID／RoboDojo的采集时序未在本轮补充核实，明确unknown。需要固定完整历史但启动无历史的模型、只有事件取图却要求固定时间历史的模型，在首版明确拒绝，后续另行设计有来源的初始化／采集协议。
+
+示例 `synthetic_history_exact_run.json`、`synthetic_history_approximate_run.json` 为合成架构测试；另外两个history拒绝示例分别验证非整数网格和启动缺历史。它们不是任何真实模型新增成绩，也不是原生权重已经全部完成时间标定。
+
 ```sh
 .venv/bin/python -m embodied_eval check --config examples/mn_synthetic_run.json
 .venv/bin/python -m embodied_eval run --config examples/mn_synthetic_run.json --output outputs/my-v03-run
 .venv/bin/python -m embodied_eval migrate --config /path/to/old.json --output outputs/migrated-v03.json
+.venv/bin/python -m embodied_eval check --config examples/synthetic_history_exact_run.json
+.venv/bin/python -m embodied_eval run --config examples/synthetic_history_exact_run.json --output outputs/my-history-fixture
 ```
 
 预检查不创建模型／仿真工厂，不下载权重。`--verify-assets` 仅核验本地固定资产。结构可组合、运行资产就绪、真实运行、严格原生一致和正式验收是不同状态。

@@ -6,6 +6,7 @@ import re
 from ..codec import decode, loads, to_data
 from ..core.types import Budgets
 from ..core.validation import require
+from .contracts import TemporalPolicy
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -28,6 +29,7 @@ class RunConfig:
     benchmark: AdapterConfig
     episodes: tuple[EpisodeConfig, ...]
     control_mode: str | None = None
+    temporal: TemporalPolicy = field(default_factory=TemporalPolicy)
     contract_version: Literal["0.3"] = "0.3"
 
 
@@ -35,6 +37,8 @@ def validate_config(config, registry=None):
     require(isinstance(config, RunConfig), "unsupported_config_version", "contract_version",
             "current run/check only accept 0.3 configurations; migrate old files explicitly")
     decode(RunConfig, config)
+    from .temporal import validate_policy
+    validate_policy(config.temporal)
     pattern = r"[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
     require(re.fullmatch(pattern, config.run_id) is not None, "invalid_id", "run_id", "safe run ID required")
     require(bool(config.episodes), "missing_episode", "episodes", "select at least one episode")

@@ -1,0 +1,21 @@
+{
+  "contract_version": "0.3",
+  "run_id": "synthetic-history-grid-rejected",
+  "temporal": {"mode": "observation_aligned"},
+  "model": {
+    "adapter": "synthetic_policy_a",
+    "options": {
+      "history": {
+        "offsets_s": [-0.2, -0.1, 0.0],
+        "selection": "exact",
+        "startup": "available_prefix",
+        "provenance": {"synthetic": true, "rule": "negative fixture: 0.1 seconds is off the 0.04-second grid"}
+      }
+    }
+  },
+  "benchmark": {
+    "adapter": "synthetic_simulator_a",
+    "options": {"period_s": 0.04, "declare_sample_timing": true}
+  },
+  "episodes": [{"episode_id": "ep-0", "seed": 0, "budgets": {"env_steps": 8, "model_calls": 8}}]
+}

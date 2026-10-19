@@ -9,5 +9,6 @@ from .v03.contracts import (
     Context, SensorSpec, ReferenceSite, EndEffectorSpec, RobotSpec, StateSpec,
     StateSample, SpaceSpec, InputSpec, OutputSpec, CapabilitySpec, ResolvedProfile,
     Observation, ModelInput, Action, Prediction, TaskSpec, StepResult,
+    TemporalPolicy, HistoryRequirement, SampleTiming, ModelTiming, HistorySelection,
 )
 CONTRACT_VERSION = "0.3"

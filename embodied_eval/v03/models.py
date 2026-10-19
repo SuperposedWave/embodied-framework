@@ -80,7 +80,13 @@ def capability(family, options, original):
             control_sites={targets[k]: targets[k] + "_control_site" for k, kind in out.target_slots.items()
                            if kind == "end_effector" and "pose_target" in out.command_kinds}),
         supported_timing_modes=original.supported_timing_modes, training_embodiments=original.training_embodiments,
-        observation_update=original.observation_update)
+        observation_update=original.observation_update,
+        temporal=c.ModelTiming(native_action_period_s=None,
+            replanning_owner="server" if family == "openwam" else "adapter",
+            provenance={"revision": original.source_revision, "checkpoint": original.checkpoint_ref,
+                "io_profile": profile,
+                "rule": "preserve native next-action/chunk cache; wire observations are current snapshots, not assembled histories",
+                "action_period_status": "unknown: training FPS/stride has not been proven to define this weight's action duration"}))
 
 
 def native_state_spec(spec):
@@ -154,6 +160,8 @@ class CanonicalModel:
         self.engine.begin_episode(native_context(context), task, bound, private_space(space, self.original, self.paths))
 
     def observe(self, model_input):
+        require(not model_input.history, "unsupported_native_history", "model_input.history",
+                "this released current-snapshot encoder must not silently discard a new history requirement")
         self.engine.observe(private_input(model_input, self.original, self.paths))
 
     def predict(self, context):

@@ -9,6 +9,19 @@ from .matching import input_key
 
 def inputs_for_model(view, capability, space):
     states, specs = dict(view.states), dict(view.state_specs)
+    history = dict(view.history)
+    def convert(sample, spec, destination, at):
+        transform = transform_between(space, at, spec.frame_id, destination)
+        require(sample.payload is not None and sample.payload.data is not None, "payload_unavailable", spec.semantic,
+                "inline data required; DataRef reading is not implemented")
+        data = sample.payload.data
+        if spec.semantic in ("eef_position", "tcp_position", "base_position"):
+            data = [a + b for a, b in zip(rotate_vector(transform.quaternion_xyzw, data), transform.translation_m)]
+        elif spec.semantic.endswith("orientation"):
+            data = list(multiply_quaternions(transform.quaternion_xyzw, tuple(data)))
+        else:
+            require(False, "unsupported_frame_conversion", spec.semantic, "only explicitly physical position/orientation fields can be transformed")
+        return replace(sample, payload=replace(sample.payload, data=data))
     for req in capability.inputs:
         if req.kind != "state" or req.frame_id is None:
             continue
@@ -18,19 +31,14 @@ def inputs_for_model(view, capability, space):
         spec = specs[key]
         if spec.frame_id == req.frame_id:
             continue
-        transform = transform_between(space, view, spec.frame_id, req.frame_id)
-        sample = states[key]
-        require(sample.payload is not None and sample.payload.data is not None, "payload_unavailable", key, "inline data required; DataRef reading is not implemented")
-        data = sample.payload.data
-        if spec.semantic in ("eef_position", "tcp_position", "base_position"):
-            data = [a + b for a, b in zip(rotate_vector(transform.quaternion_xyzw, data), transform.translation_m)]
-        elif spec.semantic.endswith("orientation"):
-            data = list(multiply_quaternions(transform.quaternion_xyzw, tuple(data)))
-        else:
-            require(False, "unsupported_frame_conversion", key, "only explicitly physical position/orientation fields can be transformed")
-        states[key] = replace(sample, payload=replace(sample.payload, data=data))
+        states[key] = convert(states[key], spec, req.frame_id, view)
+        path = "states." + key
+        if path in history:
+            history[path] = tuple(replace(entry, sample=convert(entry.sample, spec, req.frame_id,
+                replace(view, sim_time_s=entry.sample.captured_at_s, frame_transforms=entry.frame_transforms)))
+                for entry in history[path])
         specs[key] = replace(spec, frame_id=req.frame_id)
-    return replace(view, states=states, state_specs=specs)
+    return replace(view, states=states, state_specs=specs, history=history)
 
 
 def action_for_environment(action, space, observation):

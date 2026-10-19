@@ -12,6 +12,40 @@ VERSION = "0.3"
 
 
 @dataclass(frozen=True, kw_only=True)
+class TemporalPolicy:
+    """Opt-in observation alignment only; never changes control or inference."""
+    mode: Literal["native", "observation_aligned"] = "native"
+    allow_approximate: bool = False
+    max_samples_per_input: int = 64
+
+
+@dataclass(frozen=True, kw_only=True)
+class HistoryRequirement:
+    """Offsets from decision simulation time, ordered oldest to newest."""
+    offsets_s: tuple[float, ...]
+    selection: Literal["exact", "nearest", "previous"] = "exact"
+    tolerance_s: float = 0.
+    startup: Literal["reject", "available_prefix"] = "reject"
+    provenance: dict[str, object] = field(default_factory=dict)
+
+
+@dataclass(frozen=True, kw_only=True)
+class SampleTiming:
+    """Actual acquisition capability, not physics or model-request frequency."""
+    kind: Literal["uniform", "event", "unknown"]
+    period_s: float | None = None
+    provenance: dict[str, object] = field(default_factory=dict)
+
+
+@dataclass(frozen=True, kw_only=True)
+class ModelTiming:
+    # None explicitly means unverified, not "use the environment period".
+    native_action_period_s: float | None = None
+    replanning_owner: Literal["adapter", "server", "unknown"] = "unknown"
+    provenance: dict[str, object] = field(default_factory=dict)
+
+
+@dataclass(frozen=True, kw_only=True)
 class Context:
     run_id: str
     env_id: str
@@ -89,6 +123,7 @@ class SpaceSpec:
     reference_sites: dict[str, ReferenceSite] = field(default_factory=dict)
     # Known conventions are descriptions, not guessed transforms/calibration.
     frame_conventions: dict[str, str] = field(default_factory=dict)
+    sample_timing: dict[str, SampleTiming] = field(default_factory=dict)
     contract_version: Literal["0.3"] = VERSION
 
 
@@ -106,6 +141,7 @@ class InputSpec:
     provenance: Literal["measurement", "controller_target"] | None = None
     site_id: str | None = None
     joint_ids: tuple[str, ...] = ()
+    history: HistoryRequirement | None = None
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -133,6 +169,7 @@ class CapabilitySpec:
     supported_timing_modes: tuple[Literal["fixed_period", "measured_native"], ...]
     training_embodiments: tuple[str, ...] = ()
     observation_update: Literal["every_env_step", "decision_boundary"] = "every_env_step"
+    temporal: ModelTiming | None = None
     contract_version: Literal["0.3"] = VERSION
 
 
@@ -163,6 +200,16 @@ class Observation:
 
 
 @dataclass(frozen=True, kw_only=True)
+class HistorySelection:
+    requested_at_s: float
+    source_observation_id: str
+    available_at_s: float
+    sample: leaf.SensorSample | StateSample
+    # Only transforms actually acquired at the sample's time are attached.
+    frame_transforms: dict[str, leaf.TimedTransform] = field(default_factory=dict)
+
+
+@dataclass(frozen=True, kw_only=True)
 class ModelInput:
     context: Context
     observation_id: str
@@ -174,6 +221,9 @@ class ModelInput:
     sensor_specs: dict[str, SensorSpec] = field(default_factory=dict)
     view_aliases: dict[str, str] = field(default_factory=dict)
     frame_transforms: dict[str, leaf.TimedTransform] = field(default_factory=dict)
+    # Keys retain canonical domains, e.g. sensors.head, states.joint_positions.
+    history: dict[str, tuple[HistorySelection, ...]] = field(default_factory=dict)
+    history_missing_offsets_s: dict[str, tuple[float, ...]] = field(default_factory=dict)
 
 
 

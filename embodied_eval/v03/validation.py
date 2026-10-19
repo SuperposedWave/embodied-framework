@@ -44,6 +44,8 @@ def state_base(key):
 def validate_space(space):
     decode(c.SpaceSpec, space)
     validate_structure(space)
+    from .temporal import validate_sample_timing
+    validate_sample_timing(space)
     require(set(space.robots) == {"robot0"}, "unsupported_robot_scope", "robots", "one explicitly controlled robot0, single or dual arm")
     require("world" in space.frames, "missing_frame", "world", "public world frame required")
     targets = target_table(space)

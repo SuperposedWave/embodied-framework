@@ -50,7 +50,7 @@ def state_names(family, old):
     return mapping
 
 
-def canonical_space(family, old):
+def canonical_space(family, old, runtime_verified=False):
     fmap, cmap = frame_map(family, old), CAMERA_MAPS[family]
     frames = {fmap[key]: replace(spec, parent_id=fmap.get(spec.parent_id)) for key, spec in old.frames.items()}
     # An unknown base orientation is not an identity transform to world.
@@ -109,6 +109,17 @@ def canonical_space(family, old):
                 tensor=replace(original.tensor, shape=(6,)), origin=side + " arm native drive targets, not measured qpos",
                 provenance="controller_target", joint_ids=tuple("robot0/" + side + "_j" + str(i) for i in range(6)),
                 native_source={"field": "joint_drive_targets", "slice": [offset, offset + 6], "revision": old.revision})
+    # Acquisition capability is not inferred from physics_dt or a camera FPS.
+    # VLABench's static .002 fallback is NOT its loaded control_timestep().
+    kind = "uniform" if family == "libero" or (family == "vlabench" and runtime_verified) else (
+        "event" if family == "robotwin" else "unknown")
+    sampling = c.SampleTiming(kind=kind,
+        period_s=old.control_period_s if kind == "uniform" else None,
+        provenance={"revision": old.revision, "protocol": old.protocol_version,
+            "rule": "one snapshot per native control step" if kind == "uniform" else
+                    "native action-requested captures; cached snapshots retain original timestamps" if kind == "event" else
+                    "acquisition period not verified by static describe; do not substitute physics/control defaults",
+            "runtime_period_read": runtime_verified and family == "vlabench"})
     return c.SpaceSpec(spec_id=old.spec_id + ":canonical-v03", revision=old.revision,
         protocol_id=old.protocol_id, protocol_version=old.protocol_version,
         timing_mode=old.timing_mode, control_period_s=old.control_period_s, physics_period_s=old.physics_period_s,
@@ -117,7 +128,8 @@ def canonical_space(family, old):
         required_action_targets=old.required_action_targets, action_joint_modes=old.action_joint_modes,
         view_aliases={"main": "head"} if "head" in sensors else {}, reference_sites=sites,
         frame_conventions={"world": "right-handed native protocol world; metres/radians/seconds; no cross-benchmark origin identity",
-            "robot0/base": "unconnected until a verified full base transform is available"})
+            "robot0/base": "unconnected until a verified full base transform is available"},
+        sample_timing={domain + "." + key: sampling for domain, table in (("sensors", sensors), ("states", states)) for key in table})
 
 
 def canonical_observation(family, old_space, obs, space=None):
@@ -155,7 +167,7 @@ class CanonicalBenchmark:
 
     def describe(self):
         self.native_space = self.engine.describe()
-        self.space = canonical_space(self.family, self.native_space)
+        self.space = canonical_space(self.family, self.native_space, runtime_verified=True)
         return self.space
 
     def enumerate_tasks(self, episodes):

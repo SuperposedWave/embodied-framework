@@ -13,6 +13,7 @@ from .matching import resolve, model_input
 from .preflight import check
 from .registry import default_registry
 from .validation import validate_space, validate_observation, validate_prediction, validate_step, same_episode
+from .temporal import ObservationHistory, assess
 
 
 def run(config, output, registry=None):
@@ -32,7 +33,7 @@ def run(config, output, registry=None):
     try:
         benchmark = b.factory(config.benchmark.options, output)
         space = validate_space(benchmark.describe())
-        profile = resolve(space, cap, config.control_mode)
+        profile = resolve(space, cap, config.control_mode, config.temporal)
         tasks = benchmark.enumerate_tasks(config.episodes)
         require([t.episode_id for t in tasks] == [e.episode_id for e in config.episodes], "task_selection_mismatch", "tasks", "different selected episodes")
         model = m.factory(config.model.options, output)
@@ -42,6 +43,7 @@ def run(config, output, registry=None):
         writer = ArtifactWriter(output)
         metrics = b.metric_templates(config.benchmark.options)
         writer.manifest(config, space, cap, profile, tasks, metrics, provenance)
+        writer.write("temporal-plan.json", assess(space, cap, profile.input_paths, config.temporal)[2])
         rows, results = [], []
         for task in tasks:
             decode(c.TaskSpec, task)
@@ -52,6 +54,7 @@ def run(config, output, registry=None):
                          model_forward_count=0, physics_steps=0 if space.timing_mode == "measured_native" else None)
             errors, begun, reset, in_flight, state_known = [], False, False, False, True
             prediction_in_flight=False
+            history = ObservationHistory(cap, profile, space, config.temporal)
             reason, phase, status = "budget_exhausted", "reset", "completed"
             started = time.monotonic()
             seen = set()
@@ -76,7 +79,10 @@ def run(config, output, registry=None):
                 model.begin_episode(context, copy.deepcopy(task.public), copy.deepcopy(profile), copy.deepcopy(space))
                 while not exhausted(remaining()):
                     phase = "observe"
-                    view = model_input(obs, task, cap, profile, space)
+                    history.push(obs)
+                    view = model_input(obs, task, cap, profile, space, history=history)
+                    if history.requirements:
+                        writer.append(prefix + "/observation_alignment.internal.jsonl", history.receipt(view))
                     writer.append(prefix + "/model_input.public.jsonl", view)
                     model.observe(view)
                     phase = "predict"
@@ -150,7 +156,8 @@ def run(config, output, registry=None):
                           termination_reason=reason, metrics=scored, execution_statistics=stats)
             path = writer.write(prefix + "/result.json", result)
             try:
-                writer.write(prefix + "/diagnostics.internal.json", {"model": model.diagnostics(), "benchmark": benchmark.diagnostics()})
+                writer.write(prefix + "/diagnostics.internal.json", {"model": model.diagnostics(), "benchmark": benchmark.diagnostics(),
+                                                                     "temporal": history.diagnostics()})
             except Exception as error:
                 errors.append(_error(error,"diagnostics"))
                 status="error"
@@ -158,6 +165,7 @@ def run(config, output, registry=None):
                 result["run_status"]=status
                 result["termination_reason"]=reason
                 writer.write(prefix+"/result.json",result)
+            history.clear()
             results.append(result)
             rows.append(dict(episode_id=task.episode_id, run_status=status, termination_reason=reason,
                              result_ref=path, errors=errors, execution_statistics_complete=state_known))

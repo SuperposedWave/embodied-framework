@@ -1,0 +1,21 @@
+{
+  "contract_version": "0.3",
+  "run_id": "synthetic-history-exact",
+  "temporal": {"mode": "observation_aligned", "max_samples_per_input": 64},
+  "model": {
+    "adapter": "synthetic_policy_a",
+    "options": {
+      "history": {
+        "offsets_s": [-0.2, -0.1, 0.0],
+        "selection": "exact",
+        "startup": "available_prefix",
+        "provenance": {"synthetic": true, "rule": "test model accepts real partial history at startup; no padding"}
+      }
+    }
+  },
+  "benchmark": {
+    "adapter": "synthetic_simulator_a",
+    "options": {"period_s": 0.02, "declare_sample_timing": true}
+  },
+  "episodes": [{"episode_id": "ep-0", "seed": 0, "budgets": {"env_steps": 12, "model_calls": 12}}]
+}

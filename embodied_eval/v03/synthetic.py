@@ -13,6 +13,7 @@ from . import contracts as c
 class ModelOptions:
     value: float = .1
     cache_rows: int = 1
+    history: c.HistoryRequirement | None = None
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -21,6 +22,7 @@ class BenchmarkOptions:
     period_s: float = .05
     timing_mode: Literal["fixed_period", "measured_native"] = "fixed_period"
     fault: Literal["none", "score_error"] = "none"
+    declare_sample_timing: bool = False
 
 
 def model_options(options):
@@ -36,14 +38,16 @@ def benchmark_options(options):
 
 
 def capability(options, ramp=False):
-    model_options(options)
+    cfg = model_options(options)
     return c.CapabilitySpec(model_id="synthetic-ramp" if ramp else "synthetic-policy", io_profile_id="synthetic-head-joint",
         source_revision="synthetic-v03", checkpoint_ref="synthetic:none", normalization_ref="synthetic:none",
         inputs=(c.InputSpec(key="rgb", public_path="views.main" if ramp else "sensors.head", kind="sensor", semantic="rgb",
-            tensor=leaf.TensorSpec(dtype="uint8", shape=(-1, -1, 3), layout="HWC")),
+            tensor=leaf.TensorSpec(dtype="uint8", shape=(-1, -1, 3), layout="HWC"), history=cfg.history),
             c.InputSpec(key="instruction", public_path="task_public.instruction", kind="task")),
         output=c.OutputSpec(command_kinds=("joint_target",), targets={"robot0/j0": "joint"}, joint_modes=("position",)),
-        supported_timing_modes=("fixed_period", "measured_native"))
+        supported_timing_modes=("fixed_period", "measured_native"),
+        temporal=c.ModelTiming(replanning_owner="adapter", provenance={"synthetic": True,
+            "rule": "cache_rows controls synthetic forward accounting; action time is not a real weight claim"}))
 
 
 def space(options):
@@ -59,7 +63,11 @@ def space(options):
             tensor=leaf.TensorSpec(dtype="uint8", shape=(2, 2, 3), layout="HWC"), native_source={"field": cfg.native_camera_name, "synthetic": True})},
         state_fields={}, view_aliases={"main": "head"},
         action_specs={"joint-position@1": leaf.ActionSpec(command_kinds=("joint_target",), target_ids=("robot0/j0",))},
-        required_action_targets={"joint-position@1": ("robot0/j0",)}, action_joint_modes={"joint-position@1": ("position",)})
+        required_action_targets={"joint-position@1": ("robot0/j0",)}, action_joint_modes={"joint-position@1": ("position",)},
+        sample_timing={"sensors.head": c.SampleTiming(kind="uniform" if cfg.timing_mode == "fixed_period" else "event",
+            period_s=cfg.period_s if cfg.timing_mode == "fixed_period" else None,
+            provenance={"synthetic": True, "rule": "snapshot after each synthetic advance; no real camera"})}
+            if cfg.declare_sample_timing else {})
 
 
 class SyntheticModel:
@@ -68,22 +76,33 @@ class SyntheticModel:
         self.calls = self.forwards = self.observes = 0
         self.latest = None
         self.events = []
+        self.history_inputs = []
+        self.cached_value = self.config.value
 
     def begin_episode(self, context, task, profile, space):
         self.calls = self.forwards = self.observes = 0
         self.latest = None
+        self.history_inputs = []
+        self.cached_value = self.config.value
         self.events = [{"event": "begin", "episode_id": context.episode_id, "cache_at_begin": 0}]
 
     def observe(self, model_input):
         self.latest = model_input
         self.observes += 1
+        if self.config.history is not None:
+            require("sensors.head" in model_input.history, "missing_history_input", "sensors.head", "synthetic model actually consumes declared history")
+            self.history_inputs.append({"captured_at_s": [e.sample.captured_at_s for e in model_input.history["sensors.head"]],
+                "missing_offsets_s": model_input.history_missing_offsets_s.get("sensors.head", ())})
 
     def predict(self, context):
         forward = int(self.calls % self.config.cache_rows == 0)
+        if forward and self.config.history is not None:
+            frames = self.latest.history["sensors.head"]
+            self.cached_value = self.config.value + sum(e.sample.payload.data[0][0][0] for e in frames) / 10000
         self.forwards += forward
         self.calls += 1
         command = leaf.JointTarget(command_id=context.message_id + ":j0", target_id="robot0/j0",
-                                  mode="position", value=self.config.value, unit="rad")
+                                  mode="position", value=self.cached_value, unit="rad")
         return c.Prediction(context=context, based_on_observation_id=self.latest.observation_id,
             action=c.Action(commands=(command,)), model_forward_count=forward)
 
@@ -95,7 +114,7 @@ class SyntheticModel:
 
     def diagnostics(self):
         return {"synthetic": True, "calls": self.calls, "forwards": self.forwards,
-                "observe_count": self.observes, "events": self.events}
+                "observe_count": self.observes, "events": self.events, "history_inputs": self.history_inputs}
 
 
 class SyntheticRampModel(SyntheticModel):

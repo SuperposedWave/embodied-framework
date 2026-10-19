@@ -33,7 +33,7 @@ def connected(space, source, target):
     return root(source) is not None and root(source) == root(target)
 
 
-def compatibility(space, cap, control_mode=None):
+def compatibility(space, cap, control_mode=None, temporal=None):
     decode(c.SpaceSpec, space)
     decode(c.CapabilitySpec, cap)
     issues, warnings, paths, conversions = [], [], {}, set()
@@ -122,18 +122,22 @@ def compatibility(space, cap, control_mode=None):
     for rid in {t.split("/")[0] for t in cap.output.targets}:
         if rid in space.robots and space.robots[rid].embodiment_id not in cap.training_embodiments:
             warnings.append(f"training_coverage_unverified:{rid}:{space.robots[rid].embodiment_id}")
+    from .temporal import assess
+    timing_issues, timing_warnings, _ = assess(space, cap, paths, temporal)
+    issues.extend(timing_issues)
+    warnings.extend(timing_warnings)
     return CompatibilityReport(tuple(issues), tuple(warnings)), paths, tuple(sorted(conversions)), selected
 
 
-def resolve(space, cap, control_mode=None):
-    report, paths, conversions, selected = compatibility(space, cap, control_mode)
+def resolve(space, cap, control_mode=None, temporal=None):
+    report, paths, conversions, selected = compatibility(space, cap, control_mode, temporal)
     report.require_compatible()
     return c.ResolvedProfile(profile_id=cap.model_id + "::" + space.spec_id, model_id=cap.model_id,
         space_ref=space.spec_id, action_spec_ref=selected, input_paths=paths,
         target_ids=tuple(cap.output.targets), frame_conversions=conversions, warnings=report.warnings)
 
 
-def model_input(obs, task, cap, profile, space):
+def model_input(obs, task, cap, profile, space, history=None):
     sensors, states = {}, {}
     for req in cap.inputs:
         if req.kind == "task":
@@ -157,9 +161,15 @@ def model_input(obs, task, cap, profile, space):
     for req in cap.inputs:
         if req.kind == "task" and req.required:
             require(bool(getattr(public, input_key(space, req))), "missing_required_input", req.public_path, "public task field unavailable")
-    return copy.deepcopy(c.ModelInput(context=obs.context, observation_id=obs.observation_id,
+    view = copy.deepcopy(c.ModelInput(context=obs.context, observation_id=obs.observation_id,
         sim_time_s=obs.sim_time_s, task_public=public, sensors=sensors, states=states,
         state_specs={key: space.state_fields[key] for key in states},
         sensor_specs={key: space.sensors[key] for key in sensors},
         view_aliases={alias: key for alias, key in space.view_aliases.items() if key in sensors},
         frame_transforms=obs.frame_transforms))
+    needs_history = any(r.history is not None and r.key in profile.input_paths
+                        and profile.input_paths[r.key].split(".", 1)[1] in
+                        (sensors if r.kind == "sensor" else states) for r in cap.inputs)
+    require(not needs_history or history is not None, "missing_history_buffer", "model_input",
+            "declared history cannot be silently replaced by the latest snapshot")
+    return history.assemble(view) if history is not None else view
