@@ -1,0 +1,89 @@
+{
+  "kind": "offline_qz_validation_prepared_not_submitted_due_to_parent_project_membership",
+  "at_utc": "2026-10-19T09:13:20.086Z",
+  "branch": "feat/massworld-integration",
+  "requested_project_text": "世界模型项目",
+  "selected_parent_project": {
+    "id": "project-e270c04e-7274-4bf7-b003-d131781094c9",
+    "name": "智能体原生通用世界模型",
+    "is_member": false
+  },
+  "candidate_child_project": {
+    "id": "project-c77f7cc9-cc3f-44f8-819e-3812639f723a",
+    "name": "世界模型评测",
+    "GetProjectForPage_is_member": true,
+    "GetProjectListV2_membership_field_inconsistent": true,
+    "shared_workdir_same_as_parent": true,
+    "user_confirmation_pending": true
+  },
+  "workspace": {
+    "id": "ws-9dcc0e1f-80a4-4af2-bc2f-0e352e7b17e6",
+    "name": "分布式训练空间"
+  },
+  "GPU_total_limit": 32,
+  "prepared_tasks": 7,
+  "maximum_planned_simultaneous_GPU_requests": 7,
+  "accepted_jobs": 0,
+  "allocated_training_GPUs": 0,
+  "candidate_GPU_type": "H100 80GB",
+  "GPUs_per_job": 1,
+  "steps_per_entrypoint": 4,
+  "entrypoints_per_task": [
+    "direct",
+    "MassWorld"
+  ],
+  "job_names": [
+    "worldeval-openwam-libero-20261019090530",
+    "worldeval-openwam-vlabench-20261019090530",
+    "worldeval-openpi-vlabench-20261019090530",
+    "worldeval-openwam-robotwin-20261019090530",
+    "worldeval-lingbot-robotwin-20261019090530",
+    "worldeval-openwam-dual-physical-20261019090530",
+    "worldeval-openpi-libero-20261019090816"
+  ],
+  "all_names_begin_with_worldeval": true,
+  "offline_assets_prepared_before_submission": true,
+  "new_large_weights_downloaded": false,
+  "networked_setup_downloads_process_scoped_direct_without_global_proxy_change": true,
+  "runtime_interpreters_archived_before_submission": true,
+  "source_reference_modifications_preserved": true,
+  "clean_LIBERO_clone_commit": "8f1084e3132a39270c3a13ebe37270a43ece2a01",
+  "platform_max_running_time_ms": "3600000",
+  "platform_minimum_retention_ms": "60000",
+  "automatic_fault_tolerance": false,
+  "automatic_retry": false,
+  "admission_attempt_outcomes": [
+    {
+      "business_error": "InvalidParameter",
+      "detail": "framework_config.image_type must be nonempty",
+      "job_created": false
+    },
+    {
+      "business_error": "InvalidParameter",
+      "detail": "retention time must be positive",
+      "job_created": false
+    },
+    {
+      "business_error": "InvalidParameter",
+      "detail": "retention time at least 1m0s",
+      "job_created": false
+    },
+    {
+      "business_error": "AccessForbidden",
+      "detail": "您已离开所选项目，无法创建",
+      "job_created": false
+    }
+  ],
+  "parent_project_worldeval_jobs_read_back": 0,
+  "CLI_exit_zero_is_not_business_success": true,
+  "no_alternative_project_submission_without_user_confirmation": true,
+  "prepared_batches": [
+    "outputs/worldeval-qz-batch-20261019-run1/prepared-batch.json",
+    "outputs/worldeval-qz-batch-20261019-run2/prepared-batch.json"
+  ],
+  "shared_runtime_manifest": "outputs/worldeval-platform-assets-20261019/runtime-manifest.json",
+  "client_dependency_overlay": "outputs/worldeval-openwam-libero-bridge-20261019085827/client-overlay",
+  "real_inference_performed": false,
+  "formal_acceptance": false,
+  "source_code_followup": "qz supervisor metadata validation fixes only; public 0.3 unchanged"
+}

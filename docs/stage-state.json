@@ -1,6 +1,22 @@
 {
-  "last_update_utc": "2026-10-19T08:14:03.110Z",
-  "review_status": "massworld_local_bridge_515_base_26_bridge_tests_and_saved_mapping_delivered_not_real_runtime_acceptance",
+  "last_update_utc": "2026-10-19T09:13:20.086Z",
+  "review_status": "qz_offline_validation_prepared_seven_tasks_no_GPU_allocation_parent_project_membership_denied_pending_project_confirmation",
+  "qz_validation_preparation_20261019": {
+    "status": "seven_offline_jobs_prepared_pending_user_target_project_confirmation",
+    "index": "docs/handoff/qz-validation-preparation-20261019-index.json",
+    "GPU_limit": 32,
+    "ready_tasks": 7,
+    "planned_GPU_requests": 7,
+    "accepted_jobs": 0,
+    "allocated_GPUs": 0,
+    "parent_project_creation_error": "AccessForbidden: 您已离开所选项目，无法创建",
+    "candidate_child_project": "世界模型评测",
+    "confirmation_requested": true,
+    "offline_assets_and_python_runtime_staged": true,
+    "global_proxy_changed": false,
+    "real_inference_performed": false,
+    "stage4_accepted": false
+  },
   "massworld_local_bridge_20261019": {
     "user_authorization": "可以的，现在在新分支上面推进",
     "state": "local_single_run_bridge_software_and_saved_mapping_delivered_pending_real_runtime_acceptance",
