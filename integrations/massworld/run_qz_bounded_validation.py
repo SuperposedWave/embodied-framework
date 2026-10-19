@@ -100,7 +100,8 @@ def execute(args):
     if len(config.episodes) != 1 or config.episodes[0].budgets.env_steps != 4:
         raise ValueError('this reviewed diagnostic requires one episode and four actions')
     args.output.mkdir(parents=True, exist_ok=False)
-    report = dict(kind='qz_allocated_direct_vs_MassWorld_four_action_real_diagnostic', passed=False,
+    report = dict(kind=args.allocation_origin + '_direct_vs_MassWorld_four_action_real_diagnostic', passed=False,
+                  allocation_origin=args.allocation_origin, monitor_gpu_index=args.monitor_gpu_index,
                   created_at_utc=datetime.now(timezone.utc).isoformat(), cases=[],
                   task_success_or_formal_acceptance_claim=False, new_weights=False,
                   automatic_retry=False, native_logs_saved=False,
@@ -110,8 +111,10 @@ def execute(args):
     phase = {'name': 'asset_and_runtime_preflight'}
     def sample():
         while not stop.is_set():
-            p = subprocess.run(['nvidia-smi', '--query-gpu=index,name,utilization.gpu,memory.used',
-                                '--format=csv,noheader,nounits'], capture_output=True, text=True)
+            query = ['nvidia-smi', '--query-gpu=index,name,utilization.gpu,memory.used', '--format=csv,noheader,nounits']
+            if args.monitor_gpu_index is not None:
+                query.extend(['--id', str(args.monitor_gpu_index)])
+            p = subprocess.run(query, capture_output=True, text=True)
             if p.returncode == 0:
                 devices = []
                 for row in p.stdout.splitlines():
@@ -241,7 +244,10 @@ def execute(args):
         mean = sum(utilizations) / len(utilizations) if utilizations else None
         write(args.output / 'gpu-utilization.json', dict(samples=samples, all_card_sample_mean_percent=mean,
             target_percent=20, target_met=mean is not None and mean >= 20,
-            extra_occupancy_load_started=False, whole_project_lifetime_average=False))
+            extra_occupancy_load_started=False, whole_project_lifetime_average=False,
+            monitor_gpu_index=args.monitor_gpu_index, allocation_origin=args.allocation_origin,
+            preexisting_occupancy_may_be_included=args.allocation_origin == 'existing_local_GPU',
+            sample_mean_is_not_evaluation_work_or_score=True))
         report['finished_at_utc'] = datetime.now(timezone.utc).isoformat()
         write(args.output / 'receipt.json', report)
     return 0 if report['passed'] else 1
@@ -255,8 +261,12 @@ if __name__ == '__main__':
     parser.add_argument('--overlay', type=Path)
     parser.add_argument('--library-manifest', type=Path)
     parser.add_argument('--model-cache-manifest', type=Path)
+    parser.add_argument('--allocation-origin', choices=('qz_allocated', 'existing_local_GPU'), default='qz_allocated')
+    parser.add_argument('--monitor-gpu-index', type=int)
     parser.add_argument('--child', choices=('direct', 'bridge'))
     args = parser.parse_args()
     if not args.child and args.overlay is None:
         parser.error('--overlay is required for the supervisor')
+    if not args.child and args.allocation_origin == 'existing_local_GPU' and args.monitor_gpu_index is None:
+        parser.error('local diagnostics must explicitly scope GPU sampling')
     raise SystemExit(child(args) if args.child else execute(args))
