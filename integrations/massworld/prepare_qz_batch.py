@@ -67,6 +67,8 @@ def main():
         write(folder / 'preflight-local.json', checked)
         row = dict(case=case, name=name, source_manifest=str(source), source_manifest_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
                    config=str((folder / 'config.json').resolve()), ready=checked['structurally_compatible'] and checked['assets_verified'],
+                   ready_meaning='structure_and_staged_assets_only_not_GPU_runtime_acceptance',
+                   native_GPU_runtime_checks_required_in_task_before_policy_start=True,
                    issues=checked['issues'], asset_errors=checked['asset_errors'])
         if not row['ready']:
             print(json.dumps(row), flush=True)

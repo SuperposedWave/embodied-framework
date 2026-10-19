@@ -161,6 +161,17 @@ def execute(args):
             report['runtime_dependency_checks'].append(dependency)
             if result.returncode != 0 or not dependency.get('imports') or not all(x['passed'] for x in dependency['imports']):
                 raise RuntimeError('offline_runtime_dependency_gate_failed')
+        if config.benchmark.adapter == 'robotwin':
+            phase['name'] = 'native_render_device_preflight'
+            render_output = args.output / 'native-render-readiness'
+            result = subprocess.run([str(client), str(Path(__file__).with_name('probe_graphics_context.py')),
+                                     '--output', str(render_output.resolve())],
+                                    env=environment, capture_output=True, text=True, timeout=180)
+            receipt = render_output / 'receipt.json'
+            report['native_render_readiness'] = json.loads(receipt.read_text()) if receipt.is_file() else {
+                'passed': False, 'exit_code': result.returncode, 'dependency_facts': dependency_facts(result.stderr)}
+            if result.returncode != 0 or not report['native_render_readiness']['passed']:
+                raise RuntimeError('native_render_device_unavailable_before_policy_start')
         preflight = check(config, verify_assets=True)
         write(args.output / 'preflight.json', preflight)
         if not preflight['structurally_compatible'] or not preflight['assets_verified']:
@@ -269,4 +280,6 @@ if __name__ == '__main__':
         parser.error('--overlay is required for the supervisor')
     if not args.child and args.allocation_origin == 'existing_local_GPU' and args.monitor_gpu_index is None:
         parser.error('local diagnostics must explicitly scope GPU sampling')
+    if args.monitor_gpu_index is not None and args.monitor_gpu_index < 0:
+        parser.error('GPU index must be nonnegative')
     raise SystemExit(child(args) if args.child else execute(args))
