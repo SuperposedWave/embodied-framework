@@ -24,3 +24,4 @@ htmlcov/
 *.pt
 *.onnx
 *.mp4
+core.[0-9]*

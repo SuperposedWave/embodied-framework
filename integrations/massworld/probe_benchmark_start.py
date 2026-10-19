@@ -3,6 +3,7 @@ import argparse
 import contextlib
 import io
 import json
+import resource
 from pathlib import Path
 import sys
 import traceback
@@ -45,6 +46,7 @@ def main(args):
 
 
 if __name__ == '__main__':
+    resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)

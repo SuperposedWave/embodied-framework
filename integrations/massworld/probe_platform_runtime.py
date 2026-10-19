@@ -3,6 +3,7 @@ import argparse
 import importlib
 import json
 import os
+import resource
 from pathlib import Path
 import subprocess
 import sys
@@ -83,6 +84,7 @@ def main(args):
 
 
 if __name__ == '__main__':
+    resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--child', action='store_true')
     parser.add_argument('--modules', nargs='+', default=[])
