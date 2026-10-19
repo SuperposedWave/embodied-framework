@@ -1,0 +1,132 @@
+--- a/src/worldevalkit/runner.py
++++ b/src/worldevalkit/runner.py
+@@ -49,8 +49,8 @@
+     def __init__(
+         self,
+         *,
+-        model: str,
+-        benchmark: str,
++        model: str | None = None,
++        benchmark: str | None = None,
+         output_dir: str | Path = "outputs",
+         endpoint: str | None = None,
+         model_options: Mapping[str, Any] | None = None,
+@@ -61,7 +61,25 @@
+         history_root: str | Path | None = None,
+         record_dir: str | Path | None = None,
+         prediction_executor: Any | None = None,
++        execution_backend: str | None = None,
++        backend_config: Mapping[str, Any] | None = None,
+     ):
++        self._backend_runner = None
++        if execution_backend is not None:
++            if any((model, benchmark, endpoint, model_options, benchmark_options,
++                    parameters, registry, history_root, prediction_executor)):
++                raise ValueError("execution backend config cannot be mixed with legacy adapter options")
++            if backend_config is None:
++                raise ValueError("execution backend requires backend_config")
++            from .execution_backends import BackendEvaluationRunner
++            self._backend_runner = BackendEvaluationRunner(
++                execution_backend=execution_backend, backend_config=backend_config,
++                output_dir=output_dir, record_dir=record_dir,
++            )
++            self.run_dir = self._backend_runner.run_dir
++            return
++        if backend_config is not None or model is None or benchmark is None:
++            raise ValueError("select model and benchmark, or an execution backend with its config")
+         self.registry = registry or default_registry()
+         self.model_options = dict(model_options or {})
+         self.benchmark_options = dict(benchmark_options or {})
+@@ -211,6 +229,8 @@
+     def plan(
+         self, *, write: bool = True, inspect_readiness: bool = True
+     ) -> PlanDecision:
++        if self._backend_runner is not None:
++            return self._backend_runner.plan(write=write, inspect_readiness=inspect_readiness)
+         decision = Planner().plan(
+             self.model_spec,
+             self.benchmark_spec,
+@@ -267,6 +287,8 @@
+         return decision
+ 
+     def setup(self) -> Mapping[str, Any]:
++        if self._backend_runner is not None:
++            return self._backend_runner.setup()
+         self.run_dir = self.maintenance_dir
+         decision = self.plan()
+         if decision.status in {"not_applicable", "blocked"} or not decision.plan:
+@@ -284,6 +306,8 @@
+         }
+ 
+     def doctor(self) -> Mapping[str, Any]:
++        if self._backend_runner is not None:
++            return self._backend_runner.doctor()
+         self.run_dir = self.maintenance_dir
+         decision = self.plan()
+         if not decision.plan:
+@@ -337,6 +361,11 @@
+         return dict(result.metrics) if result is not None else {}
+ 
+     def run(self) -> Mapping[str, Any]:
++        if self._backend_runner is not None:
++            try:
++                return self._backend_runner.run()
++            finally:
++                self.run_dir = self._backend_runner.run_dir
+         self.run_dir = self.record_dir or dated_directory(
+             self.output_dir, f"{self.model_spec.id}--{self.benchmark_spec.id}"
+         )
+--- a/src/worldevalkit/cli.py
++++ b/src/worldevalkit/cli.py
+@@ -23,8 +23,10 @@
+ 
+ 
+ def _pair_arguments(parser: argparse.ArgumentParser) -> None:
+-    parser.add_argument("--model", required=True)
+-    parser.add_argument("--benchmark", required=True)
++    parser.add_argument("--model")
++    parser.add_argument("--benchmark")
++    parser.add_argument("--execution-backend")
++    parser.add_argument("--backend-config", help="whole-run backend configuration JSON")
+     parser.add_argument("--endpoint")
+     parser.add_argument("--output-dir", default="outputs")
+     parser.add_argument("--model-option", action="append", default=[])
+@@ -49,6 +51,8 @@
+ 
+     catalog = commands.add_parser("catalog", help="inspect discovered adapters")
+     catalog_commands = catalog.add_subparsers(dest="catalog_command", required=True)
++    backends = catalog_commands.add_parser("backend", help="catalog from an installed execution backend")
++    backends.add_argument("--execution-backend", required=True)
+     listing = catalog_commands.add_parser("list")
+     listing.add_argument(
+         "--kind", choices=("models", "benchmarks", "all"), default="all"
+@@ -97,6 +101,9 @@
+ 
+ 
+ def _runner(arguments: argparse.Namespace) -> EvaluationRunner:
++    from .execution_backends import load_config
++    if bool(arguments.execution_backend) != bool(arguments.backend_config):
++        raise ValueError("--execution-backend and --backend-config are required together")
+     return EvaluationRunner(
+         model=arguments.model,
+         benchmark=arguments.benchmark,
+@@ -106,6 +113,8 @@
+         benchmark_options=_assignments(arguments.benchmark_option),
+         parameters=_assignments(arguments.parameter),
+         reuse_results=not getattr(arguments, "no_cache", False),
++        execution_backend=arguments.execution_backend,
++        backend_config=load_config(arguments.backend_config) if arguments.backend_config else None,
+     )
+ 
+ 
+@@ -151,6 +160,10 @@
+             return 0 if result.get("ready_for_judge", result.get("complete", result.get("success", False))) else 1
+ 
+         if arguments.command == "catalog":
++            if arguments.catalog_command == "backend":
++                from .execution_backends import backend_catalog
++                _print(backend_catalog(arguments.execution_backend))
++                return 0
+             registry = default_registry()
+             if arguments.catalog_command == "show":
+                 adapter = (
