@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "bind": "127.0.0.1",
+  "port": 8766,
+  "files": [
+    {
+      "path": "/outputs/massworld-local-delivery-20261019-final/MassWorld-local-bridge-delivery.html",
+      "status": 200,
+      "sha256": "d94c63d7aad01c46754bcd04ea7416d16f3701c008d778cdd2c49e9090ea0caf"
+    },
+    {
+      "path": "/outputs/massworld-bridge-verification-20261019-final/receipt.json",
+      "status": 200,
+      "sha256": "5310d8e1aee781d656747cb11c794639dd8fda744eaaf597b6ab54fb02826734"
+    },
+    {
+      "path": "/outputs/massworld-client-verification-20261019-final/receipt.json",
+      "status": 200,
+      "sha256": "f1c35ffef52dc0a928670b73e950c6f128b7b33164d38deea3d6b86f2260840e"
+    },
+    {
+      "path": "/outputs/massworld-saved-boundaries-20261019-run1/receipt.json",
+      "status": 200,
+      "sha256": "45a29aadeff97fb8cadbdbb8834a5f90a1d53b47cdc8f60d00e86bf84e5a1733"
+    },
+    {
+      "path": "/outputs/massworld-bridge-verification-20261019-final/backend-baseline/baseline-check.json",
+      "status": 200,
+      "sha256": "fc4b1a0398a4ef7f1dd40e1aa719bee3a2121a1933ee15ab916d3d0ab56777e6"
+    },
+    {
+      "path": "/outputs/massworld-bridge-verification-20261019-final/bridge-tests.txt",
+      "status": 200,
+      "sha256": "9dd2272129baaf6cc95c5b6594652951d1a74cb6ac616b70dce3a37a303e9204"
+    },
+    {
+      "path": "/outputs/massworld-bridge-verification-20261019-final/massworld-original.txt",
+      "status": 200,
+      "sha256": "d68b9f3f31cb6e11c4915795ad6ea37e3108ceee106cac0b6e50179f0186708e"
+    },
+    {
+      "path": "/outputs/massworld-bridge-verification-20261019-final/massworld-patched.txt",
+      "status": 200,
+      "sha256": "7217f3878ae0427e4eb9253fae7d4a1fa13bec1eec5395635a9e757fd9f3275c"
+    },
+    {
+      "path": "/outputs/massworld-bridge-verification-20261019-final/catalog.json",
+      "status": 200,
+      "sha256": "49dbce926bfb830952b787c6c38472d3d2bf78468d817fd819d37a14ca758987"
+    }
+  ],
+  "root_redirect_status": 302,
+  "unselected_paths_denied": true,
+  "desktop_port_forwarding_verified": false
+}

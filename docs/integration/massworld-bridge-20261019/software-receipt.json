@@ -1,0 +1,228 @@
+{
+  "kind": "MassWorld_local_bridge_software_not_real_inference",
+  "passed": true,
+  "created_at_utc": "2026-10-19T08:08:51.883524+00:00",
+  "commands": [
+    {
+      "name": "massworld-original",
+      "argv": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/EmbodiedEval/outputs/massworld-original-20261019/WorldEvalKit/tests",
+        "-v"
+      ],
+      "exit_code": 1,
+      "log": "massworld-original.txt",
+      "log_sha256": "d68b9f3f31cb6e11c4915795ad6ea37e3108ceee106cac0b6e50179f0186708e",
+      "tests": 377,
+      "skipped": 10,
+      "failed_test_ids": [
+        "test_http_failures_hide_credentials_and_transient_retries_are_bounded (test_gpt_droid.GPTDroidTest.test_http_failures_hide_credentials_and_transient_retries_are_bounded)",
+        "test_image_payload_chunking_usage_and_episode_reset (test_gpt_droid.GPTDroidTest.test_image_payload_chunking_usage_and_episode_reset)",
+        "test_refusal_incomplete_or_invalid_actions_never_become_success (test_gpt_droid.GPTDroidTest.test_refusal_incomplete_or_invalid_actions_never_become_success) (actions=[])",
+        "test_refusal_incomplete_or_invalid_actions_never_become_success (test_gpt_droid.GPTDroidTest.test_refusal_incomplete_or_invalid_actions_never_become_success) (actions=[[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]])",
+        "test_refusal_incomplete_or_invalid_actions_never_become_success (test_gpt_droid.GPTDroidTest.test_refusal_incomplete_or_invalid_actions_never_become_success) (actions=[[nan, nan, nan, nan, nan, nan, nan, nan], [nan, nan, nan, nan, nan, nan, nan, nan]])"
+      ]
+    },
+    {
+      "name": "massworld-patched",
+      "argv": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/EmbodiedEval/outputs/massworld-local-20261019-verified/WorldEvalKit/tests",
+        "-v"
+      ],
+      "exit_code": 1,
+      "log": "massworld-patched.txt",
+      "log_sha256": "7217f3878ae0427e4eb9253fae7d4a1fa13bec1eec5395635a9e757fd9f3275c",
+      "tests": 377,
+      "skipped": 10,
+      "failed_test_ids": [
+        "test_http_failures_hide_credentials_and_transient_retries_are_bounded (test_gpt_droid.GPTDroidTest.test_http_failures_hide_credentials_and_transient_retries_are_bounded)",
+        "test_image_payload_chunking_usage_and_episode_reset (test_gpt_droid.GPTDroidTest.test_image_payload_chunking_usage_and_episode_reset)",
+        "test_refusal_incomplete_or_invalid_actions_never_become_success (test_gpt_droid.GPTDroidTest.test_refusal_incomplete_or_invalid_actions_never_become_success) (actions=[])",
+        "test_refusal_incomplete_or_invalid_actions_never_become_success (test_gpt_droid.GPTDroidTest.test_refusal_incomplete_or_invalid_actions_never_become_success) (actions=[[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]])",
+        "test_refusal_incomplete_or_invalid_actions_never_become_success (test_gpt_droid.GPTDroidTest.test_refusal_incomplete_or_invalid_actions_never_become_success) (actions=[[nan, nan, nan, nan, nan, nan, nan, nan], [nan, nan, nan, nan, nan, nan, nan, nan]])"
+      ]
+    },
+    {
+      "name": "bridge-tests",
+      "argv": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "integrations/massworld/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "bridge-tests.txt",
+      "log_sha256": "9dd2272129baaf6cc95c5b6594652951d1a74cb6ac616b70dce3a37a303e9204",
+      "tests": 26,
+      "skipped": 0,
+      "failed_test_ids": []
+    },
+    {
+      "name": "backend-baseline",
+      "argv": [
+        "docs/handoff/replay_v03_baseline.py",
+        "--output",
+        "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/EmbodiedEval/outputs/massworld-bridge-verification-20261019-final/backend-baseline",
+        "--expected-tests",
+        "515"
+      ],
+      "exit_code": 0,
+      "log": "backend-baseline.txt",
+      "log_sha256": "5dd118212a9495b1f028377e0a3671743e8c3f664532734650ad285ff333e7ac"
+    },
+    {
+      "name": "catalog",
+      "argv": [
+        "-m",
+        "worldevalkit.cli",
+        "catalog",
+        "backend",
+        "--execution-backend",
+        "embodied-v03"
+      ],
+      "exit_code": 0,
+      "log": "catalog.txt",
+      "log_sha256": "49dbce926bfb830952b787c6c38472d3d2bf78468d817fd819d37a14ca758987"
+    },
+    {
+      "name": "bridge-cli-single",
+      "argv": [
+        "-m",
+        "worldevalkit.cli",
+        "run",
+        "--execution-backend",
+        "embodied-v03",
+        "--backend-config",
+        "examples/synthetic_single_run.json",
+        "--output-dir",
+        "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/EmbodiedEval/outputs/massworld-bridge-verification-20261019-final/cli-single"
+      ],
+      "exit_code": 0,
+      "log": "bridge-cli-single.txt",
+      "log_sha256": "3f1c03f165d4b17b93d927b5f802fac770b4eea174b10acee374dd3e4255fd62"
+    },
+    {
+      "name": "bridge-cli-cache",
+      "argv": [
+        "-m",
+        "worldevalkit.cli",
+        "run",
+        "--execution-backend",
+        "embodied-v03",
+        "--backend-config",
+        "examples/synthetic_cache_run.json",
+        "--output-dir",
+        "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/EmbodiedEval/outputs/massworld-bridge-verification-20261019-final/cli-cache"
+      ],
+      "exit_code": 0,
+      "log": "bridge-cli-cache.txt",
+      "log_sha256": "675a8ede371feed04c9a40f15dbb309e902aa24fc708155838706e3da038d50e"
+    },
+    {
+      "name": "bridge-cli-native_timing",
+      "argv": [
+        "-m",
+        "worldevalkit.cli",
+        "run",
+        "--execution-backend",
+        "embodied-v03",
+        "--backend-config",
+        "examples/synthetic_native_timing_run.json",
+        "--output-dir",
+        "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/EmbodiedEval/outputs/massworld-bridge-verification-20261019-final/cli-native_timing"
+      ],
+      "exit_code": 0,
+      "log": "bridge-cli-native_timing.txt",
+      "log_sha256": "d51799d7b08cc1908d295503e46cb42ab9b2882798c2a5502ecdc392ea16ce12"
+    },
+    {
+      "name": "bridge-cli-score_error",
+      "argv": [
+        "-m",
+        "worldevalkit.cli",
+        "run",
+        "--execution-backend",
+        "embodied-v03",
+        "--backend-config",
+        "examples/synthetic_score_error_run.json",
+        "--output-dir",
+        "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/EmbodiedEval/outputs/massworld-bridge-verification-20261019-final/cli-score_error"
+      ],
+      "exit_code": 1,
+      "log": "bridge-cli-score_error.txt",
+      "log_sha256": "87bb0e5e5f3a81277bd9cb0e97260a9deef78672bd5f695bef4b90c6d206d1bf"
+    },
+    {
+      "name": "bridge-cli-rejected",
+      "argv": [
+        "-m",
+        "worldevalkit.cli",
+        "run",
+        "--execution-backend",
+        "embodied-v03",
+        "--backend-config",
+        "examples/synthetic_rejected_run.json",
+        "--output-dir",
+        "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/EmbodiedEval/outputs/massworld-bridge-verification-20261019-final/cli-rejected"
+      ],
+      "exit_code": 2,
+      "log": "bridge-cli-rejected.txt",
+      "log_sha256": "b24945ce97eeb1ab0542284d9cf5bbe4e328a70beb0ac6c1a21357df399e16da"
+    }
+  ],
+  "source_commit": "6dacc21c255eae4caf07444cac8d2e3a323421a6",
+  "new_GPU_inference": false,
+  "new_simulation": false,
+  "stage4_formally_accepted": false,
+  "MassWorld_original_and_patched_test_outcomes_match": true,
+  "MassWorld_all_discovered_tests_passed": false,
+  "bridge_CLI": [
+    {
+      "case": "single",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "case": "cache",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "case": "native_timing",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "case": "score_error",
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "case": "rejected",
+      "expected": 2,
+      "actual": 2
+    }
+  ],
+  "original_EmbodiedEval_source_files_unchanged": 130,
+  "source_sha256": {
+    "integrations/massworld/build_delivery_report.py": "6eb179c94fe33e59ee09cdaef644b848b4c7bdbe64f1b29022f60c4a9bb1319a",
+    "integrations/massworld/patches/execution-backend.patch": "bba8c403f4500e805dcae16079e090b1da51f04fa6bcee709e8dc8c2438aab71",
+    "integrations/massworld/prepare_workspace.py": "20eac5330956e154ecf02dd5ac2b4f22e18cd98df4558a76b52933c487f53027",
+    "integrations/massworld/pyproject.toml": "7771a52c0c19782e0ebce43c282062ca086c2ea7e246644a09507c46fce085d3",
+    "integrations/massworld/src/massworld_embodied/__init__.py": "86585b6a4a847d8d2da7a7116d31e6048042581639396e23e228910bf768941d",
+    "integrations/massworld/src/massworld_embodied/backend.py": "b0e76b9f6d40f95562fb6e47e615c0007b6a333aedef37fdf476519b00614109",
+    "integrations/massworld/tests/test_bridge.py": "8bb1321818a92d4beb6aceeb7c79e521cbf3420c2115b8857f32b9dff1c9c2eb",
+    "integrations/massworld/verify_local_bridge.py": "de1140e7e3cff3d68d94157d66f8f16f1992219833cbf8e452d4299e677b5e78",
+    "integrations/massworld/verify_optional_client.py": "f0a7e8f4672a3234830c267f0f72bd0a1d29d999b7a1cf7e7a5f0efb5499a9aa",
+    "integrations/massworld/worldevalkit-overlay/execution_backends.py": "025ab9f93389d3bdccae94160f0d0fb6ff8afe3460fcf2664f47d756f8908c58"
+  }
+}

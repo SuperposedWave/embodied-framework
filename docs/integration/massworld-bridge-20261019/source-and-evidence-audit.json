@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "implementation_commit": "6dacc21c255eae4caf07444cac8d2e3a323421a6",
+  "integration_source_hashes_verified": 10,
+  "saved_EmbodiedEval_source_hashes_verified": 112,
+  "original_MassWorld_files_exact": 277,
+  "modified_MassWorld_files": [
+    "src/worldevalkit/cli.py",
+    "src/worldevalkit/runner.py"
+  ],
+  "new_MassWorld_module_exact": true,
+  "logs_verified": true,
+  "real_GPU_inference": false,
+  "formal_acceptance": false
+}

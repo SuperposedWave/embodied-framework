@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MassWorld本地整合桥接交付</title>
+  <style>
+    :root { color-scheme: light dark; --canvas:#fafbff; --paper:#fff; --text:#242630; --muted:#666b7a; --accent:#354381; --tint:#eef0f8; --line:#dfe2ec; --code:#20232d; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--canvas); color:var(--text); font:16px/1.76 Inter,"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif; }
+    .report-shell { display:block; width:min(100% - 40px,820px); margin:32px auto 64px; }
+    main.report-content { min-width:0; padding:42px 48px; background:var(--paper); border:1px solid var(--line); border-radius:8px; counter-reset:section; }
+    h1 { margin:0 0 .7em; color:var(--accent); font-size:1.85em; line-height:1.25; scroll-margin-top:24px; }
+    h2 { margin:2em 0 .8em; padding-bottom:.35em; border-bottom:1px solid var(--line); font-size:1.42em; counter-increment:section; counter-reset:subsection; scroll-margin-top:24px; }
+    h2::before { content:counter(section, cjk-ideographic) "、"; color:var(--accent); }
+    h3 { margin:1.5em 0 .6em; font-size:1.18em; counter-increment:subsection; scroll-margin-top:24px; }
+    h3::before { content:counter(section) "." counter(subsection) " "; color:var(--accent); }
+    h1:target, h2:target, h3:target { border-radius:4px; background:var(--tint); box-shadow:0 0 0 6px var(--tint); }
+    p,ul,ol { margin:.8em 0; }
+    .lead { color:var(--muted); font-size:1.05em; }
+    .callout { margin:1.25em 0; padding:14px 16px; background:var(--tint); border-left:4px solid var(--accent); }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .panel { padding:16px; border:1px solid var(--line); border-radius:6px; }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:10px 12px; border:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:var(--tint); }
+    code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
+    pre { overflow-x:auto; padding:16px; color:#f5f6fa; background:var(--code); border-radius:8px; }
+    a { color:var(--accent); text-underline-offset:2px; }
+    @media (max-width:760px) {
+      body { font-size:15px; }
+      .report-shell { display:block; width:100%; margin:0; }
+      main.report-content { width:100%; margin:0; padding:58px 18px 48px; border:0; border-radius:0; }
+      .grid { grid-template-columns:1fr; }
+    }
+    @media (prefers-color-scheme:dark) { :root { --canvas:#14161d; --paper:#1b1e27; --text:#e8eaf0; --muted:#aeb3c2; --accent:#aeb9ff; --tint:#282d42; --line:#383d4d; } }
+    @media print { :root { --canvas:#fff; --paper:#fff; --text:#111; --accent:#222; --tint:#f2f2f2; --line:#bbb; } body,.report-shell,main.report-content { background:#fff; } .report-shell { display:block; width:100%; margin:0; } main.report-content { width:100%; padding:0; border:0; } a { color:inherit; } }
+  </style>
+</head>
+<body>
+  <div class="report-shell">
+    <main class="report-content">
+<h1 id="title">MassWorld 本地整合桥接：本轮修改与验证</h1>
+<p class="lead">2026-10-19 · 工作分支 feat/massworld-integration · 实施基线 6dacc21c255e。只交付本地桥接，不宣布整仓合并、真实任务成功或阶段验收通过。</p>
+<section aria-labelledby="conclusion"><h2 id="conclusion">现在已经能做什么</h2>
+<div class="callout">MassWorld 的单任务入口已经能够选择 EmbodiedEval 执行整场评测；机器人每一步怎样取图、推理、执行、计数和评分，仍由原来的 0.3 执行器负责。本轮执行证据是合成任务和已有真实数据的只读复查，没有新增真实模型推理。</div>
+<p>原有515项无回归，新增26项桥接测试通过。两套入口的五组命令退出码均为0/0/0/1/2。MassWorld原版和补丁版的全量测试结果一致；其中受客户端依赖影响的用例另在兼容环境补查。不能说MassWorld全部用例在同一个环境里全绿。</p>
+</section>
+<section aria-labelledby="flow"><h2 id="flow">两套框架现在怎样接起来</h2>
+<pre>MassWorld 单任务命令／计划／证据
+    ↓ 选择 execution backend（整任务执行后端）
+massworld-embodied 通用桥接包
+    ↓ 传入原样的 0.3 运行配置
+EmbodiedEval 0.3 Runner（唯一机器人执行循环）
+    ↓ 独立模型 Adapter ↔ 公共空间 ↔ 独立环境 Adapter
+原有模型推理环境／仿真环境
+    ↓ 原始指标、错误、计数、文件证据
+MassWorld result.json 与 scorecard.json</pre>
+<p>Adapter是只处理模型侧或环境侧转换的适配器。M+N指M个模型、N个环境各自维护适配器；本次没有为每个模型与环境组合新增一套Python类。公共空间仍使用0.3字段，例如head总览视角、左右腕视角、状态来源以及xyzw四元数；xyzw就是x、y、z三个向量分量在前，实数w在后。本轮不改变这些定义。</p>
+<p>MassWorld外层只执行一个stage，即一项完整工作，不把它当成一次机器人动作。这里没有嵌套第二个机器人循环，也没有把模型的resize、归一化、控制器或评分搬到桥接包。</p></section>
+<section aria-labelledby="changes"><h2 id="changes">具体改了哪些东西</h2>
+<table><thead><tr><th>材料</th><th>作用</th><th>没有做什么</th></tr></thead><tbody>
+<tr><td>patches/execution-backend.patch</td><td>给MassWorld的runner.py、cli.py增加可选后端入口；在旧模型实例化和接口绑定之前分流</td><td>不改原有图片／视频模型接口，不伪造一个不能predict的机器人模型</td></tr>
+<tr><td>worldevalkit-overlay/execution_backends.py</td><td>新增整任务后端发现、计划、单阶段调度、结果归档和错误传递</td><td>不包含机器人动作转换，不默认重试、缓存或恢复</td></tr>
+<tr><td>src/massworld_embodied/</td><td>从现有注册表导出模型／环境目录，调用0.3预检查及原Runner，完整收取结果</td><td>不包含组合白名单，不重新实现模型或环境Adapter</td></tr>
+<tr><td>prepare_workspace.py</td><td>验证固定压缩包摘要，创建新测试副本并应用补丁及新增模块，保留两层原有许可材料</td><td>不修改附件，不覆盖已有副本，不安装依赖，不下载权重</td></tr>
+<tr><td>tests/、verify_local_bridge.py、verify_optional_client.py</td><td>集中做合成架构、原版／补丁版回归以及隔离客户端补查，保存真实日志</td><td>不把合成测试称为模型能力评测</td></tr>
+</tbody></table>
+<p>原EmbodiedEval目录下130个已跟踪文件逐字节保持不变，包括原生实现及资产清单。整合先以补丁和独立包交付，不立即搬迁两个项目的全部目录，也不重写历史绝对路径。</p>
+</section>
+<section aria-labelledby="meaning"><h2 id="meaning">结果有没有被改意思</h2>
+<p>没有。框架执行完成与任务成功是两回事：机器人走完预算而没有完成任务，外层的框架success可以是true，但样本里的官方success仍是false，并明确说明两者含义。评分报错会让外层失败，原指标保留null、valid=false和不可用原因，不填0。</p>
+<p>MassWorld的总指标字典只接受数字，因此桥接只投影有效数字；布尔值、空值、单位、来源、错误和完整执行计数都留在result.json的samples及backend-result.json里。所谓“投影”就是从完整原始结果中挑选允许展示的数字，不修改原始结果。</p>
+<p>动作次数、真实物理步数、仿真秒数及模型前向次数分别保留。执行失联时保留状态未知；没有拿到完整回执的启动异常也不会猜成状态已知。失败后未尝试的任务另列清单。</p>
+<p>每次运行必须使用新目录，原目录存在即拒绝。外层stage缓存关闭、resume关闭、历史复用关闭、尝试次数固定为1。模型内部原有动作缓存不关闭，因此原先每三步推理一次等行为保持原样。manifest与summary文件使用完整SHA256摘要，不以大小和修改时间代替。</p></section>
+<section aria-labelledby="readiness"><h2 id="readiness">结构、资产与运行就绪分开</h2>
+<p>catalog就是可用组件目录；entry point是Python安装包声明的发现入口，本轮新增组名worldevalkit.execution_backends，插件名embodied-v03。目录直接读取现有注册表，真实模型仍是OpenWAM、openpi、LingBot-VLA、Cosmos3、DreamZero五类，环境仍是LIBERO、VLABench、RoboTwin、DROID仿真、RoboDojo五类；另有明确标注的合成组件。目录列出不代表DreamZero真实推理已通过。</p>
+<p>plan和doctor不会创建模型或环境工厂。plan保存结构、公共输入路径、独立来源和资产检查；缺输入或动作不匹配就拒绝。路径和哈希核对完成但运行依赖未核实，状态仍为needs_setup，意思是还不能宣称运行准备充分。首版setup只核验，不安装环境、下载资产或申请GPU。</p>
+<p>run在明确提交的本地配置下调用原Runner；是否加--preflight可由调用者选择。没有接入MassWorld的suite矩阵和离线infer/judge分段入口；这些入口仍沿用其原有行为。平台资源调度也不在本轮实现。</p></section>
+<section aria-labelledby="verification"><h2 id="verification">实际验证结果</h2>
+<table><thead><tr><th>检查</th><th>实际结果</th><th>证据边界</th></tr></thead><tbody>
+<tr><td>EmbodiedEval现有回归</td><td>515项通过，0跳过；原CLI为0/0/0/1/2</td><td>本轮使用Python 3.13.5，未声称重跑全部既有原生推理环境</td></tr>
+<tr><td>新增桥接测试</td><td>26项通过，0跳过</td><td>合成测试：2模型×2环境、第三组件接入、错误、缓存、计数、预检查与文件保全</td></tr>
+<tr><td>原入口与桥接入口边界对照</td><td>单步、动作缓存、变时长三类的公开输入、动作执行记录、诊断、结果逐字节一致</td><td>同一合成配置，没有借任务成功替代映射核对</td></tr>
+<tr><td>MassWorld原版与补丁版</td><td>各发现377项：364项通过、3项因缺客户端依赖出错、10项跳过；两侧结果完全相同</td><td>Python 3.13环境；没有静默删用例。子测试的错误事件不等于不同用例数</td></tr>
+<tr><td>兼容客户端补查</td><td>原版24项、补丁版24项通过，均0跳过</td><td>隔离Python 3.11.17；GPT-DROID、DROID假服务／假环境及文件传输测试，不是真实DreamZero推理</td></tr>
+<tr><td>保存真实数据转换复查</td><td>11条链路、55份观测、44条动作通过，历史哈希不变</td><td>重新读取已有证据，没有启动GPU推理或仿真，不是桥接真实闭环验收</td></tr>
+</tbody></table>
+<p>桥接CLI实测如下。退出0表示运行正常；1表示运行或评分报错；2表示配置／结构拒绝。期望失败也是测试要核对的行为。</p>
+<table><thead><tr><th>用例</th><th>期望</th><th>实际</th></tr></thead><tbody><tr><td>single</td><td>0</td><td>0</td></tr><tr><td>cache</td><td>0</td><td>0</td></tr><tr><td>native_timing</td><td>0</td><td>0</td></tr><tr><td>score_error</td><td>1</td><td>1</td></tr><tr><td>rejected</td><td>2</td><td>2</td></tr></tbody></table>
+<ul><li><a href="/outputs/massworld-bridge-verification-20261019-final/receipt.json">本地软件检查回执（passed仅表示本轮门禁通过，不表示上游所有测试通过）</a></li><li><a href="/outputs/massworld-client-verification-20261019-final/receipt.json">兼容客户端环境补查回执</a></li><li><a href="/outputs/massworld-saved-boundaries-20261019-run1/receipt.json">保存真实样本的转换复查回执</a></li><li><a href="/outputs/massworld-bridge-verification-20261019-final/backend-baseline/baseline-check.json">515项及原CLI实际结果</a></li><li><a href="/outputs/massworld-bridge-verification-20261019-final/bridge-tests.txt">桥接新增测试日志</a></li><li><a href="/outputs/massworld-bridge-verification-20261019-final/massworld-original.txt">原版MassWorld完整测试日志</a></li><li><a href="/outputs/massworld-bridge-verification-20261019-final/massworld-patched.txt">补丁版MassWorld完整测试日志</a></li><li><a href="/outputs/massworld-bridge-verification-20261019-final/catalog.json">实际导出的独立模型／环境目录</a></li></ul>
+</section>
+<section aria-labelledby="environment"><h2 id="environment">环境处理与保留的缺口</h2>
+<p>当前轻量环境新增PyAV 16.1.0和safetensors 0.7.0，仅用于视频解码及小张量文件测试。未安装新的GPU模型依赖，未下载权重，未改共享驱动或既有原生推理环境。下载命令只在当前进程去掉代理变量；全局代理不变，未使用或保存API密钥。</p>
+<p>openpi-client要求NumPy小于2，与当前Python 3.13轻量环境不匹配；没有强行忽略依赖约束或降级NumPy，而是创建隔离Python 3.11客户端测试环境。版本清单见补查回执。原版与补丁版的相关用例都在这个环境复查。</p>
+<p>主环境仍有10项明确跳过：8项DROID客户端／文件协议用例由上述兼容环境补查；2项LingBot-World可选推理依赖相关测试仍未执行，不能算通过。它们不是本项目已适配的LingBot-VLA，也不抵扣暂缓的LingBot-VA。</p>
+<p>原有严格原生复现差异、全任务多种子统计、DreamZero双H10080GB、正式阶段4接受和契约冻结仍未关闭。本轮没有新增GPU利用率统计，不把既有占卡负载计入评测工作量，也不声称达成新的20%实测窗口。</p></section>
+<section aria-labelledby="replay"><h2 id="replay">怎样接入和复跑</h2>
+<p>以下命令在EmbodiedEval项目根目录执行。先用prepare_workspace.py从已提供的固定ZIP创建全新的测试副本；不要对只读上游就地打补丁。脚本拒绝不同摘要的ZIP、重复路径、符号链接、路径穿越和覆盖旧目录。完整ZIP摘要为e64747418982c8787645925b86f78f120024bea3fbe1dc84496e3ac80966034a。</p>
+<pre>.venv/bin/python integrations/massworld/prepare_workspace.py   --archive "/path/to/MassWorld-main (1).zip"   --output outputs/massworld-workspace-new
+
+# 当前轻量环境已具备基础依赖；只安装本地两个包，不递归下载依赖
+.venv/bin/python -m pip install --no-deps --no-build-isolation   -e outputs/massworld-workspace-new/WorldEvalKit -e integrations/massworld
+
+.venv/bin/python -m worldevalkit.cli catalog backend   --execution-backend embodied-v03
+
+.venv/bin/python -m worldevalkit.cli plan   --execution-backend embodied-v03   --backend-config examples/synthetic_single_run.json   --output-dir outputs/my-massworld-check
+
+.venv/bin/python -m worldevalkit.cli run   --execution-backend embodied-v03   --backend-config examples/synthetic_single_run.json   --output-dir outputs/my-massworld-run</pre>
+<p>backend-config就是原来的0.3运行配置，不新建逐对接线文件。模型配置、环境配置、种子、预算和控制模式各保留原义；不允许同时再传MassWorld旧--model、--benchmark、--endpoint或另一份参数覆盖，避免两套设置相互打架。--no-cache在该后端下并非必要，因为外层缓存始终禁用。</p>
+<p>后端接口约定：catalog读取独立组件目录；preflight只读检查配置；execute接收一个尚不存在的输出目录并完整运行一次。它返回success、execution_state_known、numeric_metrics、samples、metadata、evidence。这里success只表示框架完成；execution_state_known表示执行状态是否已核实；numeric_metrics是可展示的有效数字；samples是完整逐任务结果；metadata保留来源；evidence是带摘要的文件证据。</p></section>
+<section aria-labelledby="remaining"><h2 id="remaining">下一步与验收边界</h2>
+<ol><li>先确认本地桥接的软件交付，再选择已有资产上的有限步真实链路，经MassWorld入口运行并与同条件直接入口比较；重新推理随机性、映射正确性与任务成功分别报告。</li>
+<li>真实对照通过后再评审单仓目录迁移，保留Git历史、包名、原生子进程模块路径和历史结果路径；本轮不先搬目录。</li>
+<li>再扩展suite目录／结果汇总和启智执行提供者；启智CLI已经可用不等于提供者已实现，不自动提交任务、申请GPU或启用平台故障重试。</li></ol>
+<p>没有新增0.4公共物理协议，也没有自动认定阶段4通过。两套代码原有许可和第三方NOTICE仍需在最终对外合仓前统一盘点；本轮只保留来源材料，不替所有人作授权判断。</p></section>
+</main></div></body></html>

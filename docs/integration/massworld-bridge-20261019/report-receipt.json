@@ -1,0 +1,13 @@
+{
+  "kind": "MassWorld_local_bridge_report_not_formal_acceptance",
+  "created_at_utc": "2026-10-19T08:12:05.753418+00:00",
+  "report": "MassWorld-local-bridge-delivery.html",
+  "report_sha256": "d94c63d7aad01c46754bcd04ea7416d16f3701c008d778cdd2c49e9090ea0caf",
+  "inputs": {
+    "outputs/massworld-bridge-verification-20261019-final/receipt.json": "5310d8e1aee781d656747cb11c794639dd8fda744eaaf597b6ab54fb02826734",
+    "outputs/massworld-client-verification-20261019-final/receipt.json": "f1c35ffef52dc0a928670b73e950c6f128b7b33164d38deea3d6b86f2260840e",
+    "outputs/massworld-saved-boundaries-20261019-run1/receipt.json": "45a29aadeff97fb8cadbdbb8834a5f90a1d53b47cdc8f60d00e86bf84e5a1733"
+  },
+  "new_inference": false,
+  "formal_acceptance": false
+}

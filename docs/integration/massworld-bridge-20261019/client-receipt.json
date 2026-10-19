@@ -1,0 +1,77 @@
+{
+  "kind": "compatible_optional_client_CPU_tests_not_model_or_simulator_validation",
+  "passed": true,
+  "created_at_utc": "2026-10-19T08:09:11.704828+00:00",
+  "checks": [
+    {
+      "source": "original",
+      "suite": "test_gpt_droid.py",
+      "exit_code": 0,
+      "tests": 6,
+      "log": "original-test_gpt_droid.txt",
+      "skipped": [],
+      "log_sha256": "0013216a6d0c6dc952bd2523f62bb5b96cb861f7ae2bc68b00af0b6f5293b370"
+    },
+    {
+      "source": "original",
+      "suite": "test_droid_sim.py",
+      "exit_code": 0,
+      "tests": 14,
+      "log": "original-test_droid_sim.txt",
+      "skipped": [],
+      "log_sha256": "70eeb81119073e1b90d9be86b077518f91c53be41b714e9eacd054501559d179"
+    },
+    {
+      "source": "original",
+      "suite": "test_file_policy.py",
+      "exit_code": 0,
+      "tests": 4,
+      "log": "original-test_file_policy.txt",
+      "skipped": [],
+      "log_sha256": "73d364a67bf84939b2154169d8c2889e3d6a4f883d93af48b35355f625c5496b"
+    },
+    {
+      "source": "patched",
+      "suite": "test_gpt_droid.py",
+      "exit_code": 0,
+      "tests": 6,
+      "log": "patched-test_gpt_droid.txt",
+      "skipped": [],
+      "log_sha256": "39bf3c867cc42f38aa586e5cedb49601fe9d944fbab8d461c2d7040b4dd20bed"
+    },
+    {
+      "source": "patched",
+      "suite": "test_droid_sim.py",
+      "exit_code": 0,
+      "tests": 14,
+      "log": "patched-test_droid_sim.txt",
+      "skipped": [],
+      "log_sha256": "e05cb382766686f8bddae522b9cff845564cfc1533e70d49ea28477442548dd8"
+    },
+    {
+      "source": "patched",
+      "suite": "test_file_policy.py",
+      "exit_code": 0,
+      "tests": 4,
+      "log": "patched-test_file_policy.txt",
+      "skipped": [],
+      "log_sha256": "62602d29d9f4f6446eaa23b82064500cdfa6d06d830adcebe08a50065957d461"
+    }
+  ],
+  "real_inference": false,
+  "real_simulation": false,
+  "environment": {
+    "python": "3.11.17",
+    "packages": {
+      "numpy": "1.26.4",
+      "Pillow": "13.0.0",
+      "openpi-client": "0.1.2",
+      "jsonschema": "4.26.0",
+      "PyYAML": "6.0.3",
+      "python-dotenv": "1.2.4",
+      "websockets": "16.1.1",
+      "av": "16.1.0",
+      "imageio-ffmpeg": "0.6.0"
+    }
+  }
+}
