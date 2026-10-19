@@ -29,14 +29,14 @@ def main():
     if output.exists():
         raise ValueError("new_report_path_required")
     source_proof = evidence / "source-preservation.json"
-    if source_proof.exists():
-        raise ValueError("new_source_preservation_path_required")
     audit = json.loads((evidence / "audit-final/receipt.json").read_text())
     native = json.loads((evidence / "native-clock-review.json").read_text())
     native_rows_check = json.loads((evidence / "robotwin-native-row-check.json").read_text())
     baseline = json.loads((evidence / "baseline-final2/baseline-check.json").read_text())
     temporal = json.loads((evidence / "temporal-evidence-final/receipt.json").read_text())
     differences = json.loads((evidence / "audit-final/recent-boundary-localization.json").read_text())["comparisons"]
+    pi_libero = next(x for x in differences if x["route"] == "openpi_libero")["camera_differences"]
+    pi_vla = next(x for x in differences if x["route"] == "openpi_vlabench")["camera_differences"]
     if not audit["completed"] or not baseline["passed"] or not temporal["passed"] or not native["source_identity_checks_passed"] or not native_rows_check["passed"]:
         raise ValueError("completed_source_and_software_evidence_required")
     runs = {row["id"]: json.loads((evidence / "audit-final" / row["evidence"]).read_text()) for row in audit["runs"]}
@@ -102,19 +102,19 @@ def main():
 <p class="lead">{esc(at)} · 离线读取历史证据 · 核对工具提交 <code>{esc(commit[:12])}</code> · 无新GPU推理或仿真</p>
 <section aria-labelledby="summary"><h2 id="summary">本轮结论</h2>
 <div class="callout">完整核对了<strong>{len(runs)}次已有运行</strong>：11次历史框架运行，以及最近7条链路的直接／MassWorld双入口共14次短跑，覆盖{sum(r['executed_actions'] for r in runs.values())}条已存在的动作记录。日志核对通过不等于原生复现相同；原生差异仍保留。</div>
-<p>目前最明确的发现是：<strong>记录了很多次公共模型输入，不代表模型每次都重新看图推理。</strong>LingBot历史运行有112次模型侧调用，但每个相机只有3个不同采集时间，记录的服务请求也是3次；其中一次取图间隔达到约20.39个仿真秒。它符合保留的原生缓存设置，不能直接当成Adapter丢图。</p>
+<p>目前最明确的发现是：<strong>记录了很多次公共模型输入，不代表模型每次都重新看图推理。</strong>LingBot历史运行有112次模型侧调用，但每个相机只有3个不同采集时间，记录的原生动作请求也是3次；其中一次取图间隔达到约20.39个仿真秒。它符合保留的原生缓存设置，不能直接当成Adapter丢图。</p>
 <p>本轮只增加离线核对工具、合成测试和证据报告，没有改Runner、模型／环境Adapter、权重、归一化、控制器、取图、推理频率或评分。没有提交启智任务，也没有把已有占卡当评测工作。阶段4和契约冻结仍未接受。</p></section>
 <section aria-labelledby="meaning"><h2 id="meaning">到底核对了什么</h2>
 {table(['记录','人话解释','不能据此断言'], [
  ['公共输入条数','框架给Adapter交了多少次观测快照','不等于每次都调用模型服务'],
  ['不同采集时间数','同一个相机出现了几个不同的采集时间；重复缓存不重复计数','不是独立相机触发仪器实测；同一时刻多次取图仍可能无法区分'],
- ['原生请求／生成请求计数','模型侧诊断记录了多少次服务请求，或本地生成调用','不等于已核实的模型前向推理次数，也未记录每次请求的准确位置'],
+ ['原生动作请求／生成计数','模型侧诊断记录了多少次成功返回动作的请求，或本地生成调用；不含重置、健康检查等通信','不等于已核实的模型前向推理次数，也未记录每次请求的准确位置'],
  ['每动作耗时','这条动作的执行反馈报告推进了多少仿真秒','不是该权重训练时所要求的动作时长'],
  ['物理步数','执行记录报告底层仿真推进了多少步','没有物理计数的记录不能用动作条数代替']])}
 <p>同一画面被重复返回，要保持原采集时间；不同时间采到完全相同的像素也可能合理，例如场景静止，不能仅按图像内容去重。所有时间均为仿真中的秒数，不是等待推理的现实耗时。本工具的数值比较容差为一亿分之一秒，只处理浮点舍入，不会把相差一个物理步说成相同。</p></section>
 <section aria-labelledby="historical"><h2 id="historical">历史运行逐条核对</h2>
 <p>下表来自旧版0.2历史记录，并未改写或迁移这些证据。每个相机都做了核对，表内只选一个代表相机显示计数；完整字段在各运行回执中。请求列保留各实现诊断的原含义，不能跨模型合计为统一“推理次数”。</p>
-{table(['链路','动作数','公共输入数','原生请求数','代表相机不同采集时间数','每动作仿真秒数范围','累计仿真秒数'], long_rows)}
+{table(['链路','动作数','公共输入数','原生动作请求／生成数','代表相机不同采集时间数','每动作仿真秒数范围','累计仿真秒数'], long_rows)}
 <p>每条已保存预测都核对了对应公共输入的观测编号、采集时间和相机像素指纹；每个执行反馈都核对了动作计数、时间增量，以及存在时的物理步数。新快照编号不等于新图；终止后返回的最后快照也不一定再取图，且未必再次送进模型。</p>
 <h3 id="lingbot-example">用LingBot这次真实记录举例</h3>
 {table(['已完成动作数','模型公共输入里出现的新采集时间（仿真秒）'], ling_rows)}
@@ -133,6 +133,7 @@ def main():
 {table(['链路','首次公共输入相同','第一条不同动作','第一次不同物理计数','差异最早出现在哪里'], recent_rows)}
 <p>π0.5的起始图像差异发生在第一条动作执行之前，不能靠修改后续动作频率消除。LingBot首次公共输入相同而首条返回动作不同，仍需核对实际编码与服务状态；不能直接归咎于随机性。OpenWAM两条RoboTwin链路的公共动作相同，物理计数先出现差异，应继续追查环境执行／规划／计数路径，不能用任务成功掩盖。</p>
 <p>机器人测量状态相同，不代表物体、灯光、相机及完整仿真状态都相同；现有公开状态没有覆盖所有细节，不能仅凭机械臂状态一致确定起始图像差异的原因。</p>
+<p>π0.5／LIBERO的起点主视角有{pi_libero['head']['changed_pixels']:,}个像素不同、腕视角有{pi_libero['wrist']['changed_pixels']:,}个像素不同；π0.5／VLABench只有右侧视角不同，共{pi_vla['external_right']['changed_pixels']:,}个像素、{pi_vla['external_right']['changed_values']:,}个颜色分量，主／腕视角相同。一个像素含红绿蓝3个颜色分量，二者不是同一计数。对这些差异图做上下、左右或同时翻转的数值比较，也没有恢复完全相等；本轮没有据此认定更深层的渲染原因。</p>
 <p>另对两条OpenWAM／RoboTwin链路各4条保存动作，调用生产代码的纯坐标／原生命令转换：双方转换后仍逐项相同，包括控制模式和float32精度。因此这几个已保存动作的差异没有出现在该纯转换边界。LingBot首条动作的不同也保留到了原生关节数组。见<a href="robotwin-native-row-check.json">三条RoboTwin链路的原生命令数值检查</a>。这是CPU计算，不是向控制器重新发送动作，也不是实际执行端抓包。</p>
 <p>原始逐相机像素差、是否存在简单翻转关系、逐动作相等结果和逐步计数，见<a href="audit-final/recent-boundary-localization.json">七条链路差异定位证据</a>。没有改变图片以追求表面一致，也没有提高比较容差来关闭物理步数差异。</p></section>
 <section aria-labelledby="native"><h2 id="native">原生参考的时间复核</h2>
@@ -171,9 +172,13 @@ def main():
     start = template.index('<main class="report-content">') + len('<main class="report-content">')
     end = template.index('</main>', start)
     document = (template[:start] + body + template[end:]).replace('lang="en"', 'lang="zh-CN"').replace('<title>Report title</title>', '<title>已有真实记录：取图、动作缓存与仿真时间核对</title>')
-    with source_proof.open("x") as f:
-        json.dump(source_proof_payload, f, ensure_ascii=False, indent=2)
-        f.write("\n")
+    if source_proof.exists():
+        if json.loads(source_proof.read_text()) != source_proof_payload:
+            raise ValueError("refuse_to_replace_different_source_preservation_evidence")
+    else:
+        with source_proof.open("x") as f:
+            json.dump(source_proof_payload, f, ensure_ascii=False, indent=2)
+            f.write("\n")
     with output.open("x", encoding="utf-8") as f:
         f.write(document)
     print(json.dumps({"report": str(output), "runs": len(runs), "quality_passed": audit["passed"], "new_inference": False}))

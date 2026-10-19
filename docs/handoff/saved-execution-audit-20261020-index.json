@@ -1,0 +1,153 @@
+{
+  "kind": "saved_execution_clock_and_difference_localization_delivery_index",
+  "checked_at_utc": "2026-10-19T18:10:29Z",
+  "user_facing_date_Asia_Shanghai": "2026-10-20",
+  "branch": "feat/massworld-integration",
+  "initial_audit_tools_commit": "16fbaf0",
+  "implementation_commit": "f20266a6abf1706594e1be20485c564eea47d41d",
+  "passed": true,
+  "scope": "read-only existing log quality, clock reconciliation, difference boundary localization and pure saved action conversion; no new runtime",
+  "formal_acceptance": false,
+  "contract_frozen": false,
+  "report": {
+    "path": "outputs/saved-execution-audit-20261020-run1/saved-execution-and-differences-final2.html",
+    "sha256": "5ea285b0296eefdb240ac261a1dbd493c097fb0c0473521b908115fc6036ce38"
+  },
+  "evidence": [
+    {
+      "path": "outputs/saved-execution-audit-20261020-run1/audit-final/receipt.json",
+      "sha256": "958d9c8acc53438f0e3377b16948db08ba0945358ec48db58214f6d98fa71548",
+      "passed": true
+    },
+    {
+      "path": "outputs/saved-execution-audit-20261020-run1/audit-final/recent-boundary-localization.json",
+      "sha256": "0590432cb1e4a560d27fb895ad65b74766a4c76fcf7dac0f57dd70222cc2cc81",
+      "gate": "localized_difference_boundaries_not_unique_root_causes"
+    },
+    {
+      "path": "outputs/saved-execution-audit-20261020-run1/native-clock-review.json",
+      "sha256": "027c1d8103fc1e45988d1a12811c61a72049bae04d2e4926c9dc6aaafe0cc711",
+      "gate": "source_binding_and_common_prefix_clock_review_not_strict_reproduction_pass"
+    },
+    {
+      "path": "outputs/saved-execution-audit-20261020-run1/robotwin-native-row-check.json",
+      "sha256": "927f93166a077d64f55116a1a9490cd8e37e323484a47b8a37c7978ddd16023a",
+      "passed": true
+    },
+    {
+      "path": "outputs/saved-execution-audit-20261020-run1/source-preservation.json",
+      "sha256": "e199f10fcde5fac04e256c00a90dff4a0c7e5abaec764b9ff109d2adef3104cc",
+      "passed": true
+    },
+    {
+      "path": "outputs/saved-execution-audit-20261020-run1/baseline-final2/baseline-check.json",
+      "sha256": "9e9f14afc432557c64e40e06e646113584ef8c7b38dd4bdaf43f08cf447b873f",
+      "passed": true
+    },
+    {
+      "path": "outputs/saved-execution-audit-20261020-run1/temporal-evidence-final/receipt.json",
+      "sha256": "a9aaf909e8f1c3ab33b949a9e46b10c22d86b60259d8b84b167dcbb470c8af63",
+      "passed": true
+    },
+    {
+      "path": "outputs/saved-execution-audit-20261020-run1/http-verification.json",
+      "sha256": "08bd5e4f8d7852eaba0a65dd9141c31d1d7dc3c49570e4882ec0666ea0f5185e",
+      "passed": true
+    }
+  ],
+  "execution_audit": {
+    "existing_real_runs": 25,
+    "historical_framework_runs": 11,
+    "recent_direct_and_bridge_runs": 14,
+    "existing_action_records_reviewed": 1814,
+    "protected_run_files": 125,
+    "protected_run_file_bytes": 26085236549,
+    "all_records_in_selected_trace_and_public_input_files_read": true,
+    "quality_checks_passed_runs": 25,
+    "historical_hashes_unchanged": true,
+    "runtime_python_files_preserved": 114,
+    "previous_conversion_checks_reused_not_rerun": true,
+    "numerical_clock_tolerance_s": 1e-8,
+    "tolerance_does_not_allow_a_physics_step_difference": true,
+    "model_forward_counts_verified": false,
+    "per_native_request_positions_observed": false,
+    "request_counters_are_action_requests_or_generation_calls_not_ping_reset_RPC_total": true,
+    "cache_remaining_after_cleanup_is_not_proof_of_full_consumption": true,
+    "training_action_periods_verified": false
+  },
+  "concrete_lingbot_historical_example": {
+    "public_model_input_records": 112,
+    "native_action_requests": 3,
+    "different_capture_times_per_camera": 3,
+    "repeated_capture_occurrences_per_camera": 109,
+    "capture_after_action_indices": [0, 50, 100],
+    "capture_times_sim_seconds": [0.0, 20.388000968378037, 32.172001528088],
+    "single_action_elapsed_s_min": 0.06000000284984708,
+    "single_action_elapsed_s_max": 0.7040000334382057,
+    "max_image_age_in_public_input_s": 20.30800096457824,
+    "retained_native_open_loop_behavior_not_newly_introduced": true,
+    "not_claimed_to_be_112_fresh_inferences_on_stale_images": true
+  },
+  "native_reference_review": {
+    "references": 10,
+    "direct_native_result_manifest_hash_bindings": 7,
+    "companion_input_and_actual_native_request_hash_bindings": 3,
+    "companion_input_equality_failures_preserved": true,
+    "original_strict_equal_references": 2,
+    "root_causes_proven": false,
+    "strict_reproduction_gaps_closed": false
+  },
+  "RoboTwin_saved_native_conversion": {
+    "routes": 3,
+    "entrypoint_sides_per_route": 2,
+    "saved_actions_per_side": 4,
+    "two_OpenWAM_routes_all_four_native_rows_and_dtype_exact": true,
+    "LingBot_different_first_action_stays_different_after_conversion": true,
+    "native_controller_wire_captured": false,
+    "new_controller_calls": 0
+  },
+  "software": {
+    "previous_main_tests": 603,
+    "new_synthetic_log_tests": 25,
+    "new_synthetic_source_binding_tests": 6,
+    "main_tests_passed": 634,
+    "bridge_tests_passed": 34,
+    "skips": 0,
+    "CLI_exit_codes": [0, 0, 0, 1, 2],
+    "observation_timing_tests_passed": 57,
+    "synthetic_crosses": 4
+  },
+  "preserved_scope": {
+    "public_contract_changed": false,
+    "model_or_benchmark_Adapter_runtime_changed": false,
+    "Runner_changed": false,
+    "weights_normalization_controller_or_scoring_changed": false,
+    "action_or_observation_schedule_changed": false,
+    "new_model_inference": false,
+    "new_real_simulation": false,
+    "new_platform_jobs": 0,
+    "GPU_average_newly_measured": false,
+    "DreamZero_two_H100_80GB_real_validation_deferred": true
+  },
+  "preview": {
+    "port": 8770,
+    "pid": 536585,
+    "bind": "127.0.0.1",
+    "instance_local_url": "http://127.0.0.1:8770/outputs/saved-execution-audit-20261020-run1/saved-execution-and-differences-final2.html",
+    "HTTP_verified_exposed_files": 35,
+    "remote_port_forwarding_verified": false,
+    "rendered_browser_inspection_performed": false,
+    "rendered_inspection_gap": "no browser tool or installed Chromium/Playwright runtime available; HTML structure and all explicit HTTP bytes verified",
+    "public_upload_performed": false
+  },
+  "retained_intermediates_not_final": [
+    {
+      "path": "outputs/saved-execution-audit-20261020-run1/baseline-final/baseline-check.json",
+      "reason": "628-test successful intermediate before six explicit source-binding tests; final is baseline-final2 with 634"
+    },
+    {
+      "path": "outputs/saved-execution-audit-20261020-run1/saved-execution-and-differences-report.html",
+      "reason": "initial valid report retained; final2 clarifies action-request counters exclude reset and health-check communication"
+    }
+  ]
+}
