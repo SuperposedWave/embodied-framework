@@ -75,8 +75,8 @@ def main():
                 '--manifest', str(args.runtime_manifest.resolve()), '--version', version]) + ' && '
         command += shlex.join(invocation)
         request = dict(name=name,workspace_id=selection['workspace_id'],project_id=selection['project_id'],
-            logic_compute_group_id=selection['logic_compute_group_id'],framework='PyTorch',command=command,
-            framework_config=[dict(image_type='official',image=selection['image_address'],instance_count=1,shm_gi=16,spec_id=selection['spec_id'])],
+            logic_compute_group_id=selection['logic_compute_group_id'],framework='pytorch',command=command,
+            framework_config=[dict(image_type='SOURCE_OFFICIAL',image=selection['image_address'],instance_count=1,shm_gi=16,spec_id=selection['spec_id'])],
             auto_fault_tolerance=False,fault_tolerance_max_retry=0,fault_tolerance_retry_interval_sec=0,
             # The live platform requires at least one minute of retention.
             max_running_time_ms=selection['job_max_running_time_ms'],reserve_on_fail_ms='60000',reserve_on_success_ms='60000',

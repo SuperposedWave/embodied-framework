@@ -1,6 +1,23 @@
 {
-  "last_update_utc": "2026-10-19T09:13:20.086Z",
-  "review_status": "qz_offline_validation_prepared_seven_tasks_no_GPU_allocation_parent_project_membership_denied_pending_project_confirmation",
+  "last_update_utc": "2026-10-19T09:19:06.543Z",
+  "review_status": "qz_user_confirmed_child_project_seven_offline_single_H100_tasks_accepted_queued_not_evaluated",
+  "qz_validation_submission_20261019": {
+    "status": "user_confirmed_child_project_seven_offline_single_H100_jobs_accepted_and_queued_not_evaluated",
+    "index": "docs/handoff/qz-validation-submission-20261019-index.json",
+    "user_confirmed_project": "世界模型评测",
+    "GPU_limit": 32,
+    "accepted_jobs": 7,
+    "requested_GPUs_including_queue": 7,
+    "queued_jobs": 7,
+    "running_jobs": 0,
+    "completed_jobs": 0,
+    "assigned_nodes": 0,
+    "offline_assets_and_python_runtime_staged": true,
+    "automatic_retry": false,
+    "global_proxy_changed": false,
+    "real_inference_performed": false,
+    "stage4_accepted": false
+  },
   "qz_validation_preparation_20261019": {
     "status": "seven_offline_jobs_prepared_pending_user_target_project_confirmation",
     "index": "docs/handoff/qz-validation-preparation-20261019-index.json",
