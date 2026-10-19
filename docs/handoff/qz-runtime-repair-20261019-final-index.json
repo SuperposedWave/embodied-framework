@@ -1,0 +1,641 @@
+{
+  "kind": "completed_runtime_repairs_and_bounded_retests_with_unresolved_reproduction_gates",
+  "at_utc": "2026-10-19T15:14:32.368Z",
+  "branch": "feat/massworld-integration",
+  "implementation_commit": "0a3b8b4",
+  "before_repair_commit": "8baa674",
+  "public_contract_version": "0.3",
+  "public_Adapter_Runner_and_contract_source_changed": false,
+  "weights_normalization_controller_scoring_and_historical_paths_changed": false,
+  "full_software_tests": 515,
+  "bridge_and_diagnostic_tests": 34,
+  "all_software_tests_passed": true,
+  "software_skips": 0,
+  "CLI_exit_codes": [
+    0,
+    0,
+    0,
+    1,
+    2
+  ],
+  "baseline_evidence": "outputs/worldeval-qz-fix-baseline-20261019-final2/baseline-check.json",
+  "completed_real_routes": 7,
+  "completed_entrypoint_runs": 14,
+  "policy_actions_executed": 56,
+  "framework_errors_in_latest_runs": 0,
+  "receipt_initial_boundary_gate_passed": 5,
+  "all_recorded_actions_exact_routes": 4,
+  "complete_saved_trace_and_model_inputs_bytes_exact_routes": [
+    "openwam_libero",
+    "openwam_vlabench"
+  ],
+  "task_success_rate_claim": false,
+  "full_suite_or_multiseed_evaluation": false,
+  "all_strict_reproduction_gates_passed": false,
+  "fixed_findings": [
+    {
+      "name": "missing_system_graphics_libraries",
+      "plain": "文件和权重齐全，但新镜像缺少图像／仿真程序需要的系统库。",
+      "confirmed": [
+        "libxcb.so.1",
+        "libGL.so.1",
+        "libX11.so.6"
+      ],
+      "fix": "15个有SHA256的私有用户态库；只改任务进程库路径，不改系统或驱动"
+    },
+    {
+      "name": "inherited_image_library_ABI_conflict",
+      "plain": "镜像自带Python/PyTorch的动态库覆盖了独立环境原本该用的版本。",
+      "confirmed_symbol": "PyObject_CallOneArg",
+      "fix": "隔离LD_LIBRARY_PATH；保留标准驱动目录，使用各环境自己的wheel库",
+      "same_H100_LIBERO_enumeration_inherited_failed_isolated_passed": true
+    },
+    {
+      "name": "supervisor_crc_module_not_visible",
+      "plain": "CRC依赖已准备，但启动前检查进程没有把依赖目录加进来。",
+      "fix": "父检查进程与子进程都能访问准备好的依赖；CPU310已验证CRC32C标准向量"
+    },
+    {
+      "name": "OpenPI_public_tokenizer_only_in_host_cache",
+      "plain": "分词器只在原实例私有缓存里，新容器拿不到。",
+      "fix": "仅复制公开分词器到共享目录并校验原字节，显式OPENPI_DATA_HOME；未复制其他缓存或凭据",
+      "source_sha256": "8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6",
+      "old_openpi_vlabench_timeout_unique_cause_proven": false
+    },
+    {
+      "name": "GPU_render_readiness_missing_in_preparation",
+      "plain": "CUDA能算数不代表当前任务能创建SAPIEN渲染设备。",
+      "fix": "新增真正的原生渲染设备检查，在加载模型大权重前拦截；RoboTwin改在本实例RTX完成验证"
+    }
+  ],
+  "platform_render_gap": {
+    "job_id": "job-798b34e7-1a4a-4bcd-9e1b-b6f2ae9b7248",
+    "workspace": "分布式训练空间",
+    "project": "世界模型评测",
+    "logic_group": "开发区-H100-cuda12.8版本-183核",
+    "image": "docker.sii.shaipower.online/base/ngc-pytorch:25.02-cuda12.8.0-py3",
+    "nodes": [
+      "qb-prod-gpu541"
+    ],
+    "CUDA_operation_passed": true,
+    "libEGL_nvidia_accessible": true,
+    "libGLX_nvidia_accessible": false,
+    "native_error": "failed to find a rendering device",
+    "hardware_all_H100_unsupported_claim": false,
+    "platform_render_gap_fixed": false,
+    "existing_RTX_same_render_probe_passed": true,
+    "existing_RTX_native_RoboTwin_initialization_passed": true
+  },
+  "remaining_gaps": [
+    "π0.5/LIBERO：机器人测量状态相同，但两幅起始图像不同，第一条新动作也不同，唯一原因未确定。",
+    "π0.5/VLABench：状态和主／腕视角相同，右侧图像691200个颜色分量中789个不同，最大差21；该图像确实是模型输入，唯一原因未确定。",
+    "LingBot-VLA/RoboTwin：起始观测与输入相同，但第一条新动作不同；物理步数264/263。",
+    "OpenWAM/RoboTwin旧版：动作相同，物理步数366/365；不代表执行轨迹相同。",
+    "OpenWAM/RoboTwin标准位姿：动作相同，物理步数363/367；不代表执行轨迹相同。",
+    "H100平台SAPIEN图形设备缺口保留，不能以本机RTX通过冒充平台通过。"
+  ],
+  "cases": [
+    {
+      "case": "openwam_libero",
+      "receipt": "outputs/worldeval-qz-batch-20261019-run4/openwam_libero/runtime/receipt.json",
+      "passed": true,
+      "runtime_both_passed": true,
+      "comparison": {
+        "initial_observation_exact": true,
+        "first_public_model_input_exact": true,
+        "all_recorded_actions_exact": true,
+        "first_action_difference": null,
+        "action_counts": [
+          4,
+          4
+        ],
+        "execution_statistics": [
+          {
+            "env_steps": 4,
+            "sim_time_s": 0.2,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": null
+          },
+          {
+            "env_steps": 4,
+            "sim_time_s": 0.2,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": null
+          }
+        ],
+        "official_metrics": [
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "LIBERO official environment done@8f1084e",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          },
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "LIBERO official environment done@8f1084e",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          }
+        ],
+        "task_success_not_a_mapping_gate": true,
+        "fresh_inference_difference_is_not_automatically_an_adapter_bug": true
+      },
+      "gpu_sample_mean_percent": 0.7360406091370558,
+      "gpu_samples": 394,
+      "GPU_average_includes_preexisting_occupancy": false,
+      "finished_at_utc": "2026-10-19T13:33:25.269838+00:00",
+      "all_saved_trace_and_inputs_bytes_exact": {
+        "trace.internal.jsonl": true,
+        "model_input.public.jsonl": true
+      }
+    },
+    {
+      "case": "openpi_libero",
+      "receipt": "outputs/worldeval-qz-batch-20261019-run4/openpi_libero/runtime/receipt.json",
+      "passed": false,
+      "runtime_both_passed": true,
+      "comparison": {
+        "initial_observation_exact": false,
+        "first_public_model_input_exact": false,
+        "all_recorded_actions_exact": false,
+        "first_action_difference": 1,
+        "action_counts": [
+          4,
+          4
+        ],
+        "execution_statistics": [
+          {
+            "env_steps": 4,
+            "sim_time_s": 0.2,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": null
+          },
+          {
+            "env_steps": 4,
+            "sim_time_s": 0.2,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": null
+          }
+        ],
+        "official_metrics": [
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "LIBERO official environment done@f78abd6",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          },
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "LIBERO official environment done@f78abd6",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          }
+        ],
+        "task_success_not_a_mapping_gate": true,
+        "fresh_inference_difference_is_not_automatically_an_adapter_bug": true
+      },
+      "gpu_sample_mean_percent": 0.2556818181818182,
+      "gpu_samples": 176,
+      "GPU_average_includes_preexisting_occupancy": false,
+      "finished_at_utc": "2026-10-19T13:26:51.920931+00:00"
+    },
+    {
+      "case": "openwam_vlabench",
+      "receipt": "outputs/worldeval-qz-batch-20261019-run3/openwam_vlabench/runtime/receipt.json",
+      "passed": true,
+      "runtime_both_passed": true,
+      "comparison": {
+        "initial_observation_exact": true,
+        "first_public_model_input_exact": true,
+        "all_recorded_actions_exact": true,
+        "first_action_difference": null,
+        "action_counts": [
+          4,
+          4
+        ],
+        "execution_statistics": [
+          {
+            "env_steps": 4,
+            "sim_time_s": 0.4,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": null
+          },
+          {
+            "env_steps": 4,
+            "sim_time_s": 0.4,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": null
+          }
+        ],
+        "official_metrics": [
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "VLABench official native evaluator@cf588fe",
+              "valid": true,
+              "unavailable_reason": null
+            },
+            "progress_score": {
+              "value": 0,
+              "unit": "score",
+              "source": "VLABench official native evaluator@cf588fe",
+              "valid": true,
+              "unavailable_reason": null
+            },
+            "intention_score": {
+              "value": 0,
+              "unit": "score",
+              "source": "VLABench official native evaluator@cf588fe",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          },
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "VLABench official native evaluator@cf588fe",
+              "valid": true,
+              "unavailable_reason": null
+            },
+            "progress_score": {
+              "value": 0,
+              "unit": "score",
+              "source": "VLABench official native evaluator@cf588fe",
+              "valid": true,
+              "unavailable_reason": null
+            },
+            "intention_score": {
+              "value": 0,
+              "unit": "score",
+              "source": "VLABench official native evaluator@cf588fe",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          }
+        ],
+        "task_success_not_a_mapping_gate": true,
+        "fresh_inference_difference_is_not_automatically_an_adapter_bug": true
+      },
+      "gpu_sample_mean_percent": 0.22646310432569974,
+      "gpu_samples": 393,
+      "GPU_average_includes_preexisting_occupancy": false,
+      "finished_at_utc": "2026-10-19T13:20:18.091349+00:00",
+      "all_saved_trace_and_inputs_bytes_exact": {
+        "trace.internal.jsonl": true,
+        "model_input.public.jsonl": true
+      }
+    },
+    {
+      "case": "openpi_vlabench",
+      "receipt": "outputs/worldeval-qz-batch-20261019-run3/openpi_vlabench/runtime/receipt.json",
+      "passed": false,
+      "runtime_both_passed": true,
+      "comparison": {
+        "initial_observation_exact": false,
+        "first_public_model_input_exact": false,
+        "all_recorded_actions_exact": false,
+        "first_action_difference": 1,
+        "action_counts": [
+          4,
+          4
+        ],
+        "execution_statistics": [
+          {
+            "env_steps": 4,
+            "sim_time_s": 0.4,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": null
+          },
+          {
+            "env_steps": 4,
+            "sim_time_s": 0.4,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": null
+          }
+        ],
+        "official_metrics": [
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "VLABench official native evaluator@cf588fe",
+              "valid": true,
+              "unavailable_reason": null
+            },
+            "progress_score": {
+              "value": 0,
+              "unit": "score",
+              "source": "VLABench official native evaluator@cf588fe",
+              "valid": true,
+              "unavailable_reason": null
+            },
+            "intention_score": {
+              "value": 0,
+              "unit": "score",
+              "source": "VLABench official native evaluator@cf588fe",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          },
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "VLABench official native evaluator@cf588fe",
+              "valid": true,
+              "unavailable_reason": null
+            },
+            "progress_score": {
+              "value": 0,
+              "unit": "score",
+              "source": "VLABench official native evaluator@cf588fe",
+              "valid": true,
+              "unavailable_reason": null
+            },
+            "intention_score": {
+              "value": 0,
+              "unit": "score",
+              "source": "VLABench official native evaluator@cf588fe",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          }
+        ],
+        "task_success_not_a_mapping_gate": true,
+        "fresh_inference_difference_is_not_automatically_an_adapter_bug": true
+      },
+      "gpu_sample_mean_percent": 5.429184549356223,
+      "gpu_samples": 233,
+      "GPU_average_includes_preexisting_occupancy": false,
+      "finished_at_utc": "2026-10-19T13:13:52.976593+00:00"
+    },
+    {
+      "case": "lingbot_robotwin",
+      "receipt": "outputs/worldeval-RTX-retests-20261019-run1/lingbot_robotwin/runtime/receipt.json",
+      "passed": true,
+      "runtime_both_passed": true,
+      "comparison": {
+        "initial_observation_exact": true,
+        "first_public_model_input_exact": true,
+        "all_recorded_actions_exact": false,
+        "first_action_difference": 1,
+        "action_counts": [
+          4,
+          4
+        ],
+        "execution_statistics": [
+          {
+            "env_steps": 4,
+            "sim_time_s": 1.0560000501573086,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": 264
+          },
+          {
+            "env_steps": 4,
+            "sim_time_s": 1.0520000499673188,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": 263
+          }
+        ],
+        "official_metrics": [
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "RoboTwin native eval_success@13c3c47",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          },
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "RoboTwin native eval_success@13c3c47",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          }
+        ],
+        "task_success_not_a_mapping_gate": true,
+        "fresh_inference_difference_is_not_automatically_an_adapter_bug": true
+      },
+      "gpu_sample_mean_percent": 67.94050343249428,
+      "gpu_samples": 437,
+      "GPU_average_includes_preexisting_occupancy": true,
+      "finished_at_utc": "2026-10-19T13:47:38.215114+00:00"
+    },
+    {
+      "case": "openwam_robotwin",
+      "receipt": "outputs/worldeval-RTX-retests-20261019-run1/openwam_robotwin/runtime/receipt.json",
+      "passed": true,
+      "runtime_both_passed": true,
+      "comparison": {
+        "initial_observation_exact": true,
+        "first_public_model_input_exact": true,
+        "all_recorded_actions_exact": true,
+        "first_action_difference": null,
+        "action_counts": [
+          4,
+          4
+        ],
+        "execution_statistics": [
+          {
+            "env_steps": 4,
+            "sim_time_s": 1.4640000695362687,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": 366
+          },
+          {
+            "env_steps": 4,
+            "sim_time_s": 1.460000069346279,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": 365
+          }
+        ],
+        "official_metrics": [
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "RoboTwin native eval_success@0aeea2d",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          },
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "RoboTwin native eval_success@0aeea2d",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          }
+        ],
+        "task_success_not_a_mapping_gate": true,
+        "fresh_inference_difference_is_not_automatically_an_adapter_bug": true
+      },
+      "gpu_sample_mean_percent": 66.50746268656717,
+      "gpu_samples": 469,
+      "GPU_average_includes_preexisting_occupancy": true,
+      "finished_at_utc": "2026-10-19T13:48:46.567817+00:00"
+    },
+    {
+      "case": "openwam_dual_physical",
+      "receipt": "outputs/worldeval-RTX-retests-20261019-run1/openwam_dual_physical/runtime/receipt.json",
+      "passed": true,
+      "runtime_both_passed": true,
+      "comparison": {
+        "initial_observation_exact": true,
+        "first_public_model_input_exact": true,
+        "all_recorded_actions_exact": true,
+        "first_action_difference": null,
+        "action_counts": [
+          4,
+          4
+        ],
+        "execution_statistics": [
+          {
+            "env_steps": 4,
+            "sim_time_s": 1.4520000689662993,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": 363
+          },
+          {
+            "env_steps": 4,
+            "sim_time_s": 1.4680000697262585,
+            "model_calls": 4,
+            "tool_calls": 0,
+            "model_forward_count": null,
+            "physics_steps": 367
+          }
+        ],
+        "official_metrics": [
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "RoboTwin native eval_success@0aeea2d",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          },
+          {
+            "success": {
+              "value": false,
+              "unit": "boolean",
+              "source": "RoboTwin native eval_success@0aeea2d",
+              "valid": true,
+              "unavailable_reason": null
+            }
+          }
+        ],
+        "task_success_not_a_mapping_gate": true,
+        "fresh_inference_difference_is_not_automatically_an_adapter_bug": true
+      },
+      "gpu_sample_mean_percent": 68.35042735042735,
+      "gpu_samples": 468,
+      "GPU_average_includes_preexisting_occupancy": true,
+      "finished_at_utc": "2026-10-19T13:48:43.170431+00:00"
+    }
+  ],
+  "GPU_utilization": {
+    "selected_latest_seven_windows_samples": 2570,
+    "sample_weighted_mean_percent": 36.793385214007785,
+    "scope": "latest seven direct/bridge job diagnostic windows only; includes loading and pre-existing occupancy in local RTX windows",
+    "project_whole_lifetime_average_verified": false,
+    "pure_evaluation_utilization": false,
+    "new_occupancy_load_started": false
+  },
+  "resource_limit": 32,
+  "conservative_peak_including_existing_eight_GPUs_and_nine_queued_or_retained_requests": 17,
+  "other_tasks_or_occupancy_processes_stopped": false,
+  "new_occupancy_workload_started": false,
+  "core_dump_cleanup": {
+    "files": [
+      {
+        "path": "core.2151",
+        "bytes": 1941688320
+      },
+      {
+        "path": "core.4252",
+        "bytes": 1940680704
+      },
+      {
+        "path": "core.5034",
+        "bytes": 1940652032
+      }
+    ],
+    "reason": "own failed client process core dumps; never inspected or committed",
+    "recoverable_via_git": false,
+    "core_limit_now_zero_only_in_task_processes": true,
+    "at_utc": "2026-10-19T13:16:41.286Z"
+  },
+  "all_own_model_and_validation_processes_finished": true,
+  "diagnostic_evidence": {
+    "original_image_imports": "outputs/worldeval-qz-runtime-probe-20261019-124356/runtime/receipt.json",
+    "private_library_imports": "outputs/worldeval-qz-runtime-probe-20261019-124356-fixed/runtime/receipt.json",
+    "image_library_path_inherited": "outputs/worldeval-libero-task-image-start-probe-20261019-run1-inherited/runtime/receipt.json",
+    "image_library_path_isolated": "outputs/worldeval-libero-task-image-start-probe-20261019-run1/runtime/receipt.json",
+    "H100_graphics": "outputs/worldeval-H100-graphics-probe-20261019-run1/runtime/receipt.json",
+    "RTX_graphics": "outputs/worldeval-local-RTX-graphics-probe-20261019-run1/receipt.json",
+    "RTX_native_init": "outputs/worldeval-RTX-robotwin-native-start-20261019-run1/receipt.json",
+    "isolated_import_checker_false_positive_corrected": "VLABench客户端不需要Torch；额外强制检查Torch导致该检查任务失败，已在308422a修正，未给客户端安装不必要依赖。",
+    "pure_wrapper_import_and_constructor_Python_and_NumPy_RNG_states_match": true,
+    "RNG_probe_is_not_entire_native_or_GPU_RNG_proof": true
+  },
+  "stage4_formally_accepted": false,
+  "contract_frozen": false,
+  "DreamZero_and_LingBot_VA_still_deferred": true,
+  "original_failed_receipts_and_old_reports_preserved": true,
+  "no_global_proxy_or_kernel_driver_changes": true,
+  "no_credentials_read_or_copied": true,
+  "report": "docs/handoff/EmbodiedEval-task-failure-repair-20261019.html",
+  "preview_port": 8767,
+  "desktop_port_forwarding_verified": false,
+  "actual_runtime_source_hashes_are_in_each_receipt": true,
+  "not_all_real_runs_reexecuted_after_final_supervisor_only_render_guard_patch": true,
+  "public_backend_code_matches_across_all_real_runs": true,
+  "two_entrypoint_comparison_is_not_unmodified_official_complete_evaluator": true
+}

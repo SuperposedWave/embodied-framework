@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EmbodiedEval 任务失败原因与修复报告</title>
+  <style>
+    :root { color-scheme: light dark; --canvas:#fafbff; --paper:#fff; --text:#242630; --muted:#666b7a; --accent:#354381; --tint:#eef0f8; --line:#dfe2ec; --code:#20232d; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--canvas); color:var(--text); font:16px/1.76 Inter,"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif; }
+    .report-shell { display:block; width:min(100% - 40px,820px); margin:32px auto 64px; }
+    main.report-content { min-width:0; padding:42px 48px; background:var(--paper); border:1px solid var(--line); border-radius:8px; counter-reset:section; }
+    h1 { margin:0 0 .7em; color:var(--accent); font-size:1.85em; line-height:1.25; scroll-margin-top:24px; }
+    h2 { margin:2em 0 .8em; padding-bottom:.35em; border-bottom:1px solid var(--line); font-size:1.42em; counter-increment:section; counter-reset:subsection; scroll-margin-top:24px; }
+    h2::before { content:counter(section, cjk-ideographic) "、"; color:var(--accent); }
+    h3 { margin:1.5em 0 .6em; font-size:1.18em; counter-increment:subsection; scroll-margin-top:24px; }
+    h3::before { content:counter(section) "." counter(subsection) " "; color:var(--accent); }
+    h1:target, h2:target, h3:target { border-radius:4px; background:var(--tint); box-shadow:0 0 0 6px var(--tint); }
+    p,ul,ol { margin:.8em 0; }
+    .lead { color:var(--muted); font-size:1.05em; }
+    .callout { margin:1.25em 0; padding:14px 16px; background:var(--tint); border-left:4px solid var(--accent); }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .panel { padding:16px; border:1px solid var(--line); border-radius:6px; }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:10px 12px; border:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:var(--tint); }
+    code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
+    pre { overflow-x:auto; padding:16px; color:#f5f6fa; background:var(--code); border-radius:8px; }
+    a { color:var(--accent); text-underline-offset:2px; }
+    @media (max-width:760px) {
+      body { font-size:15px; }
+      .report-shell { display:block; width:100%; margin:0; }
+      main.report-content { width:100%; margin:0; padding:58px 18px 48px; border:0; border-radius:0; }
+      .grid { grid-template-columns:1fr; }
+    }
+    @media (prefers-color-scheme:dark) { :root { --canvas:#14161d; --paper:#1b1e27; --text:#e8eaf0; --muted:#aeb3c2; --accent:#aeb9ff; --tint:#282d42; --line:#383d4d; } }
+    @media print { :root { --canvas:#fff; --paper:#fff; --text:#111; --accent:#222; --tint:#f2f2f2; --line:#bbb; } body,.report-shell,main.report-content { background:#fff; } .report-shell { display:block; width:100%; margin:0; } main.report-content { width:100%; padding:0; border:0; } a { color:inherit; } }
+  </style>
+</head>
+<body>
+  <div class="report-shell">
+    <main class="report-content">
+
+<h1 id="report-title">EmbodiedEval 任务失败原因与修复报告</h1>
+<p class="lead">2026年10月19日 · 截至 2026-10-19T15:14:32.368Z · 分支 feat/massworld-integration · 实现版本 0a3b8b4 · 公共协议0.3不变</p>
+<section aria-labelledby="summary"><h2 id="summary">结论先说</h2>
+<div class="callout"><strong>七条链路已恢复完整运行：</strong>直接入口与MassWorld入口共14次运行，各执行4条策略动作，总计56条，框架错误数为0。<strong>这不等于七组严格复现全部通过，也不是完整任务成功率验收。</strong></div>
+<p>最初的失败主要卡在运行准备：新镜像少了图形库；独立环境误加载了镜像的另一套Python／PyTorch库；父检查进程看不到已经准备好的CRC模块；OpenPI还依赖原实例私有缓存中的公开分词器。RoboTwin另外遇到平台任务无法创建SAPIEN渲染设备的问题，已用当前实例的RTX完成真实对照，但平台缺口没有被冒充为已修好。</p>
+<p>本轮没有修改模型Adapter、Benchmark Adapter、通用Runner、公共契约、权重、归一化、控制器、IK或官方评分。历史失败、旧报告和Mac绝对路径保持原样。软件回归<strong>515项原测试＋34项桥接／诊断测试通过，无跳过</strong>；五组CLI退出码仍为 <code>0/0/0/1/2</code>。最后两个非零退出码是预设错误／拒绝用例，不是回归故障。</p>
+<p>实际运行版本的源码指纹保存在各自回执。最后新增的“加载权重前检查渲染设备”属于监督脚本防护，其底层检查已在H100／RTX实测；并未声称全部七组又在这次最终防护补丁后重跑了一遍。下表比较的是两个框架入口，不是未经修改的官方整套评测程序。</p>
+</section>
+<section aria-labelledby="causes"><h2 id="causes">为什么会失败，怎么修</h2>
+<h3 id="missing-libs">权重在，不代表镜像能运行程序</h3>
+<p>同一套独立环境在原实例能用，换成训练任务镜像后，图像库或仿真库需要的 <code>libxcb.so.1</code>、<code>libGL.so.1</code>、<code>libX11.so.6</code> 不存在。它们分别是窗口／图形系统的基础组件；没有这些组件，程序可能连导入都过不了，还没到机器人动作映射这一步。</p>
+<p>修复方式是提前在共享存储准备15个用户态库及其依赖，并保存SHA256——即逐文件的内容指纹。任务只使用自己的库目录，不安装全局系统包，不复制或替换NVIDIA驱动、glibc或系统C++运行时。<a href="../../outputs/worldeval-qz-runtime-probe-20261019-124356-fixed/runtime/receipt.json">H100依赖修复检查</a>。</p>
+<h3 id="wrong-libs">库不是没有，而是加载错了版本</h3>
+<p>补齐图形库后，LIBERO仍报导入错误。进一步对照发现，新镜像把自己那套Python／PyTorch库路径带进了独立环境，导致客户端引用到不兼容的动态库，出现 <code>PyObject_CallOneArg</code> 符号错误。</p>
+<p>同一H100任务配置下，保留镜像库路径时失败；仅隔离该路径、保留标准驱动目录时，LIBERO任务枚举通过。现在模型与仿真客户端分别使用各自环境的库，不把镜像里的另一套Torch／CUDA库覆盖进来。<a href="../../outputs/worldeval-libero-task-image-start-probe-20261019-run1-inherited/runtime/receipt.json">继承路径的失败证据</a>；<a href="../../outputs/worldeval-libero-task-image-start-probe-20261019-run1/runtime/receipt.json">隔离路径的通过证据</a>。</p>
+<h3 id="offline-assets">准备好的依赖没有被正确接上</h3>
+<p>CRC是校验资产文件内容是否正确的算法。<code>google_crc32c</code> 已放在共享依赖目录，但父检查进程没有加载这个目录。已修复父／子进程的可见性，并用已知校验值验证。另把OpenPI公开分词器约4.3MB从原实例缓存等字节复制到共享目录，显式设置 <code>OPENPI_DATA_HOME</code>，也就是告诉OpenPI到哪个准备好的目录找数据。没有更换分词器，没有复制整个用户缓存或凭据，也没有新增大权重下载。</p>
+<p>VLABench的仿真客户端本来不需要Torch，模型在另一进程推理。中间新增检查曾把Torch错误地列为通用客户端依赖，产生一次检查器误报；已修正并添加回归测试，没有给客户端强行安装不必要依赖。<code>libtpu.so</code> 在这些GPU任务中是可选TPU后端的探测信息，不能仅凭这个日志就判定GPU推理失败。</p>
+<h3 id="render-device">GPU能计算，不代表这个任务能打开仿真画面</h3>
+<p>节点 <code>qb-prod-gpu541</code> 的H100任务能完成CUDA运算，能加载EGL驱动库，但无法加载 <code>libGLX_nvidia.so.0</code>；SAPIEN报 <q>failed to find a rendering device</q>，意思是找不到可用渲染设备。错误发生在创建原生渲染系统，早于策略推理。</p>
+<p>这只能说明<strong>本次节点／镜像组合</strong>没有满足SAPIEN的图形运行要求，不能推导成“所有H100都不能运行所有仿真”。同一环境的最小检查在本机RTX通过，完整RoboTwin原生初始化和种子筛选也通过，因此三条RoboTwin链路改在已授权的本机GPU 2、3、4验证，使用不同本地端口。没有改动作、控制器、规划器或评分来绕过错误。<a href="../../outputs/worldeval-H100-graphics-probe-20261019-run1/runtime/receipt.json">H100渲染失败</a>；<a href="../../outputs/worldeval-local-RTX-graphics-probe-20261019-run1/receipt.json">RTX渲染通过</a>；<a href="../../outputs/worldeval-RTX-robotwin-native-start-20261019-run1/receipt.json">RTX原生初始化通过</a>。</p>
+<p>启动程序现在会在加载模型大权重前检查真实的原生渲染设备。平台RoboTwin运行仍需支持该渲染器的节点／镜像；本机通过不抵消平台缺口。</p>
+</section>
+<section aria-labelledby="results"><h2 id="results">七条链路的实际结果</h2>
+<p>“直接”是原EmbodiedEval入口；“桥接”是经MassWorld调用同一个0.3执行后端。每侧重新启动原生模型服务，均沿用现有匹配权重、协议、预算和原生动作缓存。56是策略动作次数，<strong>不是56次独立模型前向计算</strong>；原生缓存仍然保留。</p>
+<div class="table-wrap"><table><caption>有限步真实验证：每条每侧4动作，不是全任务成功率</caption><thead><tr><th>链路</th><th>资源</th><th>运行状态</th><th>一致性与剩余问题</th><th>证据</th></tr></thead><tbody><tr><th scope="row">OpenWAM / LIBERO</th><td>平台 H100</td><td>直接／桥接各4动作；错误0</td><td>全部保存的公共输入和执行轨迹记录逐字节一致。</td><td><a href="../../outputs/worldeval-qz-batch-20261019-run4/openwam_libero/runtime/receipt.json">查看回执</a></td></tr>
+<tr><th scope="row">π0.5 / LIBERO</th><td>平台 H100</td><td>直接／桥接各4动作；错误0</td><td>初始状态相同；主视角6,534个颜色分量不同，最大差125；腕部5,592个不同，最大差77。第一条新动作不同。</td><td><a href="../../outputs/worldeval-qz-batch-20261019-run4/openpi_libero/runtime/receipt.json">查看回执</a></td></tr>
+<tr><th scope="row">OpenWAM / VLABench</th><td>平台 H100</td><td>直接／桥接各4动作；错误0</td><td>全部保存的公共输入和执行轨迹记录逐字节一致。</td><td><a href="../../outputs/worldeval-qz-batch-20261019-run3/openwam_vlabench/runtime/receipt.json">查看回执</a></td></tr>
+<tr><th scope="row">π0.5 / VLABench</th><td>平台 H100</td><td>直接／桥接各4动作；错误0</td><td>主／腕视角和状态相同；右侧相机789/691,200个颜色分量不同，最大差21。第一条新动作不同。</td><td><a href="../../outputs/worldeval-qz-batch-20261019-run3/openpi_vlabench/runtime/receipt.json">查看回执</a></td></tr>
+<tr><th scope="row">LingBot-VLA 2.0 / RoboTwin</th><td>本机 RTX</td><td>直接／桥接各4动作；错误0</td><td>初始输入相同，第一条新动作不同；物理步数264 / 263。</td><td><a href="../../outputs/worldeval-RTX-retests-20261019-run1/lingbot_robotwin/runtime/receipt.json">查看回执</a></td></tr>
+<tr><th scope="row">OpenWAM / RoboTwin（旧双臂配置）</th><td>本机 RTX</td><td>直接／桥接各4动作；错误0</td><td>初始输入和4条动作相同；物理步数366 / 365，仍非完全相同的执行。</td><td><a href="../../outputs/worldeval-RTX-retests-20261019-run1/openwam_robotwin/runtime/receipt.json">查看回执</a></td></tr>
+<tr><th scope="row">OpenWAM / RoboTwin（标准化双臂位姿）</th><td>本机 RTX</td><td>直接／桥接各4动作；错误0</td><td>初始输入和4条动作相同；物理步数363 / 367，仍非完全相同的执行。</td><td><a href="../../outputs/worldeval-RTX-retests-20261019-run1/openwam_dual_physical/runtime/receipt.json">查看回执</a></td></tr></tbody></table></div>
+<p>OpenWAM/LIBERO、OpenWAM/VLABench不仅初始输入和动作一致，保存的整段公共模型输入文件和执行轨迹文件也逐字节相同。这里的“整段”仅指本次4动作窗口，不能外推为全Benchmark、任意种子或长时任务都已复现。</p>
+</section>
+<section aria-labelledby="gaps"><h2 id="gaps">哪些还不能算验收通过</h2>
+<h3 id="pi-gaps">π0.5：先有输入图像差异，不能直接怪模型随机</h3>
+<p>两组π0.5均已正常完成两侧运行。LIBERO的机器人测量状态相同，但主视角和腕部图像不同；VLABench的状态、主视角和腕部图像相同，差异集中在模型确实会使用的右侧相机。右侧691,200个颜色分量中789个不同，约0.114%，最大差21；不能一概称为“只差1”。LIBERO图像差异更大，最大差达到125。</p>
+<p>当前只能确认输入不同，不能用这次对照证明“唯一原因就是推理随机性”，也不能归罪于动作Adapter。另做的CPU检查显示，外层模块导入和构造阶段没有改变Python／NumPy随机状态；这不等于所有原生、GPU或渲染随机源都已核实。下一步应做同入口重复初始化、记录原生场景／相机状态，再用固定观测独立重推理，把环境差异和推理差异分开。不能放宽像素门槛或拿任务得分代替检查。</p>
+<h3 id="robotwin-gaps">RoboTwin：指令相同，也不等于每个物理步骤相同</h3>
+<p>LingBot-VLA两侧起始输入相同，但第一条新动作不同，本轮尚未确定唯一原因。两组OpenWAM的4条公共动作一致，但物理步数分别为366/365、363/367，实际仿真时间也随之不同。它们仍保留“输入相同／动作是否相同／执行是否相同”三层证据，不能拿一层相同代替另一层。</p>
+<p>原检查脚本的 <code>passed</code> 只要求两侧运行无框架错误、起始观测和第一次公共输入一致；它<strong>不保证动作全等或仿真逐步一致</strong>。因此本轮没有把5个该字段为真的回执包装成5组完整严格复现。</p>
+<p>本轮每侧只有4动作，所有官方成功指标均为假。这既不是任务成功的证明，也不能据此估计完整任务成功率。DreamZero后置硬件验证、暂缓的LingBot-VA、全任务／多种子统计、阶段4正式接受和契约冻结均未因此完成。</p>
+</section>
+<section aria-labelledby="resources"><h2 id="resources">资源、安全与版本记录</h2>
+<p>本轮申请始终在32卡授权内。把排队／保留期的保守9卡上界与本实例既有8卡一起算，上界17卡。没有停止其他人的任务或既有占卡程序，没有新增占卡负载。拟停止的两条旧路径RoboTwin任务在操作前已自行结束，实际未发送停止命令。</p>
+<p>最新七条运行窗口共2,570个采样点，按样本数加权的GPU均值约<strong>36.79%</strong>，但本机RTX窗口含既有占卡负载，且统计包含加载时间。它<strong>不是纯评测利用率，也不是项目全时段总体平均的证明</strong>。逐任务统计与评测成绩分开保存。</p>
+<p>三次早期崩溃生成约5.82GB内存转储，已核实后删除；它们未进入Git，无法从Git恢复，失败回执仍在。后续本任务进程和子进程关闭内存转储，未改全局内核设置。不保存原始native日志，不读取或复制CLI认证文件，不改全局代理。</p>
+<p>所有修改在 <code>feat/massworld-integration</code> 留有提交。核心模型、环境、Runner、0.3契约源码与修复前版本一致；变化集中在任务准备、离线依赖、库路径隔离、诊断与资源标记。<a href="../../outputs/worldeval-qz-fix-baseline-20261019-final2/baseline-check.json">515项与CLI回归</a>；<a href="qz-runtime-repair-20261019-final-index.json">完整机器可读交付索引</a>。</p>
+</section>
+    </main>
+  </div>
+</body>
+</html>
