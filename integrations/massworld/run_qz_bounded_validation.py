@@ -89,6 +89,7 @@ def execute(args):
     # Make the pre-staged overlay available to this process as well.
     sys.path.insert(1, str(args.overlay.resolve()))
     from platform_diagnostics import dependency_facts
+    from platform_libraries import environment as library_environment
     from embodied_eval.config import load_config
     from embodied_eval.v03.preflight import check
     from probe_mn_components import categories, public_exception
@@ -127,11 +128,33 @@ def execute(args):
     for name in ('HTTP_PROXY', 'HTTPS_PROXY', 'ALL_PROXY', 'http_proxy', 'https_proxy', 'all_proxy'):
         environment.pop(name, None)
     try:
+        if args.library_manifest:
+            environment = library_environment(environment, args.library_manifest)
+            report['library_manifest_sha256'] = hashlib.sha256(args.library_manifest.read_bytes()).hexdigest()
+        command, cwd, client = server_spec(config)
+        # Fail cheaply on missing OS/Python dependencies before hashing large
+        # checkpoints or launching a model. No weights or actions in this gate.
+        report['runtime_dependency_checks'] = []
+        simulator_modules = ['cv2', 'sapien', 'mplib'] if config.benchmark.adapter == 'robotwin' else ['cv2', 'mujoco']
+        for role, python, modules in [('model', command[0], ['torch', 'cv2']), ('benchmark', str(client), simulator_modules)]:
+            result = subprocess.run([python, str(Path(__file__).with_name('probe_platform_runtime.py')), '--child', '--modules', *modules],
+                                    env=environment, capture_output=True, text=True, timeout=180)
+            dependency = dict(role=role, exit_code=result.returncode, dependency_facts=dependency_facts(result.stderr))
+            for line in reversed(result.stdout.splitlines()):
+                try:
+                    data = json.loads(line)
+                    if isinstance(data, dict) and 'imports' in data:
+                        dependency.update(data)
+                        break
+                except ValueError:
+                    continue
+            report['runtime_dependency_checks'].append(dependency)
+            if result.returncode != 0 or not dependency.get('imports') or not all(x['passed'] for x in dependency['imports']):
+                raise RuntimeError('offline_runtime_dependency_gate_failed')
         preflight = check(config, verify_assets=True)
         write(args.output / 'preflight.json', preflight)
         if not preflight['structurally_compatible'] or not preflight['assets_verified']:
             raise RuntimeError('structure_or_local_asset_verification_failed')
-        command, cwd, client = server_spec(config)
         report['client_python'] = str(client)
         report['model_command'] = command
         report['config_sha256'] = hashlib.sha256(args.config.read_bytes()).hexdigest()
@@ -220,6 +243,7 @@ if __name__ == '__main__':
     parser.add_argument('--config', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--overlay', type=Path)
+    parser.add_argument('--library-manifest', type=Path)
     parser.add_argument('--child', choices=('direct', 'bridge'))
     args = parser.parse_args()
     if not args.child and args.overlay is None:

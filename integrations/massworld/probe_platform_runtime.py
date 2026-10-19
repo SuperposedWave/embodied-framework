@@ -51,6 +51,9 @@ def main(args):
         MUJOCO_GL='egl', PYOPENGL_PLATFORM='egl', OMP_NUM_THREADS='4', OPENBLAS_NUM_THREADS='4')
     for key in ('HTTP_PROXY', 'HTTPS_PROXY', 'ALL_PROXY', 'http_proxy', 'https_proxy', 'all_proxy'):
         environment.pop(key, None)
+    if args.library_manifest:
+        from platform_libraries import environment as library_environment
+        environment = library_environment(environment, args.library_manifest)
     rows = []
     for name, modules in definitions.items():
         command = [str(envs / name / 'bin/python'), __file__, '--child', '--modules', *modules, '--gpu-probe']
@@ -71,7 +74,8 @@ def main(args):
         rows.append(row)
         print(json.dumps(row), flush=True)
     report = {'kind': 'offline_task_runtime_import_probe_not_evaluation', 'at_utc': datetime.now(timezone.utc).isoformat(),
-              'model_weights_loaded': False, 'actions_executed': False, 'native_logs_saved': False, 'environments': rows}
+              'model_weights_loaded': False, 'actions_executed': False, 'native_logs_saved': False,
+              'private_library_overlay_used': args.library_manifest is not None, 'environments': rows}
     with (args.output / 'receipt.json').open('x') as stream:
         json.dump(report, stream, indent=2)
         stream.write('\n')
@@ -84,5 +88,6 @@ if __name__ == '__main__':
     parser.add_argument('--modules', nargs='+', default=[])
     parser.add_argument('--gpu-probe', action='store_true')
     parser.add_argument('--overlay', type=Path)
+    parser.add_argument('--library-manifest', type=Path)
     parser.add_argument('--output', type=Path)
     raise SystemExit(main(parser.parse_args()))

@@ -26,6 +26,8 @@ def main():
     parser.add_argument('--clean-libero', type=Path, required=True)
     parser.add_argument('--overlay', type=Path, required=True)
     parser.add_argument('--runtime-manifest', type=Path, required=True)
+    parser.add_argument('--library-manifest', type=Path, required=True,
+                        help='Pre-staged, checksum-verified user-space libraries; no driver replacement')
     parser.add_argument('--cases', nargs='+', choices=['openwam_libero','openpi_libero','openwam_vlabench','openpi_vlabench','openwam_robotwin','lingbot_robotwin','openwam_dual_physical'])
     args = parser.parse_args()
     from embodied_eval.v03.migration import migrate
@@ -35,6 +37,8 @@ def main():
     gate = json.loads((ROOT / 'outputs/massworld-saved-boundaries-20261019-run1/receipt.json').read_text())
     assert gate['passed']
     selection = json.loads(args.selection.read_text())
+    from platform_libraries import environment as library_environment
+    library_environment({}, args.library_manifest)
     cases = args.cases or ['openwam_libero', 'openpi_libero', 'openwam_vlabench', 'openpi_vlabench',
              'openwam_robotwin', 'lingbot_robotwin', 'openwam_dual_physical']
     assert len(cases) * selection['gpu_count_per_job'] <= selection['active_plus_queued_GPU_limit'] <= 32
@@ -67,7 +71,8 @@ def main():
             return row
         python = str(ROOT.parent / 'upstream/envs/libero/bin/python')
         invocation = [python, 'integrations/massworld/run_qz_bounded_validation.py', '--config', row['config'],
-                      '--overlay', str(args.overlay.resolve()), '--output', str((folder / 'runtime').resolve())]
+                      '--overlay', str(args.overlay.resolve()), '--library-manifest', str(args.library_manifest.resolve()),
+                      '--output', str((folder / 'runtime').resolve())]
         command = 'cd ' + shlex.quote(str(ROOT)) + ' && '
         version = {'openpi': '3.11', 'lingbot_vla': '3.12'}.get(cfg.model.adapter)
         if version:
@@ -82,7 +87,8 @@ def main():
             max_running_time_ms=selection['job_max_running_time_ms'],reserve_on_fail_ms='60000',reserve_on_success_ms='60000',
             enable_notification=False,enable_troubleshoot=False,
             envs=[dict(name='PYTHONDONTWRITEBYTECODE',value='1'),dict(name='PYTHONUNBUFFERED',value='1'),dict(name='WORLDEVAL_PLATFORM_TASK',value='1'),
-                  dict(name='HF_HUB_OFFLINE',value='1'),dict(name='TRANSFORMERS_OFFLINE',value='1')],
+                  dict(name='HF_HUB_OFFLINE',value='1'),dict(name='TRANSFORMERS_OFFLINE',value='1'),
+                  dict(name='NVIDIA_DRIVER_CAPABILITIES',value='compute,utility,graphics')],
             description='worldeval: '+case+'，直接／MassWorld各4动作；固定已有权重与协议，离线运行，无重试，非正式验收。')
         write(folder / 'job-request.json',request)
         row.update(request=str((folder / 'job-request.json').resolve()),gpus=selection['gpu_count_per_job'])
