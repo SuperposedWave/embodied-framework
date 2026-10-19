@@ -46,7 +46,7 @@ def main():
             cache = f"Adapter每次取{fact['execution_rows_per_request']}条执行，再请求"
         elif family == "lingbot_vla":
             training = "50行动作；未来视频教师默认1帧/秒，可被数据批次覆盖；不是在线1帧/秒"
-            cache = "当前具名服务返回50条；Adapter执行缓存"
+            cache = "已审阅启动器配置返回50条；Adapter消费全部返回行；实际服务身份未在线核实"
         elif family == "cosmos3":
             training = "固定配方15帧/秒；服务默认生成条件15、32行动作；权重checkpoint.json为空"
             cache = f"Adapter默认取{fact['execution_rows_per_request']}条；可用具名运行配置缩短"
@@ -80,7 +80,7 @@ def main():
 <section aria-labelledby="profiles"><h2 id="profiles">逐配置时间规则</h2>
 <p>下表合并相同规格，保留11种不同输入输出规格。13份配置中，ARX两个模型分别用于两个环境，因此配置数更多。表中训练规则来自本地固定来源；“当前1张”表示外部送入接口的单张画面，不否认服务内部另有缓存。</p>
 {table(['模型','具名规格','外部送图','训练／生成时间数字','动作缓存','每条动作秒数'], rows)}
-<p>完整13份配置各自的固定revision、权重引用、源码SHA256、相关行号和小配置锁结果见<a href="source-audit-final/receipt.json">原始来源审计回执</a>。revision是固定源码提交编号；SHA256是核对文件内容是否变化的指纹。</p></section>
+<p>完整13份配置各自的固定revision、权重引用、源码SHA256、相关行号和小配置锁结果见<a href="source-audit-final/receipt.json">原始来源审计回执</a>。revision是固定源码提交编号；SHA256是核对文件内容是否变化的指纹。表中缓存条数描述具名原生入口及默认配置，不是本轮测到的真实服务回包；本轮未连接模型服务，不能因此确认外部端点确实加载了相同设置。</p></section>
 <section aria-labelledby="interpretation"><h2 id="interpretation">几个数字为什么不能直接用</h2>
 <h3 id="openwam-stride">OpenWAM：每4帧抽图，不是4倍动作间隔</h3>
 <p>匹配目录中的配置使用33行训练窗口，视频每4行选一帧；读取器保留32行动作，并不跟着每4行只留一条。在线推理则用当前合成视图和当前状态生成未来动作。仅有“4”无法推出相邻动作间隔几秒，照它拉长动作时长会改变控制。</p>

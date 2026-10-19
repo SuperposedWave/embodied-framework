@@ -1,0 +1,117 @@
+{
+  "kind": "native_timing_source_audit_delivery_evidence_index",
+  "user_facing_date_Asia_Shanghai": "2026-10-20",
+  "checked_at_utc": "2026-10-19T17:39:42Z",
+  "implementation_commit": "0dd1031624e20d9f50256ad03cffec8694b89aba",
+  "branch": "feat/massworld-integration",
+  "passed": true,
+  "formal_acceptance": false,
+  "contract_frozen": false,
+  "scope": "model timing provenance, offline selected-source/metadata verification and synthetic native image assembly; no new control protocol",
+  "report": {
+    "path": "outputs/native-timing-audit-20261020-run1/native-model-timing-report.html",
+    "sha256": "c9bceb12d93d22b723e921917d38fbfa8a283301add74e99bd60f3db9b12435d"
+  },
+  "evidence": [
+    {
+      "path": "outputs/native-timing-audit-20261020-run1/source-audit-final/receipt.json",
+      "sha256": "176668a2632947a26f9090fbf801b604206c11567654b9b0713cf5b7bbedec99",
+      "passed": true
+    },
+    {
+      "path": "outputs/native-timing-audit-20261020-run1/source-audit-final/dreamzero-native-assembly-synthetic.json",
+      "sha256": "dfec9cf2c935fdc38246f0cf8cd57f862b40df51e46d0327154f8ee92332d594",
+      "passed": true
+    },
+    {
+      "path": "outputs/native-timing-audit-20261020-run1/baseline-final/baseline-check.json",
+      "sha256": "0fd88c3eddb4182dc7a46494099b795067c4611fa2ccdb5aca215a3d765e3fed",
+      "passed": true
+    },
+    {
+      "path": "outputs/native-timing-audit-20261020-run1/temporal-evidence-final/receipt.json",
+      "sha256": "ca2c0c2bdd3ec849b6bccf17380945f805f2bb6160bc5aa4db2d072357724117",
+      "passed": true
+    },
+    {
+      "path": "outputs/native-timing-audit-20261020-run1/saved-boundaries-final/receipt.json",
+      "sha256": "46668eff795ca067d7d9b796af211decdaa449d34b5ba4f146c1c215a1f2cf6c",
+      "passed": true
+    },
+    {
+      "path": "outputs/native-timing-audit-20261020-run1/http-verification.json",
+      "sha256": "46bb454870aae55127272e048cee5a4b177145ddaaa5186fb1f2b2ccce475162",
+      "passed": true
+    }
+  ],
+  "software": {
+    "retained_main_tests": 572,
+    "new_timing_profile_tests": 31,
+    "main_tests": 603,
+    "bridge_tests": 34,
+    "skips": 0,
+    "CLI": [0, 0, 0, 1, 2],
+    "history_CLI": [0, 0, 2, 2],
+    "synthetic_crosses": 4
+  },
+  "source_audit": {
+    "configurations": 13,
+    "unique_weight_io_profiles": 11,
+    "different_selected_source_files": 25,
+    "different_small_weight_metadata": 7,
+    "source_files_match_fixed_git_blobs": true,
+    "OpenWAM_LIBERO_config_only_new_hash_no_preexisting_lock": true,
+    "full_weight_tensors_rehashed": false,
+    "matching_training_datasets_verified": false,
+    "live_server_identity_verified": false,
+    "all_native_action_periods_still_unknown": true,
+    "new_real_weight_histories_enabled": false,
+    "OpenWAM_ARX_chunk_owner_declaration_corrected_to_adapter": true,
+    "native_execution_cache_moved": false
+  },
+  "dreamzero_pure_method_replay": {
+    "input_kind": "synthetic_constant_pixel_ids_not_real_captures",
+    "calls": 5,
+    "camera_views": 3,
+    "first_call_frames": 1,
+    "later_call_frames": 4,
+    "short_history_repeats_earliest_input": true,
+    "timestamps_calibrated": false,
+    "native_padding_is_not_public_history_padding": true,
+    "model_forward": false
+  },
+  "saved_real_boundaries": {
+    "routes": 11,
+    "transitions_per_route": 1,
+    "input_tensors_and_acquisition_times_exact": true,
+    "native_action_values_precision_and_capture_flags_exact": true,
+    "historical_hashes_unchanged": true,
+    "new_inference": false,
+    "new_simulation": false
+  },
+  "preserved_boundaries": {
+    "new_platform_jobs": 0,
+    "public_contract_changed": false,
+    "action_resampling": false,
+    "inference_schedule_changed": false,
+    "native_controller_or_scoring_changed": false,
+    "GPU_average_newly_measured": false,
+    "existing_strict_reproduction_gaps_closed": false,
+    "DreamZero_two_H100_80GB_real_inference_still_deferred": true
+  },
+  "preview": {
+    "port": 8769,
+    "pid": 3354878,
+    "bind": "127.0.0.1",
+    "instance_local_url": "http://127.0.0.1:8769/outputs/native-timing-audit-20261020-run1/native-model-timing-report.html",
+    "instance_HTTP_verified_exposed_files": 9,
+    "remote_port_forwarding_verified": false,
+    "external_upload": false
+  },
+  "retained_intermediate_not_final_evidence": [
+    {
+      "path": "outputs/native-timing-audit-20261020-run1/source-audit/receipt.json",
+      "reason": "initial successful probe before final source fingerprints and synthetic field naming cleanup; authoritative receipt is source-audit-final"
+    }
+  ]
+}
