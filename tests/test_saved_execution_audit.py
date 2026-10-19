@@ -1,9 +1,14 @@
 """Small synthetic log fixtures only, never new real model execution."""
 import copy
+import hashlib
+import json
+from pathlib import Path
+import tempfile
 import unittest
 
 from docs.handoff.execution_audit import analyze_events, image_digest, summary
 from docs.handoff.audit_saved_execution import array_difference
+from docs.handoff.audit_saved_native_clocks import resolve_binding
 
 
 def fixture(n=3, *, reuse=False, same_pixels=False, measured=False, physics=False, v03=False):
@@ -182,6 +187,63 @@ class SavedExecutionAuditTests(unittest.TestCase):
 
     def test_empty_interval_population_is_missing_not_zero_frequency(self):
         self.assertEqual(summary([]), {"count": 0, "min": None, "max": None, "mean": None, "sum": 0.})
+
+
+class NativeReferenceBindingTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.manifest = self.root / "manifest.json"
+        self.manifest.write_text(json.dumps({"config": {"episodes": [{"episode_id": "ep"}]}}))
+        base = self.root / "episodes/ep"
+        base.mkdir(parents=True)
+        self.view = base / "model_input.public.jsonl"
+        self.view.write_text('{}\n')
+        native = self.root / "native-exchanges"
+        native.mkdir()
+        self.request = native / "request-0001.msgpack"
+        self.request.write_bytes(b"synthetic fixture bytes, not real model data")
+        self.sha = hashlib.sha256(self.manifest.read_bytes()).hexdigest()
+        self.companion = {"framework_manifest_sha256": self.sha, "passed": False,
+            "native_request_sha256": hashlib.sha256(self.request.read_bytes()).hexdigest(),
+            "framework_public_input_first_line_sha256": hashlib.sha256(self.view.read_bytes()).hexdigest()}
+
+    def save_companion(self):
+        (self.root / "first-native-request-check.json").write_text(json.dumps(self.companion))
+
+    def test_explicit_native_manifest_binding_matches(self):
+        x = resolve_binding(self.manifest, {"framework_manifest_sha256": self.sha}, self.root)
+        self.assertEqual(x["basis"], "native_result_manifest_sha256")
+
+    def test_wrong_explicit_binding_is_not_hidden_by_valid_companion(self):
+        self.save_companion()
+        with self.assertRaisesRegex(ValueError, "native_framework_manifest_hash_mismatch"):
+            resolve_binding(self.manifest, {"framework_manifest_sha256": "0" * 64}, self.root)
+
+    def test_matching_source_identity_does_not_require_matching_inference_input(self):
+        self.save_companion()
+        x = resolve_binding(self.manifest, {}, self.root)
+        self.assertFalse(x["companion_input_equality_check_passed"])
+        self.assertEqual(len(x["files"]), 2)
+
+    def test_companion_wrong_manifest_is_rejected(self):
+        self.companion["framework_manifest_sha256"] = "0" * 64
+        self.save_companion()
+        with self.assertRaisesRegex(ValueError, "companion_framework_manifest_hash_mismatch"):
+            resolve_binding(self.manifest, {}, self.root)
+
+    def test_companion_wrong_native_request_is_rejected(self):
+        self.save_companion()
+        self.request.write_bytes(b"changed")
+        with self.assertRaisesRegex(ValueError, "actual_native_request_hash_mismatch"):
+            resolve_binding(self.manifest, {}, self.root)
+
+    def test_companion_wrong_public_input_is_rejected(self):
+        self.save_companion()
+        self.view.write_text('{"changed":true}\n')
+        with self.assertRaisesRegex(ValueError, "framework_first_input_hash_mismatch"):
+            resolve_binding(self.manifest, {}, self.root)
 
 
 if __name__ == "__main__":
