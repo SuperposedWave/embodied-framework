@@ -1,0 +1,118 @@
+{
+  "kind": "observation_timing_first_delivery_evidence_index",
+  "user_facing_date_Asia_Shanghai": "2026-10-20",
+  "checked_at_utc": "2026-10-19T17:19:28Z",
+  "implementation_commit": "9c15bbcbd72804dcee7c0c1573c29552ccd19972",
+  "branch": "feat/massworld-integration",
+  "passed": true,
+  "formal_acceptance": false,
+  "contract_frozen": false,
+  "scope": "optional 0.3 observation history timing only; native execution preserved",
+  "report": {
+    "path": "outputs/observation-timing-20261020-run1/observation-timing-report.html",
+    "sha256": "0ef855e07bae359c87dbe192659d8de6f5ec09eaa2d0add2645122e610c1455b"
+  },
+  "evidence": [
+    {
+      "path": "outputs/observation-timing-20261020-run1/baseline-final/baseline-check.json",
+      "sha256": "ad2282a55d16f2fd6b4b23736b2222c42a59a61928997595f31c99bbb2c5fa8a",
+      "passed": true
+    },
+    {
+      "path": "outputs/observation-timing-20261020-run1/temporal-evidence-final/receipt.json",
+      "sha256": "ba757a93f8e3b992829e7cf26933c482048614572359957887afa9ab25797e55",
+      "passed": true
+    },
+    {
+      "path": "outputs/observation-timing-20261020-run1/saved-boundaries-final/receipt.json",
+      "sha256": "d199c366ffe5f4be1a39feaf73c735a58be86b17499ad247222bd2d360f120f5",
+      "passed": true
+    },
+    {
+      "path": "outputs/observation-timing-20261020-run1/bridge-history-comparison.json",
+      "sha256": "7c7d30afc50296a3dfac6b5b260bc296c832338b0bfd626b6cec42ca6214c5f7",
+      "passed": true
+    },
+    {
+      "path": "outputs/observation-timing-20261020-run1/http-verification.json",
+      "sha256": "22cf551a9b37b6b2ea0e9e2df7d7db2eadcc541cc3174ab8f3e84313dbdf5fdc",
+      "passed": true
+    }
+  ],
+  "software": {
+    "retained_tests": 515,
+    "new_temporal_tests": 57,
+    "main_tests": 572,
+    "bridge_tests": 34,
+    "skips": 0,
+    "CLI": [
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "history_CLI": [
+      0,
+      0,
+      2,
+      2
+    ],
+    "synthetic_crosses": 4
+  },
+  "saved_real_boundaries": {
+    "routes": 11,
+    "transitions_per_route": 1,
+    "input_tensors_and_times_exact": true,
+    "native_action_values_precision_and_capture_flags_exact": true,
+    "historical_hashes_unchanged": true,
+    "new_inference": false,
+    "new_simulation": false,
+    "existing_reproduction_gaps_closed": false
+  },
+  "native_timing": {
+    "configurations_audited": 13,
+    "training_FPS_not_inferred_as_control_period": true,
+    "real_weight_action_periods_verified": false,
+    "new_real_weight_history_profiles": false
+  },
+  "no_changes": {
+    "controller": true,
+    "normalization": true,
+    "weights": true,
+    "scoring": true,
+    "inference_and_capture_schedule": true,
+    "read_only_upstream": true,
+    "historical_evidence": true
+  },
+  "not_implemented": [
+    "action time resampling",
+    "central takeover of server-owned action buffers",
+    "real-time asynchronous execution",
+    "hard simulation-time caps for native macro actions",
+    "automatic padding/warmup",
+    "robot retargeting"
+  ],
+  "development_only_evidence": {
+    "intermediate_baseline": "outputs/observation-timing-20261020-run1/baseline/baseline-check.json",
+    "intermediate_saved_check": "outputs/observation-timing-20261020-run1/saved-boundaries/receipt.json",
+    "intermediate_saved_check_status": "explicitly interrupted as superseded after source safeguards were updated; not final evidence",
+    "final_saved_check_completed": true,
+    "previous_files_retained": true
+  },
+  "preview": {
+    "bind": "127.0.0.1",
+    "port": 8768,
+    "url": "http://127.0.0.1:8768/outputs/observation-timing-20261020-run1/observation-timing-report.html",
+    "lifecycle": "outputs/observation-timing-20261020-run1/preview-lifecycle.json",
+    "HTTP_selected_files_verified": 11,
+    "remote_browser_or_port_forwarding_verified": false,
+    "external_upload": false
+  },
+  "next": [
+    "verify time semantics against each matched checkpoint and pinned data conversion",
+    "add named real-model history profiles only where source requires them",
+    "bounded native comparison before enabling new real input rules",
+    "separately approve action resampling or real-time protocol extensions"
+  ]
+}

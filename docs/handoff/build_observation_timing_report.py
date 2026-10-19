@@ -2,6 +2,7 @@
 import argparse
 from datetime import datetime
 import html
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -38,6 +39,19 @@ def main():
         path = evidence / f"temporal-evidence-final/cli-{case}/episodes/ep-0/observation_alignment.internal.jsonl"
         rows = [json.loads(line) for line in path.read_text().splitlines()]
         examples[case] = rows[index]
+    bridge_outputs = list((evidence / "bridge-history-exact").glob("backend-*/backend"))
+    assert len(bridge_outputs) == 1, "one_explicit_synthetic_bridge_run_required"
+    compared = []
+    for relative in ("episodes/ep-0/model_input.public.jsonl", "episodes/ep-0/trace.internal.jsonl",
+                     "episodes/ep-0/observation_alignment.internal.jsonl", "episodes/ep-0/result.json", "temporal-plan.json"):
+        direct = evidence / "temporal-evidence-final/cli-exact" / relative
+        bridged = bridge_outputs[0] / relative
+        a, b = direct.read_bytes(), bridged.read_bytes()
+        assert a == b, (relative, "direct_bridge_bytes_differ")
+        compared.append({"relative": relative, "direct": str(direct), "bridge": str(bridged),
+                         "sha256": hashlib.sha256(a).hexdigest(), "bytes_equal": True})
+    bridge_comparison = {"kind": "synthetic_history_direct_vs_massworld_bytes", "passed": True,
+        "new_real_inference": False, "compared": compared}
     time_rows = []
     for case, row in examples.items():
         for sample in row["selections"]["sensors.head"]:
@@ -72,6 +86,7 @@ def main():
 {table(['检查','实际结果','证据边界'], [
     ['主测试集', f'{tests}项通过，原515项＋新增{focused}项，零跳过', 'CPU软件／合成测试，不是新真实成绩'],
     ['MassWorld桥接', f'{bridge}项通过，零跳过', '已有桥接行为无回归'],
+    ['历史输入穿过MassWorld', '实际CLI合成运行完成，5份关键证据字节一致', '没有新增逐组合桥接逻辑'],
     ['原五组CLI', '/'.join(str(c['actual_exit_code']) for c in baseline['checks'][1:]), '保留0/0/0/1/2退出语义'],
     ['新增历史CLI', '精确0／授权近似0／网格拒绝2／启动拒绝2', '拒绝时不创建运行产物目录'],
     ['独立组合', f"{len(temporal['crosses'])}种交叉组合通过", '两个合成模型×两个合成环境，不是新增逐组合Adapter'],
@@ -80,6 +95,7 @@ def main():
 <ul><li><a href="baseline-final/baseline-check.json">主回归与五组CLI回执</a>；<a href="baseline-final/unittest.txt">完整主测试日志</a>。</li>
 <li><a href="temporal-evidence-final/receipt.json">时间扩展、桥接、四种组合与原生声明审计</a>；<a href="temporal-evidence-final/temporal-tests.txt">新增测试日志</a>；<a href="temporal-evidence-final/bridge-tests.txt">桥接测试日志</a>。</li>
 <li><a href="saved-boundaries-final/receipt.json">保存真实数据的边界与历史文件SHA256保护回执</a>。</li></ul>
+<p><a href="bridge-history-comparison.json">同一历史输入配置在直接入口／MassWorld入口的逐文件比较</a>：公共模型输入、执行记录、历史选帧记录、单轮结果和时间方案字节一致。该项仍是合成数据，不冒充真实模型验证。</p>
 <p>本轮没有提交启智任务、下载权重或新增GPU推理，没有改变占卡程序，也没有重新测算整个项目GPU平均利用率。</p></section>
 <section aria-labelledby="native"><h2 id="native">现有真实配置的时间声明</h2>
 <p>下表来自只读注册信息审计，共{len(native_rows)}份已有配置，不是本轮新增真实运行。unknown表示未核实，event表示事件触发；不能把它们当作固定取图频率。所有现有原生模型继续使用原来的当前画面编码，不擅自增加历史。</p>
@@ -104,6 +120,7 @@ def main():
     end = template.index('</main>', start)
     document = (template[:start] + body + template[end:]).replace('lang="en"', 'lang="zh-CN"').replace('<title>Report title</title>', '<title>图像时间对齐首轮修改与证据</title>')
     (evidence / "alignment-examples.json").write_text(json.dumps(examples, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (evidence / "bridge-history-comparison.json").write_text(json.dumps(bridge_comparison, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     output.write_text(document, encoding="utf-8")
     print(json.dumps({"report": str(output), "main_tests": tests, "new_tests": focused, "bridge_tests": bridge,
                       "saved_routes": len(saved["cases"]), "new_real_inference": False}))
