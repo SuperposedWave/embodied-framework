@@ -1,0 +1,34 @@
+{
+  "kind": "readonly_plan_report_delivery_verification",
+  "passed": true,
+  "at_utc": "2026-10-19T03:56:29.554232+00:00",
+  "HTTP": [
+    {
+      "path": "/outputs/massworld-integration-plan-20261019/MassWorld-EmbodiedEval-integration-plan.html",
+      "status": 200,
+      "sha256": "fd12aa79640f75d5cca9c19b3f37ab8112d45a5c737f3cc53a4ce59c0e48bd0c"
+    },
+    {
+      "path": "/outputs/massworld-integration-plan-20261019/source-index.json",
+      "status": 200,
+      "sha256": "13b7a87fc76bf4a6abfe7d891c67375783bd087d90a8e9912c5dda3ced11a104"
+    },
+    {
+      "path": "/outputs/massworld-integration-plan-20261019/code-evidence.json",
+      "status": 200,
+      "sha256": "563e02b9515b5f8a9097e6972fef500854643d921206e81abd0479d16febbffd"
+    },
+    {
+      "path": "/outputs/massworld-integration-plan-20261019/qz-schema-check.json",
+      "status": 200,
+      "sha256": "72cce51bd71e29c909bc96ddcdd9eeeed59f4a90a871f69246c9ca9a062bfa89"
+    }
+  ],
+  "root_redirect": true,
+  "unknown_paths_denied": true,
+  "tracked_files_unchanged": 407,
+  "port": 8765,
+  "bind": "127.0.0.1",
+  "desktop_forwarding_verified": false,
+  "implementation_performed": false
+}

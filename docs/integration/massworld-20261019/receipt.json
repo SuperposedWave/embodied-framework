@@ -1,0 +1,21 @@
+{
+  "kind": "readonly_integration_proposal_not_implementation",
+  "passed": true,
+  "reviewed_at_utc": "2026-10-19T03:55:53.062630+00:00",
+  "framework_commit": "f114576fe947051f8732515cd0ce14ffe2acdfe8",
+  "archive_sha256": "e64747418982c8787645925b86f78f120024bea3fbe1dc84496e3ac80966034a",
+  "archive_Python_sources_parsed": 206,
+  "tracked_files_unchanged": 407,
+  "production_code_modified": false,
+  "public_contract_modified": false,
+  "project_status_or_history_rewritten": false,
+  "MassWorld_code_executed": false,
+  "framework_tests_rerun": false,
+  "new_inference": false,
+  "platform_job_created": false,
+  "qz_metadata_only": true,
+  "credentials_read": false,
+  "integration_implemented": false,
+  "formal_acceptance": false,
+  "report_sha256": "fd12aa79640f75d5cca9c19b3f37ab8112d45a5c737f3cc53a4ce59c0e48bd0c"
+}

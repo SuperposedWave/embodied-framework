@@ -1,0 +1,65 @@
+{
+  "version": "qz version v1.0.0",
+  "operations": [
+    {
+      "service": "train",
+      "action": "CreateJob",
+      "parameters": [
+        "logic_compute_group_id",
+        "name",
+        "project_id",
+        "workspace_id",
+        "framework",
+        "command",
+        "framework_config",
+        "auto_fault_tolerance",
+        "task_priority",
+        "max_running_time_ms",
+        "reserve_on_fail_ms",
+        "reserve_on_success_ms",
+        "tb_summary_path",
+        "envs",
+        "enable_notification",
+        "dataset_info",
+        "enable_troubleshoot",
+        "fault_tolerance_max_retry",
+        "fault_tolerance_retry_interval_sec",
+        "description",
+        "exclude_nodes",
+        "is_publicpath_readonly",
+        "specified_nodes",
+        "pre_check_items",
+        "runtime_attributes"
+      ]
+    },
+    {
+      "service": "train",
+      "action": "GetJob",
+      "parameters": [
+        "job_id"
+      ]
+    },
+    {
+      "service": "train",
+      "action": "GetJobLog",
+      "parameters": [
+        "page_num",
+        "page_size",
+        "filter",
+        "sorter",
+        "search_after",
+        "job_id"
+      ]
+    },
+    {
+      "service": "train",
+      "action": "StopJob",
+      "parameters": [
+        "job_id"
+      ]
+    }
+  ],
+  "platform_jobs_created": false,
+  "account_or_job_data_queried": false,
+  "tokens_read_or_copied": false
+}

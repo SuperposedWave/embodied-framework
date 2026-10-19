@@ -1,0 +1,1657 @@
+{
+  "kind": "readonly_massworld_integration_plan_sources",
+  "review_utc": "2026-10-19T03:55:53.026397+00:00",
+  "archive_name": "MassWorld-main (1).zip",
+  "archive_sha256": "e64747418982c8787645925b86f78f120024bea3fbe1dc84496e3ac80966034a",
+  "archive_comment_not_verified_git_revision": "0425da26bc79b6dcc5debd40d904cc063950aaec",
+  "archive_files": 292,
+  "archive_Python_files_syntax_checked": 206,
+  "archive_index": {
+    "MassWorld-main/.gitignore": {
+      "bytes": 59,
+      "sha256": "dac59a9afa01d1a5d32a57f7e18a55e854a3a958a88f369e6f649e0d879e2c35"
+    },
+    "MassWorld-main/.gitmodules": {
+      "bytes": 1029,
+      "sha256": "0fb5b750f5653d398485d62a5517200aacb3fc250130d8c873f8a93502610d2a"
+    },
+    "MassWorld-main/LICENSE": {
+      "bytes": 1068,
+      "sha256": "8c85081730435a79d5e9c0ef4096a328833a6406c60aafa295c2d72f56806107"
+    },
+    "MassWorld-main/README.md": {
+      "bytes": 1339,
+      "sha256": "00c8d0ee78d078a1db1817451f011df60aebe016824ef36cde44b49430ec8fc1"
+    },
+    "MassWorld-main/WorldEvalKit/.env.example": {
+      "bytes": 141,
+      "sha256": "b4d06a3d33630f573dc31581e6c7a5881391b0e6569fb06c56db55cd9412cf79"
+    },
+    "MassWorld-main/WorldEvalKit/.gitattributes": {
+      "bytes": 121,
+      "sha256": "cc3c3e32f6a6b25eb26f44e2c850cf18c45e58a1dd40574b23f237695beb105f"
+    },
+    "MassWorld-main/WorldEvalKit/.gitignore": {
+      "bytes": 317,
+      "sha256": "8bd629fcbaafaa9e9f8929efc8e52d791f0e3358e589181778b567b4054c91fd"
+    },
+    "MassWorld-main/WorldEvalKit/LICENSE": {
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    "MassWorld-main/WorldEvalKit/README.md": {
+      "bytes": 59364,
+      "sha256": "8cf59fda336474bfb7498b08b7ab37452c19de65e4e54feffd2fa2cfa935269d"
+    },
+    "MassWorld-main/WorldEvalKit/docs/architecture.md": {
+      "bytes": 6446,
+      "sha256": "4b6d5675e96afd478d96a50e65037eb62ca2ca4f0aefd59880afffe75ad17995"
+    },
+    "MassWorld-main/WorldEvalKit/docs/droid-sim.md": {
+      "bytes": 12794,
+      "sha256": "7d97a34854b440497d3a1de206d6fddcff297bccd8a5377e540f9f299f17add8"
+    },
+    "MassWorld-main/WorldEvalKit/docs/extending-models-and-benchmarks.md": {
+      "bytes": 12843,
+      "sha256": "6f095223f85e648a7d05165b5f0d2045d9ce77730cefaddb7a1ef9ab35c0ae45"
+    },
+    "MassWorld-main/WorldEvalKit/docs/generation-benchmarks.md": {
+      "bytes": 13472,
+      "sha256": "252b49f235956e40e64b42f97175ae38d574160caf049946c1afcee8aa62c63a"
+    },
+    "MassWorld-main/WorldEvalKit/docs/gpt-droid.md": {
+      "bytes": 3389,
+      "sha256": "81df77347023ec652f4c2ed848632dbb1d7dcba1f1fac4bb3aa973e07839d758"
+    },
+    "MassWorld-main/WorldEvalKit/docs/phased-evaluation.md": {
+      "bytes": 10804,
+      "sha256": "707dfbc8dff3b647c98486ccd4e6abec95009190bb21d6bda6d59b97cc76a94b"
+    },
+    "MassWorld-main/WorldEvalKit/docs/progress.md": {
+      "bytes": 3540,
+      "sha256": "eb44be90f07021b9f21ae58bc360339fbf628c4e22aaa0c0c0ecd3cbe71d0740"
+    },
+    "MassWorld-main/WorldEvalKit/docs/robotics-native.md": {
+      "bytes": 6889,
+      "sha256": "edf7da57864a53a0e959dda941c8989b6f1538459b3d9723f132098894e7554e"
+    },
+    "MassWorld-main/WorldEvalKit/docs/seedance25.md": {
+      "bytes": 14797,
+      "sha256": "6118df71b48436aac530272fefa1da42f484d3372db2c85030c68d1f0b08fa0c"
+    },
+    "MassWorld-main/WorldEvalKit/docs/wise-verified.md": {
+      "bytes": 5256,
+      "sha256": "96eef91302e645ec5ebd9aafbcbc650be2cfd4a3c5a9cc3245a8ed51a6023d2e"
+    },
+    "MassWorld-main/WorldEvalKit/environments/README.md": {
+      "bytes": 2353,
+      "sha256": "5a94ed2be7dcb80d8ba0902edf19112841ca17e2541c654ea1fedec16be98364"
+    },
+    "MassWorld-main/WorldEvalKit/environments/isaac51-rtx-compat/build.sh": {
+      "bytes": 954,
+      "sha256": "7f3bd43aa4f99cb291c937a438dec0afa6c025b9636e7d56c7451817c3e58a81"
+    },
+    "MassWorld-main/WorldEvalKit/environments/isaac51-rtx-compat/prepare.py": {
+      "bytes": 3991,
+      "sha256": "234a526ceb56e27b571a525a50cd765d8a54d332641fd2141e4f0ff01b5becb3"
+    },
+    "MassWorld-main/WorldEvalKit/examples/README.md": {
+      "bytes": 5337,
+      "sha256": "bd680cde2d7bc429c49eb448bdfd7c9a69b7f67f17632bc69afb736df4a874e3"
+    },
+    "MassWorld-main/WorldEvalKit/examples/droid-sim-parallel.yaml": {
+      "bytes": 1376,
+      "sha256": "b825067983abaea8811c9488e697f215a8a9fcc8c0094758eec5c2cd4f9f4c84"
+    },
+    "MassWorld-main/WorldEvalKit/examples/droid-sim-shared-files.yaml": {
+      "bytes": 735,
+      "sha256": "b7e23cb0fbf0e5330a631c777e7520d83aa20315001bc8a9ba91dc8e27c753d2"
+    },
+    "MassWorld-main/WorldEvalKit/examples/droid-sim.yaml": {
+      "bytes": 915,
+      "sha256": "529bfc392190be4978b34455ef438c7beb0d1d94026051451479e06bfad9b460"
+    },
+    "MassWorld-main/WorldEvalKit/examples/generation-benchmarks.yaml": {
+      "bytes": 1775,
+      "sha256": "00dd45515ef78a3d810d55f391818f6573dd732839ee09eb54c1309dc16cdebf"
+    },
+    "MassWorld-main/WorldEvalKit/examples/gpt-droid.yaml": {
+      "bytes": 834,
+      "sha256": "fa4f9881390f048316aaf7bbb41d17c0b1103fa82a00535810c5384cdaef32d8"
+    },
+    "MassWorld-main/WorldEvalKit/examples/mock/mock_samples.json": {
+      "bytes": 149,
+      "sha256": "8bd73747f1a1a9b410cbc19a1f4c810453178d83c66a0f3d056b10e5a3977d35"
+    },
+    "MassWorld-main/WorldEvalKit/examples/mock/suite.yaml": {
+      "bytes": 135,
+      "sha256": "a883604218af027847284c5bff69b086a766de842735a378fd4f5bc76a842f9e"
+    },
+    "MassWorld-main/WorldEvalKit/examples/phyground.yaml": {
+      "bytes": 1055,
+      "sha256": "bf924004c8dc95ae5695e6040f52109884cec76c14bc0ad4c0696f7894c88a2f"
+    },
+    "MassWorld-main/WorldEvalKit/examples/physics-iq-cosmos3-edge-verified.yaml": {
+      "bytes": 1020,
+      "sha256": "4d3cd3cfb32f41eee2c36ad7d4b2faa054dca9148ee0a0bb134d47a4e3d15641"
+    },
+    "MassWorld-main/WorldEvalKit/examples/physics-iq-cosmos3-verified.yaml": {
+      "bytes": 779,
+      "sha256": "7eb554149500f75f16025f933cd3ca9f7673fd43d661674555210d95f9874472"
+    },
+    "MassWorld-main/WorldEvalKit/examples/physics-iq-lingbot-v2-verified.yaml": {
+      "bytes": 688,
+      "sha256": "04d59261839e8d05a0a4efcef0a5e350924e54938eb9fea64e0fdac356d549b0"
+    },
+    "MassWorld-main/WorldEvalKit/examples/physics-iq-minimax-h3-verified.yaml": {
+      "bytes": 870,
+      "sha256": "12adee5e6eac038e2a280f0019732a8ee6d580a14935faef2d413a8ef9859efd"
+    },
+    "MassWorld-main/WorldEvalKit/examples/physics-iq-original.yaml": {
+      "bytes": 840,
+      "sha256": "75e681c6dfc81130d2cd2bc9a8e699a9e82dfc860a98baba4541db85dcda9628"
+    },
+    "MassWorld-main/WorldEvalKit/examples/physics-iq-recorded-verified.yaml": {
+      "bytes": 489,
+      "sha256": "c57c7b3db45d1c5a507fdd74821c74f79d40c680140e63477bf887a3e83f2af6"
+    },
+    "MassWorld-main/WorldEvalKit/examples/physics-iq-seedance25-verified.yaml": {
+      "bytes": 617,
+      "sha256": "e314dc0f4f014ad01906d7e9d0dfbdc3cab280f866328b0f14fd190f9a2f9267"
+    },
+    "MassWorld-main/WorldEvalKit/examples/physics-iq-verified-smoke.yaml": {
+      "bytes": 781,
+      "sha256": "2db591a68ad678b912283889d200ce3c13baf70d9a47397eced22d167053151d"
+    },
+    "MassWorld-main/WorldEvalKit/examples/physics-iq-verified.yaml": {
+      "bytes": 833,
+      "sha256": "220aba7fab660eea851ed2ebf6a46648d40e938e5c9595df5a813a2d8d6b3549"
+    },
+    "MassWorld-main/WorldEvalKit/examples/robotics/robodojo.yaml": {
+      "bytes": 805,
+      "sha256": "b4fd440db63c69594af2e6467f512f736a86b2e020b0c1ec425b050cb09afa01"
+    },
+    "MassWorld-main/WorldEvalKit/examples/robotics/robotwin-hard.yaml": {
+      "bytes": 596,
+      "sha256": "09d8a68840786dcfc37c97c6a9ca768438bb5746c688e979b6300de80176e3ed"
+    },
+    "MassWorld-main/WorldEvalKit/examples/run_generation_benchmarks.sh": {
+      "bytes": 2745,
+      "sha256": "dcc894277ce7cacd961fef5fb4b8a5d291d1ca7397d03a63e6d619a08b88f25b"
+    },
+    "MassWorld-main/WorldEvalKit/examples/run_wise_verified.sh": {
+      "bytes": 1830,
+      "sha256": "744fe0224d6810eca6530c2c000ac62d153a910d912b9d0d292522871fc595f2"
+    },
+    "MassWorld-main/WorldEvalKit/examples/vbench2.yaml": {
+      "bytes": 2025,
+      "sha256": "6fa679f08382c0dae055f851cd0cceaaeb7676b6e4c5e7019f19ea164ba71396"
+    },
+    "MassWorld-main/WorldEvalKit/examples/wise-verified.yaml": {
+      "bytes": 517,
+      "sha256": "be14844d71ee558c68d579a290702472cbd31b9cde733246f65c66e690184b28"
+    },
+    "MassWorld-main/WorldEvalKit/examples/worldmodelbench.yaml": {
+      "bytes": 1143,
+      "sha256": "00c6e2c6e3219f1692df2b1180fdc1bf243b6cb48a2fa39490fd9bdcbf65d266"
+    },
+    "MassWorld-main/WorldEvalKit/pyproject.toml": {
+      "bytes": 1463,
+      "sha256": "0163bdf33e73aab9daba2e3057e6e8dd70c503776ed754273912bed89f4cb6dd"
+    },
+    "MassWorld-main/WorldEvalKit/scripts/apply_third_party_patches.sh": {
+      "bytes": 291,
+      "sha256": "dcab26e3e4c2cf62f2e7ff0a59a72f99c7e908bee9e166cb519bdf2fbe30a5fa"
+    },
+    "MassWorld-main/WorldEvalKit/scripts/run_minimax_h3_service.sh": {
+      "bytes": 2883,
+      "sha256": "73fac7c3296955fd6291519407bfa96c4cfa096d98da5a696c7c57c4e5a86de0"
+    },
+    "MassWorld-main/WorldEvalKit/scripts/run_minimax_massworld_verified.sh": {
+      "bytes": 2169,
+      "sha256": "53533ef765eb70a3c6375e79f8980326df28a0c8d37ec5d462f9ec2375d3a4c9"
+    },
+    "MassWorld-main/WorldEvalKit/scripts/run_physics_iq_cosmos3.sh": {
+      "bytes": 1945,
+      "sha256": "5caf638fc9253651ccb1459a37bc50c313406209e5b0719e893bb65801b91056"
+    },
+    "MassWorld-main/WorldEvalKit/scripts/run_physics_iq_cosmos3_edge.sh": {
+      "bytes": 862,
+      "sha256": "c70cea6f7adad09961133c8656342cffed52165c51dc16386c4e2c6461d48f43"
+    },
+    "MassWorld-main/WorldEvalKit/scripts/run_physics_iq_massworld.sh": {
+      "bytes": 4379,
+      "sha256": "092cd361eff79185805aa6ab2f0575961b3b0fb2dee801227242ce1905ec311b"
+    },
+    "MassWorld-main/WorldEvalKit/scripts/run_physics_iq_multimodel.sh": {
+      "bytes": 1861,
+      "sha256": "b97469e22fc3d1399496eec97a631db280871352d3d15f21be3139ca67d39434"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/__init__.py": {
+      "bytes": 906,
+      "sha256": "4993cfcd7f2c4bde158af07da17bf602b138cfbfea2d2acbdf38e04702406228"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/__main__.py": {
+      "bytes": 80,
+      "sha256": "3d2438ae92f4746e9ffaa1f837b1fe803f6281091d1f31f8c95643716f257d9a"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/adapter.py": {
+      "bytes": 12355,
+      "sha256": "64be27b63638f834fa22dee0227320a74ef1d0790cd7c04c855bc9bc6d58e654"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/__init__.py": {
+      "bytes": 160,
+      "sha256": "bb4aea57716d33e7ea60f5a9d9cad009657bc34296182ef0f0ab8b80e02cee9d"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_droid_parallel.py": {
+      "bytes": 4984,
+      "sha256": "aab2ebfb4251348d87e6e189038146b0bd805a610779fe0547fee9850d47e399"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_official.py": {
+      "bytes": 4578,
+      "sha256": "1ec0285e8afa5637f56317d0f9b3e3d98ef574d7a3f141f5e38708f9922c1ff3"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_phyground/__init__.py": {
+      "bytes": 239,
+      "sha256": "dd52f5d52838f297c98a55a27872bd4d8b690fb5d5918c4928ad5db4e4a1b91d"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_phyground/eval_types.py": {
+      "bytes": 5618,
+      "sha256": "3feebc5d64974f4fc12d59ccb2917800ffb5cae04252c7d688f4ac3f26c2f340"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_phyground/evaluator.py": {
+      "bytes": 9395,
+      "sha256": "f8143c469b75344768399bb9b221a289a8681d0b94fb8c26c41b449d1c4da6a5"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_phyground/merge_judge.py": {
+      "bytes": 5352,
+      "sha256": "b62dd791d1d33b847161a59c395d27218d04ec4d0f86b9e00a97abcd8ed8d0ad"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_phyground/physics_criteria.py": {
+      "bytes": 16972,
+      "sha256": "83d812981576cdbf3dab7142bb45782a267dbda68f9a23e629fdad822d653e2c"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_phyground/prompts/__init__.py": {
+      "bytes": 8112,
+      "sha256": "abf5c8ab15072f6654ff1125da81671c0fb19f5f970738d68bbb12694ed8674d"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_phyground/prompts/default.yaml": {
+      "bytes": 4120,
+      "sha256": "950a9487c2b68b9f2973a49ce351c5b8c0da3a5a1dec5a5bcdc486c51f904ee8"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_phyground/prompts/subq+human.yaml": {
+      "bytes": 2694,
+      "sha256": "aff282ed9da6effe36286b7a35277362f65b807cb8b34eecdc611db3236e8068"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_phyground/sub_questions.py": {
+      "bytes": 8327,
+      "sha256": "fbe70dc223792017ec9700680bf1feb494927985d0917282912d5e4eac9b9284"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_phyground/vlm_common.py": {
+      "bytes": 10903,
+      "sha256": "bb910c8bdb364d26fd7412ead81a265426e5bd1cf7d487eb4b925817ec712fd5"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_phyground/vlm_eval.py": {
+      "bytes": 16264,
+      "sha256": "7d0f6e6729a3c561bbc7984789a51703ce18d51e7e27c752442f6e9b7b3f5063"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_robotics.py": {
+      "bytes": 11918,
+      "sha256": "d36de3c57852b4118e914f0065ecd8da9867da9531fb26f75de0e460af277bf1"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_robotics_tasks.py": {
+      "bytes": 2644,
+      "sha256": "71b58fd658d6c43a3cb691a68da4834b791c701b3ca075f3017ec65115ae616e"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/__init__.py": {
+      "bytes": 83,
+      "sha256": "5937230f67c5bea4fbc81240b1fe9f716b954cce2901e79353a5870ff394a9c8"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_anatomy/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_anatomy/config.py": {
+      "bytes": 9149,
+      "sha256": "d3e1a180167341afce6bd60048025e53704c52bf48319847cb38c48d1c81d6c7"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_anatomy/detect.py": {
+      "bytes": 16135,
+      "sha256": "db35e739dc429047b56a3fe8df8b40abc610dc3f9897cce583529448357c07a6"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_anatomy/logger.py": {
+      "bytes": 1664,
+      "sha256": "b88cc158ab168fd0d07793b4378d8e871ddcf8438bcd4fb0dda33074820f57d5"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_anatomy/models/__init__.py": {
+      "bytes": 229,
+      "sha256": "f5695a7f9d3d081c4a742dfd6288b6642010ad70e34725adb476e3856d002e48"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_anatomy/models/build.py": {
+      "bytes": 984,
+      "sha256": "b7024f9c876a90ff6385b01276aaca72b91962eb0f04f045ab35c132ffc7d952"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_anatomy/models/simmim.py": {
+      "bytes": 6387,
+      "sha256": "72b1c26bccf16319045a6b8fe3c8d621dbb101611175784a6838b45795d8217a"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_anatomy/models/swin_transformer.py": {
+      "bytes": 25356,
+      "sha256": "42e5aea4f24c50407753a42dc063f7d0403b46445d36f9028b32a8c84fcb912f"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_anatomy/models/vision_transformer.py": {
+      "bytes": 15809,
+      "sha256": "1e6ea52875be0b36e6c5a13067494be9f8461350a9bfda914e23a806245355ff"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_anatomy/simmim_finetune__vit_base__img224__800ep.yaml": {
+      "bytes": 642,
+      "sha256": "deb5d4ec113ae9ba3d43b314aaabbdca1afcfb8691a6cabdb71ed805d815a64e"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_anatomy/yolo_world.py": {
+      "bytes": 7591,
+      "sha256": "87f8827a0fa8789d812e81cd4db1efbfe852ec5dc3ef3b83c5a12b433f15aadf"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_arcface.py": {
+      "bytes": 11229,
+      "sha256": "194717154f0a2e00d63c2c6ffdc541acb0ad26f97ea80c6de498e9cca6895955"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_assets.py": {
+      "bytes": 6266,
+      "sha256": "e83fd6d485dd6e6fb57a5f3f3355f3c70d3ba2c2ff0e2805c8079535c0a88436"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_dense_match/PatchAutoEvaluate.py": {
+      "bytes": 2780,
+      "sha256": "c5da6ff75183719bc5d72a328c01a72bbe1f033b559cff8466035bc99597b788"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_dense_match/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_dense_match/core_function.py": {
+      "bytes": 2242,
+      "sha256": "ed7743f6d778a595b788341354abfd7d0a64e7cdf388bf33675e06fe1211dd71"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_models.py": {
+      "bytes": 4746,
+      "sha256": "3bf0e415c290a7f8067d9648fb80327cb2bd81521946b79516dd4a8ebba72574"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_raft/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_raft/corr.py": {
+      "bytes": 3284,
+      "sha256": "f8ce732744c11275f86776db451959772b11b0964e4a96187a2d01463cc60f3e"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_raft/extractor.py": {
+      "bytes": 9045,
+      "sha256": "6ea08952c325d0b68f7848ab60cab41fcd7c31f3bcca12d8fd40b7f510040478"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_raft/raft.py": {
+      "bytes": 5122,
+      "sha256": "fd254777c8ce1168ac0eacae422d21709f0bbb2a46c5ca18ae27f1037b106290"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_raft/update.py": {
+      "bytes": 5422,
+      "sha256": "d384edc99439e5acd551e43bbe7207717c00b148cf7065adda999ec41c576a37"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_raft/utils/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/_raft/utils/utils.py": {
+      "bytes": 2687,
+      "sha256": "9455e086e71ddcd918a272eb495cf6095c0ea3c9a91d2743b0ef0689ea044620"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/camera_motion.py": {
+      "bytes": 9361,
+      "sha256": "35dad2ca7987cdeeec586f7c63a3567cba1d646ffedd23ed2bf911cca5f9a878"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/complex_landscape.py": {
+      "bytes": 7882,
+      "sha256": "5b8b3fbb9e6f9024e2312808c9d36ecd2150339a53f36fc1f30258352247b756"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/complex_plot.py": {
+      "bytes": 9917,
+      "sha256": "3f3894e74c82ca534ee8418ee419493c5170bebd27ab83c1ba7fbe1f295f4606"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/composition.py": {
+      "bytes": 6868,
+      "sha256": "0d9f2d7e1c577ae40dfff53ced4e041001508c7040c646bf3ac1d0e1f42dad8d"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/diversity.py": {
+      "bytes": 4158,
+      "sha256": "a20c6bb3c10de0f074a6086a5bdac515fb67068a133c85a138fce9c74909b94b"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/dynamic_attribute.py": {
+      "bytes": 4517,
+      "sha256": "06dd46b016740e1fb35776da355dd4853e4793de5426eec7439fb984b627e72c"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/dynamic_spatial_relationship.py": {
+      "bytes": 5721,
+      "sha256": "e97803254a7ac0ae8f5fc4c41c4f4e6c5213daaa44cefe4b991efd39406d346d"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/human_anatomy.py": {
+      "bytes": 2663,
+      "sha256": "ed3affb3f224a177803d7c268f37ef6898333a9d3f677e506c105c8aefa055f6"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/human_clothes.py": {
+      "bytes": 5306,
+      "sha256": "839ce99bf2161f28faaf884fcdee934eea1717fb58ae2ae8e21ecc8e2c053587"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/human_identity.py": {
+      "bytes": 6586,
+      "sha256": "82ff7a9cd85026dd8cb02b5c831e5853e7072f8948b547ebbafa030f3e7b8830"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/human_interaction.py": {
+      "bytes": 8253,
+      "sha256": "e1f0920f1571d6e51387ad4a0f7c646ebb7bb4c356f0a53e873da0cb6e6fae37"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/instance_preservation.py": {
+      "bytes": 4426,
+      "sha256": "c5bd64a696015eb829f3eddd00c1212ccc8fd392a29bef096c00bb2c4a8f2f5e"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/material.py": {
+      "bytes": 6172,
+      "sha256": "550dfb86875ef58297216c303a3422d7d96001df3d54be133495fc066a84013f"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/mechanics.py": {
+      "bytes": 6174,
+      "sha256": "79c3e072594685aeaa17feb272211ee57234b764c85ad1f4bb8ebb9ca7f8c657"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/motion_order_understanding.py": {
+      "bytes": 9062,
+      "sha256": "457cffcaf2c977dd82edc9142dd34dc5e083d8796cd01b4467b76c1ca656a023"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/motion_rationality.py": {
+      "bytes": 4567,
+      "sha256": "51a3156f87dae7ee9c4fa0a6f95f00a0769607e2e4fcaf720894746b2541025f"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/multi_view_consistency.py": {
+      "bytes": 10280,
+      "sha256": "42eeab4be94adb1a5afd47fb3fe9854a44d35f37cc752b982b5b63a06f4e4d62"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/thermotics.py": {
+      "bytes": 6234,
+      "sha256": "3aad6a9d5823e9f4c082ec407040ef098937be7cfcb063ec0783dfb430433c2a"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/_vbench2/utils.py": {
+      "bytes": 4047,
+      "sha256": "24d6889d1ac161d4ef584fb16f44ba2166c32dc35f2531034b96b01124221335"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/droid_sim.py": {
+      "bytes": 16467,
+      "sha256": "aadddfff97929d9d31f0b0f190404e3d2426815ead22516cb2858e31b06f287e"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/geneval2.py": {
+      "bytes": 12006,
+      "sha256": "afbecffccd4be69ff8dec8054e5f696e44864b343328655e679e726b31847003"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/mock.py": {
+      "bytes": 1597,
+      "sha256": "b819ad8c0db2b7ba0ad73913292083f9076d8b2690c1d5f3c0701b7a7b9e6162"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/phyground.py": {
+      "bytes": 20004,
+      "sha256": "b34e8636a1a6299ab546655e561a047581e6ed6b6e67f22c2344ca3c0016d1dd"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/physics_iq.py": {
+      "bytes": 11812,
+      "sha256": "1e802ff4513ebdd4bfbed3561eaa1a6466aa939f48e5e09e3ea276b1a90667b7"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/physics_iq_original.py": {
+      "bytes": 984,
+      "sha256": "ae745621d4036d0eddef066bebc52b3792816aa6104dfda001af224af6c474b5"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/robodojo.py": {
+      "bytes": 10602,
+      "sha256": "d5739db6f8ef77f106772eee1bad87958f104a893015ba77fcb4d8ed492b350a"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/robotwin_hard.py": {
+      "bytes": 7623,
+      "sha256": "5f7f9c1a614dea97ca1beb86aba02c5a8ba7a513db793d649a6e2019f1fed97f"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/vbench2.py": {
+      "bytes": 20382,
+      "sha256": "f2ab9812ab12748c05ab7ca600bf7c2aaaf5e75e931853e65afceff07091cc28"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/wise_verified.py": {
+      "bytes": 11741,
+      "sha256": "064ea858bb11a2cd6dff96e842addf4a7a5c792ac49850f63346a7efb96256d6"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/benchmarks/worldmodelbench.py": {
+      "bytes": 16535,
+      "sha256": "d0fd4ab79f783984143f216233abe139056a5714579bf86d5396ddb074390eaf"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/cli.py": {
+      "bytes": 9608,
+      "sha256": "01f0af87d81e146e9a6eb7f9b7a6565b5050d119febe2002a1a01d400775aa31"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/contracts/__init__.py": {
+      "bytes": 1047,
+      "sha256": "b7e8db8ff8d583b11046195f56bdfbea86b22a9483d872b798ce8d24452b5abb"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/contracts/artifacts.py": {
+      "bytes": 9613,
+      "sha256": "ea7b02c66fc91877980396d3300d4c0ed1a975933f8d1fc9bf3880b2e2c815a5"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/contracts/cases.py": {
+      "bytes": 9711,
+      "sha256": "74222a43c9f471949169b2cb363d822c1852ac85aac06e27c642871f6f97ffe4"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/contracts/models.py": {
+      "bytes": 9178,
+      "sha256": "577bad6f6115d4aeacb00d9ee706e4c23ac2c45f24c1d946bf0349075fe4265e"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/contracts/plan.py": {
+      "bytes": 11185,
+      "sha256": "13bbf865551db7fd81b5b139e11cce5e96067abc41383633e228dc815f645ad6"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/episode.py": {
+      "bytes": 3704,
+      "sha256": "ec316ba83d8cd62a15d55b85bd482770e6ab032e88a45e4fdfb47ab9bc0edad5"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/execution.py": {
+      "bytes": 19461,
+      "sha256": "f372b8ee45c5beccf3ee219791f52f2bcb57ca10dd21dadc79606413dec835a2"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/handlers.py": {
+      "bytes": 13449,
+      "sha256": "8e0910780b67c94566bb43440da43789ec03d107243c9de6353a666a0815ae90"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/handoff.py": {
+      "bytes": 20120,
+      "sha256": "80fbe6330b556ed3616c3449b546855eec0f7a9a6ed3e560929db45b771a9099"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/history.py": {
+      "bytes": 19526,
+      "sha256": "3a271efcf9bcc73779f05cba46a5d6936ed3a5ebf2cbdd07712ad11243b5f10d"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/io.py": {
+      "bytes": 2960,
+      "sha256": "97c1c417794fa6c2de4b82893b1154edda8fb9ac39ea9378dee28de2e12ce62d"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/__init__.py": {
+      "bytes": 152,
+      "sha256": "04de9ab007faae1cb8d3050060f19f19b80afc873ce7dbb9ece89f974fbf9a4c"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_external.py": {
+      "bytes": 8373,
+      "sha256": "71a873620ba4c33d27ea83783125ea7430459ca96082bc60d55abec90f41b51a"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_file_policy.py": {
+      "bytes": 9045,
+      "sha256": "f0486fae25dfcfd32ae8d60a0fd587f01560160a8b774d7a6ec0c59ec9b00870"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/__init__.py": {
+      "bytes": 81,
+      "sha256": "99a2e4390c41b1edf6fbe9634dd8a20cc7ea8ef5bb2258417be688055d0763ad"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/configs/__init__.py": {
+      "bytes": 134,
+      "sha256": "42603dcfbd2330b1d1e14d73050ad3c879bedf3a5ef7f38082d52c367b51c2d4"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/configs/shared_config.py": {
+      "bytes": 1046,
+      "sha256": "115d14508a4e8a2d9e08522949515c8c60256cf5cce166d71fafdb77df4f46e9"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/configs/wan_i2v_A14B.py": {
+      "bytes": 1947,
+      "sha256": "c5bc64b37bd070b5c616dd83c6b54aac2c421c5fd6096102548e22f951f6ad7d"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/distributed/__init__.py": {
+      "bytes": 49,
+      "sha256": "56c7310cdd57d838923a2bdc6172128c2b219eab8de5e5ce2b749f0f3008ba16"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/distributed/fsdp.py": {
+      "bytes": 1483,
+      "sha256": "f045cb19e1ab1cfddb66f080a052b7cb566c4aa73954223b75d6e52ba55432db"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/distributed/sequence_parallel.py": {
+      "bytes": 14665,
+      "sha256": "a096e7981a0b6a62dc1d2faa91a080ed1e6629dc4db841f37ba4971edd1ca553"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/distributed/util.py": {
+      "bytes": 1480,
+      "sha256": "3b29e65a01277e614d9d7361c7d523f83230837cdb8478e836eb512b49d3e543"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/modules/__init__.py": {
+      "bytes": 49,
+      "sha256": "56c7310cdd57d838923a2bdc6172128c2b219eab8de5e5ce2b749f0f3008ba16"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/modules/attention.py": {
+      "bytes": 5533,
+      "sha256": "af29e763634c9e9e25ae3828dd2ef19f65f13120895f3f8255c18cdc6fbf92d2"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/modules/model_causal.py": {
+      "bytes": 27584,
+      "sha256": "8171b87f226ecd2b6d9c249c7cb09bfa818ae7ade2b0ceb5b796a96feea95f6e"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/modules/t5.py": {
+      "bytes": 17013,
+      "sha256": "626dbaffe14bb1a60644d12269e1025514669b62ed91be850d515180f6685d18"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/modules/tokenizers.py": {
+      "bytes": 2532,
+      "sha256": "8d40dfb3869d14a9039b0b86047936858bbfb140504f3d2f37c200207a20ee0c"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/modules/vae2_1.py": {
+      "bytes": 23203,
+      "sha256": "af15979d7517e60263a86132043723906cc63c04c048794744f441ebaeb42bee"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/pipeline.py": {
+      "bytes": 20813,
+      "sha256": "442a0baa568edd9f4743cc65d2a19054dfa8d994bbd33a804e51857f1c7276f2"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/scheduler.py": {
+      "bytes": 32839,
+      "sha256": "78422c2cfb9af8a8b7208fefc676fa5bdc3b109aa17c55742f9bc1110b5dc99d"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_lingbot_world_v2/video.py": {
+      "bytes": 926,
+      "sha256": "31d9c4bb84d46bcb0b1869f8f9f6bc9e5e080a80044fbfce5c6f77a4b1d1752b"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_native_policy.py": {
+      "bytes": 1362,
+      "sha256": "2a22affb1846ac3c5e5593e957c83476daca2426d1c3505df751d064266d6f5f"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_recorded_video.py": {
+      "bytes": 2047,
+      "sha256": "ce4725340c8e66f157c0c9a1fb3d86ff4d3eec2699b73b375c47df7e7de15af0"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_runtime_requirements.py": {
+      "bytes": 799,
+      "sha256": "eb383722438119233acc5518dc0f3b1c52e5b82310eed3587716d6c922896a9c"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_video_api.py": {
+      "bytes": 13613,
+      "sha256": "b3122847e39c8df3334429e5ddcf927491638ce5f2c0930ad402003918662d96"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/_video_evidence.py": {
+      "bytes": 3263,
+      "sha256": "40ebd2f3a2e586aed41678618f52daa8983ba1de3803435f7fdab9ff3bdd579b"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/cogvideox_5b.py": {
+      "bytes": 933,
+      "sha256": "e6fd569bdeca7f0770d519fb785cbde4f6c5aee4479b67e82f8aed9a09d04f42"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/cosmos3_edge.py": {
+      "bytes": 920,
+      "sha256": "6801c9910cb006bd3c317ad3570f17f6d7cfff5aab0b6f223361a4dcf3b1b1e6"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/cosmos3_edge_i2v.py": {
+      "bytes": 446,
+      "sha256": "8b2239851a6a9cacdb2ad21245cc6d797efacee944b0d81a9cca371ccf5a64d0"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/cosmos3_nano.py": {
+      "bytes": 2501,
+      "sha256": "7ce9fdfe8465427446b4c38b3c25c237d999ac82c007a9d88e574f45e238e76a"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/cosmos3_super.py": {
+      "bytes": 396,
+      "sha256": "c4a24bccb54cfd7509e14c284efb62240de64054eb7657d7985d5c10e82a3d23"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/cosmos3_super_i2v.py": {
+      "bytes": 11921,
+      "sha256": "9a849b7a3706168c8c3e81c943cfc8b9770d8700c0f36cfc6ed6097f012c7cdc"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/dreamzero_droid.py": {
+      "bytes": 11418,
+      "sha256": "60b5308845a88fd71572eb440456bd5728fb99232aaae86aa3dcc19b80f31768"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/gpt_droid.py": {
+      "bytes": 11146,
+      "sha256": "c6cc1a1f70e882be6e2f302993c35d38caf03bc44f390be62f526221271be7a2"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/lawam.py": {
+      "bytes": 3163,
+      "sha256": "ab2476859dc286024d82b6154f408f40e9e0a5da8cb65106d2a7123e14817f99"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/lingbot_v2.py": {
+      "bytes": 6187,
+      "sha256": "b5ffba0582f63ed7261d03efb3656019161a814826ff848e912230f0f525f787"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/lingbot_world_v2.py": {
+      "bytes": 5261,
+      "sha256": "cda0de20b1968dedbd001f8377d302797d3f6157832f2dab67472e73e7e40ea3"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/minimax_h3.py": {
+      "bytes": 3314,
+      "sha256": "fa6fdd559ca30bb35190a42a07beadd318283a22c7c85d232b89335dcd4d63e7"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/minimax_h3_fl2va.py": {
+      "bytes": 4708,
+      "sha256": "bb2f626feec401a9856cefca3c9b3897cef1af1eac88b94fa25d52af879f5716"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/mock.py": {
+      "bytes": 560,
+      "sha256": "3ace8d001caa7852a40fd8f3d3d9d247817cd55b0b45f16e08a5fc305fe39ee2"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/qwen_image.py": {
+      "bytes": 636,
+      "sha256": "2c37f0be83f13854a4529ec29e3661a7ee9e1059b983f71cce433b766edea393"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/recorded_i2v.py": {
+      "bytes": 1011,
+      "sha256": "1c4d6baa67cc1ea1d8ef24c2ae7101d606e0c603bd3e915e8342989ad57bdb62"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/seedance25.py": {
+      "bytes": 36498,
+      "sha256": "c70219b0b03073e65b7dfa4e2e10278c92c1972125567a95ff7f9498af187382"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/seedance25_i2v.py": {
+      "bytes": 1248,
+      "sha256": "93d0c8df2f54454e93ecad9feaabf0959a0bb5fc7ad901aba654844526118b26"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/wan22_i2v_a14b.py": {
+      "bytes": 434,
+      "sha256": "f38297b236fbfc403588a345997a1a7c1035d56a31cd1370980b42029991be34"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/wan22_i2v_a14b_official.py": {
+      "bytes": 6298,
+      "sha256": "cd0b6c83f0044f3409a28bb3de0306a8011e3a2fd229dd317ecae98bcae10378"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/wan22_t2v_a14b.py": {
+      "bytes": 422,
+      "sha256": "8bd56ae0466c16240343b8f0b3d32fe7bf7eb580543f5185c06d3aff62e97a4f"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/wan22_ti2v_5b.py": {
+      "bytes": 1084,
+      "sha256": "1d9e66a558b6f606aec763445bd6190cea4e89a4260a24ddffd3750db41467de"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/wan22_ti2v_5b_official.py": {
+      "bytes": 875,
+      "sha256": "5dcc0c5b095cf44f56aeb718180e1f727826b67af1c1e6f9b4bacc375960408a"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/models/x_wam.py": {
+      "bytes": 3245,
+      "sha256": "031ddf64e3e4f96a14c2779b5872c79b3bab2b8417d925c483f1d0cb4182c24c"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/patches/README.md": {
+      "bytes": 3437,
+      "sha256": "aec3eb1fa16fb95feda4c6ee2964acbbbdf53cf23ba01341134e7c67aae8612a"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/patches/phyground/0001-vllm-json-limit-mm.patch": {
+      "bytes": 294,
+      "sha256": "04aa4bc467d492fe9db9bdeb09057497160136aef5fbebe8701814066a9a2403"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/patches/phyground/manifest.json": {
+      "bytes": 481,
+      "sha256": "eda8fcb4bd88b8b51bbaabbcbcdb9f97a1c9c2f9cc231577c0df2cae0a494228"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/patching.py": {
+      "bytes": 6361,
+      "sha256": "917b4612ce4e386ddf5dcceadec05a6d0c2ba48c512c48b4c9c34af68ccc74b6"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/phases.py": {
+      "bytes": 35429,
+      "sha256": "f34fd1c36a180dec46bb028760082d0232b8c24053ca5651c4747255c566b9bd"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/planner.py": {
+      "bytes": 8866,
+      "sha256": "376e330d27777e32b9f78f77766d040533271bda040767c2aba302e5e0994467"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/progress.py": {
+      "bytes": 6353,
+      "sha256": "705a215f09b8a0c4ffd9c46fe12c44b4137cabfd5b287dea2cd49270335f5cc1"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/registry.py": {
+      "bytes": 7363,
+      "sha256": "e77e4b8820a46f707757f1f163b4bdec18bdadba1f6154aab5cc3ff8695de063"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/environments/lingbot-world-v2.yaml": {
+      "bytes": 968,
+      "sha256": "5558a2bbb7fb331cba065e5b1d62198b635f8f200adabef7c90c7fa7d7578cb5"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/licenses/GenEval2.txt": {
+      "bytes": 1372,
+      "sha256": "58709a304a239f8131b75ea6c4f9a343782e7314d1890b6f9ed763e1dff1ef19"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/licenses/LingBot-World-V2.sources.json": {
+      "bytes": 4937,
+      "sha256": "de157fac619be9155bac356f6a873297422ecb9342585fd34b35a7c8b1845898"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/licenses/LingBot-World-V2.txt": {
+      "bytes": 20849,
+      "sha256": "1349a4b6148492b44f629e64eed676612e234fe9a839e4f3b277c1482c8849f1"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/licenses/NOTICE.md": {
+      "bytes": 5034,
+      "sha256": "415fd172ee78bb091024d98837839459dcf1e0c4d8d22f9241a081fc2edcb7ae"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/licenses/PhyGround.txt": {
+      "bytes": 1356,
+      "sha256": "77508b262350b1caf24cddd148b71db0388eb4e223cb6fa137ea0ff32aedab90"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/licenses/VBench2-RAFT.txt": {
+      "bytes": 1512,
+      "sha256": "399af7e243d625e8dea2b3f81fec676ea19bacf7d9ce8cfd4ce15530d8a66173"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/licenses/VBench2-SimMIM.txt": {
+      "bytes": 1141,
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/licenses/VBench2.txt": {
+      "bytes": 11356,
+      "sha256": "43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/licenses/source_manifest.json": {
+      "bytes": 13245,
+      "sha256": "a5c2b429ceec6e4ce142a84f7044f2b4351686c57c48d129bb5ccdbe6091a847"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/robotics/patches/lawam.patch": {
+      "bytes": 787,
+      "sha256": "6a51b95a9bfd5ee3d1a0ea19369fc181b6191b213e1cbb3f08af004d9683c47a"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/robotics/patches/robodojo.patch": {
+      "bytes": 4481,
+      "sha256": "42026ed4cb82d6c64a7aee0093bcb1b2edbb4c10b45973140104c27151cd816b"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/robotics/patches/xpolicylab.patch": {
+      "bytes": 843,
+      "sha256": "ce88d7faf3961c48f6f77d8bc94b5b8a5d3c74c79d0c8de2a40b3f7dc089d13a"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/resources/robotics/sources.json": {
+      "bytes": 959,
+      "sha256": "968b9f9e8ec67b64765a6dceecc9e9349100d8b1b72a8f894a084d3a0e3e8950"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/robotics.py": {
+      "bytes": 4978,
+      "sha256": "8e4b89e2755ce060a27ebb791b1e4d0f692fefb6ab52b1c5191813b59d13180f"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/runner.py": {
+      "bytes": 22552,
+      "sha256": "80f7897377a850f7394b3fc2697382e3fb1d5d9edca70ef599618fcca9b15044"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/runtime.py": {
+      "bytes": 13216,
+      "sha256": "120ff544aca289a6e6b00eb060a0f84856551f85dfe7503b34e57e4cc249bb35"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/runtime_checks.py": {
+      "bytes": 1824,
+      "sha256": "e7f1267f6b1fa11b9e9450b857ee675857c7505d3d234e03d89ad7559434e3fc"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/setup.py": {
+      "bytes": 26133,
+      "sha256": "f5661ba3c41604af7e31e8a350fdd0b5349b5c4e864a2c03f94aa7b93b0e0cbc"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/sources.py": {
+      "bytes": 8879,
+      "sha256": "1aa887552d2912b7a014709e99064d5cbfe73048603b0397a236bcd2c356f670"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/stores.py": {
+      "bytes": 7584,
+      "sha256": "6138f3c46d3bdead847b438001e65389541dd731a125c0485bd89ed541b58c03"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/submission.py": {
+      "bytes": 2915,
+      "sha256": "a128b80923d0e410ffbc40879c943ffcabe667a15cc1016f081ea3955d2aefe8"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/suite.py": {
+      "bytes": 12810,
+      "sha256": "4ad6bb701a35626e0c162ea5dfbc0958d687b7003ba3dc142a5fe3a14f096f19"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/__init__.py": {
+      "bytes": 72,
+      "sha256": "d83b04d5c76cd4e44e380761be765c1f5262795cf9efc150b01d7c91dbe3a417"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/benchmark_evaluate.py": {
+      "bytes": 1001,
+      "sha256": "4d12227570b7800151c94adc0da8bb11b79c3636a68521748b7860090eb02a6a"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/cogvideox.py": {
+      "bytes": 2225,
+      "sha256": "e0089c86c374561c80afa5f8885cd8382fd6e573ecaaa1ee99dc1d3fde45d881"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/common.py": {
+      "bytes": 2472,
+      "sha256": "d334d204a309da0bdb2e86b2fc97a5b421c0dfd6cc96ff9b44f6aa308b75cfa6"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/cosmos3.py": {
+      "bytes": 3511,
+      "sha256": "1f0d09bc5fff03e55d65451487196775be707cf11c4826a781bc2c9b229a3cd1"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/cosmos3_official.py": {
+      "bytes": 1912,
+      "sha256": "f92625c004b00aa1371ee3a1f83041439dd973599db5b692a469da92dc20a76e"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/droid_review.py": {
+      "bytes": 1682,
+      "sha256": "198e32e03652acd16acfe665a132a07906d965185788fcab2d671ff11457c55e"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/droid_sim.py": {
+      "bytes": 12761,
+      "sha256": "5ed004635dcc1eb96f20a799bdced94f46f7c2e13f13875ed49161a136135628"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/lingbot_v2.py": {
+      "bytes": 5343,
+      "sha256": "88fdb546e752c4df1daaa41d97a5c7490d2eb42b420ef962fa6f24320cb8747c"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/lingbot_world_v2.py": {
+      "bytes": 12475,
+      "sha256": "b4a1168c0a8cde5d327adc1f1d28aace5202813cd63520d5dcf73d52fbf57911"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/minimax_h3.py": {
+      "bytes": 5384,
+      "sha256": "dca3f062a14d91604cd392393fbd975e7675a604b5d4d0d5becad1aed2169825"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/native_entry.py": {
+      "bytes": 2696,
+      "sha256": "88037a7647142b130d16d73a4bb7dc215659b65084892a78846fc3348afadb85"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/policy_file_bridge.py": {
+      "bytes": 915,
+      "sha256": "b8d54741129db18ce474461cee8ad9d096ef35a0f03f1bfe53104618a43925bd"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/progress_events.py": {
+      "bytes": 766,
+      "sha256": "291b115887db3db338ed05df9b614bd836f99acfcf98d6177a27df1674d8d852"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/qwen_image.py": {
+      "bytes": 1698,
+      "sha256": "beebd8cd2e40a340d5f76be60f53720df387786df74ec476bce87d39ad0bbd4d"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/wan22.py": {
+      "bytes": 6286,
+      "sha256": "6c018759a02396433021defc19c12775c7f3d6b78cb193de3dc9723a8551ebb6"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/wan22_a14b.py": {
+      "bytes": 4741,
+      "sha256": "8d3ee9e5703d8b9fd52a2efcf9ec0a5766aaf68fa13bab07f3e7381e9d524c6f"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/wan22_official.py": {
+      "bytes": 3184,
+      "sha256": "6cc135f1bc3a6345b44387249c7a01f2a146ccc769ebbc338bff5133d591492c"
+    },
+    "MassWorld-main/WorldEvalKit/src/worldevalkit/workers/wise_verified_evaluate.py": {
+      "bytes": 7509,
+      "sha256": "cc66bf3dfa416f5d0fdbad1d273893499bcf1fe1cd2c809300eab60fc7588ff5"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_benchmark_worker.py": {
+      "bytes": 5720,
+      "sha256": "446810e2228e4342a5fdb6752f9ce640056e11642497534af2b46848695bd49a"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_contracts.py": {
+      "bytes": 3491,
+      "sha256": "0392075996b0b0bb34ff231c5c21ac99e738b8b7641d4b363a283f03bbc5c6fb"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_droid_parallel.py": {
+      "bytes": 7838,
+      "sha256": "b4fc199b5e95b2481e850d92af3d24f29be007960d50e0eb82414a7d21547114"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_droid_sim.py": {
+      "bytes": 23806,
+      "sha256": "18d97d1aa7a5e28871d7aa85a32b0bdbff272b0604e9c2d0f66c49c5b55ef2a8"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_execution.py": {
+      "bytes": 4097,
+      "sha256": "db77e7735e7601858a611fb241f4180a396d8caea392f6ab2db89b8bf9b35aed"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_file_policy.py": {
+      "bytes": 7017,
+      "sha256": "ca909bdf7cfc522bc6c4b7273f0f755664e1d410c619f162e08b09f6474bbdf8"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_generation_benchmarks.py": {
+      "bytes": 16860,
+      "sha256": "639831b27806d2274369cea4ef43575c6083260b544220afa6e65fabcab00ddb"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_generation_cosmos_variants.py": {
+      "bytes": 5197,
+      "sha256": "55cc2fde4e5ee3497293ac1a419f52659ce0b529b23e274dc035f5114ca35444"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_generation_large_models.py": {
+      "bytes": 11776,
+      "sha256": "7f2816a8677b0a8a3badbe5c5dd8afa576318c4227e88d41488d8da6de395f76"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_generation_lingbot.py": {
+      "bytes": 19196,
+      "sha256": "e7c17b12ae842e73fe92456c5d6177bce5c0ad2115472db938d8ccfe363e6550"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_generation_native.py": {
+      "bytes": 14387,
+      "sha256": "2bb81c1e3f93530b3328a47ce8955d7f41b9cfaff457db273bdcf5f116eacf0d"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_generation_parallel.py": {
+      "bytes": 13421,
+      "sha256": "d283865c22e93aeedec0388f6c98f1de8256e7eb49fa9a37db18348f69f3c312"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_gpt_droid.py": {
+      "bytes": 8093,
+      "sha256": "1747b84b6fc2543c92c93164bc787d585bf56b84ccca90ae14778439e353d5e2"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_history.py": {
+      "bytes": 17794,
+      "sha256": "961b4de649b3a664b7cc4f463aeb534b4621ed013a089bb70296dd249a8a15d1"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_lingbot_backend.py": {
+      "bytes": 7534,
+      "sha256": "1956be4316064c88858fbfd1f3691e0ae97ca2fbccaa0bfd8db07aaea8f07dc7"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_parameter_resolution.py": {
+      "bytes": 9570,
+      "sha256": "6a0e213e036949d8ebbdd8a3ea9d467472764691e4466f55308767eb6c9812e3"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_patching.py": {
+      "bytes": 7864,
+      "sha256": "11ee7a9f64765c1a48bab8fb8e09955609c4fcff1389e6636a2e3efa1090f24f"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_phases.py": {
+      "bytes": 16170,
+      "sha256": "a88e24cee588be49b6a1a6fef617a1938d1fd918620c2048f1bfdaf1efc21166"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_phyground_merge.py": {
+      "bytes": 6580,
+      "sha256": "04e7e4c0fd8ea92b460190e4119e768256824f62f753b8c6957dfba4ab23440d"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_phyground_worker.py": {
+      "bytes": 15158,
+      "sha256": "d6618624478513946ed5d091137b782634671002c06d33ea125d7d5980340ccc"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_physics_iq.py": {
+      "bytes": 13350,
+      "sha256": "b524b00d8ce8347e674c5f559a7e7e5a1a560a7507e9bbb24358e3bff450240c"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_progress.py": {
+      "bytes": 6054,
+      "sha256": "a213b44c7f6099d0b2627468a2062ef48cf3494427ef133f3eddeb2f11cb5d7e"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_protocols.py": {
+      "bytes": 9902,
+      "sha256": "76f189a3d571c388f404115fedbe2e468d19cb5cc8ca022acea9b14bf52246f5"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_registry.py": {
+      "bytes": 4452,
+      "sha256": "81eee9466e47d55883ba3d7c7976d6895db2f679e377c94c9ee455b0e36e89fd"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_robotics_native.py": {
+      "bytes": 16264,
+      "sha256": "307ab88e7a523bc36d797744340af5661457362c1b9fd973c5b7278463b555e5"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_runner.py": {
+      "bytes": 6461,
+      "sha256": "50831f25b01170a405742ccd66fe4e7883200647766134369b1b00ca4472659e"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_runtime.py": {
+      "bytes": 11298,
+      "sha256": "6c8ebdddca4981510027979ec0ce875e90d85e3f6d42d388cc2ce9cb973a3040"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_runtime_checks.py": {
+      "bytes": 6079,
+      "sha256": "7411a834e27cebd727e9547c414afe96b38ccaeaf3850aac18496b6128a955e7"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_sampling_profiles.py": {
+      "bytes": 7085,
+      "sha256": "c7a313c2e169a1bc338c4856eecbf2ed5b0039cbe881891ad4875bdb0cf91651"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_score_aggregation.py": {
+      "bytes": 8798,
+      "sha256": "3750c674a852559da0ad975c028c833672d8b41dac112d07fa0d462ab0937602"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_seedance25.py": {
+      "bytes": 45073,
+      "sha256": "727c92ab46d07c45cce2959f31b22b5dbec95f9e1ea2f72450220c37406ebeaa"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_seedance_split.py": {
+      "bytes": 54271,
+      "sha256": "21d58b24828417249efdd320a97d450f3a203f36be8622185ae7dbd93c8b3a26"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_setup.py": {
+      "bytes": 3605,
+      "sha256": "8a561cf568b1095092bc22cc3280273b4bc6c9cc27831b138fb5455d4b362ada"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_source_setup.py": {
+      "bytes": 5887,
+      "sha256": "e0b631f24cfb9fb20382ed57aa1d4755d9d558403454479e3d27d2dae3d93d1e"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_suite.py": {
+      "bytes": 3780,
+      "sha256": "a908f6eff8e33617a94b99f87ab1bc1af6dfa632f177baaa043934503ecd9a06"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_test_mode.py": {
+      "bytes": 11413,
+      "sha256": "003954f49fb3d203daa7bf3b1d6aa4c7b9e8dd462673d085f7afd8f64675d41c"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_vbench_anatomy.py": {
+      "bytes": 7413,
+      "sha256": "99daac4acd0253febf3ceb1fa142012a74c470e347942a5ba694d05008e3428b"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_vbench_full.py": {
+      "bytes": 30529,
+      "sha256": "1d459a662a78a9003e477e11222010ec6561551ecc59ebbaa30a6cf854e66115"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_vbench_offline.py": {
+      "bytes": 10785,
+      "sha256": "55486130412dbe2883dd53386b2f1c185d9a915ab585d9fe49055d52f1c10702"
+    },
+    "MassWorld-main/WorldEvalKit/tests/test_wise_verified.py": {
+      "bytes": 13934,
+      "sha256": "6d6829fef023bb161e4f84185b0d612a6c1bc9a1de7af283c1df4d6e98554f33"
+    },
+    "MassWorld-main/WorldEvalKit/third_party/README.md": {
+      "bytes": 2791,
+      "sha256": "d4c0e8b7a1c086db26b95b51b31de4c191fd6a7407a2c41ff3dab7e7210aa330"
+    },
+    "MassWorld-main/docs/architecture/unified-evaluation-platform/README.md": {
+      "bytes": 5523,
+      "sha256": "f2ecd46562264a371f8db4a10392198fb028ef6e17f0d176e88ca9a15a7e5738"
+    },
+    "MassWorld-main/docs/architecture/unified-evaluation-platform/adr/0001-unified-control-plane.md": {
+      "bytes": 3778,
+      "sha256": "1a2c999400b428f5e43f1bd8f89d4437eb8d959999de53ce34a1bce67171bcc2"
+    },
+    "MassWorld-main/docs/architecture/unified-evaluation-platform/adr/0002-evaluation-grade-events.md": {
+      "bytes": 3827,
+      "sha256": "6cf0796a0065983a514245e2cd8a414b09a06f16403e1f71c5394ce45cf9bb34"
+    },
+    "MassWorld-main/docs/architecture/unified-evaluation-platform/architecture.md": {
+      "bytes": 9951,
+      "sha256": "7efafb94751bd5b75594277865e548b3c49edcc803950f352419f71072008408"
+    },
+    "MassWorld-main/docs/architecture/unified-evaluation-platform/evaluation-grade-logging.md": {
+      "bytes": 28636,
+      "sha256": "9098ad87ae3b62691a324af34cb3b5a618733f1f46447aab096228c0a8d090b6"
+    },
+    "MassWorld-main/docs/architecture/unified-evaluation-platform/evaluation-run-swimlane.md": {
+      "bytes": 14602,
+      "sha256": "3f03cefc73f90f7b7e8fd39201ee6c8ed891639052d260e7cb4f68c02558aa4b"
+    },
+    "MassWorld-main/docs/architecture/unified-evaluation-platform/open-questions.md": {
+      "bytes": 2714,
+      "sha256": "929021cfdc52949e929cd7fcfcf4164f91c92c0dec2367c4d342b8c919d972fc"
+    },
+    "MassWorld-main/docs/architecture/unified-evaluation-platform/platform-definition.md": {
+      "bytes": 11707,
+      "sha256": "e19ec32ae314869fc35fac3853af0a22e0abf643c83e3b506f1321faf86250fb"
+    },
+    "MassWorld-main/docs/architecture/unified-evaluation-platform/research/benchmark-decomposition-comparison.md": {
+      "bytes": 78073,
+      "sha256": "80a44ba39fe5017def1c9bad69828ef63a647bfad2f3761e41474b4452a3f070"
+    },
+    "MassWorld-main/docs/architecture/unified-evaluation-platform/research/platform-comparison.md": {
+      "bytes": 4017,
+      "sha256": "a2bbffa9c018c6974a30ad9ed9b4e12c8e1eee9e04e975b6e91184b34283549b"
+    },
+    "MassWorld-main/docs/architecture/unified-evaluation-platform/roadmap.md": {
+      "bytes": 4455,
+      "sha256": "1308691a799932f9b440263fab2c39d866d6399eeab9f87219f8b1c6353eb808"
+    }
+  },
+  "EmbodiedEval_commit": "f114576fe947051f8732515cd0ce14ffe2acdfe8",
+  "tracked_file_sha256": {
+    ".gitignore": "64a0f88d8e71dc0865bcfac59204ea5c5f5f2ff6801a832d43304e3431430fa7",
+    "AGENTS.md": "de5cc5a6033abe915c77e3af817fafe63063fef2ec407e5da987df48cb625e9c",
+    "HANDOFF_CONTENTS.json": "d7e09edc0a430a58f073c69a99f7ed363e5c8fe5bcc11e758717e53d9fe2ce48",
+    "README.md": "109fc90210236481d9f106a7201407ca00bbbcea773b57f7c8ef48995e657a30",
+    "SHA256SUMS": "770beaf6be364658e9478bc7e7628b2e8ed5a0911675387c0c76d9b64706ce3a",
+    "docs/GPU实例交接文档.md": "0599748dc6f089897dfd58f0faae015f57e7998303d23910b7c240f393e8ce86",
+    "docs/adapter-onboarding.md": "4ae22b4e1db3ffa98f59938e1aeb0decb0921e1df4918bbff3e1afa93dbc7af1",
+    "docs/benchmark-coverage-review.md": "2b466185f7e1ab92ac058030363a30495783b7609da205abe1c08659ac63fe74",
+    "docs/benchmark-task-inventory-20261015.json": "ad8ceeab4e5030dd58257f520eace6d983ad0c4db2865f2a102d7d6f41c47914",
+    "docs/contract-v0.1.md": "3288db4e14426c4ce15d46a15932a390c1785c9dcea099a67b19623c81439388",
+    "docs/contract-v0.2.md": "858a9aab4849d9e41a6b4100ff226bdfaf56d4808800c955c7a15ee3eff5b21b",
+    "docs/contract-v0.3.md": "6e5f32a8792bbc4055b06a578ca6ac713d70aafcac00fd521281fcb8004dcab0",
+    "docs/handoff/audit_public_space_review.py": "aaa412583f0916aaeb9607306433ecbac77e62b554ccc553b7051ae8e15a9ab6",
+    "docs/handoff/build_adapter_coverage.py": "ddf4f04e1b3456766964e39a756c4404a97e7c3136a1b3b0640933c3118ec1ec",
+    "docs/handoff/build_delivery_receipt.py": "b117e3cc435f61dc45f36f2f0683a78c71eede31c55a82047fd00759fbb8c4d7",
+    "docs/handoff/build_massworld_architecture_review.py": "78e5186d4d1f97434dd20618d1783b4b75cdb8b0836f5053a163a36f27214d4f",
+    "docs/handoff/build_mn_acceptance_report.py": "82db24196714ccf63ba41a7eb1a8d7f32e729fbcc41ca5034ac9d7c086b4a6d5",
+    "docs/handoff/build_mn_coverage.py": "0870918d59ab3850c65c617fcd26d0c079bc372d1353f47c9f86fb241827ad8a",
+    "docs/handoff/build_mn_extension_report.py": "e1bc6ca2cd646969a1942863642061922c330dcb31fcfcdbbed177e590a51823",
+    "docs/handoff/build_mn_report.py": "57a41140f75b035a06e56521bfdd79f3ed1c8e107bb0fdf993fbea88ecab491e",
+    "docs/handoff/build_mn_runtime_report.py": "10e15b5e5ac1967b4311bc60b9b9c2eee5b0c1b0aac0e0d0a1ea0084234160d7",
+    "docs/handoff/build_native_comparison_report.py": "d7f78367633ff9b312d69f8eb1fb790635b3194baf2d04d956c0edc6d960eb87",
+    "docs/handoff/build_repro_followup_report.py": "0ba9a7adf926b7b910ad7d865535f6c3e67f1c2b90df59a6fc78e5b7e07f90b3",
+    "docs/handoff/build_stage4_coverage.py": "b5440a80f6bba6b64b326488d7127d00866ee1f7e96707b553c3f95dab1f1672",
+    "docs/handoff/build_v03_cleanup_report.py": "07ddd53fddea55d0d6a14043e646a69b6030598c556736b2b688d798bc17241c",
+    "docs/handoff/build_v03_report.py": "d90dcc06f858605a095a19b5b8bb0adeb49b6465b37fe9a05411918f1162e807",
+    "docs/handoff/cancel_owned_native_comparison.py": "faea68985c425364647094d53f0bc1c0b61a613d198d48b0ce90209ce08bda03",
+    "docs/handoff/check_comparison_video_http.py": "2d19c08d021389ef63eb819ba4b7a6c2ca0d1558df24d2f131bdfe264c6b19e4",
+    "docs/handoff/check_first_native_request.py": "36f8ed16dc2a5265ec7a5e7c736b4a6e3cb0c70fd29db78214af6850894985c7",
+    "docs/handoff/check_mn_extension_native_mappings.py": "394cfa743d052298d5ca7753fabf4ba6ab0a28d9d03b379051dbd20f10cf9ed6",
+    "docs/handoff/check_mn_preparation.py": "4fdcb969dea2b31b963a3eae0d10baeef432c2e8d16a2a46f2b758bbf0006a35",
+    "docs/handoff/check_mn_usd_references.py": "728d3b980243bc45de667af01bd5d274cbad03e0bac17de8228d7fc6c4dea7e0",
+    "docs/handoff/check_native_array_wire_environments.py": "f4e6e5bed00d1c14ab375ee9404291378b0cc39669c4289ca77cea90226f18b5",
+    "docs/handoff/check_native_policy_socket.py": "19aa8a727ad6ce1d020830aee07949cff7ea3b055be0e5262bab8fd1fe2ef125",
+    "docs/handoff/check_openwam_dual_pose.py": "ce8169f0427d52786c5d99e3180341ce809492be5d6520a9d470ad22661a858e",
+    "docs/handoff/check_pi05_libero_native_input.py": "478c73ef1154081733c7ee326de1c54a117e18f7736f882b7e35e147a9c7cbec",
+    "docs/handoff/check_public_space_review.py": "dbc230939b551d5a53ec1024eebfe2edeeca89d894a23d7be11cc1052d52df95",
+    "docs/handoff/check_report_http.py": "096bdac1dfcdfc06d98897629bd877f0828a2411a88bd20d35f2e56e0a6f8117",
+    "docs/handoff/check_served_report.py": "f5d477cdcece2ca7bd21bf1129ef51f27fe13cb3a933191f0b04c6adb73cf756",
+    "docs/handoff/check_v03_cleanup_package.py": "644f574ed233f9740435da2683c50f2d732a02573f390468dd7102151e41ba7f",
+    "docs/handoff/check_v03_internal_cleanup.py": "6ef06ba8da4beee958c118ed88d720b2db05af139397e861f1bd46af5e4a0de2",
+    "docs/handoff/check_v03_inventory.py": "fe052067b1f4c352676c94cfa73eb443bf34c1e02e11d5a17388b24312d8ab64",
+    "docs/handoff/check_v03_saved_boundaries.py": "2fd50253f58b5b61212087ff575bc5a824a8910c2d8b1ec6666ac0de7870006c",
+    "docs/handoff/check_v03_supervisor_port.py": "e752759fd8a9405feb2240554b72f6dbbc40575e0c5e2b50dfe30f87f7efe292",
+    "docs/handoff/check_v03_validation_patch.py": "613ba1fa2c89d8f51664bdc334188af7007874cce90b7fb5ea09b52d782facf0",
+    "docs/handoff/collect_mn_trial_index.py": "5cbfd297f19db8e2160696249690a5d9899ed455ef2e0f0a091da4eab7f7ae44",
+    "docs/handoff/collect_native_comparison_attempts.py": "9845825bf68529f658892dafc2e0db977e5635bdcc8c7458ad9ed854ec04036d",
+    "docs/handoff/combine_v03_runtime.py": "fc2e4bf771c86556b3081b4ce1ef41ffe88958467efa76a472130703adba4c3c",
+    "docs/handoff/compare_arx_recorded_exchanges.py": "2b748d910734737480ed51b4ec30bbef434a52f38353795b44d3f4042ae0030f",
+    "docs/handoff/compare_dreamzero_recorded_exchanges.py": "9829bb37acd992048de6b663c4cb6e69e8680e2cc44ed6606ee541c7bfe9a853",
+    "docs/handoff/compare_libero_fresh_native_policy.py": "b1c28abaa2d8c972eb53feff990ae037a75c820feb8955d2db1df822fc39f37d",
+    "docs/handoff/compare_lingbot_fresh_native_policy.py": "056eaec972ac20922596c016a480e6e9ea80603ade5e41083eebbef9f67cb46a",
+    "docs/handoff/compare_mn_bounded_repeats.py": "058a3148bec16a38e2cc0a92a3f2b803a1a4e7998d141e13c3fd9c8c42dd4771",
+    "docs/handoff/compare_mn_fresh_trials.py": "49d5bd43929a5c770230e883f3813fb4d273355f2734fec28088dfcb5df37df4",
+    "docs/handoff/compare_mn_mappings.py": "5aaf9a0f905d6dd71ca05debf042881d8aa2b2772536abd2c1732be39d35269c",
+    "docs/handoff/compare_native_cosmos_droid_closedloop.py": "714fd2ccd5070a7681f69e7a3cced555f3be4273d452ca94cb2956b8a4c79cfb",
+    "docs/handoff/compare_native_robodojo_closedloop.py": "a492f0b19c041aac642d258ca675817456a2f74fb339bcc870e79df7bb6d8d40",
+    "docs/handoff/compare_native_robotwin_closedloop.py": "5838f59477149e1998582026b1da4be61b7fb24833fe10f36a3a78f006085789",
+    "docs/handoff/compare_native_singlearm_closedloop.py": "95f0d13ff43323ee790eafe88a9a249ede7e061c2cac598111155ac979f835c3",
+    "docs/handoff/compare_pi05_rng_runs.py": "1e292e6a97d4b185039c732bb201f06e7c04ea766ac1629ef3ac71609fcd3862",
+    "docs/handoff/compare_pi05_robotwin_closedloop.py": "f71363031172412198070f5d05fe241d0f7648ff8a40317c9f7ed43e8bfe01a1",
+    "docs/handoff/compare_robodojo_native_render_runs.py": "9b06e7fc04a07d146ab07d814e81fb56f6b5b2b3f990bd3bc3b785df27049ecd",
+    "docs/handoff/compare_robotwin_execution_audits.py": "78c4e28f4b87cfefb47a374e7e3ec69567f96bb14cc957cc63d96337c368003e",
+    "docs/handoff/compare_robotwin_first_action.py": "5f0b0dd4d05243ee52373a9c05f0272679b3150094ba39e1e57b4ab5e032f6eb",
+    "docs/handoff/compare_stage3_pilot.py": "c148e90c41cc116e6910cf32872e14ddb27e1d11f82790a4001568b12a982b7f",
+    "docs/handoff/comparison_video.py": "1243c8fd73e3bef9af60cd3fca1becd539f65593904f70bbb875578a3ddf3c02",
+    "docs/handoff/complete_robodojo_curobo.py": "cc2bebf2a7f8b330734042ffa998e47ae8f03fc0595390378367210f5d08c081",
+    "docs/handoff/complete_robodojo_runtime.py": "dcc907b23daffb2fb84be73bf562aef0a3df839e8efb6b0d9fbecb70beec8fb4",
+    "docs/handoff/continue_mn_extension_downloads.py": "d2a73dd474e65327501818f67a568d830d5071c574a29534ad4a76fb621ab890",
+    "docs/handoff/crosscheck_mn_robotwin_meter.py": "9e0c22e675767475baf0663025ed0fedf4d9cf8685c13eec2b8b4507a81f135a",
+    "docs/handoff/cuda_toolchain_probe.cu": "22ead670d1e043bda41bd9f9a48b5cd5f7b313200495e3196a179549c952f480",
+    "docs/handoff/diagnose_mn_native_install.py": "98bd08615f6afc19b4f69f4ddef41ed09be00de70c5fe7c94dba620e2008138c",
+    "docs/handoff/diagnose_openwam_pose_execution.py": "980e7d756cd3f3f46c43b792c2bc2e93fac5d322f2aa4cea67e4344636e2ae62",
+    "docs/handoff/diagnose_robotwin_first_action.py": "5cb0201804e6b939da0375a6a13be56b0471b67c9e7192086d71ebe9c8036b87",
+    "docs/handoff/download_hf_ranges.py": "03a07b25400030fd64cb64c7a18a37fabdee463c32537cd92b6e03b85bb5d09c",
+    "docs/handoff/download_lingbot_attention_wheel.py": "71434a670c0c6d4ca2a43fa42dd329ec9aa22d1cd6a35f1a36883232d9fc7d66",
+    "docs/handoff/download_mn_extension_assets.py": "73b69f61c2d2e709bc87b80ec325fd4f12e1ba4f5660d3595abc435eb7da6087",
+    "docs/handoff/download_stage4_assets.py": "d6edb057edef367f9448fe33387153d23752132e1cd05a0b5a99734af2fd44e6",
+    "docs/handoff/inventory_mn_python_environment.py": "e49a1c55620d7874c6b77bca53939a4dc181dfd28d371a763818eb047052cfbb",
+    "docs/handoff/investigate_pi05_rng.py": "76a0536b08f590c1f383ffe6814721dcbf5aabb6bd69653befbdbadf9308a248",
+    "docs/handoff/monitor_v03_gpu.py": "83d9bd0a6a34391b5e877785228ed45e8f4eaa675eb0450dcc67a7a2b1a25340",
+    "docs/handoff/native_array_wire.py": "5c4ce10320ef800fe1ca026dab034ea6df4ac5393d0667ba4f916960410bb3a0",
+    "docs/handoff/native_openwam_arx_worker.py": "8d9042f6c914621de3916e4b3ebb7b85c94744eaddfbd3b29c3bdf5ae9eeef77",
+    "docs/handoff/native_robodojo_reference_entry.py": "73c36043e82165597cdb7765a95f0a8ac07c5141a2d668a40f24ce19821ea2e8",
+    "docs/handoff/native_robodojo_reference_rollout.py": "a7b75847cc25f14c07e524f4fea61fe8f4c7357dd3eec4e46bee6e677b9ee7d9",
+    "docs/handoff/native_robodojo_reference_startup.py": "8cc28dd5f6210b97875f190fd8f37c99caffb734f58d59100a581614aee19cb9",
+    "docs/handoff/prepare_cosmos_native_vae.py": "45cd5c7d2aa7650da5701d7506cc70b53e6a5205be6683eb8c1dba9930462a94",
+    "docs/handoff/prepare_cuda121_toolchain.py": "ad824c5a107f539227530f65dc125a884a7cc2715f4aabe00512dd049cc3ddad",
+    "docs/handoff/prepare_cuda129_toolchain.py": "1bed4f628d19313c90253ad07e794ae6478421156e8d32f915686884b4c4a009",
+    "docs/handoff/prepare_dreamzero_backbone.py": "7fa46b44a6d338878773aa7e430bab678213e3720eaffc8fa2b6ad46119de349",
+    "docs/handoff/prepare_dreamzero_import_compatibility.py": "cebedc3f2c232d59b8f1e194332cfe3f9b5abd806d7d43a4ef77354d764e2c75",
+    "docs/handoff/prepare_isaac_local_libraries.py": "709cbd6a9276daddfc36858b0f63c7ac133ed4cf7cfcc8d6a650805c5b8c4892",
+    "docs/handoff/prepare_mn_extension.py": "dbfaa35c55a8ff01431374970c7399caccf03b180e0dbd0c6f846b56afc3c851",
+    "docs/handoff/prepare_mn_native_environment.py": "1bea29d33a6393988a8fab178ec5c2d9315d8b51ade581d30563defae5c16fb6",
+    "docs/handoff/prepare_native_debugger.py": "53b1df8f074dd9d383cb264205a3a9c69546f40f4027cbc165938bf6cb9ebb54",
+    "docs/handoff/prepare_native_video_runtime.py": "64799c26d903c2b64aaaf3568a32b18128f9b1f259e7984f844127bb3a69286d",
+    "docs/handoff/prepare_pi05_arx_environment.py": "f293366dfbf63a03ae1d00631638bcf53d3dbd2d42c126cc075c24b50437c16d",
+    "docs/handoff/prepare_pi05_diagnostic_overlay.py": "7120417e9b27a05a34c772ae89e00762b6b0a6e39b2bff42431ede9db53a80a4",
+    "docs/handoff/prepare_robodojo_environment.py": "0afc09b70f188ab7a1c08f9df4881c2313be95278af9be4185af353d99c57a82",
+    "docs/handoff/prepare_robodojo_isaac_archive.py": "e426500835bf40891dc2c884ff0fcb43e206056bb618f0e15f06cf849571ed5f",
+    "docs/handoff/prepare_robodojo_sources.py": "a68474c18198ef35e7c00c40fbc816ecb49964197b8ab3fd963694b8246eaa83",
+    "docs/handoff/prepare_robotwin_archives.py": "877c84a64b21ff83c8cc50835468e95535d33c8cfedd34ed2c5be2c7de88ffbd",
+    "docs/handoff/prepare_vlabench_assets.py": "c54e7d0fca8603a984f473d8e89c9dc48b42a88977deba8660f42683e7b86b60",
+    "docs/handoff/prepare_vlabench_mirror.py": "b8d0c7e8c76ccb31253bec13797c57548b1ab46bc01ebfa010aa6293efcf90f1",
+    "docs/handoff/probe_dreamzero_range.py": "520fb96bb0fd6fdd474a035a71c593a9bd363e1598b55ae0ad96a91b13f7fd3b",
+    "docs/handoff/probe_dreamzero_request.py": "2a332bf6f5ca5993a6ba7810121f3281112a2ab7640e2166a934774e892efc57",
+    "docs/handoff/probe_dreamzero_xet.py": "59f877b50595a41870d206565e9cc2306bdd5103214540df757acba947ae6328",
+    "docs/handoff/probe_lingbot_checkpoint_startup.py": "ed80d53cc6484f7dc7dc0f1044314e2addfbf3853b8bb5fb197c1d4583def5fe",
+    "docs/handoff/probe_lingbot_environment.py": "11929079b54ccfcd0b494aef45caf14b63949b508de27b26ef51f1c935a564b3",
+    "docs/handoff/probe_mn_component_imports.py": "6295d31fa5e52803a5caea42b26f68df59b4ff1a2356b71a9744a1f499bc13f1",
+    "docs/handoff/probe_mn_components.py": "c45f464b919cf9aec8a903abe2e639f25e91127eb592bb5cd57af7b0ef76ee53",
+    "docs/handoff/probe_mn_extension_runtime.py": "abf9e6b2a0ab88a4fe0766066030db2a6b4700b7232460505b2543008482cd28",
+    "docs/handoff/probe_native_models.py": "d420c6caea24c680f155f1ed917ca2f6ace4686cc6bc48e7b6ca4f3496fc25f2",
+    "docs/handoff/probe_openwam_model_process.py": "e60fb692cf0e8f7e028aefaeb429befa940e144e4cdc9b2c2793ddfb9baa55df",
+    "docs/handoff/probe_real_observation_copy.py": "1d60290369c41a2530228791dd5ff6d6212fed67337db5847aef73c2075a2e2a",
+    "docs/handoff/probe_robodojo_reset.py": "b5f9b2e3ee87f2cf921bff058c07f0541cd593df7d7fad2ce056a65c2800b442",
+    "docs/handoff/probe_robotwin_environment.py": "334e9865feaa27c0281eff3735ebf598c00732361e8a9f64207dfc334a4d2015",
+    "docs/handoff/probe_robotwin_models.py": "44f8219768e98f07333fa29ed544d52b708e846007bd997f98aa29e88505b9bc",
+    "docs/handoff/probe_robotwin_runtime.py": "a12219362ef56f5a93dce5efb760712bd5242cd89457b5fd2efcd51a880966cf",
+    "docs/handoff/record_arx_policy_exchange.py": "736cb0b7d070f081ad93ff4a0ada02f1c7ae8790f282329988ea8cd604d11897",
+    "docs/handoff/record_dreamzero_policy_exchange.py": "6ee13bee36a30c03cef71576752e1074c7331cb3496f7ee79521ab9fe5d6de59",
+    "docs/handoff/record_native_comparison_hardware.py": "a469635fd1ce003bc47d388a6e83b4caaf7dbe863783f28c1cb6b32094ae79ad",
+    "docs/handoff/record_stage4_preparation.py": "463bf79af73b10637c558ee5f4295a4babd82eae4a02669a596efe58b287e8c9",
+    "docs/handoff/release_verified_occupancy.py": "90d91431f7ab7f9016d8b57c577693fc6c5fbe503ece35a540de17911d29d0c4",
+    "docs/handoff/repair_dreamzero_ranges.py": "766212fdebf21acc536a68a3e27e771c3d7d041c98a2b797570a0fe89d64f098",
+    "docs/handoff/repair_openwam_arx_torch.py": "281fa97ad3ed74eee9180244399946ac72a03975ef62393bc97f4c8a9e3f59be",
+    "docs/handoff/replay_baseline.py": "71358b0811991d0bca3bfb478df3bc38bd81bac62ee27a346ccedf6537782aa7",
+    "docs/handoff/replay_droid_native_actions.py": "d4ded231084662ed9dce1b63fb168cd7a7d5908daae8f0d907d4c0f8f13007f2",
+    "docs/handoff/replay_libero_native_actions.py": "c0c75220efea9baa3612cf4fc3aad550f4bc29ae7d27a81c49a0b87646c73e10",
+    "docs/handoff/replay_mn_native_actions.py": "12be42838e4614f9e2cceefb93afc0960bbd50a040755145063a642710d2a72d",
+    "docs/handoff/replay_robodojo_native_actions.py": "9f4d9cdabd04cbdc0ee88a5d8500f1986bf790bcacb782c50608a3e9f2fae82a",
+    "docs/handoff/replay_robotwin_native_actions.py": "9165eaaf400f3e52f2917a8de763be03585459737f3cb22bbb20454a835b7aad",
+    "docs/handoff/replay_v03_baseline.py": "95d0698ee259fee710ab4d6a39263fb35e257e3feb7aa078a3c0254ede4f15ea",
+    "docs/handoff/replay_vlabench_native_actions.py": "b7753b7f1efa603219fb65650c9f382d3d3eee6b2cd2bd0ee1a2855caff797f5",
+    "docs/handoff/report-shell-v03-cleanup.html": "fcb3e5b81d97e59a64df8dc944be4ecdb7c68cfe3114f78949a22728868467ea",
+    "docs/handoff/report-shell-v03.html": "6cbed1de5831c152f59baee65a7216094f75636e24c68da076aca381cfdd8397",
+    "docs/handoff/repro-followup-20261015-index.json": "501a101129dab707711bfc229c1a6428c7240816c67f4f767fb6f4ffde2a3744",
+    "docs/handoff/requirements-libero-openpi-stage4.txt": "408b95ee55e395d49f7818fa8b31d35180f711aae19fc0aab706dbf5df1c0f54",
+    "docs/handoff/requirements-robotwin-stage4.txt": "562e9b163b22f2844675a06a61285cba4c79153e753c267d74eda7dc141fb078",
+    "docs/handoff/requirements-vlabench-stage4.txt": "8498fc1af4d9a08459f8e511ed347dac619217c8a0c62fa0cf6cb2c7f16f0858",
+    "docs/handoff/reuse_mn_component_assets.py": "3cd0a0852225e3fa963ed40f544bbcf6ef676353c09f1f5043f556e1da3bfb24",
+    "docs/handoff/robotwin_execution_observer.py": "4a9a145b00c747645e27cbbf1b3a09624899df05d0ac8de2d19d91e3270c7ab4",
+    "docs/handoff/run_cosmos_droid_bounded.py": "66b11ded94c0affc746534e09087a300148a723071267b8aea2f15edc3c8db6d",
+    "docs/handoff/run_dreamzero_droid_bounded.py": "9731395a650f5bc0b1d6a55c86558ce35a1f251971be84b6aef3fdceee37654c",
+    "docs/handoff/run_mn_architecture_examples.py": "1689f818a8b04bcb75cc43373b48a018b28473fb13cbf6c18696505fff0fabc2",
+    "docs/handoff/run_mn_trials.py": "3a8e9653572bef4175c358919e287bb935e3c6b691c8732b32a20339d1d313ff",
+    "docs/handoff/run_openwam_dual_pose_comparison.py": "7c7175e3a6608897db832aaa1003f2eae8eeed492e13725ce1da8d0dc64cb067",
+    "docs/handoff/run_pi05_robotwin_native_limit.py": "31a21f373269ffce02a459e902b809cde8452e628bffdb996f64722647a59915",
+    "docs/handoff/run_robodojo_bounded.py": "64560bc8e61d2bfdab75078a4bf091fb532f36a141b90a4b9106f9c0741f26b0",
+    "docs/handoff/run_same_condition_singlearm.py": "0d8b5a53c71e32d187871bfdb2cf84e41bafa128c6645e73ed808b433538d502",
+    "docs/handoff/run_v03_bounded.py": "6ee13c909bde1296aadb47f9f09dba0cdd6a2427ff3bbf908cc3008a7e63e1f4",
+    "docs/handoff/sample_gpu_util.py": "3242f13edfad333c0d4f53cedffc8a582d7fed0cdad9df7d924bec4a645899aa",
+    "docs/handoff/seal_mn_delivery.py": "ee59bd1aa9abeff58c7a98831059aabc1a6e23b03993cd37068db5d2b64c12af",
+    "docs/handoff/serve_comparison_report.py": "8680613983b8ee579c8bb25f09f85089543be603be6d44f6df6ae6936be9077b",
+    "docs/handoff/serve_dreamzero_native.py": "67bc1f3ef0733243beebe32a64f4cc28283a456f064fb72577e75af085257759",
+    "docs/handoff/serve_lingbot_native.py": "3a19b316160cf7aa34b075e8465116902cbd341dcf510b9d4d5da13773b8c6ac",
+    "docs/handoff/serve_pi05_arx_native.py": "7f0e235caf3dcbf8f8dedc0d5d737db77da0ecb454a9a917cfe7d13724ab84cb",
+    "docs/handoff/serve_report.py": "4a331abdfaf746c0dd5adaea4b5c2f0b73623d1f2654ea504f029682eb4a1336",
+    "docs/handoff/smoke_native_environments.py": "1759bb98d570da09482153559b8f0515f9e82ec107a2d48093bedc255ac1a1c9",
+    "docs/handoff/smoke_pi05_arx_model.py": "39190c92de165301ccabe3efe06f154c114638d07d38cef0dafd1273ea8d94d8",
+    "docs/handoff/source-materials/compatibility-draft.json": "ca5fba2c6c6a65005ca9c7c16bebb5e3caeb76743ede75fde1b21ba3f0250196",
+    "docs/handoff/source-materials/sources.json": "66692d046f46b6679741bb8c13ebe14fc72afb36fb7d3238634a1a6b0438d9e9",
+    "docs/handoff/source-materials/兼容性清单.md": "7a974e0ce5d44574e9f3edc03b433e5d222badcfc71ad4f7b738979540e47b96",
+    "docs/handoff/source-materials/来源说明.md": "ba90346ec112074edbf4e9396d34f438966237fb18fb3cf745a64a502eb93873",
+    "docs/handoff/source-materials/模型×Benchmark_分工表.xlsx": "2002ec227399594458223ee9e04b5e81aeb58af0c4d601dba4c1d1885d3e9ced",
+    "docs/handoff/source-materials/阶段0确认材料.md": "f645e4844724301b23c70b47d02263e1fd40212025501bf584155bddd84fb501",
+    "docs/handoff/summarize_openwam_dual_pose.py": "22e80d6abcca02918771efd2e1519fc1fd52a4b5c5fc257ba5378281f177b75c",
+    "docs/handoff/supervise_mn_case_boundary.py": "8d0bea6bba6d47d4df0ea6162333e5a2525ff64d5005e454bef882f5c8b85a7e",
+    "docs/handoff/supervise_pi05_arx_smoke.py": "37a891bd65dc0d1f213184b0d4df1a99d34ca390537c31abebf8c2d36e28a60b",
+    "docs/handoff/v03-delivery-index.json": "a375a633c6fb844fcbe42ab474d9ec55a6d0db901b6e07ea681b15c0142bfbe0",
+    "docs/handoff/v03-internal-cleanup-index.json": "5daa6d9c5047b8d116824712d0e678a60795734991d40f470cdcae0b173c34cb",
+    "docs/handoff/verify_acceptance_snapshot.py": "6ad3ea249806f1bcb140f3c4ce67a4472e6b8bc5455334f69370bc0e9db89f22",
+    "docs/handoff/verify_comparison_videos.py": "021b1e064078859480b760d541c8ef626a40ecc795f9cb5bf927ef418b158076",
+    "docs/handoff/verify_dreamzero_backbone.py": "f71753e826f8d902ba6c37e351b2c14fc70779f39bc3db940458a9b171348192",
+    "docs/handoff/verify_real_observation_evidence.py": "77be23e8dab6dd4bb0ec2bf961d8b27fd0ae9b22209a130230886af803e2159e",
+    "docs/handoff/verify_recorded_trial_accounting.py": "1a82fd4e1835cd87fa8f63a96efd3490d7b7b5053dd870c25ec31d47d6fe6317",
+    "docs/handoff/verify_v03_cleanup_delivery.py": "7c9f5764c9f720abae1271a49577ae8c5563a17f3cd6c192a8caba19d47f3dd9",
+    "docs/handoff/verify_v03_delivery.py": "251a14cff76f5197afaeda789f3d35b2cfbf55fcad19484b48fc4b60a693a8da",
+    "docs/handoff/交接启动提示词.md": "cb1adbb30269ae88a0c7b7563e829d73ef932f3c68b014b82e819b3d27b7e9bd",
+    "docs/openwam-dual-pose-20261015.md": "fc0dc58ab9660e1964880edccf703f976b51fa5c1bef108fc3fbce51225aeaf5",
+    "docs/public-space-fields-review-20261016.html": "3ef859c6762d00e3a959653da9cb6227e4a7c657dc9849176ae64cc32211932b",
+    "docs/stage-state.json": "83df06e2e6f28c082f4f1081821e8afa33043620c9623a35f326648fa810f644",
+    "docs/stage1-acceptance.md": "91809bfcb69d1ba1557890535f55671289b1257e366fc47e0c90af584301ca73",
+    "docs/stage2-acceptance.md": "a07a147bc914f4c37b9e3ccbda4e6f80335198eb6fc8c93367b8b3abf861706b",
+    "docs/stage2-evidence.json": "59583dd153e316e955be86261065660df9b92492b7b241d89cf17881a4490bd0",
+    "docs/stage2-linux-replay-20261005.md": "3a58fc70abe0513b335bd80f013efa0a26921ddb5cc86e66894e818984e53975",
+    "docs/stage2-review.md": "45bd16b22a5c77680db3b76617faafb6c88d6d11bc7d80bf0d4c32d02751d95d",
+    "docs/stage2-test-output.txt": "6cd637dcf03d8ef96a52ac14ddc04e301aeb2a26b529a510b3d15217f9c7e369",
+    "docs/stage3-framework-evidence-20261005.md": "d89e56bdbe15a36ee0fd72f4075e3b892dfbe0b2fa447faf1a286e7e0cf452ec",
+    "docs/stage3-native-evidence-20261005.md": "a0a0cad225114593135641048ad4cc1a9539b298f8ab4dcf3b521e1e755e7a1a",
+    "docs/stage3-preflight-20261005.md": "850f4ca889d57f8486a405668c17b4394ef7da0c0e74ecb4bc3e2a9224a981eb",
+    "docs/stage3-review.md": "b6a35f8313f3c7608bfc2711b4b0b5e1f4ceaaa9003651b30e795f1790b80da9",
+    "docs/stage4-review.md": "e136afb90f341f654dfa2e81d005f82a7441f8064de9c24dcdada5efb9f3b99d",
+    "docs/test-output.txt": "e728f4a6c11c87f2162a9c6a06dd1b01a46333935a3a977e60aea1ae3ce350d4",
+    "docs/validation-evidence.json": "47cc87fdc688137166f9c47e4e65206a43ef3b2d085aef927368ac463e267e60",
+    "docs/variable-transition-review.md": "152d3db29ae156b65221664f4d15f75082032f0c137f7de9067ce0574876a860",
+    "embodied_eval/__init__.py": "c588a9fee4964266ebe32b48102501d70167477b10f6cad059962cf135645bdc",
+    "embodied_eval/__main__.py": "8b10bd210e4d724e9691c4823dc2ac904b60a89f1c34094ca9d3387dbc3d48f9",
+    "embodied_eval/_legacy_contracts.py": "32c4cc787fb4725765eedeef068770954fd16872275a17586d6f5987a7bf5969",
+    "embodied_eval/_legacy_interfaces.py": "ba4044f7b3dbc4851b69eb27657f2c194a9ffc1a00cec366b06e820fb618e907",
+    "embodied_eval/_legacy_validation.py": "ff302ac10f3c8397be1a67b18ef84afc3f432e0fd811608e31d50a5cd7b0e373",
+    "embodied_eval/adapters/__init__.py": "b7c5bae57162766cd591f628ba598e47917d7f228bc842599fe375a23f3e2b64",
+    "embodied_eval/adapters/libero_openpi_benchmark.py": "5c7d2907723319f6cee30b3e80751eb056c30b037e6083cedf2525d17728c46b",
+    "embodied_eval/adapters/libero_spatial_benchmark.py": "ea328d1f8737ccf55aba40115b68751f4cf046208c9b719f564245481cd90cd5",
+    "embodied_eval/adapters/lingbot_robotwin_objects.json": "2eb0d306959afc409170ee64dc471df21280c2ea22e99cc29a31428896345270",
+    "embodied_eval/adapters/mock_benchmark.py": "1375ec98886a13403c0c901a938b5c47a9ddb23f28c189c96ab5b1247c5c5f17",
+    "embodied_eval/adapters/mock_model.py": "f069d152a666048b90c28ea0a04597d48f2fbe574e3c2d442854a0b752461ecc",
+    "embodied_eval/adapters/mock_spec.py": "23a50cd8903bfb5af39682ae666417ed5ebaa00494b7d2cd040729080aaff6bf",
+    "embodied_eval/adapters/native_common.py": "48bba452efd9df50cee8e4a5ae64483cfcd13c7f1f463481e60d1b77ca309336",
+    "embodied_eval/adapters/native_policy_transport.py": "7f894762e8b1820b69d3d4b566867a82287bdba91aba6b89da8f257106851bc7",
+    "embodied_eval/adapters/native_robotwin_executor.py": "b9a7226a9c47ab202286cb3bc798d4eb86a136cc6fa2129cd062ac78ad0c5fdf",
+    "embodied_eval/adapters/native_robotwin_models.py": "9424df4fbb0ed93a50d134b235ef480ed8a873db610a610af71c657d5d7cd4e2",
+    "embodied_eval/adapters/native_robotwin_runtime.py": "07d8ab3f3d54882e2c4d14daa34b0bc4b8bf3d61affb8e912eef063ba44a397d",
+    "embodied_eval/adapters/openpi_libero_model.py": "97ce5185323b611ae4c1929924775649f75ce833effd840e65cb4c7fb689ba34",
+    "embodied_eval/adapters/openpi_libero_spec.py": "ad26e5a2101f7bbdc1c26d4fa38e2d44258c22bc79485b0b36752da8b7936342",
+    "embodied_eval/adapters/openpi_vlabench_model.py": "97e7ec33c51c0f197f58c7c51c6f4ff8cc56882b3de8b0acf4a1426f50a061b4",
+    "embodied_eval/adapters/openpi_vlabench_spec.py": "48436905edf5dd7298e6200bd915e2b08e870294e3cc764ca93d132fb6da53c4",
+    "embodied_eval/adapters/openwam_libero_model.py": "e8837494f2c2f1a496a3f8138cb625c6defb803f60f85997f60a9395741c03c5",
+    "embodied_eval/adapters/openwam_libero_spec.py": "6c06c26eb7b1cbd6c13b689684734d9f9a0aad6b9396493a9087f2e8232dfd9b",
+    "embodied_eval/adapters/openwam_robotwin_objects.json": "b4b3b867419d5051fa4c5a3333b477d8c7d4ce1d0dae5bf15b37b0c9915e2818",
+    "embodied_eval/adapters/openwam_vlabench_model.py": "cedc5d5eac436d8892dc604e4aa7864dc7c6e4a546a4f084cd3b00637217ed95",
+    "embodied_eval/adapters/pi05_libero_objects.json": "3af9f7ab961499af3d4b192101cc9d445195f72eeeb7edd375bf4782dfed7341",
+    "embodied_eval/adapters/pi05_vlabench_objects.json": "31fa2546a392c9fa372dca70d489f7bfe244b4c62aba32784a17a3d7ba4c90ee",
+    "embodied_eval/adapters/qwen3_vl_processor_objects.json": "adc589fb56cd41ad2ae89c6425c419cdc5a0821300a837b2519550e33e836ac0",
+    "embodied_eval/adapters/robotwin_assets_objects.json": "3dd60f6c6d467552d61de6eb023fb6c86178047105e49061ecae6d06c8e85d08",
+    "embodied_eval/adapters/robotwin_benchmark.py": "b6b08fbf7072c835d8269d632513d5f3a61cbe47f13aa2935fd22167a87c9010",
+    "embodied_eval/adapters/robotwin_identity.py": "573c306a4547ffbf26fdd4b7e4717bf782bbc109bbd7c61112881110cb497da9",
+    "embodied_eval/adapters/robotwin_model.py": "86e3ba0054098108beb47572d0d0aab1d093bbe93d5ad18605570a53dbec9139",
+    "embodied_eval/adapters/robotwin_spec.py": "4183c3fb2a5eafd743620c9de1679b25e8cf98f753e5a45b2fa370dd1169db36",
+    "embodied_eval/adapters/runtime_options.py": "5f5675282a8d05e9f162c3427af61bfd1a515c87ee99c90529c75d10506ee296",
+    "embodied_eval/adapters/vlabench_benchmark.py": "ef0565bb2a108496f2796487808c454a361f64862f588e0d274e0d1b21338d16",
+    "embodied_eval/adapters/vlabench_openpi_benchmark.py": "d9c681baee05f81ee1bd8792aa5bc28c95f36ac161bb6091370eee6c04dec5ea",
+    "embodied_eval/adapters/vlabench_spec.py": "697207717b3b5092594e5c88ab79a56dbf39aa59cfb0bb3c41a45d6308ae1dc9",
+    "embodied_eval/artifacts.py": "453340fda0b7664f5d439d812a8876d9797f63f3dba168203fbdc40c7a5329da",
+    "embodied_eval/codec.py": "525e19b7de9b99c3a8fa8cdf4e5f469b76e9add9f46c06e24eb1cfc0d188d49e",
+    "embodied_eval/compatibility.py": "cd4fdf0de71d5948bd5d50a42cf94919c069dfd3a7bf22e72624b3174d4c4023",
+    "embodied_eval/config.py": "af688ad4c863722d761109638e158eaab2c81ea34d9382185a4f86e9f8c0c6f0",
+    "embodied_eval/contracts.py": "4b855d93835cbe8ef1287f777695396640885aa52031bef6f2dad5a3ca266c4e",
+    "embodied_eval/core/__init__.py": "bbcd15e634063b33f9fca48f7452b61b3c0c67a425ea1046399e0519ad8541bd",
+    "embodied_eval/core/compatibility.py": "b6b7a5c78d2cf7de4df2c3c4ef2a0289107cb448399d59427e5fb2a3dd57ab95",
+    "embodied_eval/core/registry.py": "4e42ff53ae71702f2fee94b1a8ee1c6cdc508576bf03e7264601775a593347eb",
+    "embodied_eval/core/transforms.py": "8b3553d51f072b1a6c2c9a53ad93649519776df417e510a9b9dcbc72e7958ab7",
+    "embodied_eval/core/types.py": "99836ec58a3218f9df9ad35496c23a6ac81575365c30db6f14874d275e7ef8b2",
+    "embodied_eval/core/validation.py": "86921f5033f1c153942225324f45da1f445dcb69fa95f6570c5acf256af0a151",
+    "embodied_eval/errors.py": "48e84515926280a9c803b10ffd13d20712928cc07813d4df4bc1bf3453d37b4c",
+    "embodied_eval/geometry.py": "6fa6938bd62329cb19e467aed1b8ce5beeeb3aa7c76eb23017feb151e3a2a4f3",
+    "embodied_eval/interfaces.py": "8a98bc24a4616bd13c7e2486fc2cecb08d309eeba7627a264a70cb7632c45e9f",
+    "embodied_eval/mn/__init__.py": "796e6d70cab50b18c71da7fa6e9cc003149f72d88c8292be2d09d1a4751ccbfc",
+    "embodied_eval/mn/additional_catalog.py": "61250f01007b3335b5d0b800aa7775470a7f92ab1c2c9297430c769006af09fe",
+    "embodied_eval/mn/additional_models.py": "499c7507e64e2abaea97460cf7fdb7d7aa7cfdb6ad7cd8e266c07c7fe95d0f05",
+    "embodied_eval/mn/asset_manifests/cosmos3.json": "ee9beef400f9b48ebd871dfcb70103d8418a8683847291476ab6a5aada307262",
+    "embodied_eval/mn/asset_manifests/dreamzero.json": "b7c2465b4756795113c3e634e506cbdb227f75526e125a735bb7c92e16588e6c",
+    "embodied_eval/mn/asset_manifests/droid_sim.json": "5ee2df59ba95ba1138cb41a8f33d940b8462f9c11bdeb1f10b05b7b5d2ae542c",
+    "embodied_eval/mn/asset_manifests/openwam_arx.json": "ddb8d189c0e4c035e9461360d9a596db93b2da0cdb78192a53a64d31e8f4249b",
+    "embodied_eval/mn/asset_manifests/pi05_arx.json": "2abccb36c5e8b2ac6b20e13c93685b746b9556b9983c6b9af46005167c26eca2",
+    "embodied_eval/mn/asset_manifests/robodojo.json": "df5f99615ee9033f86c9bc666c713fbb2c3fe8bc1a883437f19329129584a172",
+    "embodied_eval/mn/assets.py": "93efef39376485336c9b676c3200f41b05f73acaf4f89b52a417ac8fdfb613ce",
+    "embodied_eval/mn/assets_common.py": "6c9a2280406df502b5ecda9a095c97b13f548c5276d0950a8c197382ce1a63a8",
+    "embodied_eval/mn/binding.py": "0e8168e701586e25836bf9c09c36312a1cc07ef30ef6af60d2b4bf45ad49ac2e",
+    "embodied_eval/mn/config.py": "2d9a9e7183954d173470f369799281d2b9823d84a44145b689c096f836e5cc65",
+    "embodied_eval/mn/contracts.py": "1eb9fc3fd7cc3ebbd5c01ae7500183f670a2f6f374f8a9d4693b8b82891be12c",
+    "embodied_eval/mn/droid_simulator.py": "06a9d5e2cae53fa5bfce9b03f73cc5ce4673497ad79af185b731f95e05b053c5",
+    "embodied_eval/mn/interfaces.py": "a5597c7610fbb03444687dd1c69349611dc299494721588f8ec54813a1e42413",
+    "embodied_eval/mn/joint_native.py": "4d8b008595138d833a9241c11e9c436b14bc04a76140eb4176534c62bdf9b17b",
+    "embodied_eval/mn/migration.py": "fbf30e697f1eb4eea5b1116c2a61908b9c64990b3c2ec7332f7a45bf6fecaf9b",
+    "embodied_eval/mn/native_benchmarks.py": "c41525f13b6bb63443c5b9f4b38663942d9536472d57b2155aa78b5f5cb03e28",
+    "embodied_eval/mn/native_catalog.py": "de7943501c6f5427d52a1961dcf33a0528327adade5494926e0c42fbdd0265f2",
+    "embodied_eval/mn/native_model_process.py": "a6f1d61d5a99bd8bf80dc2e8e1c281e2222f84ebfbcbacbc1edd93912fdebfee",
+    "embodied_eval/mn/native_model_worker.py": "f2a012b8afd3ad1ad4bb4ebe5ddfb455067abd107de7b0dafe9a42189e804802",
+    "embodied_eval/mn/native_models.py": "111ebc6d7b4f1322afb615472623cf1975c37b7419b4f2a5a360fd511c92661e",
+    "embodied_eval/mn/openwam_arx.py": "27230e918a51a40799dcafb6ee0ce4a4be75caa15a3b51eb076812c7b54e69bb",
+    "embodied_eval/mn/openwam_dual_pose.py": "44a37960467e4287e58dc0cfa94f884771596742593ff826156518707057497a",
+    "embodied_eval/mn/preflight.py": "fc8cf40d531da6a793eca6bbd0f5486eb22de9f22512245ceb293aca56ca502a",
+    "embodied_eval/mn/registry.py": "0688adcba0b1ea846b12b1dea9b7a464150c33d053c05cdeb16d329e419fb4b3",
+    "embodied_eval/mn/robodojo_simulator.py": "a8c6fd39110494263b0f71f395bf6bb725c9595f5ff809bf1c17c15be55ce238",
+    "embodied_eval/mn/rotations.py": "02a7a65793d6eb92de0312180cdb914bfc6cdc8d2e3f748648bf56faaa60c645",
+    "embodied_eval/mn/runner.py": "8019f69a8ebf32c0ca44b30c7cb15e2c00e90d57d65d0d81b2ce72bc34d88d86",
+    "embodied_eval/mn/synthetic.py": "5cb04480585fb3054c5be106827500f8b61f78a54e54b538a3d57bdce3d81d13",
+    "embodied_eval/mn/transforms.py": "6ea961eba309ee39957c41bbe2075466aebbc5acc8475cde7de4e1b4e13a18a8",
+    "embodied_eval/mn/validation.py": "a7dbceb5e0af415556d8f5a9c473fc9ceea5ed6b40bc39d051366ec6ab8cee4c",
+    "embodied_eval/native/__init__.py": "4bff411d59a76a687b953027ebd943428fef292f1e53c2e1007d15c5ebf078b5",
+    "embodied_eval/native/additional_catalog.py": "bb572402acde998474c1f1ac2e2e64a7efe2552f259ba831c5ccca8a0c64f561",
+    "embodied_eval/native/additional_models.py": "87613eac7b2ffd9419ea5a8c6acbfcbb66797a122b96217c925e9f28d90d0201",
+    "embodied_eval/native/asset_manifests/cosmos3.json": "ee9beef400f9b48ebd871dfcb70103d8418a8683847291476ab6a5aada307262",
+    "embodied_eval/native/asset_manifests/dreamzero.json": "b7c2465b4756795113c3e634e506cbdb227f75526e125a735bb7c92e16588e6c",
+    "embodied_eval/native/asset_manifests/droid_sim.json": "5ee2df59ba95ba1138cb41a8f33d940b8462f9c11bdeb1f10b05b7b5d2ae542c",
+    "embodied_eval/native/asset_manifests/openwam_arx.json": "ddb8d189c0e4c035e9461360d9a596db93b2da0cdb78192a53a64d31e8f4249b",
+    "embodied_eval/native/asset_manifests/pi05_arx.json": "2abccb36c5e8b2ac6b20e13c93685b746b9556b9983c6b9af46005167c26eca2",
+    "embodied_eval/native/asset_manifests/robodojo.json": "df5f99615ee9033f86c9bc666c713fbb2c3fe8bc1a883437f19329129584a172",
+    "embodied_eval/native/assets.py": "cb9b920c5db9f50c9673044e767a585bbdd5fa1eb832891411e497f0f8dab466",
+    "embodied_eval/native/assets_common.py": "677eb09fa61d70b330d8a8dbb34a4983cac297269c9a1204a6f3c3af07fe9d1f",
+    "embodied_eval/native/contracts.py": "3aafe0358fad76f2698b97d8172ee6a942f1161d94e006676d1fddb7daebdd13",
+    "embodied_eval/native/droid_simulator.py": "51727cc8c0fe2e7b87f5880d4fb61f6160bf7c708120610373fadadaf4917129",
+    "embodied_eval/native/environment_records.py": "36797b351bd28ab8bc88fa218bfaaaa0c9684186def36f74a1dcd2748ec80b54",
+    "embodied_eval/native/joint_native.py": "384a5b51ec8ac37371b8334d82877d7177dcf8452d9950f4a4322e887daff293",
+    "embodied_eval/native/native_benchmarks.py": "0bee97f24366a043ea51e27d689fcffac7e37954f95937b47bd270391bb6d424",
+    "embodied_eval/native/native_catalog.py": "e9aaaa3fdc958ef8da3bcd21cefba83257ba7001e58ab694a8cad250bbeedf93",
+    "embodied_eval/native/native_model_process.py": "cdce34fda62d9fcbebdadcab427f1dc00932c82e4b03fad8eceda712da3e50e0",
+    "embodied_eval/native/native_model_worker.py": "063ab48f2d0f94b5a28d39791795aee98614091ffe01c2135d1ee4967795ee1b",
+    "embodied_eval/native/native_models.py": "82da4472e76c4d3038de8059f63757168a83f3fa3da4e9c8294115df63a23601",
+    "embodied_eval/native/openwam_arx.py": "612574436bdb89b54a8d6d45e098fa8b9b71fd30a59f68a8f2f3e8e66645ed24",
+    "embodied_eval/native/openwam_dual_pose.py": "bac85ca0a7fb2a012270fd1399e99e435a2e0850396baf8be462ec115cba3623",
+    "embodied_eval/native/registry.py": "79cb0547082873dc9816905fb25cbb3c7df623e122c130ba55083469199a6db4",
+    "embodied_eval/native/robodojo_simulator.py": "a97533e4dba633c9850b52be0328334b6fcbd4ca03760763307631f1ff7e8642",
+    "embodied_eval/native/rotations.py": "8c2a4b872d063a8e4a82fb7dad4150375c47cfe534e0dd15c61992e464c2a043",
+    "embodied_eval/native/transforms.py": "1eee1970ad29d3164a15eea24a8cf4cfe0936aa125927d21b48a61b7706e84e1",
+    "embodied_eval/robotwin_pairs.py": "ddbed7c06c162ab1f0926175db7531521e56c8906bb14470913482aeac4afd5b",
+    "embodied_eval/runner.py": "dfc6d928f29b4ff73dc7126b9e2db668c02bac7243ded08fcccb512b518590c2",
+    "embodied_eval/stage4_pairs.py": "ebaf2fe04830f300e3bd015101f41cf28372bcafc58a2a6fbd91d028777a7e77",
+    "embodied_eval/v03/__init__.py": "e8db16c8371626e4e6440070e7ebb3014da6239d4868f40c880767876205de4a",
+    "embodied_eval/v03/benchmarks.py": "a6c2946d783357a6111bddaf4e71cef693a63cef57bf2f687d19a72746115d73",
+    "embodied_eval/v03/config.py": "f034571d0760601d97917d4c79781b1ce88d668be6dad18faf00b76b2b449278",
+    "embodied_eval/v03/context.py": "abb0b4e86cd54954130f3f2e0e023407005fdda98a6fbe821cf5adf1ed1e78cb",
+    "embodied_eval/v03/contracts.py": "fb9ea255638dc290611c5f18b9e3e5d696602b94ecc16671c6e7fefcf7fd8f75",
+    "embodied_eval/v03/interfaces.py": "e8d4b75893a41264bca79e5866b64bcedc4047b7f7c606cc8a96dc66432354b1",
+    "embodied_eval/v03/matching.py": "4f75e29ab649c7e0d3dc0d7a1e5c3aba9493c0c9eac5c14172c1f3df3abb4bf9",
+    "embodied_eval/v03/migration.py": "7dd6c37ace44816a9d9c7bb227754f4c221a50ba7bb4525ced7352aa1203f44d",
+    "embodied_eval/v03/models.py": "f959cb02739e725456da465e6d0c67d7b806f2c3072af604c8733eb3c5c4785e",
+    "embodied_eval/v03/preflight.py": "7e835daffbbc14407f3e092a1f1dde6617d7727cfc0d652b930265181f632368",
+    "embodied_eval/v03/registry.py": "bb1ff8b16eba35f87f4cdbd01a56dfe9fa93f904a0ce5896aeb24cd1c391d80f",
+    "embodied_eval/v03/runner.py": "da61460d719432d38298fd93089b33dae7b3905972cc52935a52565b188f63d6",
+    "embodied_eval/v03/synthetic.py": "32f9a51d0612992fda1c3573118f009dc600d1bb8f9220e412257e110666d327",
+    "embodied_eval/v03/transforms.py": "0aaad94b54dcaedd939902d705589b357c4a2db7d16e909ec7665fe8e9e4a64a",
+    "embodied_eval/v03/validation.py": "98260db9c1b2064c76f4e2c258eefa0fa00c84aa86f8b2a7964416865380b5bb",
+    "embodied_eval/validation.py": "460419de8f2e88cfa2fafc8296c4655d0d109466a588ca77b621cc6d34b34749",
+    "embodied_eval/visibility.py": "c02ecee4edf7b957c133e39e7b73506a32e6ef4cc9f06d596aac9ae96b16c4fc",
+    "examples/README.md": "bbfdf881c273f6fed5bff4f0deaddfbfa060c358ce3d48ca07b74c49839b0f88",
+    "examples/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "examples/contract_examples.json": "ec47d8a8d29f7690bd12037c1de4207440acf9741676bc6f8d7877c2b6af4f58",
+    "examples/contract_sample.py": "9b37aa62056f7b4025c67b9af0ca6c2bc2d4debe7965e11aff36a5b05d9a8baa",
+    "examples/mn_openwam_dual_wxyz_encoded_absolute.json": "d8efc7f7eb84905ad7f9ea10f4f29add3e8a14b1269da80cb39d9882525f0c81",
+    "examples/mn_synthetic_run.json": "57c2bff16bbf56ff89315bf92b946b4cb2671f787768be162c403b85785f4dea",
+    "examples/stage3-native-debug-pilot.yml": "81ead6296c3116ae4b168bda78ff2504dad658ffb187fc4b6e402adc9bf5f51f",
+    "examples/stage3-openwam-libero-spatial-pilot.json": "9088656817be9f50333b11eaf745294e9711e69aac31574fee2ca0fdc2c8cf72",
+    "examples/stage4-lingbot-robotwin-adjust-bottle.json": "c2b5ff97ebf9877cd47d1b571c14a6d9946c621622fd04ef3b555f5430451d4a",
+    "examples/stage4-openwam-robotwin-adjust-bottle.json": "c66e6bcaaba9f73bc26f6c0925790994ffe9f171213c1353efc409913287a7c2",
+    "examples/stage4-openwam-vlabench-select-fruit.json": "cec009977dae25d312bf3c00d3e9cf65feed0fe4b3e64ddea1e86fa844865f85",
+    "examples/stage4-pi05-libero-spatial.json": "2ae75364ad994f4a68ac859d28617e19a591c1313f6e94d1725f42f67dd30d11",
+    "examples/stage4-pi05-vlabench-select-fruit.json": "1261d5511ddba1f6bd12abd284bd3dbb8fa782870a2b985657e52715dfd6e79e",
+    "examples/synthetic_cache_run.json": "a9977a267a88a3f89aa6c11a0e720da4d1309bf2b53f95bc00568ee15e5607e3",
+    "examples/synthetic_native_timing_run.json": "d8dac4ae810c83ffe83699bb16698f8364fbb8ff318547beb42d75c10c0a070e",
+    "examples/synthetic_rejected_run.json": "f5efb307c2d9c4b288bd3a2a8b41e9a9f74e5de62ff992f2f1d7499799db25d8",
+    "examples/synthetic_score_error_run.json": "a24bafcf3e4597a4d793fc74beb3716174c15edf129ef23e1e87028f71aa1432",
+    "examples/synthetic_single_run.json": "33ffbe2691a9243625627428f8f751f0d587421d99ff93babab54bb0074d3a57",
+    "examples/v03_cosmos3_droid_sim.json": "f782c2f2075836c6c7157bdd1c6b8b8ccf189e1b1d778850b86c452f2d2ab2de",
+    "examples/v03_dreamzero_droid_sim.json": "fb240b125224a078120ba7218acda4a1c137acee8b82f032618e7ce709a24f8d",
+    "examples/v03_openwam_arx_robodojo.json": "33668e73821325ff5d4d5a6aaf42759c3b96c277f95bdeb8939886bc11b3fcba",
+    "examples/v03_openwam_arx_robotwin.json": "ecf2c27adb378ac98bb0d1fafeeec7b60d3851f11dd14b13773aa9758c8c5ca8",
+    "examples/v03_pi05_arx_robodojo.json": "9a6db2cf0a6925b9315914e7f6f893c90b103b2499cb7228ee08fb900b477220",
+    "examples/v03_pi05_arx_robotwin.json": "00b8c990d0de6fd1c5da3d3fac62f3be850c5aa0076a0eb9ab4fa5a4f6bd5757",
+    "examples/validate_contracts.py": "4383039a3e7ec09688fb06a1c9b160278607696b5479c32bf08bcb8fb787876e",
+    "pyproject.toml": "bb4996c89229c06dd4816fde758a8198a39cf3e3e3fa9d344639dac393498cd7",
+    "tests/__init__.py": "5c68adccf4135071bd02efe9b5d3d300edadc97304aa44a5a2b2ee8085c2af46",
+    "tests/fixtures/legacy-configs/mn_openwam_dual_wxyz_encoded_absolute.json": "325b46b4abbf598f2e4ade6b57b46b712926c0407ac2542cb7c0a587a34f60c2",
+    "tests/fixtures/legacy-configs/mn_synthetic_run.json": "0f86578676e53aec199419528c2ecfeb3c64e8dece19069c41c21cfc1fe7396e",
+    "tests/fixtures/legacy-configs/mock_cache_run.json": "316d9d93b55c406d3af96a46ca9cf133105855d51a412fab395039c438c74151",
+    "tests/fixtures/legacy-configs/mock_chunk_run.json": "0a0b058885aedb64498317c9ad215d1e79a06c3ea6589a2b9a98af29ef47c479",
+    "tests/fixtures/legacy-configs/mock_rejected_run.json": "f9ccf354a2bd2dc2e5f211c67444900ac04bd4492a332bf3b869444168dccab1",
+    "tests/fixtures/legacy-configs/mock_score_error_run.json": "18f3834ee6b9e54f0b161ed360d5d157fef9f1de7a79cf1bcd4238efe335359f",
+    "tests/fixtures/legacy-configs/mock_tool_run.json": "390bc3bde22e3db85b79ade409a2526deee00c1e00f4cb00488299a69bdeb8e6",
+    "tests/fixtures/legacy-configs/stage3-openwam-libero-spatial-pilot.json": "4d9b246eaeb6b132be3faa08769d05c1fc9ed00132f14d5371fc6c7d9fb1e77a",
+    "tests/fixtures/legacy-configs/stage4-lingbot-robotwin-adjust-bottle.json": "8b89b541f749176430be025c295a6ad5fd7620685b2dbc272731a2315726bcf3",
+    "tests/fixtures/legacy-configs/stage4-openwam-robotwin-adjust-bottle.json": "f5637e4e8e6693e5ea2f7ad4ec1d000ad4665dec57c525d7e8754e16e3942779",
+    "tests/fixtures/legacy-configs/stage4-openwam-vlabench-select-fruit.json": "ed453615a264b324f1884c13021a6fa8eb272df1af81399c49181510adcef2bc",
+    "tests/fixtures/legacy-configs/stage4-pi05-libero-spatial.json": "01b80b7618d3dfa1280aefa22a5f75962fae375f28a3a91d0491b987b9de75ed",
+    "tests/fixtures/legacy-configs/stage4-pi05-vlabench-select-fruit.json": "b34c89fa584bec6479a3c890044fdd714e0a5883a6e909f55bb7f432d18b471d",
+    "tests/legacy_support/__init__.py": "a15c53bb1f365cee05cab5dd4ac99caae27d970f21780205582224c426fb7e68",
+    "tests/legacy_support/config.py": "86d9c36af95b36b7b1a1f7aee64670290e10c306ccc45d4f05872fbfdc085339",
+    "tests/legacy_support/runner.py": "be326592353a6fce0b0860d9786a8a2b47d900f9e50feef90e2ae76f5574f486",
+    "tests/test_arx_exchange_evidence.py": "047dca65c7cd975160808b3c1d4243dd4d2a8ebd9e2f795e4c40d70891a34fee",
+    "tests/test_comparison_video_preview.py": "b7df48d3124dfb40851c588fb95d71b74edfa059fefbc22b7ad76a0e3edf9aa0",
+    "tests/test_contracts.py": "230959332a6d0985f672a2c9d5dd0f34845f01352e91adf4b1baf0022391e766",
+    "tests/test_dreamzero_exchange_evidence.py": "857b3257c5656d1a13d5d451991d1c95a75561310cc1c6d7a12c63f0f6bfcf51",
+    "tests/test_droid_native_replay_evidence.py": "35c652c185d87cff4f9f361f96d7b16ef3d5c4962edba3006cd12f73e6dc3afa",
+    "tests/test_inline_tensor_paths.py": "edd874d1c1b98868f741ec14dda240c3e66bd1b61b4a97e8576d8d8dd2f5258b",
+    "tests/test_mn_additional.py": "55ac22b60efdff6bf88e46fbce35fc12dbf31a78b5246c63ebf0038708467773",
+    "tests/test_mn_architecture.py": "1d806b826ec0efc9550922b604aeaa871e0e76275a218449740d3a3e8e0cc786",
+    "tests/test_mn_component_probe.py": "33f1d8856e2eda635c3aa14fb1c9d792e524118fbdb765d131e07671db307b85",
+    "tests/test_mn_droid_process.py": "bc106b999de2dcafffe343f058b0eee204c521e97f60d6695902e8915f559251",
+    "tests/test_mn_dual_extension.py": "91b3f71adcc5925d7841d3ef635bc740e2612c2ea79e3b5381220745e32e9fb1",
+    "tests/test_mn_execution_failures.py": "db5a56045678b201c7c6d4ba9800bf1db316461d9b085fa065cc4a54c3ffe4d9",
+    "tests/test_mn_failures.py": "222ac561ce43d400712a6167d8bd227cd61dabb346ddf7f627e880c111c2f451",
+    "tests/test_mn_native_model_process.py": "f3c48405164958af43c34594548a43d66d2a8b0e2eec5409704eead821ac8a8d",
+    "tests/test_mn_native_semantics.py": "7bbe98b3db269cba54792d354c06a7b0dcc7be3d60d882528d1e50fa216836c6",
+    "tests/test_mn_openwam_arx.py": "77ee75c20a823179e229490b37cb0bf6339b5026678eb3fad7c630d830c423df",
+    "tests/test_mn_openwam_dual_pose.py": "e90b9272c2dd2ec40dfa9054041ad326cc0d6bdca12f2cce76d57296955b907f",
+    "tests/test_mn_robodojo_process.py": "db232959787088c580349196e98fa57a65d8efaaedbcce71d0c55fed825f3e04",
+    "tests/test_native_array_wire.py": "e05e3496e18a6e83a9aa29f50b6bd589b7e7b55888e0cc0dbc1fc287f9757acf",
+    "tests/test_native_comparison_video.py": "3c0f72015d882443ca94d598786b593a793b1c82e471ba1f17c0cde943a41abc",
+    "tests/test_native_droid_reference_state.py": "7f3fe3670373c3172fcbce307fa14f9dc357cb5154d620b96bec1a36b783f340",
+    "tests/test_native_policy_transport.py": "dedadf955beb4e24eb7de3213c233e97d9904a0220bc10c657d78d99f6fcb5fd",
+    "tests/test_native_robodojo_reference_startup.py": "1f6895f5f9efafcbd137f9356ef626575f953497adfc678f3dd78af0c0a50f4e",
+    "tests/test_native_robodojo_runtime_paths.py": "7e202a02c34218515df72595b19caf0d8a08bbf636e3d4e8e0dd4338eff67c7c",
+    "tests/test_native_timing.py": "bdcf95c08ae4c688f5a7f056c843920641d15e79ed36e7d4af42f814087baac5",
+    "tests/test_real_adapter.py": "8cc3532c60a3f0f5ee1079ec11e59f9a96958f6b3bcf0cc8288a059206a55d57",
+    "tests/test_real_observation_projection_evidence.py": "d7870f81f7544800b4e2b8c75715cb712f2c12f587371bb6864eb95574d7cb85",
+    "tests/test_recorded_trial_accounting.py": "02593d3fbe958e659102b8770d57570f85a5c20b84905c59847f237564e69ddd",
+    "tests/test_robodojo_native_replay_evidence.py": "56e0347a00faf7f0979fd0272e8907b6542179413f744094f178382ffbddf602",
+    "tests/test_robotwin_execution_audit.py": "04c94bc7de853bb8dd18e03c269abe6ceb509448a1ff25a6bd20cc303803c0c5",
+    "tests/test_robotwin_executor.py": "6d7ec08ba018880c2771c729abccd163373734efb04833aececcaf74853b45a1",
+    "tests/test_robotwin_pairs.py": "2d93706d7bbf16536bc3dfc68d0c21aff002c2b8955af3413f99df4819146331",
+    "tests/test_runner.py": "2192f393b89a738168c6965431885358d3f547c484936aa4f90262f8c0ab2872",
+    "tests/test_stage4_adapters.py": "7c9567480a374a646bd2d22a1ec8900e774ad54624d2c22222f8b5a114005b9e",
+    "tests/test_v03_internal_layers.py": "6af840c6d72bf89a154b7e21126393f7cdfa138480f7bc42abcdfbc129c01541",
+    "tests/test_v03_public_space.py": "757dce6e749de29928eabf40e74951074745905096844ad834db84a7d7b85670",
+    "tests/v03_helpers.py": "7c16c8d8aeb032f78ad0c827377a0c7355a6bffb88ef940e144673e2e17b5b73",
+    "uv.lock": "72ca6ceca6131552742dc26818fd58afa8c2c4701a7ee54ed2b466986de0e9e7"
+  },
+  "git_branch": "feat/public-v03",
+  "qz_metadata": {
+    "version": "qz version v1.0.0",
+    "operations": [
+      {
+        "service": "train",
+        "action": "CreateJob",
+        "parameters": [
+          "logic_compute_group_id",
+          "name",
+          "project_id",
+          "workspace_id",
+          "framework",
+          "command",
+          "framework_config",
+          "auto_fault_tolerance",
+          "task_priority",
+          "max_running_time_ms",
+          "reserve_on_fail_ms",
+          "reserve_on_success_ms",
+          "tb_summary_path",
+          "envs",
+          "enable_notification",
+          "dataset_info",
+          "enable_troubleshoot",
+          "fault_tolerance_max_retry",
+          "fault_tolerance_retry_interval_sec",
+          "description",
+          "exclude_nodes",
+          "is_publicpath_readonly",
+          "specified_nodes",
+          "pre_check_items",
+          "runtime_attributes"
+        ]
+      },
+      {
+        "service": "train",
+        "action": "GetJob",
+        "parameters": [
+          "job_id"
+        ]
+      },
+      {
+        "service": "train",
+        "action": "GetJobLog",
+        "parameters": [
+          "page_num",
+          "page_size",
+          "filter",
+          "sorter",
+          "search_after",
+          "job_id"
+        ]
+      },
+      {
+        "service": "train",
+        "action": "StopJob",
+        "parameters": [
+          "job_id"
+        ]
+      }
+    ],
+    "platform_jobs_created": false,
+    "account_or_job_data_queried": false,
+    "tokens_read_or_copied": false
+  },
+  "historical_515_tests_recorded_not_rerun": true,
+  "integration_implemented": false
+}

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MassWorld与EmbodiedEval 0.3整合实施方案</title>
+  <style>
+    :root { color-scheme: light dark; --canvas:#fafbff; --paper:#fff; --text:#242630; --muted:#666b7a; --accent:#354381; --tint:#eef0f8; --line:#dfe2ec; --code:#20232d; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--canvas); color:var(--text); font:16px/1.76 Inter,"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif; }
+    .report-shell { display:block; width:min(100% - 40px,820px); margin:32px auto 64px; }
+    main.report-content { min-width:0; padding:42px 48px; background:var(--paper); border:1px solid var(--line); border-radius:8px; counter-reset:section; }
+    h1 { margin:0 0 .7em; color:var(--accent); font-size:1.85em; line-height:1.25; scroll-margin-top:24px; }
+    h2 { margin:2em 0 .8em; padding-bottom:.35em; border-bottom:1px solid var(--line); font-size:1.42em; counter-increment:section; counter-reset:subsection; scroll-margin-top:24px; }
+    h2::before { content:counter(section, cjk-ideographic) "、"; color:var(--accent); }
+    h3 { margin:1.5em 0 .6em; font-size:1.18em; counter-increment:subsection; scroll-margin-top:24px; }
+    h3::before { content:counter(section) "." counter(subsection) " "; color:var(--accent); }
+    h1:target, h2:target, h3:target { border-radius:4px; background:var(--tint); box-shadow:0 0 0 6px var(--tint); }
+    p,ul,ol { margin:.8em 0; }
+    .lead { color:var(--muted); font-size:1.05em; }
+    .callout { margin:1.25em 0; padding:14px 16px; background:var(--tint); border-left:4px solid var(--accent); }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .panel { padding:16px; border:1px solid var(--line); border-radius:6px; }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:10px 12px; border:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:var(--tint); }
+    code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
+    pre { overflow-x:auto; padding:16px; color:#f5f6fa; background:var(--code); border-radius:8px; }
+    a { color:var(--accent); text-underline-offset:2px; }
+    @media (max-width:760px) {
+      body { font-size:15px; }
+      .report-shell { display:block; width:100%; margin:0; }
+      main.report-content { width:100%; margin:0; padding:58px 18px 48px; border:0; border-radius:0; }
+      .grid { grid-template-columns:1fr; }
+    }
+    @media (prefers-color-scheme:dark) { :root { --canvas:#14161d; --paper:#1b1e27; --text:#e8eaf0; --muted:#aeb3c2; --accent:#aeb9ff; --tint:#282d42; --line:#383d4d; } }
+    @media print { :root { --canvas:#fff; --paper:#fff; --text:#111; --accent:#222; --tint:#f2f2f2; --line:#bbb; } body,.report-shell,main.report-content { background:#fff; } .report-shell { display:block; width:100%; margin:0; } main.report-content { width:100%; padding:0; border:0; } a { color:inherit; } }
+  </style>
+</head>
+<body>
+  <div class="report-shell">
+    <main class="report-content">
+<h1 id="report-title">MassWorld × EmbodiedEval 0.3 整合方案</h1>
+<p class="lead">2026年10月19日 · 基于用户上传的MassWorld快照和当前0.3代码 · 待确认方案，不是已合并交付。</p>
+<section aria-labelledby="recommendation"><h2 id="recommendation">结论：能合并，但先分层接通</h2><div class="callout"><strong>推荐把 MassWorld 作为统一项目入口，把 EmbodiedEval 作为机器人评测执行内核。先接通、验证，再合到同一个仓库；不同时重写两套模型/环境Adapter。</strong></div><p>人话就是：MassWorld负责“选什么、安排哪次评测、保存和展示结果”；EmbodiedEval负责“机器人每一步看见什么、模型输出什么意思、动作怎么执行和怎么判分”。最终用户从一个入口使用，不需要在两套系统之间手工搬配置或结果。</p><p>这不是永远保留两个独立产品：可以形成一个MassWorld仓库、多个职责明确的Python包。一个仓库不等于一个巨大的Python环境，也不等于两套循环同时控制机器人。</p><p>本轮只是方案和只读核实，不实施合并，不创建平台任务，不更改0.3契约、上游、历史结果或Git提交。</p></section>
+<section aria-labelledby="baseline"><h2 id="baseline">依据与相较上次的变化</h2><div class="table-wrap"><table><thead><tr><th scope="col">对象</th><th scope="col">实际依据</th><th scope="col">边界</th></tr></thead><tbody><tr><td>MassWorld</td><td>MassWorld-main (1).zip；归档标记<code>0425da26bc79b6dcc5debd40d904cc063950aaec</code>；292份文件，其中206份Python可解析。</td><td>用户上传快照是本方案依据；没有在线核实GitHub当前HEAD，归档标记不是签名验证。</td></tr><tr><td>EmbodiedEval</td><td>当前提交<code>f114576fe947051f8732515cd0ce14ffe2acdfe8</code>；公共入口0.3，core/native分层已完成。</td><td>旧10月16日MassWorld分析中“0.3仍是提案”的判断已经过时；本方案直接接现有0.3，不再先接0.2。</td></tr><tr><td>既有工程验证</td><td>两套Python各515项、CLI预期0/0/0/1/2；11条保存链路55份观测、44条动作转换已有回执。</td><td>本轮没有重新跑这些测试，也没有运行MassWorld测试、模型或仿真。</td></tr><tr><td>启智工具</td><td>qz version v1.0.0；本轮只读核实四个train操作的schema。</td><td>不是MassWorld文档所写的旧qzcli 0.3.0；登录/接口可用不等于已有平台调度适配器。</td></tr></tbody></table></div><p>压缩包SHA256（内容指纹）：<code>e64747418982c8787645925b86f78f120024bea3fbe1dc84496e3ac80966034a</code>。逐文件摘要、源码节选与当前版本见<a href="source-index.json">来源索引</a>、<a href="code-evidence.json">代码证据</a>。</p></section>
+<section aria-labelledby="capabilities"><h2 id="capabilities">两边现有能力如何分工</h2><div class="table-wrap"><table><thead><tr><th scope="col">方面</th><th scope="col">MassWorld / WorldEvalKit现状</th><th scope="col">整合后归属</th></tr></thead><tbody><tr><td>总体平台</td><td>MassWorld根目录以目标架构文档为主，实际可复用实现主要在WorldEvalKit。没有把目标门户、部署注册、统一控制平面当作已实现。</td><td>统一入口、任务计划、运行身份、产物与展示由MassWorld一侧组织；网页管理台如需要，单独建设。</td></tr><tr><td>离线评测</td><td>已有图像/视频生成、评分、typed Artifact与阶段编排。Artifact是带类型名的数据或文件容器。</td><td>原流程保留，不强迫视频模型输出机器人动作。</td></tr><tr><td>机器人执行</td><td>既有EpisodeRunner和原生整批任务流程；语义、计数和协议与我们的0.3不完全一致。</td><td>接入EmbodiedEval的机器人任务只由其0.3 Runner推进仿真。原生整批入口另标模式保留。</td></tr><tr><td>模型与环境接入</td><td>双方已有各自注册/声明。我们的模型与环境独立维护，当前有11份模型输入输出配置、7份环境协议。</td><td>当前机器人领域以EmbodiedEval注册表为唯一实现源，外层只导出目录元数据，不复制推理或控制代码。</td></tr><tr><td>运行环境</td><td>WorldEvalKit支持本地/Conda/venv/container等组织；remote枚举存在，但对应通用执行分支拒绝。</td><td>轻量编排与模型/仿真原生环境继续隔离，不宣称已有通用远程执行能力。</td></tr><tr><td>平台算力</td><td>qz Provider仍属目标设计；本机现在有可用qz工具。</td><td>后续新增一个平台调度适配器，只负责提交/查询/日志/停止，不解释机器人动作。</td></tr></tbody></table></div><p class="lead">源码依据：<code>MassWorld README.md; WorldEvalKit/episode.py; runtime.py:3–21; 12–105; 170–227</code>；原文与行号见<a href="code-evidence.json">代码证据</a>。</p></section>
+<section aria-labelledby="architecture"><h2 id="architecture">目标结构：上层统一，内层只有一个执行者</h2><pre aria-label="拟议的职责树">MassWorld 统一入口与任务计划（需扩展后端选择）
+├─ WorldEvalKit 原有离线生成/评分
+├─ WorldEvalKit 原有具名原生整批协议
+└─ EmbodiedEval 0.3 执行后端（新增桥接包）
+   ├─ 独立模型注册 → Model Adapter
+   ├─ head/关节/位姿等公共观测与类型化公共动作
+   ├─ 独立环境注册 → Benchmark Adapter
+   └─ 0.3 Runner：唯一推进仿真、计数和调用评分的循环
+
+运行方式：先本地执行器；后接启智平台执行器
+共同记录：计划身份、执行尝试、来源摘要、指标和证据索引</pre><p>Adapter指某一侧的格式转换组件；Runner指调用顺序、预算和计数循环；后端指上层可调用的一套执行能力，不要求新增网络服务。</p><p>外层可以显示每一步的进度，但不再调用WorldEvalKit的EpisodeRunner去包住我们的Runner，不二次分割动作缓存，不重复reset/step，不接管控制器或评分。</p></section>
+<section aria-labelledby="integration-point"><h2 id="integration-point">真正需要新增的桥接点</h2><p><strong>不是装上一个现成插件就自动完成。</strong>WorldEvalKit现有插件入口只有模型和Benchmark两类；EvaluationRunner构造时就实例化其模型/环境，Planner先按它的protocol和Port绑定，再调用自定义build_plan。仅加一个Stage并不能绕过前面的类型要求。</p><p>推荐给上层新增一个小而明确的“执行后端”入口。在实例化原有ModelAdapter之前，先确定本次任务走哪个后端；未选择新后端的原流程保持不变。新插件名和方法都属于拟议接口，不是现有功能：</p><div class="table-wrap"><table><thead><tr><th scope="col">拟议接口</th><th scope="col">具体作用</th><th scope="col">不承担什么</th></tr></thead><tbody><tr><td>catalog()：组件目录</td><td>从0.3双方注册表分别读取能力、输入输出配置、环境协议、资产与真实验证状态。</td><td>不生成模型×环境组合工厂；不把DreamZero登记状态显示成真实验证通过。</td></tr><tr><td>preflight()：运行前检查</td><td>构造严格0.3配置并调用现有预检查；返回缺相机、坐标、单位、关节或资产等原因。</td><td>不能仅凭Artifact类型名或训练机器人名判断可组合；必要输入不自动猜补。</td></tr><tr><td>build_plan()：上层阶段计划</td><td>生成检查、整次运行、结果整理三个阶段，连接既有Stage/Handler扩展能力。</td><td>不把每条机器人动作拆成上层Stage；不继承动作重试。</td></tr><tr><td>execute()/import_result()：执行与结果导入</td><td>在明确的原生环境中启动0.3入口，将退出码、manifest、逐回合结果和证据登记到外层。</td><td>不在模型Adapter里接收环境对象；不重算官方成功条件。</td></tr></tbody></table></div><p>可以拟议新增<code>worldevalkit.execution_backends</code>扩展入口，其中<code>embodied-v03</code>选择桥接包；点号表示扩展入口的命名空间。这是上层新增接口，不是把机器人契约改成0.4。</p><p>若暂时不能改MassWorld核心，可先把0.3作为独立外部任务调用并导入报告，但此时只能称“任务级联通”，不能称模型目录与规划已经全面统一。不要用predict抛NotImplemented的占位ModelAdapter充当已完成接入。</p><p class="lead">源码依据：<code>WorldEvalKit/registry.py; runner.py; adapter.py:13–14,157–197; 65–76,211–223; 326–335</code>；原文与行号见<a href="code-evidence.json">代码证据</a>。</p></section>
+<section aria-labelledby="changes"><h2 id="changes">具体改哪些模块</h2><div class="table-wrap"><table><thead><tr><th scope="col">位置</th><th scope="col">建议改动</th><th scope="col">保留不动</th></tr></thead><tbody><tr><td>MassWorld/WorldEvalKit入口与Planner</td><td>增加backend选择、命名空间目录和后端委托规划；明确机器人结构匹配以0.3结果为准。</td><td>原图像/视频模型的ModelAdapter接口、既有离线评测计划与评分。</td></tr><tr><td>新增桥接包massworld_embodied（拟议名称）</td><td>实现目录导出、RunConfig转换、后端启动、身份关联、结果/错误/证据导入。</td><td>不写OpenWAM×LIBERO等成对Python类；不复制模型预处理和环境控制器。</td></tr><tr><td>EmbodiedEval</td><td>初期只使用已有公开入口和独立注册表；必要时补稳定的目录导出函数或封装层。</td><td>0.3字段、单位、四元数、完整双臂、实际测量/控制目标区分，以及现有Runner计数和原生实现。</td></tr><tr><td>结果展示与产物索引</td><td>保留指标有效性/单位/来源、范围标签和执行状态；关联轨迹、视频和来源摘要。</td><td>不把未评分显示成0，不把任务失败显示成框架崩溃。</td></tr><tr><td>启智执行器（后续）</td><td>集中封装当前qz接口与平台状态映射，核查自动容错和资源身份。</td><td>模型/环境Adapter与Runner里不散落qz调用，不自行创建或停止无关资源。</td></tr></tbody></table></div><p>这条路线维持M+N：M表示模型数量、N表示环境数量，新增一方只扩展自己的Adapter及声明，外层目录自动读取。11份模型规则加7份环境协议不是77套需要人工维护的桥接器；可组合网格可以生成，但不作为运行白名单。</p></section>
+<section aria-labelledby="public-space"><h2 id="public-space">公共空间怎么合，不再重复写Adapter</h2><p><strong>机器人领域继续以现有0.3为公共标准。</strong>环境原生相机先映射到head/wrist/left_wrist/right_wrist等公共字段；模型Adapter从公共字段取值。图像缩放、状态编码、归一化和动作缓存仍由模型侧处理；控制器、逆运动学、仿真和评分仍由环境侧处理。</p><p>公共位置用米、时间用秒，朝向用明确坐标系下的xyzw四元数：向量分量x/y/z在前、实数分量w在后。坐标转换需要真实变换与工具参考部位，不因字段统一而凭空获得标定。未知物理含义的原生数组只能走同名协议扩展。</p><p>MassWorld的Artifact当外层文件/数据容器，里面可以存0.3的序列化记录或完整证据包。校验仍调用0.3语义校验器，不能只包一个type_id就声称完成物理映射。机器人观测不强迫与视频生成输入共用一个扁平数组。</p><p>新模型或环境只接入0.3一份实际Adapter；MassWorld目录从它自动导出。外层目录项是选择和展示，不是第二份推理实现。已有MassWorld视频模型仍走原离线后端；已有原生服务模型若要改成公共动作，必须另行核实权重与动作含义、补真实转换和测试。</p><p>首版桥接直接传配置与落盘结果，不逐帧经HTTP上传大图，也不实现远程DataRef载荷读取。DataRef是外部数据引用；能管理结果文件不等于会读取实时图像引用。</p></section>
+<section aria-labelledby="configuration"><h2 id="configuration">配置、版本和来源如何统一</h2><p>用户最终只选一次模型、环境、任务和预算。下面仅是拟议的上层选择示意，不是当前可直接运行的配置，也不代表已经选定真实试点：</p><pre>execution_backend: embodied-v03
+model:     现有模型ID + 具名输入输出配置 + 固定权重来源
+benchmark: 现有环境ID + 具名协议 + 固定环境来源
+episodes:  明确任务、初始化、seed和预算
+control:   有多个可用控制格式时明确选择</pre><p>桥接层将它解析成现有严格RunConfig；不存在的顶层字段不直接塞进0.3 JSON，也不静默丢弃。最终解析配置、代码提交、权重和归一化摘要、环境与控制器版本、初始化身份都进入运行清单。</p><p>至少区分三种身份：计划指纹表示“想运行什么”；执行尝试ID表示“这一次真实启动”；平台job_id表示“启智承载它的任务”。相同配置再次运行要有新的执行尝试与输出目录，不能用配置哈希掩盖重复执行。桥接索引关联两边run_id、episode_id、观测和命令编号。</p><p>大型权重沿用有依据的内容摘要，不降级成文件大小/修改时间。资产位置通过新运行配置显式解析；合仓不全局替换旧证据中的绝对路径，也不复制大权重、虚拟环境或原始结果进Git。</p><p class="lead">源码依据：<code>WorldEvalKit/runner.py; benchmarks/_robotics.py:78–99; 23–35</code>；原文与行号见<a href="code-evidence.json">代码证据</a>。</p></section>
+<section aria-labelledby="results"><h2 id="results">指标与错误不能在合并时走样</h2><div class="table-wrap"><table><thead><tr><th scope="col">后端事实</th><th scope="col">外层应显示</th><th scope="col">禁止的转换</th></tr></thead><tbody><tr><td>正常执行，success=false且valid=true</td><td>运行完成、任务未成功；保留原始布尔值与评分来源。</td><td>当作CLI失败或把有效失败丢出统计分母。</td></tr><tr><td>Metric.value=null、valid=false</td><td>评分不可用，并显示原因。</td><td>填0，冒充失败成绩或做进总平均。</td></tr><tr><td>退出码1或框架/评分错误</td><td>框架或评分异常，保留最后确认计数和证据。</td><td>当成模型任务失败。</td></tr><tr><td>退出码2，预检查拒绝</td><td>配置/结构不满足，未作为有效试验。</td><td>记录成模型失败的一次已完成试验。</td></tr><tr><td>进程被杀、动作已发但无确认</td><td>取消/执行状态未知，保留最后确认事件；不能给出可靠完整评分。</td><td>自动补造动作数、成功值，或原地重试该动作。</td></tr><tr><td>导入旧结果或缓存命中</td><td>历史证据导入/结果复用，标明原运行身份。</td><td>显示为本次新推理。</td></tr></tbody></table></div><p>WorldEvalKit当前EvaluationResult.metrics只收数值且拒绝布尔值；我们的Metric还包含valid、单位、来源和不可用原因。首版不必改其数值表：有效数值做展示投影，完整原始指标放samples/产物；成功布尔值保留，若显示0/1须另标“显示投影”，不是更改官方评分。</p><p>统计必须同时报告计划、启动、完成、有效评分、成功、异常和未知数量。成功率分母遵循具名协议；若只算有效评分子集，必须标明覆盖率与子集范围，不能冒充完整任务集成功率。</p><p>执行异常后也要先持久化后端日志/部分证据与错误清单，再把失败传给外层；不能因为Stage失败就把唯一排错证据丢掉。首版不在导入阶段重新调用官方评分器。</p><p class="lead">源码依据：<code>WorldEvalKit/contracts/cases.py; EmbodiedEval/core/types.py:189–229; Metric与ExecutionFeedback</code>；原文与行号见<a href="code-evidence.json">代码证据</a>。</p></section>
+<section aria-labelledby="safety"><h2 id="safety">缓存、恢复、超时与并发的边界</h2><p>机器人场景会改变状态。动作已经执行、回执丢失后再试一次，可能真的多走一步。外层的通用能力不能未经适配就成为机器人能力。</p><ul><li>整次机器人运行默认只尝试一次：Stage使用Retry(attempts=1)、Cache(enabled=False)，并关闭该路径的reuse_results/resume；不能只关一层缓存。</li><li>不从中断回合续跑。不恢复模型缓存、随机状态和仿真状态，就不能宣称有恢复能力。明确的新试验用新ID、完整重新初始化，不能伪装为原尝试的延续。</li><li>保留现有合作式预算检查；不因上层RuntimeExecutor能杀进程就宣称Runner获得硬超时。任何外部终止都按证据完整性标记取消或执行未知，新的取消协议需单独确认。</li><li>首版仍串行验证，避免共享GPU、模型服务和仿真对象互相污染。后续若并行，按相互隔离的完整试验调度，不在两个循环里并行发动作。</li><li>现有动作缓存、取图节奏、物理步数/原生动作数/仿真秒数三个计数，以及测量状态和控制目标区分全部保留。</li></ul><p class="lead">源码依据：<code>WorldEvalKit/contracts/plan.py; execution.py; runner.py:9–43; 99–111,405–460; 416</code>；原文与行号见<a href="code-evidence.json">代码证据</a>。</p></section>
+<section aria-labelledby="inspire"><h2 id="inspire">启智平台放在哪一层</h2><p>平台执行器只负责“把已确定的评测计划交给哪台机器”，不负责机器人语义。本机qz已能发现接口且登录此前已验证；本轮只再次读取版本和操作schema，没有读取账号资料、列举任务或创建任务。</p><div class="table-wrap"><table><thead><tr><th scope="col">拟议执行器能力</th><th scope="col">当前可用API定义</th><th scope="col">实施时仍需验证</th></tr></thead><tbody><tr><td>提交完整试验</td><td>qz train CreateJob</td><td>工作区/项目/计算组/镜像/挂载/GPU字段、权限、资源费用与任务启动命令。</td></tr><tr><td>查询与日志</td><td>qz train GetJob / GetJobLog</td><td>调度中、运行、退出和业务错误的精确映射；日志分页与脱敏。</td></tr><tr><td>停止自有试验</td><td>qz train StopJob</td><td>目标确属本次试验，用户授权停止；平台停止不等于已安全回收机器人执行状态。</td></tr><tr><td>防止自动重跑</td><td>CreateJob定义有auto_fault_tolerance及重试相关字段</td><td>明确关闭平台自动容错并检查生效值；无法证明不重跑时不宣称安全恢复，不自动重发超时提交。</td></tr></tbody></table></div><p>这四项是API定义可用，不是已完成提交/停止实测。原草案使用旧qzcli 0.3.0的create/status/watch等命令，当前安装为qz v1.0.0动态service/action接口，不能复制旧命令。schema检查回执见<a href="qz-schema-check.json">只读定义核对</a>。</p><p>平台凭据由CLI正常登录管理，不进入模型配置、评测清单、Git或报告。依然只在当前命令范围处理代理。GPU总体平均20%的既有目标沿用，但占卡负载单列，不作为评测工作量；本轮无GPU评测或新平均值声明。</p></section>
+<section aria-labelledby="repository"><h2 id="repository">最后合仓成什么样</h2><p>下面是拟议布局，不是已经存在的新目录。先以独立包和固定版本桥接，验收后再把源码纳入同一主仓：</p><pre>MassWorld/                         最终主仓
+  WorldEvalKit/                    保留已有通用编排与离线评测
+  EmbodiedEval/                    保留包名embodied_eval与0.3内核
+  integrations/embodied-worldeval/ 新桥接包massworld_embodied
+  providers/inspire/               后续平台执行器
+  tests/integration/               跨包契约与真实链路测试
+  docs/                            统一架构、接入和验收说明</pre><p>先保留EmbodiedEval现有包布局，减少原生子进程入口、相对资源和测试路径的额外变化。Git导入保留已有提交与标签，不把权重、环境和历史大产物搬成源码。历史路径保持原样，新运行使用新位置配置。</p><p>同名RoboDojo/RoboTwin组件按backend、固定revision、任务协议和难度区分，不能互相覆盖注册。MassWorld快照的RoboTwin hard是demo_randomized，现有后端常用demo_clean；RoboDojo版本也不同，先并列保留，不能拼成同一条成功率。</p><p>合仓前还要核对发布权限和第三方声明：附件根目录有MIT文本、WorldEvalKit有Apache-2.0文本；本项目当前未见顶层LICENSE。不能据此自动给全部内容统一换许可证。保留各组件来源与NOTICE，公开分发范围需所有者确认。</p></section>
+<section aria-labelledby="roadmap"><h2 id="roadmap">实施顺序与每阶段验收</h2><div class="table-wrap"><table><thead><tr><th scope="col">阶段</th><th scope="col">实施内容</th><th scope="col">验收后才进入下一步</th></tr></thead><tbody><tr><td>0：冻结整合基线</td><td>确认本方案、MassWorld精确快照、当前0.3提交、首批协议与执行边界。建议首条真实候选OpenWAM/LIBERO，双臂候选为已标准化OpenWAM/RoboTwin；候选不是已选定。</td><td>一份清楚的接口/状态映射、版本与资产清单；不把原生差异的旧未通过项写成已解决。</td></tr><tr><td>1：本地桥接，不搬仓</td><td>补上层backend选择、独立目录导出、严格配置转换和保存结果导入，接既有Stage/Handler。</td><td>运行两边真实软件测试并记录实际通过/跳过/失败数；我们的515项与CLI不回归。2模型×2环境四种合成交叉组合和第三组件扩展无成对类。</td></tr><tr><td>2：固定来源的真实验收</td><td>先用保存输入/动作对照桥接前后序列化和边界映射，再对已批准组合做有限步真实对照并记录视频。</td><td>检查输入/动作、精度、缓存与取图、三种计数、评分来源及进程清理；重新推理差异、物理非确定性和任务成功分别报告，不能互相替代。</td></tr><tr><td>3：同仓与统一用户入口</td><td>保留历史导入源码，建立跨包依赖、安装包与CI；新接入只写一份实际Adapter。</td><td>空环境安装/发现可用，子进程模块/资产位置正确，旧离线流程与已有0.3配置不回归，旧证据不改写。</td></tr><tr><td>4：启智平台执行器</td><td>在明确资源与授权后新增提交、查询、日志和停止，以及任务-执行尝试映射。</td><td>先用无副作用的小作业验证，再做单条GPU评测；确认无自动动作重放、取消状态与日志完整性，不自动租用DreamZero硬件。</td></tr></tbody></table></div><p>不现在重写所有Adapter，也不先实现一整套部署平台。依赖关系是：本地桥接正确 → 真实证据正确 → 同仓可安装 → 平台调度可控。每阶段提交证据，经用户确认后再推进；本方案不自动通过阶段4或冻结公共契约。</p></section>
+<section aria-labelledby="acceptance"><h2 id="acceptance">必须覆盖的反例与剩余缺口</h2><ul><li>缺head、缺右臂、关节顺序错误、单位/坐标/工具参考点不明、原生协议不一致时明确拒绝；外层类型名不能绕过0.3检查。</li><li>评分不可用、有效失败、框架错误、配置拒绝、缓存导入、取消和执行未知分别保留；无评分项不填0。</li><li>相同计划两次提交有两个执行尝试；请求断连先只读查实际状态，不重复创建任务；失联动作不自动重放。</li><li>完整保留上下文与动作来源；评测私有初始化和评分条件不进入模型公共输入；API密钥不进入计划、日志或报告。</li><li>模型/环境版本、控制器、种子和预算必须一致；不能用一个仓库的全量任务表冒充另一个已完成全量接入。</li></ul><p>现有原生复现差异、全任务多种子统计、DreamZero双H10080GB真实推理、暂缓的LingBot-VA不会因合并自动解决。DataRef实时读取、机器人硬超时、并发/恢复、视频转动作规划器也不在首版桥接里暗中增加。</p><p>原515项是历史已执行回执，不是本轮新测试结果；本轮仅做源码/结构阅读、语法解析、qz定义核查、来源摘要和报告校验。</p></section>
+<section aria-labelledby="decision"><h2 id="decision">建议你确认的方案范围</h2><div class="callout">建议确认：MassWorld作为最终主仓和统一入口；EmbodiedEval 0.3作为机器人闭环内核；允许新增上层backend扩展与桥接包；先完成本地联通和验收，再搬仓和接启智平台。</div><p>首阶段无需修改0.3机器人公共契约。需要新增的是MassWorld后端扩展和桥接层的计划/结果清单；若实施发现必须改变观测、动作、预算或恢复语义，应先说明缺口与影响再确认，不以“合并”概括授权。</p><p>收到确认后，最合适的第一项实现是：导出两边目录和版本身份、补backend入口、用四种合成组合跑通“选择→预检查→执行→结果导入”。不用你先逐项决定GPU型号或重写每个组合。</p></section>
+    </main>
+  </div>
+</body>
+</html>

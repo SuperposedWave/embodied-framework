@@ -1,0 +1,419 @@
+[
+  {
+    "source": "user_MassWorld_archive",
+    "path": "README.md",
+    "sha256": "00c8d0ee78d078a1db1817451f011df60aebe016824ef36cde44b49430ec8fc1",
+    "excerpts": [
+      {
+        "first_line": 1,
+        "last_line": 21,
+        "text": "1: # MassWorld\n2: \n3: MassWorld 正在设计为一套面向世界模型、具身策略和 Agent 系统的统一运行与评测平台。\n4: \n5: 当前架构讨论从以下文档开始：\n6: \n7: - [世界模型统一运行与评测平台设计](./docs/architecture/unified-evaluation-platform/README.md)\n8: - [统一 Benchmark 评测平台定义](./docs/architecture/unified-evaluation-platform/platform-definition.md)\n9: - [评测级日志、Trace 与证据架构](./docs/architecture/unified-evaluation-platform/evaluation-grade-logging.md)\n10: - [Benchmark 评测运行泳道与流程](./docs/architecture/unified-evaluation-platform/evaluation-run-swimlane.md)\n11: - [目标架构草案](./docs/architecture/unified-evaluation-platform/architecture.md)\n12: - [分阶段落地路线](./docs/architecture/unified-evaluation-platform/roadmap.md)\n13: - [待确认问题](./docs/architecture/unified-evaluation-platform/open-questions.md)\n14: \n15: 核心方向是建设统一控制平面，复用 qzcli 与现有算力基础设施，并让模型部署、Agent/仿真运行、评测和审计共享同一套版本身份与证据链。\n16: \n17: ## WorldEvalKit\n18: \n19: WorldEvalKit 是世界模型评测框架，提供统一的模型与 Benchmark 接入、\n20: 评测任务编排和结果记录。模块代码位于 `WorldEvalKit/`，\n21: 使用方式与扩展说明见 [WorldEvalKit 文档](WorldEvalKit/README.md)。"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/adapter.py",
+    "sha256": "64be27b63638f834fa22dee0227320a74ef1d0790cd7c04c855bc9bc6d58e654",
+    "excerpts": [
+      {
+        "first_line": 28,
+        "last_line": 87,
+        "text": "28: class ModelAdapter(ABC):\n29:     \"\"\"Simple model integration: declare capabilities and implement ``predict``.\"\"\"\n30: \n31:     id: ClassVar[str] = \"\"\n32:     name: ClassVar[str] = \"\"\n33:     version: ClassVar[str] = \"unversioned\"\n34:     protocol: ClassVar[str] = \"\"\n35:     inputs: ClassVar[Mapping[str, PortLike]] = {}\n36:     outputs: ClassVar[Mapping[str, PortLike]] = {}\n37:     endpoints: ClassVar[Mapping[str, Endpoint | Mapping[str, Any]]] = {}\n38:     tags: ClassVar[tuple[str, ...]] = ()\n39:     requirements: ClassVar[Mapping[str, Any]] = {}\n40:     validators: ClassVar[Mapping[str, Any]] = {}\n41:     metadata: ClassVar[Mapping[str, Any]] = {}\n42:     # Explicit provider rejection codes that may be excluded from phased judging.\n43:     # Kept outside ModelSpec so this scoring policy does not invalidate API jobs.\n44:     judge_rejection_codes: ClassVar[frozenset[str]] = frozenset()\n45:     judge_skip_codes: ClassVar[frozenset[str]] = frozenset()\n46: \n47:     def __init__(self, options: Mapping[str, Any] | None = None):\n48:         self.options = dict(options or {})\n49:         self.context: Any | None = None\n50: \n51:     @classmethod\n52:     def spec(cls) -> ModelSpec:\n53:         if not cls.id.strip():\n54:             raise AdapterDefinitionError(f\"{cls.__name__}.id is required\")\n55:         if cls.endpoints:\n56:             endpoints = {\n57:                 str(name): Endpoint.from_value(value, id=str(name))\n58:                 for name, value in cls.endpoints.items()\n59:             }\n60:         else:\n61:             if not cls.protocol.strip():\n62:                 raise AdapterDefinitionError(\n63:                     f\"{cls.__name__} requires protocol or endpoints\"\n64:                 )\n65:             endpoints = {\n66:                 \"default\": Endpoint(\n67:                     id=\"default\",\n68:                     protocol=cls.protocol,\n69:                     inputs=parse_ports(cls.inputs),\n70:                     outputs=parse_ports(cls.outputs),\n71:                 )\n72:             }\n73:         return ModelSpec(\n74:             id=cls.id,\n75:             name=cls.name or cls.id,\n76:             version=cls.version,\n77:             endpoints=endpoints,\n78:             tags=tuple(cls.tags),\n79:             requirements=tuple(cls.requirements),\n80:             metadata=dict(cls.metadata),\n81:         )\n82: \n83:     def start(self, context: Any) -> None:\n84:         self.context = context\n85: \n86:     def predict(self, request: Request) -> Mapping[str, Any] | ArtifactBundle:\n87:         raise NotImplementedError(f\"{type(self).__name__}.predict is not implemented\")"
+      },
+      {
+        "first_line": 200,
+        "last_line": 218,
+        "text": "200: class BenchmarkAdapter(ABC):\n201:     \"\"\"Simple benchmark integration: declare a protocol, cases and evaluator.\"\"\"\n202: \n203:     id: ClassVar[str] = \"\"\n204:     name: ClassVar[str] = \"\"\n205:     version: ClassVar[str] = \"unversioned\"\n206:     protocol: ClassVar[str] = \"\"\n207:     inputs: ClassVar[Mapping[str, PortLike]] = {}\n208:     outputs: ClassVar[Mapping[str, PortLike]] = {}\n209:     targets: ClassVar[Mapping[str, PortLike]] = {}\n210:     endpoint: ClassVar[str | None] = None\n211:     tags: ClassVar[tuple[str, ...]] = ()\n212:     requirements: ClassVar[Mapping[str, Any]] = {}\n213:     validators: ClassVar[Mapping[str, Any]] = {}\n214:     blocked_reason: ClassVar[str | None] = None\n215:     metadata: ClassVar[Mapping[str, Any]] = {}\n216:     scorer: ClassVar[str | None] = None\n217:     # Opt in when the scorer can use frozen case metadata without source data.\n218:     handoff_uses_frozen_cases: ClassVar[bool] = False"
+      },
+      {
+        "first_line": 326,
+        "last_line": 335,
+        "text": "326:     def build_plan(self, binding: Any, context: Any) -> Plan | None:\n327:         del binding, context\n328:         return None\n329: \n330:     def handlers(self) -> Mapping[str, Any]:\n331:         return {}\n332: \n333:     def services(self, context: Any) -> Mapping[str, Any]:\n334:         del context\n335:         return {}"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/registry.py",
+    "sha256": "e77e4b8820a46f707757f1f163b4bdec18bdadba1f6154aab5cc3ff8695de063",
+    "excerpts": [
+      {
+        "first_line": 13,
+        "last_line": 14,
+        "text": "13: MODEL_ENTRY_POINTS = \"worldevalkit.models\"\n14: BENCHMARK_ENTRY_POINTS = \"worldevalkit.benchmarks\""
+      },
+      {
+        "first_line": 157,
+        "last_line": 197,
+        "text": "157:     def _discover_entry_points(\n158:         self,\n159:         group: str,\n160:         expected: type,\n161:         *,\n162:         strict: bool,\n163:         discovered: Iterable[Any] | None = None,\n164:     ) -> None:\n165:         if discovered is None:\n166:             available = entry_points()\n167:             discovered = (\n168:                 available.select(group=group)\n169:                 if hasattr(available, \"select\")\n170:                 else available.get(group, ())\n171:             )\n172:         for entry_point in sorted(discovered, key=lambda item: item.name):\n173:             source = f\"entry-point:{group}:{entry_point.name}\"\n174:             try:\n175:                 adapter = entry_point.load()\n176:                 if not inspect.isclass(adapter) and callable(adapter):\n177:                     adapter = adapter()\n178:                 if not inspect.isclass(adapter) or not issubclass(adapter, expected):\n179:                     raise TypeError(\n180:                         f\"entry point must export a {expected.__name__} class\"\n181:                     )\n182:                 self._register(adapter, source=source)\n183:             except Exception as error:\n184:                 self._record_issue(source, error, strict)\n185: \n186:     @classmethod\n187:     def discover(cls, *, strict: bool = False) -> \"Registry\":\n188:         registry = cls()\n189:         registry._discover_package(\"worldevalkit.models\", ModelAdapter, strict=strict)\n190:         registry._discover_package(\n191:             \"worldevalkit.benchmarks\", BenchmarkAdapter, strict=strict\n192:         )\n193:         registry._discover_entry_points(MODEL_ENTRY_POINTS, ModelAdapter, strict=strict)\n194:         registry._discover_entry_points(\n195:             BENCHMARK_ENTRY_POINTS, BenchmarkAdapter, strict=strict\n196:         )\n197:         return registry"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/planner.py",
+    "sha256": "376e330d27777e32b9f78f77766d040533271bda040767c2aba302e5e0994467",
+    "excerpts": [
+      {
+        "first_line": 80,
+        "last_line": 87,
+        "text": "80: def _port_matches(offered: Port, required: Port) -> bool:\n81:     constraints, _ = _constraints_match(offered.constraints, required.constraints)\n82:     return (\n83:         offered.semantic == required.semantic\n84:         and offered.type_id == required.type_id\n85:         and offered.many == required.many\n86:         and constraints\n87:     )"
+      },
+      {
+        "first_line": 134,
+        "last_line": 190,
+        "text": "134:     endpoint: str | None = None,\n135:     input_mapping: Mapping[str, str] | None = None,\n136:     output_mapping: Mapping[str, str] | None = None,\n137: ) -> Binding:\n138:     selected = endpoint or benchmark.endpoint\n139:     endpoints: Iterable[Endpoint] = (\n140:         (model.endpoint(selected),) if selected else model.endpoints.values()\n141:     )\n142:     matches: list[Binding] = []\n143:     failures: list[str] = []\n144:     for candidate in endpoints:\n145:         if candidate.protocol != benchmark.protocol:\n146:             failures.append(\n147:                 f\"{candidate.id}: protocol {candidate.protocol} != {benchmark.protocol}\"\n148:             )\n149:             continue\n150:         constraints, reason = _constraints_match(\n151:             candidate.constraints,\n152:             dict(benchmark.metadata.get(\"endpoint_constraints\", {})),\n153:         )\n154:         if not constraints:\n155:             failures.append(f\"{candidate.id}: {reason}\")\n156:             continue\n157:         inputs, input_errors = _bind_ports(\n158:             candidate.inputs,\n159:             benchmark.inputs,\n160:             dict(input_mapping or {}),\n161:             direction=\"input\",\n162:         )\n163:         outputs, output_errors = _bind_ports(\n164:             candidate.outputs,\n165:             benchmark.outputs,\n166:             dict(output_mapping or {}),\n167:             direction=\"output\",\n168:         )\n169:         supplied = set(inputs.values())\n170:         missing = [\n171:             name\n172:             for name, port in candidate.inputs.items()\n173:             if port.required and name not in supplied\n174:         ]\n175:         errors = [*input_errors, *output_errors]\n176:         if missing:\n177:             errors.append(\"required endpoint inputs are unbound: \" + \", \".join(missing))\n178:         if errors:\n179:             failures.append(f\"{candidate.id}: \" + \"; \".join(errors))\n180:             continue\n181:         matches.append(Binding(candidate.id, inputs, outputs))\n182:     if not matches:\n183:         raise ValueError(\"; \".join(failures) or \"model has no compatible endpoint\")\n184:     if len(matches) > 1:\n185:         raise ValueError(\n186:             \"multiple endpoints match: \"\n187:             + \", \".join(item.endpoint for item in matches)\n188:             + \"; select one explicitly\"\n189:         )\n190:     return matches[0]"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/episode.py",
+    "sha256": "ec316ba83d8cd62a15d55b85bd482770e6ab032e88a45e4fdfb47ab9bc0edad5",
+    "excerpts": [
+      {
+        "first_line": 12,
+        "last_line": 35,
+        "text": "12: class Environment(ABC):\n13:     @abstractmethod\n14:     def reset(self, case: Case) -> ArtifactBundle:\n15:         raise NotImplementedError\n16: \n17:     @abstractmethod\n18:     def step(self, action: ArtifactBundle) -> Transition:\n19:         raise NotImplementedError\n20: \n21:     def close(self) -> None:\n22:         return None\n23: \n24: \n25: @dataclass(frozen=True)\n26: class EpisodeConfig:\n27:     max_steps: int\n28:     observation_inputs: Mapping[str, str]\n29:     action_outputs: tuple[str, ...]\n30:     parameters: Mapping[str, Any]\n31: \n32:     def __post_init__(self) -> None:\n33:         if self.max_steps <= 0 or not self.action_outputs:\n34:             raise ValueError(\"episodes require positive max_steps and action outputs\")\n35: "
+      },
+      {
+        "first_line": 51,
+        "last_line": 105,
+        "text": "51:     def run(self, case: Case) -> ArtifactBundle:\n52:         trace: list[dict[str, Any]] = []\n53:         try:\n54:             observation = self.environment.reset(case)\n55:             for step in range(self.config.max_steps):\n56:                 inputs = {}\n57:                 for (\n58:                     model_input,\n59:                     observation_output,\n60:                 ) in self.config.observation_inputs.items():\n61:                     if observation_output not in observation.outputs:\n62:                         raise ValueError(\n63:                             f\"observation is missing {observation_output!r} for \"\n64:                             f\"model input {model_input!r}\"\n65:                         )\n66:                     inputs[model_input] = observation.outputs[observation_output]\n67:                 request = Request(\n68:                     id=stable_hash([case.id, step, self.config.parameters])[:24],\n69:                     case_id=case.id,\n70:                     endpoint=self.endpoint.id,\n71:                     inputs=inputs,\n72:                     outputs=self.config.action_outputs,\n73:                     parameters={**dict(self.config.parameters), \"step\": step},\n74:                 )\n75:                 action = self.model.invoke(request)\n76:                 transition = self.environment.step(action)\n77:                 trace.append(\n78:                     {\n79:                         \"step\": step,\n80:                         \"observation\": observation.to_dict(),\n81:                         \"action\": action.to_dict(),\n82:                         \"transition\": transition.to_dict(),\n83:                     }\n84:                 )\n85:                 observation = transition.observation\n86:                 if transition.terminated or transition.truncated:\n87:                     break\n88:         finally:\n89:             self.environment.close()\n90:         final = trace[-1][\"transition\"] if trace else {}\n91:         return ArtifactBundle(\n92:             case_id=case.id,\n93:             outputs={\n94:                 \"episode_trace\": Artifact(\n95:                     \"core.episode_trace\",\n96:                     data=trace,\n97:                     metadata={\n98:                         \"steps\": len(trace),\n99:                         \"terminated\": bool(final.get(\"terminated\")),\n100:                         \"truncated\": bool(final.get(\"truncated\")),\n101:                     },\n102:                 )\n103:             },\n104:             provenance={\"runner\": \"episode\", \"max_steps\": self.config.max_steps},\n105:         )"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/contracts/plan.py",
+    "sha256": "13bbf865551db7fd81b5b139e11cce5e96067abc41383633e228dc815f645ad6",
+    "excerpts": [
+      {
+        "first_line": 9,
+        "last_line": 43,
+        "text": "9: @dataclass(frozen=True)\n10: class Retry:\n11:     attempts: int = 1\n12:     backoff_seconds: float = 0.0\n13:     on: tuple[str, ...] = ()\n14: \n15:     def __post_init__(self) -> None:\n16:         if self.attempts < 1 or self.backoff_seconds < 0:\n17:             raise ValueError(\"retry attempts must be positive and backoff non-negative\")\n18: \n19:     @classmethod\n20:     def from_value(cls, value: \"Retry | Mapping[str, Any] | None\") -> \"Retry\":\n21:         if isinstance(value, cls):\n22:             return value\n23:         data = dict(value or {})\n24:         if \"max_attempts\" in data:\n25:             data[\"attempts\"] = data.pop(\"max_attempts\")\n26:         if \"retryable_errors\" in data:\n27:             data[\"on\"] = data.pop(\"retryable_errors\")\n28:         data[\"on\"] = tuple(str(item) for item in data.get(\"on\", ()))\n29:         return cls(**data)\n30: \n31: \n32: @dataclass(frozen=True)\n33: class Cache:\n34:     enabled: bool = True\n35:     namespace: str = \"default\"\n36: \n37:     @classmethod\n38:     def from_value(cls, value: \"Cache | Mapping[str, Any] | bool | None\") -> \"Cache\":\n39:         if isinstance(value, cls):\n40:             return value\n41:         if isinstance(value, bool):\n42:             return cls(enabled=value)\n43:         return cls(**dict(value or {}))"
+      },
+      {
+        "first_line": 136,
+        "last_line": 159,
+        "text": "136: @dataclass(frozen=True)\n137: class Stage:\n138:     id: str\n139:     uses: str\n140:     inputs: Mapping[str, Input] = field(default_factory=dict)\n141:     outputs: Mapping[str, Port] = field(default_factory=dict)\n142:     needs: tuple[str, ...] = ()\n143:     runtime: str = \"core\"\n144:     resources: Resources = field(default_factory=Resources)\n145:     retry: Retry = field(default_factory=Retry)\n146:     cache: Cache = field(default_factory=Cache)\n147:     params: Mapping[str, Any] = field(default_factory=dict)\n148:     optional: bool = False\n149: \n150:     def __post_init__(self) -> None:\n151:         if not self.id.strip() or not self.uses.strip():\n152:             raise ValueError(\"Stage.id and uses are required\")\n153:         if self.id in self.needs:\n154:             raise ValueError(f\"stage {self.id} cannot depend on itself\")\n155:         object.__setattr__(\n156:             self,\n157:             \"inputs\",\n158:             {str(name): Input.from_value(value) for name, value in self.inputs.items()},\n159:         )"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/contracts/artifacts.py",
+    "sha256": "ea7b02c66fc91877980396d3300d4c0ed1a975933f8d1fc9bf3880b2e2c815a5",
+    "excerpts": [
+      {
+        "first_line": 53,
+        "last_line": 75,
+        "text": "53: @dataclass(frozen=True)\n54: class Artifact:\n55:     \"\"\"One typed value or immutable resource reference.\"\"\"\n56: \n57:     type_id: str\n58:     uri: str | None = None\n59:     data: Any | None = None\n60:     mime_type: str | None = None\n61:     sha256: str | None = None\n62:     size_bytes: int | None = None\n63:     schema: Mapping[str, Any] = field(default_factory=dict)\n64:     metadata: Mapping[str, Any] = field(default_factory=dict)\n65:     source: Mapping[str, Any] = field(default_factory=dict)\n66: \n67:     def __post_init__(self) -> None:\n68:         object.__setattr__(self, \"type_id\", validate_type_id(self.type_id))\n69:         if (self.uri is None) == (self.data is None):\n70:             raise ValueError(\"Artifact requires exactly one of uri or data\")\n71:         if self.uri is not None:\n72:             uri = str(self.uri).strip()\n73:             if not uri:\n74:                 raise ValueError(\"Artifact.uri cannot be empty\")\n75:             object.__setattr__(self, \"uri\", uri)"
+      },
+      {
+        "first_line": 109,
+        "last_line": 151,
+        "text": "109: @dataclass(frozen=True)\n110: class Port:\n111:     \"\"\"A named-port contract. Strings are accepted through :func:`parse_ports`.\"\"\"\n112: \n113:     type_id: str\n114:     semantic: str = \"\"\n115:     many: bool = False\n116:     required: bool = True\n117:     schema: Mapping[str, Any] = field(default_factory=dict)\n118:     constraints: Mapping[str, Any] = field(default_factory=dict)\n119:     description: str | None = None\n120: \n121:     def __post_init__(self) -> None:\n122:         object.__setattr__(self, \"type_id\", validate_type_id(self.type_id))\n123:         object.__setattr__(self, \"semantic\", str(self.semantic).strip())\n124:         try:\n125:             validator = jsonschema.validators.validator_for(self.schema)\n126:             validator.check_schema(self.schema)\n127:         except jsonschema.SchemaError as error:\n128:             raise ValueError(f\"invalid JSON Schema: {error.message}\") from error\n129: \n130:     @property\n131:     def cardinality(self) -> str:\n132:         return \"many\" if self.many else \"one\"\n133: \n134:     def validate(self, value: ArtifactValue, *, name: str) -> None:\n135:         if self.many and not isinstance(value, tuple):\n136:             raise ValueError(f\"{name} requires multiple artifacts\")\n137:         if not self.many and isinstance(value, tuple):\n138:             raise ValueError(f\"{name} requires one artifact\")\n139:         artifacts = value if isinstance(value, tuple) else (value,)\n140:         if self.required and not artifacts:\n141:             raise ValueError(f\"{name} cannot be empty\")\n142:         for artifact in artifacts:\n143:             if artifact.type_id != self.type_id:\n144:                 raise TypeError(\n145:                     f\"{name} requires {self.type_id}, got {artifact.type_id}\"\n146:                 )\n147:             if self.schema and artifact.data is not None:\n148:                 try:\n149:                     jsonschema.validate(artifact.data, self.schema)\n150:                 except jsonschema.ValidationError as error:\n151:                     raise ValueError(f\"{name}: {error.message}\") from error"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/contracts/cases.py",
+    "sha256": "74222a43c9f471949169b2cb363d822c1852ac85aac06e27c642871f6f97ffe4",
+    "excerpts": [
+      {
+        "first_line": 189,
+        "last_line": 229,
+        "text": "189: @dataclass(frozen=True)\n190: class EvaluationResult:\n191:     metrics: Mapping[str, float]\n192:     samples: tuple[Mapping[str, Any], ...] = ()\n193:     artifacts: Mapping[str, ArtifactValue] = field(default_factory=dict)\n194:     metadata: Mapping[str, Any] = field(default_factory=dict)\n195: \n196:     def __post_init__(self) -> None:\n197:         for name, value in self.metrics.items():\n198:             if not str(name).strip() or isinstance(value, bool):\n199:                 raise ValueError(\"metric names must be non-empty and values numeric\")\n200:             if not isinstance(value, (int, float)):\n201:                 raise TypeError(f\"metric {name!r} must be numeric\")\n202:         _check_artifacts(self.artifacts, \"evaluation.artifacts\")\n203: \n204:     def to_dict(self) -> dict[str, Any]:\n205:         return {\n206:             \"metrics\": {name: float(value) for name, value in self.metrics.items()},\n207:             \"samples\": [dict(item) for item in self.samples],\n208:             \"artifacts\": _artifacts_to_dict(self.artifacts),\n209:             \"metadata\": dict(self.metadata),\n210:         }\n211: \n212:     @classmethod\n213:     def from_value(\n214:         cls, value: \"EvaluationResult | Mapping[str, Any]\"\n215:     ) -> \"EvaluationResult\":\n216:         if isinstance(value, cls):\n217:             return value\n218:         data = dict(value)\n219:         if \"metrics\" not in data:\n220:             return cls(metrics={str(name): float(item) for name, item in data.items()})\n221:         return cls(\n222:             metrics={\n223:                 str(name): float(item)\n224:                 for name, item in dict(data.get(\"metrics\", {})).items()\n225:             },\n226:             samples=tuple(dict(item) for item in data.get(\"samples\", ())),\n227:             artifacts=_artifacts_from_dict(data.get(\"artifacts\")),\n228:             metadata=dict(data.get(\"metadata\", {})),\n229:         )"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/runner.py",
+    "sha256": "80f7897377a850f7394b3fc2697382e3fb1d5d9edca70ef599618fcca9b15044",
+    "excerpts": [
+      {
+        "first_line": 49,
+        "last_line": 99,
+        "text": "49:     def __init__(\n50:         self,\n51:         *,\n52:         model: str,\n53:         benchmark: str,\n54:         output_dir: str | Path = \"outputs\",\n55:         endpoint: str | None = None,\n56:         model_options: Mapping[str, Any] | None = None,\n57:         benchmark_options: Mapping[str, Any] | None = None,\n58:         parameters: Mapping[str, Any] | None = None,\n59:         registry: Registry | None = None,\n60:         reuse_results: bool = True,\n61:         history_root: str | Path | None = None,\n62:         record_dir: str | Path | None = None,\n63:         prediction_executor: Any | None = None,\n64:     ):\n65:         self.registry = registry or default_registry()\n66:         self.model_options = dict(model_options or {})\n67:         self.benchmark_options = dict(benchmark_options or {})\n68:         self.parameters = dict(parameters or {})\n69:         self._reject_secrets(self.model_options, self.parameters)\n70:         self.model: ModelAdapter = self.registry.model(model)(self.model_options)\n71:         self.model_options = dict(self.model.options)\n72:         self.benchmark: BenchmarkAdapter = self.registry.benchmark(benchmark)(\n73:             self.benchmark_options\n74:         )\n75:         self.model_spec = self.model.spec()\n76:         self.benchmark_spec = self.benchmark.spec()\n77:         self.endpoint_id = endpoint\n78:         identity = {\n79:             \"model\": self.model_spec.to_dict(),\n80:             \"benchmark\": self.benchmark_spec.to_dict(),\n81:             \"model_options\": self.model_options,\n82:             \"benchmark_options\": self.benchmark_options,\n83:             \"parameters\": self.parameters,\n84:             \"endpoint\": endpoint,\n85:         }\n86:         self.run_id = (\n87:             slugify(f\"{self.model_spec.id}--{self.benchmark_spec.id}\", 96)\n88:             + \"-\"\n89:             + stable_hash(identity)[:10]\n90:         )\n91:         self.output_dir = Path(output_dir).expanduser().resolve()\n92:         self.history_root = Path(history_root or self.output_dir).resolve()\n93:         self.record_dir = Path(record_dir) if record_dir else None\n94:         self.reuse_results = reuse_results\n95:         self.prediction_executor = prediction_executor\n96:         self.config_fingerprint = stable_hash(identity)\n97:         self.run_dir = self.history_root / \".setup\" / self.run_id\n98:         self.setup_lock = self.run_dir / \"setup.lock.json\"\n99:         self.maintenance_dir = self.run_dir"
+      },
+      {
+        "first_line": 211,
+        "last_line": 225,
+        "text": "211:     def plan(\n212:         self, *, write: bool = True, inspect_readiness: bool = True\n213:     ) -> PlanDecision:\n214:         decision = Planner().plan(\n215:             self.model_spec,\n216:             self.benchmark_spec,\n217:             endpoint=self.endpoint_id,\n218:             parameters=self.parameters,\n219:         )\n220:         if decision.binding and decision.plan:\n221:             custom = self.benchmark.build_plan(decision.binding, self)\n222:             plan = custom or decision.plan\n223:             run_requirements = self._requirements()\n224:             required = tuple(\n225:                 dict.fromkeys("
+      },
+      {
+        "first_line": 400,
+        "last_line": 437,
+        "text": "400:         services.update(dict(self.benchmark.services(self)))\n401:         progress(self.run_id, \"扫描历史阶段记录…\")\n402:         context = ExecutionContext(\n403:             plan=decision.plan,\n404:             run_dir=self.run_dir,\n405:             handlers=handlers,\n406:             validators=validators,\n407:             services=services,\n408:             evidence=evidence,\n409:             runtime_fingerprints={\n410:                 name: executor.fingerprint()\n411:                 for name, executor in runtime_executors.items()\n412:             },\n413:             fingerprint=stable_hash(provenance),\n414:             stage_fingerprints=scopes,\n415:             history=StageHistory(self.history_root, self.run_dir, self, provenance),\n416:             resume=self.reuse_results,\n417:         )\n418:         self._active_executors = runtime_executors\n419:         started = False\n420:         prepared = set()\n421: \n422:         def start_model():\n423:             nonlocal started\n424:             if started:\n425:                 return\n426:             progress(\"predict\", \"启动生成模型…\")\n427:             try:\n428:                 self.model.start(self)\n429:             except Exception:\n430:                 self.model.close()\n431:                 raise\n432:             started = True\n433: \n434:         services[\"start_model\"] = start_model\n435:         has_prediction = any(\n436:             stage.uses == \"model.predict\" for stage in decision.plan.stages\n437:         )"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/execution.py",
+    "sha256": "f372b8ee45c5beccf3ee219791f52f2bcb57ca10dd21dadc79606413dec835a2",
+    "excerpts": [
+      {
+        "first_line": 99,
+        "last_line": 114,
+        "text": "99: @dataclass\n100: class ExecutionContext:\n101:     plan: Plan\n102:     run_dir: Path\n103:     handlers: Mapping[str, Any]\n104:     external_inputs: Mapping[str, ArtifactValue] = field(default_factory=dict)\n105:     validators: Mapping[str, Any] = field(default_factory=dict)\n106:     services: Mapping[str, Any] = field(default_factory=dict)\n107:     evidence: EvidenceStore | None = None\n108:     runtime_fingerprints: Mapping[str, str] = field(default_factory=dict)\n109:     fingerprint: str = \"\"\n110:     resume: bool = True\n111:     fail_fast: bool = False\n112:     stage_fingerprints: Mapping[str, Any] = field(default_factory=dict)\n113:     history: Any = None\n114:     before_stage: Any = None"
+      },
+      {
+        "first_line": 230,
+        "last_line": 249,
+        "text": "230:     def _cached(\n231:         self, stage: Stage, fingerprint: str, dependencies=None\n232:     ) -> StageResult | None:\n233:         if (\n234:             not self.context.resume\n235:             or not stage.cache.enabled\n236:             or not self.context.evidence\n237:         ):\n238:             return None\n239:         if self.context.history:\n240: \n241:             def validate(outputs):\n242:                 validate_artifacts(\n243:                     outputs, stage.outputs, owner=f\"cached stage[{stage.id}]\"\n244:                 )\n245:                 self._validate_outputs(outputs)\n246: \n247:             return self.context.history.find(\n248:                 stage, fingerprint, validate, dependencies or {}\n249:             )"
+      },
+      {
+        "first_line": 405,
+        "last_line": 412,
+        "text": "405:                 continue\n406:             if self.context.resume and stage.cache.enabled:\n407:                 progress(stage.id, \"检查缓存并校验产物…\")\n408:             cached = self._cached(stage, fingerprint, dependencies)\n409:             if cached:\n410:                 self._persist(cached)\n411:                 results[stage.id] = cached\n412:                 continue"
+      },
+      {
+        "first_line": 452,
+        "last_line": 460,
+        "text": "452:             payload = StagePayload()\n453:             error: str | None = None\n454:             attempts = 0\n455:             for attempt in range(1, stage.retry.attempts + 1):\n456:                 attempts = attempt\n457:                 try:\n458:                     inputs = self._resolve_inputs(stage, results)\n459:                     with stage_progress(stage, self.context):\n460:                         payload = self._invoke(stage, inputs, dependencies)"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/models/_native_policy.py",
+    "sha256": "2a22affb1846ac3c5e5593e957c83476daca2426d1c3505df751d064266d6f5f",
+    "excerpts": [
+      {
+        "first_line": 12,
+        "last_line": 40,
+        "text": "12: class NativePolicy(ModelAdapter):\n13:     source_name = \"\"\n14:     mount_name = \"\"\n15:     runtime_name = \"\"\n16: \n17:     def path(self, key):\n18:         return local_path(self.options.get(key), f\"{self.id}.{key}\")\n19: \n20:     @property\n21:     def source(self):\n22:         return source_spec(self.source_name, self.options)\n23: \n24:     def materialize(self, destination):\n25:         return materialize_source(self.source[1], Path(destination))\n26: \n27:     def predict(self, request):\n28:         raise RuntimeError(\"This native-service endpoint is executed by the benchmark's framework task stages\")\n29: \n30:     @abstractmethod\n31:     def service_spec(self, scenario, workdir, port):\n32:         \"\"\"Return argv, prepared runtime, environment, and readiness endpoint.\"\"\"\n33:         raise NotImplementedError\n34: \n35: \n36: def native_endpoint(harness):\n37:     return {\"rollout\": {\"protocol\": \"control.native_rollout\",\n38:                         \"inputs\": {\"scenario\": \"robot.scenario\"},\n39:                         \"outputs\": {\"episodes\": \"robot.episode_records\"},\n40:                         \"constraints\": {\"native_harness\": harness}}}"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/benchmarks/_robotics.py",
+    "sha256": "d36de3c57852b4118e914f0065ecd8da9867da9531fb26f75de0e460af277bf1",
+    "excerpts": [
+      {
+        "first_line": 23,
+        "last_line": 35,
+        "text": "23: def file_identity(path: Path):\n24:     path = path.expanduser().resolve()\n25:     if not path.is_file():\n26:         return {\"path\": str(path), \"missing\": True}\n27:     stat = path.stat()\n28:     record = {\"path\": str(path), \"size\": stat.st_size, \"mtime_ns\": stat.st_mtime_ns}\n29:     # Large weights retain the setup identity; a separate deployment manifest\n30:     # can supply full SHA-256 without re-reading tens of GB on every plan call.\n31:     if stat.st_size < 16 * 1024 * 1024:\n32:         record[\"sha256\"] = hashlib.sha256(path.read_bytes()).hexdigest()\n33:     else:\n34:         record[\"identity_kind\"] = \"size_mtime\"\n35:     return record"
+      },
+      {
+        "first_line": 66,
+        "last_line": 69,
+        "text": "66: class NativeRolloutBenchmark(BenchmarkAdapter):\n67:     protocol = \"control.native_rollout\"\n68:     inputs = {\"scenario\": \"robot.scenario\"}\n69:     outputs = {\"episodes\": \"robot.episode_records\"}"
+      },
+      {
+        "first_line": 90,
+        "last_line": 117,
+        "text": "90:     def build_plan(self, binding, context):\n91:         if context.parameters:\n92:             raise ValueError(\"native tasks take model/benchmark options, not generation parameters\")\n93:         tasks = self.selected_tasks()\n94:         self.model_gpu()\n95:         implementation = [file_identity(Path(inspect.getfile(type(self)))),\n96:                           file_identity(Path(inspect.getfile(type(context.model)))), file_identity(Path(__file__))]\n97:         stages = [Stage(id=\"cases\", uses=\"benchmark.cases\", outputs={\"cases\": \"core.cases\"}, params={\"scope\": tasks})]\n98:         task_stages = []\n99:         for index, task in enumerate(tasks):\n100:             name = f\"task-{index:03d}-{slugify(task, 60)}\"\n101:             task_stages.append(name)\n102:             stages.append(Stage(id=name, uses=\"robotics.task\", inputs={\"cases\": \"cases.cases\"},\n103:                 outputs={\"prediction\": \"robot.rollout_bundle\"},\n104:                 params={\"case_id\": task, \"implementation\": implementation},\n105:                 retry=Retry(attempts=positive_int(self.options.get(\"attempts\", 1), \"attempts\"), backoff_seconds=1),\n106:                 resources=Resources(gpus=self.required_gpus(), timeout_seconds=positive_int(self.options.get(\"task_timeout_seconds\", 21600), \"task_timeout_seconds\"))))\n107:         stages.append(Stage(id=\"collect\", uses=\"robotics.collect\", inputs={name: name + \".prediction\" for name in task_stages},\n108:                             outputs={\"predictions\": \"core.bundles\"}, cache=Cache(enabled=False)))\n109:         stages.append(Stage(id=\"evaluate\", uses=\"benchmark.evaluate\",\n110:                             inputs={\"cases\": \"cases.cases\", \"predictions\": \"collect.predictions\"},\n111:                             outputs={\"result\": \"core.metrics\"}, params={\"implementation\": implementation}, cache=Cache(enabled=False)))\n112:         return Plan(id=f\"{context.model_spec.id}--{self.id}\", stages=tuple(stages),\n113:                     metadata={\"unit\": \"task_episode_batch\", \"controller\": \"worldevalkit-stage-engine\",\n114:                               \"task_scope\": tasks, \"native_harness\": self.metadata[\"endpoint_constraints\"][\"native_harness\"]})\n115: \n116:     def handlers(self):\n117:         return {\"robotics.task\": NativeTaskHandler, \"robotics.collect\": CollectTaskHandler}"
+      },
+      {
+        "first_line": 141,
+        "last_line": 146,
+        "text": "141:     def result_metadata(self, cases, episodes, official_total):\n142:         complete = set(c.id for c in cases) == set(self.task_definitions()) and episodes == official_total\n143:         return {\"protocol_complete\": complete, \"execution_mode\": \"framework_native_tasks\",\n144:                 \"controller\": \"worldevalkit-stage-engine\", \"claim_level\": \"reproduction\" if complete else \"diagnostic\",\n145:                 \"official_comparable\": False, \"task_batches\": len(cases), \"episode_count\": episodes,\n146:                 \"claim_limitations\": [\"single evaluation seed\", \"step-level replay is not recorded\"]}"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/benchmarks/robodojo.py",
+    "sha256": "d5739db6f8ef77f106772eee1bad87958f104a893015ba77fcb4d8ed492b350a",
+    "excerpts": [
+      {
+        "first_line": 68,
+        "last_line": 94,
+        "text": "68: class RoboDojo(NativeRolloutBenchmark):\n69:     id = \"robodojo\"\n70:     name = \"RoboDojo simulation\"\n71:     version = \"b8e5eed9fc11fc3da8e4b142fc60acf22036efa5+worldeval2\"\n72:     metadata = {\"endpoint_constraints\": {\"native_harness\": \"xpolicylab\"},\n73:                 \"official_tasks\": 42, \"task_batches\": 54, \"official_episodes\": 2100,\n74:                 \"aggregation\": \"five-dimension equal-weight mean\"}\n75: \n76:     @property\n77:     def source(self):\n78:         return source_spec(\"robodojo\", self.options)\n79: \n80:     def required_gpus(self):\n81:         return 2\n82: \n83:     def model_gpu(self):\n84:         policy = gpu_ids([self.options.get(\"policy_gpu\", 0)])[0]\n85:         simulator = gpu_ids([self.options.get(\"simulator_gpu\", 1)])[0]\n86:         if policy == simulator:\n87:             raise ValueError(\"RoboDojo requires distinct policy_gpu and simulator_gpu\")\n88:         return policy\n89: \n90:     def task_definitions(self):\n91:         config = self.options.get(\"environment_config\", \"arx_x5\")\n92:         if config != \"arx_x5\":\n93:             raise ValueError(\"this protocol is pinned to the arx_x5 EE evaluation\")\n94:         override = self.options.get(\"episodes\", \"native\")"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/benchmarks/robotwin_hard.py",
+    "sha256": "5f7f9c1a614dea97ca1beb86aba02c5a8ba7a513db793d649a6e2019f1fed97f",
+    "excerpts": [
+      {
+        "first_line": 59,
+        "last_line": 79,
+        "text": "59: class RoboTwinHard(NativeRolloutBenchmark):\n60:     id = \"robotwin-hard\"\n61:     name = \"RoboTwin 2.0 hard (demo_randomized)\"\n62:     version = \"13c3c47ff4312dd62484bcd51be034af55c062d1+worldeval2\"\n63:     metadata = {\"endpoint_constraints\": {\"native_harness\": \"starvla-batched\"},\n64:                 \"official_tasks\": 50, \"official_episodes\": 5000, \"task_config\": \"demo_randomized\",\n65:                 \"aggregation\": \"equal-weight task success rate\"}\n66: \n67:     @property\n68:     def source(self):\n69:         return source_spec(\"robotwin\", self.options)\n70: \n71:     def task_definitions(self):\n72:         count = positive_int(self.options.get(\"episodes\", 100), \"episodes\")\n73:         slots = positive_int(self.options.get(\"num_slots\", 1), \"num_slots\")\n74:         overrides = self.options.get(\"slots_by_task\", {})\n75:         if not isinstance(overrides, dict) or set(overrides) - set(ROBOTWIN_HARD_TASKS):\n76:             raise ValueError(\"slots_by_task must map known RoboTwin tasks to positive slot counts\")\n77:         return {name: {\"episodes\": count, \"task_config\": \"demo_randomized\", \"seed\": int(self.options.get(\"seed\", 0)),\n78:                        \"num_slots\": positive_int(overrides.get(name, slots), f\"slots_by_task.{name}\")}\n79:                 for name in ROBOTWIN_HARD_TASKS}"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/src/worldevalkit/runtime.py",
+    "sha256": "120ff544aca289a6e6b00eb060a0f84856551f85dfe7503b34e57e4cc249bb35",
+    "excerpts": [
+      {
+        "first_line": 170,
+        "last_line": 227,
+        "text": "170:     def _command(\n171:         self, command: Sequence[str], cwd: str | Path | None\n172:     ) -> tuple[list[str], str | Path | None]:\n173:         values = list(command)\n174:         if self.runtime.kind == \"core\":\n175:             if values and values[0] == \"python\":\n176:                 values[0] = str(self.runtime.options.get(\"python\", sys.executable))\n177:             return values, cwd\n178:         if self.runtime.kind == \"conda\":\n179:             conda = shutil.which(\"conda\")\n180:             env_name = self.runtime.options.get(\"env_name\")\n181:             prefix = self.runtime.options.get(\"prefix\")\n182:             if not conda or not (env_name or prefix):\n183:                 raise RuntimeError(\"conda runtime requires conda and options.env_name or prefix\")\n184:             if values and values[0] == \"python\":\n185:                 values[0] = str(self.runtime.options.get(\"python\", \"python\"))\n186:             return [\n187:                 conda,\n188:                 \"run\",\n189:                 \"--no-capture-output\",\n190:                 \"--prefix\" if prefix else \"-n\",\n191:                 str(prefix or env_name),\n192:                 *values,\n193:             ], cwd\n194:         if self.runtime.kind == \"venv\":\n195:             root = self.runtime.options.get(\"path\")\n196:             python = self.runtime.options.get(\"python\")\n197:             executable = Path(str(python or (Path(str(root)) / \"bin\" / \"python\")))\n198:             executable = Path(os.path.expandvars(str(executable))).expanduser()\n199:             if not executable.is_file():\n200:                 raise RuntimeError(f\"venv Python executable not found: {executable}\")\n201:             if values and values[0] == \"python\":\n202:                 values[0] = str(executable)\n203:             return values, cwd\n204:         if self.runtime.kind == \"container\":\n205:             docker = shutil.which(\"docker\")\n206:             image = self.runtime.options.get(\"image\")\n207:             digest = self.runtime.options.get(\"digest\")\n208:             if not docker or not image or not digest:\n209:                 raise RuntimeError(\n210:                     \"container runtime requires Docker, image and digest\"\n211:                 )\n212:             image_ref = str(image) if \"@\" in str(image) else f\"{image}@{digest}\"\n213:             if values and values[0] == \"python\":\n214:                 values[0] = str(self.runtime.options.get(\"python\", \"python\"))\n215:             host_cwd = Path(cwd or Path.cwd()).resolve()\n216:             return [\n217:                 docker,\n218:                 \"run\",\n219:                 \"--rm\",\n220:                 \"-v\",\n221:                 f\"{host_cwd}:/workspace\",\n222:                 \"-w\",\n223:                 \"/workspace\",\n224:                 image_ref,\n225:                 *values,\n226:             ], None\n227:         raise RuntimeError(\"remote runtimes must be handled by the model adapter\")"
+      },
+      {
+        "first_line": 229,
+        "last_line": 270,
+        "text": "229:     def run(\n230:         self,\n231:         command: Sequence[str],\n232:         *,\n233:         cwd: str | Path | None,\n234:         log_dir: str | Path,\n235:         name: str,\n236:         environment: Mapping[str, str] | None = None,\n237:         timeout_seconds: float | None = None,\n238:         on_progress=None,\n239:     ) -> CommandResult:\n240:         timeout = timeout_seconds if timeout_seconds is not None else self.runtime.options.get(\"timeout_seconds\")\n241:         if timeout is not None and float(timeout) <= 0:\n242:             raise ValueError(\"timeout_seconds must be positive\")\n243:         service = self.start(command, cwd=cwd, log_dir=log_dir, name=name, environment=environment, on_progress=on_progress)\n244:         try:\n245:             deadline = None if timeout is None else service.started + float(timeout)\n246:             while True:\n247:                 if service.progress_reader is not None:\n248:                     service.progress_reader.poll()\n249:                 if self._cancelled.is_set():\n250:                     raise RuntimeError(\"runtime cancelled\")\n251:                 remaining = None if deadline is None else deadline - time.monotonic()\n252:                 if remaining is not None and remaining <= 0:\n253:                     raise subprocess.TimeoutExpired(command, float(timeout))\n254:                 try:\n255:                     service.process.wait(timeout=0.2 if remaining is None else min(0.2, remaining))\n256:                     break\n257:                 except subprocess.TimeoutExpired:\n258:                     continue\n259:             result = service.result()\n260:             if result.returncode:\n261:                 raise CommandFailed(f\"command failed with exit code {result.returncode}; see {result.stderr}\")\n262:             return result\n263:         except subprocess.TimeoutExpired as error:\n264:             raise TimeoutError(f\"command timed out after {timeout}s\") from error\n265:         finally:\n266:             try:\n267:                 service.close()\n268:             finally:\n269:                 if service.progress_reader is not None:\n270:                     service.progress_reader.poll()"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/docs/phased-evaluation.md",
+    "sha256": "707dfbc8dff3b647c98486ccd4e6abec95009190bb21d6bda6d59b97cc76a94b",
+    "excerpts": [
+      {
+        "first_line": 1,
+        "last_line": 11,
+        "text": "1: # 分阶段评测：infer / judge\n2: \n3: 通用入口将普通离线评测拆为独立生成和评分，继续使用 Registry、Typed Ports、参数解析、\n4: EvaluationRunner、runtime、Stage Engine 和原有 Benchmark evaluator。模型适配器只实现模型\n5: 能力、依赖和推理，不负责选择 Benchmark、调度整个评测或组织跨服务器文件。\n6: \n7: 适用于静态 `cases → predict → evaluate` 流程和无状态 endpoint，支持一个 suite 中的多个\n8: 模型与 Benchmark、每条样本不同的 controls、端口别名及多项 typed artifacts。\n9: 同一个交接目录中每个 model/benchmark 组合只能出现一次。\n10: 有自定义 Stage DAG 或闭环交互的 Benchmark 继续使用原有 `run` / `suite run`，分阶段入口会明确拒绝。\n11: 当前准备阶段从 `cases(None)` 读取静态数据，不支持依赖运行期 simulator/context 的样本生成。"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "docs/architecture/unified-evaluation-platform/architecture.md",
+    "sha256": "7efafb94751bd5b75594277865e548b3c49edcc803950f352419f71072008408",
+    "excerpts": [
+      {
+        "first_line": 1,
+        "last_line": 16,
+        "text": "1: # 目标架构草案\n2: \n3: ## 1. 架构判断\n4: \n5: 平台应围绕一条共享“身份与证据主干”构建：\n6: \n7: ```text\n8: 模型来源\n9:   → ModelVersion（代码 + 权重 + 环境 + 配置）\n10:   → Deployment / WorkflowVersion\n11:   → Run / Episode / Step\n12:   → Event / Trace / Artifact\n13:   → Metric / Scorecard / EvidenceBundle\n14: ```\n15: \n16: 如果部署、Agent、日志和评测分别维护自己的模型 ID、任务 ID 和版本字段，最终会把大量时间花在跨系统对账上。统一平台的首要价值不是统一 UI，而是让上述 lineage 从一开始就是同一条链。"
+      },
+      {
+        "first_line": 88,
+        "last_line": 115,
+        "text": "88: ### 2.3 qzcli Provider\n89: \n90: 当前机器上的 qzcli 0.3.0 已提供：\n91: \n92: - `create`：镜像、命令、workspace/project、计算组、GPU 规格、实例数、共享内存、数据集挂载；\n93: - `status`、`watch`、`track`：任务状态；\n94: - `logs`：按 pod、时间和 tail 获取日志；\n95: - `stop`：停止任务；\n96: - `exec` / `exec-attach`：开发机内执行与重连；\n97: - `batch`：批量提交。\n98: \n99: 平台不应把 qzcli 命令散落在评测代码中，应由一个 provider adapter 封装：\n100: \n101: ```python\n102: class ExecutionProvider:\n103:     def submit(spec: ProviderJobSpec) -> ProviderJobRef: ...\n104:     def inspect(job: ProviderJobRef) -> ProviderJobStatus: ...\n105:     def stream_logs(job: ProviderJobRef, cursor: str | None) -> LogBatch: ...\n106:     def cancel(job: ProviderJobRef) -> None: ...\n107:     def exec(job: ProviderJobRef, command: list[str]) -> ExecResult: ...\n108: ```\n109: \n110: 还需要确认 qzcli/底层平台是否具备持续服务所需能力：\n111: \n112: - 端口暴露和 endpoint 发现；\n113: - readiness/liveness probe；\n114: - 版本切流、滚动升级和回滚；\n115: - service credential/secret 注入；"
+      },
+      {
+        "first_line": 214,
+        "last_line": 229,
+        "text": "214: ## 3. 核心契约\n215: \n216: 第一阶段最值得先稳定的不是数据库表，而是以下可序列化契约：\n217: \n218: 1. `ModelVersionRef`\n219: 2. `RuntimeSpec`\n220: 3. `DeploymentSpec` / `DeploymentRef`\n221: 4. `CapabilityContract`\n222: 5. `EvaluationProtocol`\n223: 6. `EvaluationPlan`\n224: 7. `RunResult` / `EpisodeTrace` / `StepTrace`\n225: 8. `ArtifactRef`\n226: 9. `MetricResult`\n227: 10. `Scorecard` / `EvidenceBundle`\n228: \n229: 每个契约都应包含 `schema_version`，支持 JSON 往返，并使用不可变版本引用。"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "LICENSE",
+    "sha256": "8c85081730435a79d5e9c0ef4096a328833a6406c60aafa295c2d72f56806107",
+    "excerpts": [
+      {
+        "first_line": 1,
+        "last_line": 5,
+        "text": "1: MIT License\n2: \n3: Copyright (c) 2026 MassLab-SII\n4: \n5: Permission is hereby granted, free of charge, to any person obtaining a copy"
+      }
+    ]
+  },
+  {
+    "source": "user_MassWorld_archive",
+    "path": "WorldEvalKit/LICENSE",
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "excerpts": [
+      {
+        "first_line": 1,
+        "last_line": 5,
+        "text": "1:                                  Apache License\n2:                            Version 2.0, January 2004\n3:                         http://www.apache.org/licenses/\n4: \n5:    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION"
+      }
+    ]
+  },
+  {
+    "source": "EmbodiedEval_current_checkout",
+    "path": "embodied_eval/v03/interfaces.py",
+    "sha256": "e8d4b75893a41264bca79e5866b64bcedc4047b7f7c606cc8a96dc66432354b1",
+    "excerpts": [
+      {
+        "first_line": 1,
+        "last_line": 23,
+        "text": "1: \"\"\"Both sides receive only their own configuration and public data.\"\"\"\n2: from typing import Protocol\n3: from ..core.types import Budgets, Metric, PublicTask\n4: from .contracts import CapabilitySpec, SpaceSpec, Context, ResolvedProfile, ModelInput, Prediction, TaskSpec, Observation, Action, StepResult\n5: \n6: \n7: class ModelAdapter(Protocol):\n8:     def begin_episode(self, context: Context, task: PublicTask, profile: ResolvedProfile, space: SpaceSpec) -> None: ...\n9:     def observe(self, model_input: ModelInput) -> None: ...\n10:     def predict(self, context: Context) -> Prediction: ...\n11:     def end_episode(self, context: Context) -> None: ...\n12:     def close(self) -> None: ...\n13:     def diagnostics(self) -> dict[str, object]: ...\n14: \n15: \n16: class BenchmarkAdapter(Protocol):\n17:     def describe(self) -> SpaceSpec: ...\n18:     def enumerate_tasks(self, episodes: tuple) -> list[TaskSpec]: ...\n19:     def reset(self, task: TaskSpec, context: Context) -> Observation: ...\n20:     def advance(self, action: Action, context: Context, remaining: Budgets) -> StepResult: ...\n21:     def score(self, context: Context) -> dict[str, Metric]: ...\n22:     def close(self) -> None: ...\n23:     def diagnostics(self) -> dict[str, object]: ..."
+      }
+    ]
+  },
+  {
+    "source": "EmbodiedEval_current_checkout",
+    "path": "embodied_eval/v03/config.py",
+    "sha256": "f034571d0760601d97917d4c79781b1ce88d668be6dad18faf00b76b2b449278",
+    "excerpts": [
+      {
+        "first_line": 1,
+        "last_line": 61,
+        "text": "1: \"\"\"Only explicit current-version configurations; no implicit legacy fallback.\"\"\"\n2: from dataclasses import dataclass, field\n3: from pathlib import Path\n4: from typing import Literal\n5: import re\n6: from ..codec import decode, loads, to_data\n7: from ..core.types import Budgets\n8: from ..core.validation import require\n9: \n10: \n11: @dataclass(frozen=True, kw_only=True)\n12: class AdapterConfig:\n13:     adapter: str\n14:     options: dict[str, object] = field(default_factory=dict)\n15: \n16: \n17: @dataclass(frozen=True, kw_only=True)\n18: class EpisodeConfig:\n19:     episode_id: str\n20:     seed: int = 0\n21:     budgets: Budgets = field(default_factory=lambda: Budgets(env_steps=6, model_calls=6))\n22: \n23: \n24: @dataclass(frozen=True, kw_only=True)\n25: class RunConfig:\n26:     run_id: str\n27:     model: AdapterConfig\n28:     benchmark: AdapterConfig\n29:     episodes: tuple[EpisodeConfig, ...]\n30:     control_mode: str | None = None\n31:     contract_version: Literal[\"0.3\"] = \"0.3\"\n32: \n33: \n34: def validate_config(config, registry=None):\n35:     require(isinstance(config, RunConfig), \"unsupported_config_version\", \"contract_version\",\n36:             \"current run/check only accept 0.3 configurations; migrate old files explicitly\")\n37:     decode(RunConfig, config)\n38:     pattern = r\"[A-Za-z0-9][A-Za-z0-9._-]{0,79}\"\n39:     require(re.fullmatch(pattern, config.run_id) is not None, \"invalid_id\", \"run_id\", \"safe run ID required\")\n40:     require(bool(config.episodes), \"missing_episode\", \"episodes\", \"select at least one episode\")\n41:     ids = [ep.episode_id for ep in config.episodes]\n42:     require(len(ids) == len(set(ids)), \"duplicate_id\", \"episodes\", \"unique episode IDs required\")\n43:     for ep in config.episodes:\n44:         require(re.fullmatch(pattern, ep.episode_id) is not None, \"invalid_id\", \"episode_id\", \"safe episode ID required\")\n45:         require(0 <= ep.seed < 2**32, \"invalid_seed\", ep.episode_id, \"uint32 seed required\")\n46:         require(all(v is None or v >= 0 for v in to_data(ep.budgets).values()), \"invalid_budget\", ep.episode_id, \"nonnegative budgets\")\n47:         require(any(v is not None for v in (ep.budgets.env_steps, ep.budgets.sim_time_s,\n48:                     ep.budgets.model_calls, ep.budgets.wall_time_s)), \"unbounded_run\", ep.episode_id, \"finite execution budget required\")\n49:     from .registry import default_registry\n50:     registry = registry or default_registry()\n51:     registry.model(config.model.adapter).validate_options(config.model.options)\n52:     registry.benchmark(config.benchmark.adapter).validate_options(config.benchmark.options)\n53:     return config\n54: \n55: \n56: def load_config(path: Path):\n57:     raw = loads(object, Path(path).read_text(encoding=\"utf-8\"))\n58:     require(isinstance(raw, dict) and raw.get(\"contract_version\") == \"0.3\",\n59:             \"unsupported_config_version\", \"contract_version\",\n60:             \"only explicit contract_version=0.3 is runnable; old/missing versions require offline migration\")\n61:     return validate_config(decode(RunConfig, raw))"
+      }
+    ]
+  },
+  {
+    "source": "EmbodiedEval_current_checkout",
+    "path": "embodied_eval/v03/registry.py",
+    "sha256": "bb1ff8b16eba35f87f4cdbd01a56dfe9fa93f904a0ce5896aeb24cd1c391d80f",
+    "excerpts": [
+      {
+        "first_line": 1,
+        "last_line": 32,
+        "text": "1: \"\"\"Independent registrations; native factories are never invoked by describe.\"\"\"\n2: from ..core.registry import AdapterRegistry, ModelRegistration, BenchmarkRegistration\n3: from ..native.registry import default_registry as native_registry\n4: from .models import CanonicalModel, capability\n5: from .benchmarks import CanonicalBenchmark, canonical_space\n6: \n7: _default = None\n8: \n9: \n10: def default_registry():\n11:     global _default\n12:     if _default is None:\n13:         registry = AdapterRegistry()\n14:         originals = native_registry()\n15:         for family in (\"openwam\", \"openpi\", \"lingbot_vla\", \"cosmos3\", \"dreamzero\"):\n16:             entry = originals.model(family)\n17:             registry.register_model(family, ModelRegistration(\n18:                 describe=lambda o, f=family, e=entry: capability(f, o, e.describe(o)),\n19:                 factory=lambda o, out, f=family, e=entry: CanonicalModel(f, o, out, e),\n20:                 validate_options=entry.validate_options, verify_assets=entry.verify_assets,\n21:                 readiness=entry.readiness, provenance=entry.provenance))\n22:         for family in (\"libero\", \"vlabench\", \"robotwin\", \"droid_sim\", \"robodojo\"):\n23:             entry = originals.benchmark(family)\n24:             registry.register_benchmark(family, BenchmarkRegistration(\n25:                 describe=lambda o, f=family, e=entry: canonical_space(f, e.describe(o)),\n26:                 factory=lambda o, out, f=family, e=entry: CanonicalBenchmark(f, o, out, e),\n27:                 validate_options=entry.validate_options, verify_assets=entry.verify_assets,\n28:                 readiness=entry.readiness, provenance=entry.provenance, metric_templates=entry.metric_templates))\n29:         from .synthetic import register\n30:         register(registry)\n31:         _default = registry\n32:     return _default"
+      }
+    ]
+  },
+  {
+    "source": "EmbodiedEval_current_checkout",
+    "path": "embodied_eval/v03/runner.py",
+    "sha256": "da61460d719432d38298fd93089b33dae7b3905972cc52935a52565b188f63d6",
+    "excerpts": [
+      {
+        "first_line": 18,
+        "last_line": 40,
+        "text": "18: def run(config, output, registry=None):\n19:     from .config import RunConfig\n20:     require(isinstance(config, RunConfig), \"unsupported_config_version\", \"contract_version\", \"only current 0.3 configurations may run\")\n21:     registry = registry or default_registry()\n22:     checked = check(config, registry)\n23:     if checked[\"issues\"]:\n24:         i = checked[\"issues\"][0]\n25:         raise ContractError(i[\"code\"], i[\"path\"], i[\"message\"])\n26:     m, b = registry.model(config.model.adapter), registry.benchmark(config.benchmark.adapter)\n27:     # Asset identity is never inferred from passing structural checks or success.\n28:     assets = {\"model\": m.verify_assets(config.model.options), \"benchmark\": b.verify_assets(config.benchmark.options)}\n29:     cap = m.describe(config.model.options)\n30:     benchmark = model = None\n31:     writer = None\n32:     try:\n33:         benchmark = b.factory(config.benchmark.options, output)\n34:         space = validate_space(benchmark.describe())\n35:         profile = resolve(space, cap, config.control_mode)\n36:         tasks = benchmark.enumerate_tasks(config.episodes)\n37:         require([t.episode_id for t in tasks] == [e.episode_id for e in config.episodes], \"task_selection_mismatch\", \"tasks\", \"different selected episodes\")\n38:         model = m.factory(config.model.options, output)\n39:         provenance = {\"synthetic\": m.synthetic or b.synthetic, \"contract_version\": \"0.3\",\n40:                       \"model\": m.provenance(config.model.options), \"benchmark\": b.provenance(config.benchmark.options),"
+      },
+      {
+        "first_line": 44,
+        "last_line": 80,
+        "text": "44:         writer.manifest(config, space, cap, profile, tasks, metrics, provenance)\n45:         rows, results = [], []\n46:         for task in tasks:\n47:             decode(c.TaskSpec, task)\n48:             prefix = f\"episodes/{task.episode_id}\"\n49:             writer.write(prefix + \"/task.internal.json\", task)\n50:             context = c.Context(run_id=config.run_id, env_id=\"env-0\", episode_id=task.episode_id, message_id=\"start\")\n51:             stats = dict(env_steps=0, sim_time_s=0., model_calls=0, tool_calls=0,\n52:                          model_forward_count=0, physics_steps=0 if space.timing_mode == \"measured_native\" else None)\n53:             errors, begun, reset, in_flight, state_known = [], False, False, False, True\n54:             prediction_in_flight=False\n55:             reason, phase, status = \"budget_exhausted\", \"reset\", \"completed\"\n56:             started = time.monotonic()\n57:             seen = set()\n58:             def trace(event, data):\n59:                 writer.append(prefix + \"/trace.internal.jsonl\", {\"event\": event, \"data\": data})\n60:             def remaining():\n61:                 return Budgets(**{key: None if value is None else max(0, value -\n62:                     (time.monotonic() - started if key == \"wall_time_s\" else stats[key]))\n63:                     for key, value in to_data(task.budgets).items()})\n64:             def exhausted(left):\n65:                 return any(getattr(left, k) is not None and getattr(left, k) <= 0 for k in (\"env_steps\", \"model_calls\", \"wall_time_s\")) or (\n66:                     left.sim_time_s is not None and left.sim_time_s + 1e-9 < space.control_period_s)\n67:             try:\n68:                 obs = validate_observation(benchmark.reset(task, context), space)\n69:                 same_episode(obs.context, context)\n70:                 require(obs.env_step == 0 and obs.sim_time_s == 0, \"invalid_reset_clock\", \"reset\", \"control clock starts at zero\")\n71:                 reset = True\n72:                 seen.add(obs.observation_id)\n73:                 trace(\"reset\", obs)\n74:                 phase, begun = \"begin\", True\n75:                 # No hidden task fields or benchmark object may enter the model.\n76:                 model.begin_episode(context, copy.deepcopy(task.public), copy.deepcopy(profile), copy.deepcopy(space))\n77:                 while not exhausted(remaining()):\n78:                     phase = \"observe\"\n79:                     view = model_input(obs, task, cap, profile, space)\n80:                     writer.append(prefix + \"/model_input.public.jsonl\", view)"
+      },
+      {
+        "first_line": 87,
+        "last_line": 111,
+        "text": "87:                     validate_prediction(pred, request, obs, space, cap, profile)\n88:                     prediction_in_flight=False\n89:                     trace(\"prediction\", pred)\n90:                     if stats[\"model_forward_count\"] is not None:\n91:                         stats[\"model_forward_count\"] = None if pred.model_forward_count is None else stats[\"model_forward_count\"] + pred.model_forward_count\n92:                     left = remaining()\n93:                     if left.wall_time_s is not None and left.wall_time_s <= 0:\n94:                         break\n95:                     phase, in_flight = \"execute\", True\n96:                     reply = benchmark.advance(pred.action, request, left)\n97:                     trace(\"step_result\", reply)\n98:                     validate_step(reply, obs, request, pred.action, space)\n99:                     require(reply.observation.observation_id not in seen, \"observation_id_reused\", \"observation_id\", \"new snapshot identity required\")\n100:                     in_flight = False\n101:                     seen.add(reply.observation.observation_id)\n102:                     feedback = reply.execution_feedback\n103:                     stats[\"env_steps\"] += feedback.consumed_env_steps\n104:                     stats[\"sim_time_s\"] += feedback.elapsed_sim_time_s\n105:                     if stats[\"physics_steps\"] is not None:\n106:                         stats[\"physics_steps\"] += feedback.consumed_physics_steps\n107:                     require(task.budgets.env_steps is None or stats[\"env_steps\"] <= task.budgets.env_steps,\n108:                             \"budget_overrun\", \"env_steps\", \"adapter exceeded budget\")\n109:                     require(task.budgets.sim_time_s is None or stats[\"sim_time_s\"] <= task.budgets.sim_time_s + 1e-9,\n110:                             \"budget_overrun\", \"sim_time_s\", \"adapter exceeded budget\")\n111:                     obs = reply.observation"
+      },
+      {
+        "first_line": 126,
+        "last_line": 145,
+        "text": "126:                 errors.append(item)\n127:                 trace(\"error\", item)\n128:                 status, reason = \"error\", \"run_error\" if state_known else \"execution_state_unknown\"\n129:             scored = {k: replace(v, value=None, valid=False, unavailable_reason=\"not_initialized\" if not reset else \"execution_state_unknown\") for k, v in metrics.items()}\n130:             if reset and state_known:\n131:                 try:\n132:                     scored = benchmark.score(replace(context, message_id=\"score\"))\n133:                     require(set(metrics) <= set(scored), \"missing_metric\", \"score\", \"required metric missing\")\n134:                     for value in scored.values():\n135:                         decode(Metric, value)\n136:                         require(value.valid == (value.value is not None) and (value.valid or bool(value.unavailable_reason)),\n137:                                 \"invalid_metric\", \"score\", \"invalid metrics need null and reason\")\n138:                     trace(\"score\", scored)\n139:                 except Exception as error:\n140:                     errors.append(_error(error, \"score\"))\n141:                     status, reason = \"error\", \"run_error\"\n142:                     scored = {k: replace(v, value=None, valid=False, unavailable_reason=\"scorer_failed\") for k, v in metrics.items()}\n143:             if begun:\n144:                 try:\n145:                     model.end_episode(replace(context, message_id=\"end\"))"
+      }
+    ]
+  },
+  {
+    "source": "EmbodiedEval_current_checkout",
+    "path": "embodied_eval/core/types.py",
+    "sha256": "99836ec58a3218f9df9ad35496c23a6ac81575365c30db6f14874d275e7ef8b2",
+    "excerpts": [
+      {
+        "first_line": 236,
+        "last_line": 289,
+        "text": "236:     kind: Literal[\"gripper_command\"] = \"gripper_command\"\n237: \n238: \n239: @dataclass(frozen=True, kw_only=True)\n240: class ControllerCommand:\n241:     command_id: str\n242:     target_id: str\n243:     controller_profile_ref: str\n244:     parameters: dict[str, object]\n245:     parameter_domain: Literal[\"controller_native\"] = \"controller_native\"\n246:     kind: Literal[\"controller_command\"] = \"controller_command\"\n247: \n248: \n249: @dataclass(frozen=True, kw_only=True)\n250: class ExecutionFeedback:\n251:     request_id: str\n252:     status: Literal[\"executed\", \"partially_executed\", \"rejected\", \"planning_failed\", \"execution_failed\"]\n253:     consumed_env_steps: int\n254:     elapsed_sim_time_s: float\n255:     call_id: str | None = None\n256:     command_ids: tuple[str, ...] = ()\n257:     code: Literal[\"ok\", \"invalid_argument\", \"planning_failed\", \"execution_failed\", \"budget_exhausted\"] = \"ok\"\n258:     consumed_physics_steps: int | None = None\n259: \n260: \n261: @dataclass(frozen=True, kw_only=True)\n262: class Metric:\n263:     value: float | bool | None\n264:     unit: str\n265:     source: str\n266:     valid: bool\n267:     unavailable_reason: str | None = None\n268: \n269: \n270: @dataclass(frozen=True, kw_only=True)\n271: class ExecutionStatistics:\n272:     env_steps: int\n273:     sim_time_s: float\n274:     model_calls: int\n275:     tool_calls: int\n276:     model_forward_count: int | None = None\n277:     physics_steps: int | None = None\n278: \n279: \n280: Command = JointTarget | PoseTarget | PoseDelta | TwistCommand | GripperCommand | ControllerCommand\n281: \n282: \n283: @dataclass(frozen=True, kw_only=True)\n284: class Action:\n285:     commands: tuple[Command, ...]\n286:     acquire_observation_after: bool = True\n287:     native_protocol: str | None = None\n288:     native_dtype: Literal[\"float32\", \"float64\", \"int32\", \"int64\"] | None = None\n289:     source_euler_xyz_rad: dict[str, tuple[float, float, float]] = field(default_factory=dict)"
+      }
+    ]
+  },
+  {
+    "source": "EmbodiedEval_current_checkout",
+    "path": "embodied_eval/v03/models.py",
+    "sha256": "f959cb02739e725456da465e6d0c67d7b806f2c3072af604c8733eb3c5c4785e",
+    "excerpts": [
+      {
+        "first_line": 135,
+        "last_line": 173,
+        "text": "135:     return native.ModelInput(context=native_context(view.context), observation_id=view.observation_id,\n136:         sim_time_s=view.sim_time_s, task_public=view.task_public, sensors=sensors, states=states,\n137:         frame_transforms=view.frame_transforms)\n138: \n139: \n140: class CanonicalModel:\n141:     def __init__(self, family, options, output, entry):\n142:         self.original = entry.describe(options)\n143:         self.cap = capability(family, options, self.original)\n144:         self.paths = profile_paths(options[\"io_profile\"], self.original)\n145:         self.engine = entry.factory(options, output)\n146: \n147:     def begin_episode(self, context, task, profile, space):\n148:         self.profile = profile\n149:         inputs = {req.key: \"model/drive_targets\" if req.key == \"drive_targets\" else self.paths[req.key].split(\".\", 1)[1]\n150:                   for req in self.original.inputs}\n151:         bound = native.BoundProfile(profile_id=profile.profile_id, model_id=profile.model_id, space_ref=profile.space_ref,\n152:             warnings=profile.warnings, binding=native.BindingConfig(inputs=inputs, targets=public_targets(self.original),\n153:                 action_spec_ref=profile.action_spec_ref, frame_conversions=profile.frame_conversions))\n154:         self.engine.begin_episode(native_context(context), task, bound, private_space(space, self.original, self.paths))\n155: \n156:     def observe(self, model_input):\n157:         self.engine.observe(private_input(model_input, self.original, self.paths))\n158: \n159:     def predict(self, context):\n160:         result = self.engine.predict(native_context(context))\n161:         return c.Prediction(context=context, based_on_observation_id=result.based_on_observation_id,\n162:             action=result.action,\n163:             model_forward_count=result.model_forward_count,\n164:             transformations=result.transformations + (\"canonical-v03-to-weight-private-encoding\",))\n165: \n166:     def end_episode(self, context):\n167:         self.engine.end_episode(native_context(context))\n168: \n169:     def diagnostics(self):\n170:         return dict(self.engine.diagnostics(), public_contract_version=\"0.3\", model_private_codec_only=True)\n171: \n172:     def close(self):\n173:         self.engine.close()"
+      }
+    ]
+  },
+  {
+    "source": "EmbodiedEval_current_checkout",
+    "path": "embodied_eval/v03/benchmarks.py",
+    "sha256": "a6c2946d783357a6111bddaf4e71cef693a63cef57bf2f687d19a72746115d73",
+    "excerpts": [
+      {
+        "first_line": 145,
+        "last_line": 186,
+        "text": "145: class CanonicalBenchmark:\n146:     def __init__(self, family, options, output, entry):\n147:         self.family = family\n148:         self.engine = entry.factory(options, output)\n149:         self.latest = None\n150:         try:\n151:             self.describe()\n152:         except Exception:\n153:             self.engine.close()\n154:             raise\n155: \n156:     def describe(self):\n157:         self.native_space = self.engine.describe()\n158:         self.space = canonical_space(self.family, self.native_space)\n159:         return self.space\n160: \n161:     def enumerate_tasks(self, episodes):\n162:         return [c.TaskSpec(**{f.name: getattr(task, f.name) for f in fields(c.TaskSpec) if f.name != \"contract_version\"})\n163:                 for task in self.engine.enumerate_tasks(episodes)]\n164: \n165:     def reset(self, task, context):\n166:         old = native.TaskSpec(**{f.name: getattr(task, f.name) for f in fields(native.TaskSpec) if f.name != \"contract_version\"})\n167:         result = self.engine.reset(old, native_context(context))\n168:         self.latest = canonical_observation(self.family, self.native_space, result, self.space)\n169:         return self.latest\n170: \n171:     def advance(self, action, context, remaining):\n172:         from .transforms import action_for_environment\n173:         converted = action_for_environment(action, self.space, self.latest)\n174:         result = self.engine.advance(converted, native_context(context), remaining)\n175:         self.latest = canonical_observation(self.family, self.native_space, result.observation, self.space)\n176:         return c.StepResult(observation=self.latest, execution_feedback=result.execution_feedback,\n177:                            terminated=result.terminated, truncated=result.truncated)\n178: \n179:     def score(self, context):\n180:         return self.engine.score(native_context(context))\n181: \n182:     def diagnostics(self):\n183:         return dict(self.engine.diagnostics(), public_contract_version=\"0.3\", canonical_environment_boundary=True)\n184: \n185:     def close(self):\n186:         self.engine.close()"
+      }
+    ]
+  }
+]
