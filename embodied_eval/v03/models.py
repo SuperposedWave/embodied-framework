@@ -46,7 +46,10 @@ def public_targets(original):
 
 
 def capability(family, options, original):
+    from ..native.timing_profiles import timing_facts
     profile = options["io_profile"]
+    chunk_owner, timing_audit = timing_facts(family, profile,
+        execution_horizon=options.get("open_loop_horizon"))
     paths, targets, inputs = profile_paths(profile, original), public_targets(original), []
     for req in original.inputs:
         if req.key == "drive_targets":
@@ -82,11 +85,12 @@ def capability(family, options, original):
         supported_timing_modes=original.supported_timing_modes, training_embodiments=original.training_embodiments,
         observation_update=original.observation_update,
         temporal=c.ModelTiming(native_action_period_s=None,
-            replanning_owner="server" if family == "openwam" else "adapter",
+            replanning_owner=chunk_owner,
             provenance={"revision": original.source_revision, "checkpoint": original.checkpoint_ref,
                 "io_profile": profile,
                 "rule": "preserve native next-action/chunk cache; wire observations are current snapshots, not assembled histories",
-                "action_period_status": "unknown: training FPS/stride has not been proven to define this weight's action duration"}))
+                "action_period_status": "unknown: training FPS/stride has not been proven to define this weight's action duration",
+                "source_audit": timing_audit}))
 
 
 def native_state_spec(spec):
