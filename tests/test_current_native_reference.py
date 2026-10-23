@@ -13,7 +13,7 @@ spec.loader.exec_module(module)
 class CurrentReferenceTest(unittest.TestCase):
     def project(self, values, images, version="0.3", **kwargs):
         return module.current_snapshot(lambda obs, state, rgb, at, state_at: (state, rgb, at),
-            {"contract_version": version}, values, images, **kwargs)
+            {"context": {"contract_version": version}}, values, images, **kwargs)
 
     def test_libero_native_names(self):
         states, images, _ = self.project({"gripper_positions": [0., .02]},
@@ -59,6 +59,10 @@ class CurrentReferenceTest(unittest.TestCase):
             self.project({}, {}, version="0.2")
         with self.assertRaises(ValueError):
             self.project({}, {}, state_acquired_at={"joint_drive_targets": 0.})
+
+    def test_version_is_read_from_real_observation_context_not_fake_top_level(self):
+        with self.assertRaises(ValueError):
+            module.current_snapshot(lambda *args: None, {"contract_version": "0.3", "context": {"contract_version": "0.2"}}, {}, {})
 
 
 if __name__ == "__main__":

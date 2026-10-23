@@ -5,8 +5,26 @@
     "status": "in_progress_not_formal_acceptance",
     "authorization": "repair broken environments and advance real runs/native comparisons; DreamZero hardware deferred",
     "interpreter_repair": "outputs/native-env-repair-20261023-run1/receipt.json",
-    "dependency_readiness": "outputs/native-runtime-readiness-20261023-run1/receipt.json",
-    "bounded_current_comparisons": "outputs/current-native-live-20261023-run2/receipt.json",
+    "dependency_readiness": "outputs/native-runtime-readiness-20261023-run2/receipt.json",
+    "dependency_environments_passed": 14,
+    "all_interpreter_links_available": true,
+    "repair_identity_and_source_gate": "outputs/native-repair-evidence-gate-20261023-run1/receipt.json",
+    "original_repaired_OpenWAM_ARX_worker_probe": "outputs/native-repair-package-worker-20261023-run1/receipt.json",
+    "bounded_current_comparisons": [
+      "outputs/current-native-live-20261023-run4/receipt.json",
+      "outputs/current-native-libero-reference-20261023-run2/receipt.json",
+      "outputs/current-native-live-20261023-run6/receipt.json",
+      "outputs/current-native-live-20261023-run8/receipt.json"
+    ],
+    "two_openpi_pairs_completed_but_strict_equal_false": true,
+    "two_openpi_first_input_codec_reconstructions_exact_not_uncaptured_packet_claim": true,
+    "OpenWAM_RoboTwin_current_framework_four_steps_completed": true,
+    "OpenWAM_RoboTwin_current_framework_physics_steps": 370,
+    "shared_disk_startup_timeouts_preserved": true,
+    "local_asset_caches_byte_identical_not_new_weights": [
+      "outputs/native-local-checkpoint-cache-20261023-run1/receipt.json",
+      "outputs/native-local-lingbot-cache-20261023-run1/receipt.json"
+    ],
     "local_GPU_count": 4,
     "qz_authentication": "expired_invalid_grant_user_login_required",
     "new_platform_jobs": 0,

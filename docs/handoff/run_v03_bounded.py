@@ -35,7 +35,10 @@ def child(args):
         import VLABench.tasks
         import VLABench.envs
     try:
-        return run(cfg, args.output).exit_code
+        from record_current_policy_exchange import record_exchanges
+        from record_current_controller_boundary import record_controller
+        with record_controller(args.output.parent / 'controller-exchanges'), record_exchanges(args.output.parent / 'model-exchanges'):
+            return run(cfg, args.output).exit_code
     except Exception as error:
         write(args.output.parent / 'client-exception.json', {'exception_chain': public_exception(error)})
         return 1
@@ -52,7 +55,7 @@ def supervised_side(command, cwd, client, cfgpath, target, args, side, server_en
                 stderr=subprocess.PIPE, start_new_session=True)
             row["owned_server_pid"] = server.pid
             logs = pool.submit(server.communicate)
-            deadline = time.monotonic() + 900
+            deadline = time.monotonic() + getattr(args, 'startup_timeout_s', 900)
             while True:
                 if server.poll() is not None:
                     raise RuntimeError('owned_server_start_failed')
@@ -73,7 +76,7 @@ def supervised_side(command, cwd, client, cfgpath, target, args, side, server_en
                     '--output', str((target / 'native').resolve())]
             worker = subprocess.Popen(invocation, cwd=ROOT, env=client_env, stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE, start_new_session=True)
-            out, err = worker.communicate(timeout=1800)
+            out, err = worker.communicate(timeout=max(1800, getattr(args, 'wall_time_s', 600) + 600))
             row.update(exit_code=worker.returncode, public_failure_categories=categories((out + err).decode(errors='replace')))
             result_path = target / ('framework/summary.json' if side == 'framework' else 'native/native-result.json')
             row['passed'] = worker.returncode == 0 and result_path.is_file()
@@ -82,11 +85,17 @@ def supervised_side(command, cwd, client, cfgpath, target, args, side, server_en
                 if side == 'framework':
                     row.update(completed=value['completed'], errors=value['errors'], synthetic=value['synthetic'])
                     row['passed'] = row['passed'] and value['errors'] == 0 and value['completed'] == 1 and not value['synthetic']
+                    manifest = json.loads((target / 'framework/manifest.json').read_text())
+                    episode = manifest['config']['episodes'][0]['episode_id']
+                    result = json.loads((target / 'framework/episodes' / episode / 'result.json').read_text())
+                    row['execution_statistics'] = result['execution_statistics']
+                    row['passed'] = row['passed'] and result['execution_statistics']['env_steps'] > 0
                 else:
                     row.update({k: value.get(k) for k in ('completed', 'strict_equal', 'native_actions', 'initial_observation_exact', 'first_divergence')})
                     row['passed'] = row['passed'] and value['completed']
         except Exception as error:
             row['exception_chain'] = public_exception(error)
+            row['policy_execution_state'] = 'unknown_no_retry_or_resend' if worker is not None else 'no_policy_action_started'
         finally:
             stop_owned(worker)
             stop_owned(server)
@@ -133,9 +142,18 @@ def execute(args):
         if case not in examples:
             raise ValueError("current_example_required_for_this_supervisor")
         cfg = load_config(ROOT / "examples" / examples[case])
+        if args.asset_cache:
+            cached = json.loads(args.asset_cache.read_text())
+            if not cached.get('passed'):
+                raise ValueError('completed_byte_identical_asset_cache_required')
+            source = str(Path(cfg.model.options['checkpoint_dir']).resolve())
+            cfg = replace(cfg, model=replace(cfg.model, options={**cfg.model.options,
+                'checkpoint_dir': cached['checkpoints'][source]}))
         cfg = replace(cfg, run_id='v03-' + case.replace('_', '-'),
             model=replace(cfg.model, options={**cfg.model.options, 'port': args.port}),
-            episodes=(replace(cfg.episodes[0], budgets=Budgets(env_steps=4, model_calls=4, wall_time_s=600.)),))
+            episodes=(replace(cfg.episodes[0], budgets=Budgets(env_steps=4, model_calls=4, wall_time_s=float(args.wall_time_s))),))
+        if args.request_timeout_s is not None:
+            cfg = replace(cfg, model=replace(cfg.model, options={**cfg.model.options, 'request_timeout_s': args.request_timeout_s}))
         selected.append((case, cfg))
     samples, stop = [], threading.Event()
     def sample():
@@ -218,7 +236,13 @@ def main():
     parser.add_argument('--simulator-gpu', type=int, default=0)
     parser.add_argument('--port', type=int, default=8963)
     parser.add_argument('--native-reference', action='store_true', help='Fresh independent fixed-source reference per current framework run')
+    parser.add_argument('--asset-cache', type=Path, help='Completed byte-identical local checkpoint-cache receipt; no tensor or normalization changes')
+    parser.add_argument('--request-timeout-s', type=float, help='Explicit existing RPC wait limit for cold-start diagnostics only; defaults remain unchanged')
+    parser.add_argument('--wall-time-s', type=int, default=600, help='Existing cooperative episode diagnostic budget; does not change action/physics timing')
+    parser.add_argument('--startup-timeout-s', type=int, default=900)
     args = parser.parse_args()
+    if not 1 <= args.wall_time_s <= 3600 or not 1 <= args.startup_timeout_s <= 3600 or args.request_timeout_s is not None and not 1 <= args.request_timeout_s <= 1800:
+        raise ValueError('explicit_bounded_diagnostic_waits_required')
     return child(args) if args.child else execute(args)
 
 

@@ -11,7 +11,7 @@ import resource
 
 
 def current_snapshot(original, observation, values, images, acquired_at=None, state_acquired_at=None):
-    if observation.get("contract_version") != "0.3":
+    if observation.get("context", {}).get("contract_version") != "0.3":
         raise ValueError("current_reference_requires_current_observation")
     cameras = {
         "agentview_image": "head", "robot0_eye_in_hand_image": "wrist",
