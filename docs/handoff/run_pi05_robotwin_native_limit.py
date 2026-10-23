@@ -146,4 +146,4 @@ def main():
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit("Retired historical execution tool. Use current 0.3 run/check or run_v03_bounded.py; historical references are test-only.")

@@ -15,7 +15,7 @@
 
 当前结构：`v03/`是公共协议与通用流程；`core/`是通用物理类型；`native/model_catalog.py`与`model_assets.py`只管模型，`native/benchmark_catalog.py`、`benchmark_assets.py`与`environment_specs/`只管环境；`adapters/`只保留实际使用的环境加载与原生通信／执行工具。MassWorld桥接继续委托完整0.3运行，不增加外层动作缓存。
 
-详见[当前契约](docs/contract-v0.3.md)、[接入与调试指引](docs/adapter-onboarding.md)及[本轮修改报告](outputs/current-only-delivery-20261023-final/current-only-decoupling-report.html)。模型与环境结构满足、资产准备、真实推理、原生严格一致、全任务成功率和阶段验收仍是不同状态；契约未冻结、阶段4未自动接受，DreamZero双H10080GB验证仍后置。
+详见[当前契约](docs/contract-v0.3.md)、[接入与调试指引](docs/adapter-onboarding.md)及[本轮修改报告](outputs/current-only-delivery-20261023-final2/current-only-decoupling-report.html)。模型与环境结构满足、资产准备、真实推理、原生严格一致、全任务成功率和阶段验收仍是不同状态；契约未冻结、阶段4未自动接受，DreamZero双H10080GB验证仍后置。
 
 ## 以下为历史交付记录（当时状态，不是当前API）
 

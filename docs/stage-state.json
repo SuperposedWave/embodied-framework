@@ -1,6 +1,55 @@
 {
-  "last_update_utc": "2026-10-19T18:10:29Z",
-  "review_status": "saved_execution_clock_audit_delivered_native_reproduction_and_weight_timing_gaps_open",
+  "last_update_utc": "2026-10-23T07:40:30.204736+00:00",
+  "review_status": "current_only_v03_execution_policy_delivered_runtime_readiness_and_reproduction_gaps_open",
+  "current_only_execution_20261023": {
+    "user_authorization": "按照Benchmark优先方案实施，清理历史兼容，只保留单一当前版本并说明不可强行统一的内容",
+    "status": "software_delivery_complete_native_runtime_preparation_and_real_acceptance_pending",
+    "index": "docs/handoff/current-only-execution-20261023-index.json",
+    "report": "outputs/current-only-delivery-20261023-final2/current-only-decoupling-report.html",
+    "implementation_commit": "1905ba796238e023f3d2454ae81d916e9bc7e3d4",
+    "public_contract": "0.3",
+    "legacy_runtime_aliases_and_pair_factories_retired": true,
+    "current_runtime_python_files": 75,
+    "removed_runtime_paths_recoverable_in_git": 59,
+    "legacy_operator_entries_retired": 12,
+    "main_tests_each_environment": 676,
+    "tested_Python_versions": [
+      "3.13.5",
+      "3.10.21"
+    ],
+    "bridge_tests": 34,
+    "skips": 0,
+    "CLI_exit_codes": [
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "bridge_CLI_exit_codes": [
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "static_structure_comparisons": 77,
+    "interface_matches_not_real_runs": 20,
+    "saved_real_routes_checked": 11,
+    "saved_transitions_per_route": 1,
+    "new_GPU_inference": false,
+    "new_real_simulation": false,
+    "new_platform_jobs": 0,
+    "native_interpreter_links_missing": 9,
+    "native_environments_modified": false,
+    "live_server_identity_verified": false,
+    "all_real_weight_action_periods_still_unknown": true,
+    "old_strict_reproduction_differences_closed": false,
+    "formal_stage4_acceptance": false,
+    "contract_frozen": false,
+    "preview_port": 8774,
+    "remote_port_forwarding_verified": false
+  },
   "saved_execution_audit_20261020": {
     "user_facing_date_Asia_Shanghai": "2026-10-20",
     "status": "existing_execution_logs_checked_and_difference_boundaries_localized_no_new_runtime",

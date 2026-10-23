@@ -1,0 +1,32 @@
+{
+  "current_public_cli": [
+    "run",
+    "check"
+  ],
+  "runtime_contract": "0.3",
+  "current_tools": [
+    "docs/handoff/replay_v03_baseline.py",
+    "docs/handoff/check_current_only_architecture.py",
+    "docs/handoff/check_v03_saved_boundaries.py",
+    "docs/handoff/run_v03_bounded.py",
+    "docs/handoff/check_current_bridge.py",
+    "docs/handoff/serve_report.py",
+    "docs/handoff/check_served_report.py"
+  ],
+  "retired_legacy_execution_entrypoints": [
+    "docs/handoff/crosscheck_mn_robotwin_meter.py",
+    "docs/handoff/diagnose_openwam_pose_execution.py",
+    "docs/handoff/diagnose_robotwin_first_action.py",
+    "docs/handoff/prepare_mn_extension.py",
+    "docs/handoff/replay_mn_native_actions.py",
+    "docs/handoff/run_cosmos_droid_bounded.py",
+    "docs/handoff/run_dreamzero_droid_bounded.py",
+    "docs/handoff/run_mn_architecture_examples.py",
+    "docs/handoff/run_openwam_dual_pose_comparison.py",
+    "docs/handoff/run_pi05_robotwin_native_limit.py",
+    "docs/handoff/run_robodojo_bounded.py",
+    "docs/handoff/run_same_condition_singlearm.py"
+  ],
+  "historical_reference_scope": "test-only metadata/codec comparisons; not a production fallback",
+  "recover_original_tools_at_git_checkpoint": "67ca6ad"
+}
