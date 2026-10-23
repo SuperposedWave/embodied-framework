@@ -39,8 +39,9 @@ def server_spec(config):
                 "--port",port,"--checkpoint",o["checkpoint_dir"]]
         elif profile in ("state8_osc", "state7_absolute"):
             state8=profile=="state8_osc"
-            command=[str(envs/("openpi-stage4" if state8 else "openpi-vlabench-stage4")/"bin/python"),str(repo/"scripts/serve_policy.py"),
-                     "--port",port,"policy:checkpoint","--policy.config","pi05_libero" if state8 else "pi05_ft_vlabench_primitive","--policy.dir",o["checkpoint_dir"]]
+            command=[str(envs/("openpi-stage4" if state8 else "openpi-vlabench-stage4")/"bin/python"),
+                str(ROOT/"docs/handoff/serve_openpi_native_loopback.py"), "--repo",str(repo),
+                "--port",port,"--config-name","pi05_libero" if state8 else "pi05_ft_vlabench_primitive", "--checkpoint",o["checkpoint_dir"]]
         else:
             raise ValueError("named native model server launch not implemented for this profile")
     elif config.model.adapter=="lingbot_vla":

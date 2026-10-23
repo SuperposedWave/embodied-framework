@@ -11,6 +11,7 @@ import json
 import os
 from pathlib import Path
 import socket
+import resource
 import subprocess
 import sys
 import threading
@@ -33,7 +34,73 @@ def child(args):
         import VLABench.robots
         import VLABench.tasks
         import VLABench.envs
-    return run(cfg, args.output).exit_code
+    try:
+        return run(cfg, args.output).exit_code
+    except Exception as error:
+        write(args.output.parent / 'client-exception.json', {'exception_chain': public_exception(error)})
+        return 1
+
+
+def supervised_side(command, cwd, client, cfgpath, target, args, side, server_env, client_env):
+    """Fresh owned policy process per side; no re-send or automatic retry."""
+    row = {"side": side, "passed": False, "fresh_owned_server": True}
+    server = worker = None
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        logs = None
+        try:
+            server = subprocess.Popen(command, cwd=cwd, env=server_env, stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, start_new_session=True)
+            row["owned_server_pid"] = server.pid
+            logs = pool.submit(server.communicate)
+            deadline = time.monotonic() + 900
+            while True:
+                if server.poll() is not None:
+                    raise RuntimeError('owned_server_start_failed')
+                try:
+                    with socket.create_connection(('127.0.0.1', args.port), timeout=.5):
+                        break
+                except OSError:
+                    if time.monotonic() > deadline:
+                        raise TimeoutError('diagnostic_startup_bound')
+                    time.sleep(1)
+            print(json.dumps(dict(case=target.name, side=side, server_ready=True)), flush=True)
+            if side == "framework":
+                invocation = [str(client), __file__, '--child', '--config', str(cfgpath.resolve()),
+                    '--output', str((target / 'framework').resolve())]
+            else:
+                invocation = [str(client), str(ROOT / 'docs/handoff/compare_current_native.py'),
+                    '--config', str(cfgpath.resolve()), '--framework', str((target / 'framework').resolve()),
+                    '--output', str((target / 'native').resolve())]
+            worker = subprocess.Popen(invocation, cwd=ROOT, env=client_env, stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, start_new_session=True)
+            out, err = worker.communicate(timeout=1800)
+            row.update(exit_code=worker.returncode, public_failure_categories=categories((out + err).decode(errors='replace')))
+            result_path = target / ('framework/summary.json' if side == 'framework' else 'native/native-result.json')
+            row['passed'] = worker.returncode == 0 and result_path.is_file()
+            if result_path.is_file():
+                value = json.loads(result_path.read_text())
+                if side == 'framework':
+                    row.update(completed=value['completed'], errors=value['errors'], synthetic=value['synthetic'])
+                    row['passed'] = row['passed'] and value['errors'] == 0 and value['completed'] == 1 and not value['synthetic']
+                else:
+                    row.update({k: value.get(k) for k in ('completed', 'strict_equal', 'native_actions', 'initial_observation_exact', 'first_divergence')})
+                    row['passed'] = row['passed'] and value['completed']
+        except Exception as error:
+            row['exception_chain'] = public_exception(error)
+        finally:
+            stop_owned(worker)
+            stop_owned(server)
+            if logs:
+                out, err = logs.result(timeout=30)
+                log = (out + err).decode(errors='replace')
+                row['server_public_failure_categories'] = categories(log)
+                sys.path.insert(0, str(ROOT / 'integrations/massworld'))
+                from platform_diagnostics import dependency_facts, import_failure_details
+                row['server_dependency_facts'] = dependency_facts(log)
+                row['server_import_failure_details'] = import_failure_details(log)
+    write(target / (side + '-supervision.json'), row)
+    print(json.dumps(dict(case=target.name, **row)), flush=True)
+    return row
 
 
 def execute(args):
@@ -83,7 +150,8 @@ def execute(args):
     report = dict(kind='v03_bounded_real_runs_not_native_reinference_equivalence_or_task_acceptance', passed=False,
         started_at_utc=datetime.now(timezone.utc).isoformat(), formal_acceptance=False, transitions_per_case=4,
         four_action_diagnostic_budget_not_full_task_scores=True, mapping_gate=str(args.mapping_receipt),
-        global_proxy_occupancy_driver_controller_weights_or_normalization_changed=False, raw_logs_saved=False, cases=[])
+        global_proxy_occupancy_driver_controller_weights_or_normalization_changed=False, raw_logs_saved=False,
+        fresh_native_reference_requested=args.native_reference, cases=[])
     try:
         for case, cfg in selected:
             target = args.output / case
@@ -101,6 +169,11 @@ def execute(args):
             env = dict(os.environ, HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1', HF_HUB_DISABLE_IMPLICIT_TOKEN='1',
                 PYTHONDONTWRITEBYTECODE='1', PYTHONUNBUFFERED='1', OMP_NUM_THREADS='4', OPENBLAS_NUM_THREADS='4',
                 QWEN3VL_PATH=str(WORKSPACE.parent.parent / 'Model/Qwen3-VL-4B-Instruct-processor'))
+            env.pop('LD_LIBRARY_PATH', None)
+            if cfg.model.adapter == 'openpi':
+                sys.path.insert(0, str(ROOT / 'integrations/massworld'))
+                from platform_model_cache import environment as cache_environment
+                env = cache_environment(env, ROOT / 'outputs/worldeval-openpi-public-cache-20261019-run1/manifest.json')
             for key in ('HTTP_PROXY', 'HTTPS_PROXY', 'ALL_PROXY', 'http_proxy', 'https_proxy', 'all_proxy'):
                 env.pop(key, None)
             server_env = dict(env, CUDA_VISIBLE_DEVICES=str(args.model_gpu), XLA_PYTHON_CLIENT_MEM_FRACTION='0.6')
@@ -110,41 +183,11 @@ def execute(args):
                 client_env['__EGL_VENDOR_LIBRARY_FILENAMES'] = str(WORKSPACE / 'upstream/envs/robotwin-stage4/lib/python3.10/site-packages/sapien/vulkan_library/10_nvidia.json')
             row = dict(case=case, passed=False, model_gpu=args.model_gpu, simulator_gpu=args.simulator_gpu,
                 client_python=str(client), model_command=command)
-            server = worker = None
-            with ThreadPoolExecutor(max_workers=2) as pool:
-                logs = None
-                try:
-                    server = subprocess.Popen(command, cwd=cwd, env=server_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
-                    logs = pool.submit(server.communicate)
-                    deadline = time.monotonic() + 900
-                    while True:
-                        if server.poll() is not None:
-                            raise RuntimeError('owned_server_start_failed')
-                        try:
-                            with socket.create_connection(('127.0.0.1', args.port), timeout=.5):
-                                break
-                        except OSError:
-                            if time.monotonic() > deadline:
-                                raise TimeoutError('diagnostic_startup_bound')
-                            time.sleep(1)
-                    print(json.dumps(dict(case=case, server_ready=True)), flush=True)
-                    worker = subprocess.Popen([str(client), __file__, '--child', '--config', str(cfgpath.resolve()), '--output', str((target / 'framework').resolve())],
-                        cwd=ROOT, env=client_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
-                    out, err = worker.communicate(timeout=1200)
-                    row.update(exit_code=worker.returncode, public_failure_categories=categories((out + err).decode(errors='replace')))
-                    summary = target / 'framework/summary.json'
-                    row['passed'] = worker.returncode == 0 and summary.is_file()
-                    if summary.is_file():
-                        value = json.loads(summary.read_text())
-                        row.update(completed=value['completed'], errors=value['errors'], synthetic=value['synthetic'])
-                except Exception as error:
-                    row['exception_chain'] = public_exception(error)
-                finally:
-                    stop_owned(worker)
-                    stop_owned(server)
-                    if logs:
-                        out, err = logs.result(timeout=30)
-                        row['server_public_failure_categories'] = categories((out + err).decode(errors='replace'))
+            framework = supervised_side(command, cwd, client, cfgpath, target, args, 'framework', server_env, client_env)
+            row.update(passed=framework['passed'], framework=framework)
+            if framework['passed'] and args.native_reference:
+                native = supervised_side(command, cwd, client, cfgpath, target, args, 'native', server_env, client_env)
+                row.update(native=native, passed=native['passed'] and framework['passed'])
             report['cases'].append(row)
             write(target / 'receipt.json', row)
             print(json.dumps(row), flush=True)
@@ -164,6 +207,7 @@ def execute(args):
 
 
 def main():
+    resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', type=Path)
     parser.add_argument('--output', type=Path, required=True)
@@ -173,6 +217,7 @@ def main():
     parser.add_argument('--model-gpu', type=int, default=6)
     parser.add_argument('--simulator-gpu', type=int, default=0)
     parser.add_argument('--port', type=int, default=8963)
+    parser.add_argument('--native-reference', action='store_true', help='Fresh independent fixed-source reference per current framework run')
     args = parser.parse_args()
     return child(args) if args.child else execute(args)
 
