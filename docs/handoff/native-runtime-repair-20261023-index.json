@@ -1,0 +1,1058 @@
+{
+  "kind": "native_environment_repair_and_seven_current_real_comparison_delivery_not_stage_acceptance",
+  "at_utc": "2026-10-23T09:47:47.174681+00:00",
+  "branch": "feat/massworld-integration",
+  "implementation_source_commit": "afdc3c466ac97449d17b48771f5ced7f66e6bd6f",
+  "public_contract": "0.3",
+  "report": "outputs/native-runtime-repair-delivery-20261023-final2/native-environment-repair-and-comparison.html",
+  "report_sha256": "9b2077acdcc815157531005263ad68b4e9a7b06a99d7a56ee444d4ac72b9b688",
+  "evidence": {
+    "outputs/native-runtime-repair-delivery-20261023-final2/receipt.json": {
+      "sha256": "e75aaf90b22ad198680415c34d3367b88ee1b1ec59d4069802889ed95b947649",
+      "bytes": 4770
+    },
+    "outputs/native-runtime-repair-delivery-20261023-final2/native-environment-repair-and-comparison.html": {
+      "sha256": "9b2077acdcc815157531005263ad68b4e9a7b06a99d7a56ee444d4ac72b9b688",
+      "bytes": 24063
+    },
+    "outputs/native-runtime-repair-delivery-20261023-final2/preview-lifecycle.json": {
+      "sha256": "f1061bcd38837c22affcaa62678877e99e770f2e81985e5f6d4e8ec7098e29b3",
+      "bytes": 10059
+    },
+    "outputs/native-runtime-repair-delivery-20261023-final2/http-verification.json": {
+      "sha256": "cd8b8a0d8be145db993a860d92ffc66310a98f30eb3de8ced03187246d36fba8",
+      "bytes": 11783
+    },
+    "outputs/native-runtime-repair-delivery-20261023-final2/video-http-verification.json": {
+      "sha256": "aedfb011debde28d86d3ca2c89c73ffb86accf19ea96a520661044e2fa3b6731",
+      "bytes": 16256
+    },
+    "outputs/native-repair-evidence-gate-20261023-final1/receipt.json": {
+      "sha256": "57b7df95af4dcd104d6649819e6b4f8082a2ac031920c78faed2d31280d20246",
+      "bytes": 12789
+    },
+    "outputs/native-env-repair-20261023-run1/receipt.json": {
+      "sha256": "2b4229c09713f8f8c5aead94234a72c7d6d2f1246723773d08cd2dc14c5c3aa4",
+      "bytes": 12545
+    },
+    "outputs/native-env-links-after-20261023-run1/receipt.json": {
+      "sha256": "686d441e600adcc1188f94134e5e9e31c8eabb428c27946c0533268d906623d2",
+      "bytes": 9147
+    },
+    "outputs/native-runtime-readiness-20261023-run2/receipt.json": {
+      "sha256": "b032b12b76c1ef47c84357067cdf8425ff59e726c5a5ad5b6aa29f6235983091",
+      "bytes": 15063
+    },
+    "outputs/native-render-readiness-20261023-run1/receipt.json": {
+      "sha256": "2acde8813a1d8f8c47637278c76950fe6557a659d54c9e0354c09143766eabab",
+      "bytes": 301
+    },
+    "outputs/native-repair-package-worker-20261023-run1/receipt.json": {
+      "sha256": "fe8787fdd5db1c7447d25c04c30fd533cf509ca9240d15e794ce21ddbce5d34b",
+      "bytes": 1419
+    },
+    "outputs/native-local-checkpoint-cache-20261023-run1/receipt.json": {
+      "sha256": "8a9c272261ed73764adf7e2f12da3b7dc783c729a0a4dca593006ce62116f01a",
+      "bytes": 10618
+    },
+    "outputs/native-local-lingbot-cache-20261023-run1/receipt.json": {
+      "sha256": "d97205a58cd7ed105c9957ef90e42033f67516768fbb367cbada4bf19672ec63",
+      "bytes": 9182
+    },
+    "outputs/native-code-prefetch-20261023-run1/receipt.json": {
+      "sha256": "fa5619e5c654fe664b5c70b3529c32b83eff5be541e1d1f25011923d4f8fd8d1",
+      "bytes": 3467130
+    },
+    "outputs/native-repair-baseline-20261023-final3/baseline-check.json": {
+      "sha256": "9e8c675b3f63ec4a86b32febe178112d70c9a147d23dfa7953bfa4f0ff93add5",
+      "bytes": 1823
+    },
+    "outputs/native-repair-baseline-20261023-final3/unittest.txt": {
+      "sha256": "5ea8d890440570fc85755218e949895a736be290a154f2e9cbaf8269c1c64b78",
+      "bytes": 107236
+    },
+    "outputs/native-repair-baseline-py310-20261023-final3/baseline-check.json": {
+      "sha256": "62f2d6f9d8527cec613f69370bbe45de8e9d336590c4a6ca013e5885cdd837af",
+      "bytes": 1823
+    },
+    "outputs/native-repair-baseline-py310-20261023-final3/unittest.txt": {
+      "sha256": "432c5ba23b809f819813ff91fc410df7564520bbbd56ec1a875e9c5a769c8739",
+      "bytes": 72208
+    },
+    "outputs/current-native-libero-reference-20261023-run2/framework/manifest.json": {
+      "sha256": "d947016ea104cb26922a895d1227154c3c49aa38fcf4608b7011d16aa8b93be1",
+      "bytes": 31013
+    },
+    "outputs/current-native-libero-reference-20261023-run2/framework/summary.json": {
+      "sha256": "6e86dacd7d058d40d7d27da96a3584381e8af3f718798e94340b33e0d10530cf",
+      "bytes": 3996
+    },
+    "outputs/current-native-libero-reference-20261023-run2/native/native-result.json": {
+      "sha256": "b5fc5f0bc95d16dcc87c2c04563361b7a732b10bfe7d08f7ffcf175e563cdc92",
+      "bytes": 10293
+    },
+    "outputs/current-native-libero-reference-20261023-run2/framework/episodes/spatial-task0-trial0/result.json": {
+      "sha256": "efe39d3ea7a72767d44b019ae5473e54059b4b92dfe06ad8fa1f23fa30908f22",
+      "bytes": 527
+    },
+    "outputs/current-native-libero-reference-20261023-run2/framework/episodes/spatial-task0-trial0/model_input.public.jsonl": {
+      "sha256": "8b6eecbf8826340ca26de78725044a99af34bf6b9ebd279f7b3ee279f4cd577c",
+      "bytes": 6859883
+    },
+    "outputs/current-native-libero-reference-20261023-run2/framework/episodes/spatial-task0-trial0/trace.internal.jsonl": {
+      "sha256": "3be0dd2490bc3a03c0f86798f24df21c4a4e6587eff27fdc0e6bf52dbfc35ffd",
+      "bytes": 8569685
+    },
+    "outputs/current-native-libero-reference-20261023-run2/native/native-exchanges/action-0001.msgpack": {
+      "sha256": "4e12ab0f542ab9e0229c6b5b5cf6ade42800a17941e7aaaff88aea530fa57d9e",
+      "bytes": 614
+    },
+    "outputs/current-native-libero-reference-20261023-run2/native/native-exchanges/request-0001.msgpack": {
+      "sha256": "42a19b5d97632b218ca7cb8b52c2a1720e4716711ecbe2faa46b56d778e4418d",
+      "bytes": 301415
+    },
+    "outputs/current-native-videos-20261023/openpi_libero/receipt.json": {
+      "sha256": "4ec433e3ff1eec4c0aff4e0fe336f78741c20ac2e1410cd9c40bb91e387d2858",
+      "bytes": 1591
+    },
+    "outputs/current-native-videos-20261023/openpi_libero/framework.mp4": {
+      "sha256": "1d2e7a51822bca35cccd0d6bf685cfa5c9803f59bd77329915364bb0e74fedf7",
+      "bytes": 21243
+    },
+    "outputs/current-native-videos-20261023/openpi_libero/native.mp4": {
+      "sha256": "363adca2b9345302a2a1081951b0b7443a2f9a55eaef4b3930c25151ede54d97",
+      "bytes": 22038
+    },
+    "outputs/current-native-videos-20261023/openpi_libero/comparison.mp4": {
+      "sha256": "8cad79f394fd557bcdabe5431acd3f71f934df7073f35f3ea2c86cf03906e909",
+      "bytes": 41664
+    },
+    "outputs/current-native-live-20261023-run4/openpi_vlabench/framework/manifest.json": {
+      "sha256": "30a3d98e18dc49cc004fe31ce5a7adfd071ec5a88fd0a1eee18c7d0842c7ab30",
+      "bytes": 34276
+    },
+    "outputs/current-native-live-20261023-run4/openpi_vlabench/framework/summary.json": {
+      "sha256": "d3a75cf4f0ba2438ab43a495d2b02a3480a666011a24164a7b57b1909be933dd",
+      "bytes": 4109
+    },
+    "outputs/current-native-live-20261023-run4/openpi_vlabench/native/native-result.json": {
+      "sha256": "3a7fcf6dadc9220e9ef469286abb1c68207b557d05ffff21ad069ec0cb6a09c8",
+      "bytes": 13625
+    },
+    "outputs/current-native-live-20261023-run4/openpi_vlabench/framework/episodes/select-fruit-episode000/result.json": {
+      "sha256": "3943acd2f201279eb0f8d5bd7b347d9babd03c2f1f92da35f9fe8a59221eb6ba",
+      "bytes": 913
+    },
+    "outputs/current-native-live-20261023-run4/openpi_vlabench/framework/episodes/select-fruit-episode000/model_input.public.jsonl": {
+      "sha256": "68245ee000a7c6ed07b512e4acf23a8364d8ee5e99188c0983e9d3c0cd8c8570",
+      "bytes": 38544689
+    },
+    "outputs/current-native-live-20261023-run4/openpi_vlabench/framework/episodes/select-fruit-episode000/trace.internal.jsonl": {
+      "sha256": "80a258d72390d06cf2be98c4631120075676a9aaf544723f1def60538a3d679a",
+      "bytes": 48171756
+    },
+    "outputs/current-native-live-20261023-run4/openpi_vlabench/native/native-exchanges/action-0001.msgpack": {
+      "sha256": "873957815eb454f6cbc8a381755916533d894e4d2374632479015940b2996dfd",
+      "bytes": 614
+    },
+    "outputs/current-native-live-20261023-run4/openpi_vlabench/native/native-exchanges/request-0001.msgpack": {
+      "sha256": "e9cd289aeb29179b16e92616c54561ad344ec64f677c8ee7e2cf93ca7405c1e3",
+      "bytes": 2073984
+    },
+    "outputs/current-native-videos-20261023/openpi_vlabench/receipt.json": {
+      "sha256": "1a08edb972de47688f8179525453469702e65f95fc1d0b68a5e25213ad4fdd65",
+      "bytes": 1616
+    },
+    "outputs/current-native-videos-20261023/openpi_vlabench/framework.mp4": {
+      "sha256": "00a1782b1935890dcdd668e5907dff1f6c07290c88bc684366a5e4b3f7237f81",
+      "bytes": 38504
+    },
+    "outputs/current-native-videos-20261023/openpi_vlabench/native.mp4": {
+      "sha256": "10c0c2bbf057f8b24cdbd8a1c0e713635f630b9aa19461ec1ce54e39a6019587",
+      "bytes": 39721
+    },
+    "outputs/current-native-videos-20261023/openpi_vlabench/comparison.mp4": {
+      "sha256": "2df88a8230a7c4fb3813a706eb3206d351a5c6a8e32393ddb9fde0b01cb1295a",
+      "bytes": 76462
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/framework/manifest.json": {
+      "sha256": "371f00a292f29f0b0042d8853f51d47207b5e2e2a6b04dc48e9fa6869927a5c2",
+      "bytes": 51580
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/framework/summary.json": {
+      "sha256": "1cf110145889af18c976d0e1fafe42bb5466b051f48a233163dc6b86c3717de9",
+      "bytes": 2830
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/native/native-result.json": {
+      "sha256": "e8a7a3ff66fcb141ec31086ccb3562a333e2fd410b0b79429569e2ef767ad74b",
+      "bytes": 16845
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/framework/episodes/adjust-bottle-clean-episode0/result.json": {
+      "sha256": "d0dc5f8d8588892e913277e8ff937cfd78379e40904a37699f9eff814a97b9a3",
+      "bytes": 544
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/framework/episodes/adjust-bottle-clean-episode0/model_input.public.jsonl": {
+      "sha256": "68ac14bb37b9623e064b499eaff8a448899e24ae5c0c2c4bafd036dc30767bbc",
+      "bytes": 12864756
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/framework/episodes/adjust-bottle-clean-episode0/trace.internal.jsonl": {
+      "sha256": "d253c93ed142fb72200ef200825b4330db2f51c39eed470230a6415080790046",
+      "bytes": 16073334
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/model-exchanges/action-0001.json": {
+      "sha256": "f10dac26e2a7f9eea5632844db561ff7bac4a6cd671392e42982c86a976afe13",
+      "bytes": 309
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/model-exchanges/action-0002.json": {
+      "sha256": "5de73efc6abcab85650d400203d592531662b0366495d092a6e216207d1f8e94",
+      "bytes": 360
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/model-exchanges/action-0003.json": {
+      "sha256": "f3c6a15227d820edf903ae9ae4e03b130080560f89a0e4e310ddc7bf6f057595",
+      "bytes": 328
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/model-exchanges/action-0004.json": {
+      "sha256": "43f78070612cc392c067efc8ec01a8dfa9c128cd5eb20582efa493c162cf2581",
+      "bytes": 356
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/model-exchanges/receipt.json": {
+      "sha256": "a430e19551e0f8725ac7d9084599bc86ef293ad92f2657561af4b1d8fcad7c13",
+      "bytes": 1732
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/model-exchanges/request-0001.json": {
+      "sha256": "3beb6f0318cce3357452c0dd85b227ab1d6f3528e09a22e15dd7ae7078df2da6",
+      "bytes": 168848
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/model-exchanges/request-0002.json": {
+      "sha256": "dc81def32872adb8badfb62f03f40cb73fb0a0e5aac5af430af87a5a6c7b7263",
+      "bytes": 170903
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/model-exchanges/request-0003.json": {
+      "sha256": "37ff589f04db9ef251dd4067fed8861431688427c78f070bdffb482eb9bf98da",
+      "bytes": 167838
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/model-exchanges/request-0004.json": {
+      "sha256": "01f8f6ce48ac0d17b731a2de9d454da7ec1e122cc3c8b81c41a03eb555f75f01",
+      "bytes": 168081
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/native/native-exchanges/action-0001.json": {
+      "sha256": "de12c2b2def8f98ea91ad497f03be00d9b5cd70305f4ed578d5b78216d2d0906",
+      "bytes": 398
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/native/native-exchanges/action-0002.json": {
+      "sha256": "291128418a49fe3bd9b034dc1ab51afdcfb62837186b11b858ebb429ec522ec3",
+      "bytes": 449
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/native/native-exchanges/action-0003.json": {
+      "sha256": "a7c7c902641c6c0b916c1a1a2a92b23deecbb3629452de6f678453f613d8d886",
+      "bytes": 417
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/native/native-exchanges/action-0004.json": {
+      "sha256": "da1c10f898cb2f6899b434871f7739e7bffc9eead6224bbfc716904f784f285b",
+      "bytes": 445
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/native/native-exchanges/request-0001.json": {
+      "sha256": "13adc390d8bc7989243b12388f4cd068629d4d1b51effa234732837138ae5c29",
+      "bytes": 168957
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/native/native-exchanges/request-0002.json": {
+      "sha256": "bdcc0acda73c6b068913f108c04f7b91b899535c4cf2eb416bf560270987c400",
+      "bytes": 170167
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/native/native-exchanges/request-0003.json": {
+      "sha256": "c0df3724eac2bbad0831ef83139d123f4304d7bf6b3e032d3ff78b77ff3bcd16",
+      "bytes": 169009
+    },
+    "outputs/current-native-live-20261023-run6/openwam_robotwin/native/native-exchanges/request-0004.json": {
+      "sha256": "d3724771da052ed8531458a5c6012bd236e814be815b7f1981f7c6288d263a98",
+      "bytes": 168190
+    },
+    "outputs/current-native-videos-20261023/openwam_robotwin/receipt.json": {
+      "sha256": "630e854f0b1b5c232eb743ae059164bd545e1940e19b4d2e110d55548b2794d1",
+      "bytes": 1645
+    },
+    "outputs/current-native-videos-20261023/openwam_robotwin/framework.mp4": {
+      "sha256": "b01a57091adabb7132d8c12995f7e242fd1778c349801d1eaead27e1734c5100",
+      "bytes": 30546
+    },
+    "outputs/current-native-videos-20261023/openwam_robotwin/native.mp4": {
+      "sha256": "428d89ba06aea89ada65820bc93837d2a38ee36e89a0c60548c40e5a992f9fd6",
+      "bytes": 31212
+    },
+    "outputs/current-native-videos-20261023/openwam_robotwin/comparison.mp4": {
+      "sha256": "06f84a96b21d493b5e60e8f4e1ef3381142149bc77b6858f7501d73c48152c6e",
+      "bytes": 58820
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/framework/manifest.json": {
+      "sha256": "d2be43621d838d219cfb94960a23a142cdd9f476b55eda9dad57fbb927ce52cb",
+      "bytes": 52191
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/framework/summary.json": {
+      "sha256": "173cfda26f165e61b259c04daf24bedfd9646411fedc6fb7a05f55135e4ae21d",
+      "bytes": 2855
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/native/native-result.json": {
+      "sha256": "c5cf2ab3bc94ef666e4cb7ee730fbab086060519b3835df4c3007a89837623ce",
+      "bytes": 16343
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/framework/episodes/adjust-bottle-clean-episode0/result.json": {
+      "sha256": "bf9a5743bfd0c3cd71017b8f4f9e465445f4ee915f2945a1c7554ceb30a517a7",
+      "bytes": 545
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/framework/episodes/adjust-bottle-clean-episode0/model_input.public.jsonl": {
+      "sha256": "adb9ca75f270be85ae88a86aac76bd771cb8d1fc7870602e75018c6ed99c93a7",
+      "bytes": 12864762
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/framework/episodes/adjust-bottle-clean-episode0/trace.internal.jsonl": {
+      "sha256": "2af48328611cbd83e116e93c702fd36db89a7fb3dfad200006cac4cb95aa8c0b",
+      "bytes": 16075992
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/model-exchanges/action-0001.json": {
+      "sha256": "f10dac26e2a7f9eea5632844db561ff7bac4a6cd671392e42982c86a976afe13",
+      "bytes": 309
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/model-exchanges/action-0002.json": {
+      "sha256": "5de73efc6abcab85650d400203d592531662b0366495d092a6e216207d1f8e94",
+      "bytes": 360
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/model-exchanges/action-0003.json": {
+      "sha256": "f3c6a15227d820edf903ae9ae4e03b130080560f89a0e4e310ddc7bf6f057595",
+      "bytes": 328
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/model-exchanges/action-0004.json": {
+      "sha256": "43f78070612cc392c067efc8ec01a8dfa9c128cd5eb20582efa493c162cf2581",
+      "bytes": 356
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/model-exchanges/receipt.json": {
+      "sha256": "9165afa41228e95941712da942222c36739cc12743b6d5f7e5ae9621905996e1",
+      "bytes": 1732
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/model-exchanges/request-0001.json": {
+      "sha256": "3beb6f0318cce3357452c0dd85b227ab1d6f3528e09a22e15dd7ae7078df2da6",
+      "bytes": 168848
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/model-exchanges/request-0002.json": {
+      "sha256": "5c84632aa55ae3e663353d2061bf3d7d88e8549009e4f4cbbb8eeac3eda38476",
+      "bytes": 170058
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/model-exchanges/request-0003.json": {
+      "sha256": "d82f18d6eee30e6dacc1401c3c09fd300dfa189ee15f384ca25b0864b28f2a54",
+      "bytes": 169009
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/model-exchanges/request-0004.json": {
+      "sha256": "c1452fef6b56223b63899de7f5c17cb30ff8ddb40b62718ef945da60c56a3306",
+      "bytes": 168533
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/native/native-exchanges/action-0001.json": {
+      "sha256": "de12c2b2def8f98ea91ad497f03be00d9b5cd70305f4ed578d5b78216d2d0906",
+      "bytes": 398
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/native/native-exchanges/action-0002.json": {
+      "sha256": "291128418a49fe3bd9b034dc1ab51afdcfb62837186b11b858ebb429ec522ec3",
+      "bytes": 449
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/native/native-exchanges/action-0003.json": {
+      "sha256": "a7c7c902641c6c0b916c1a1a2a92b23deecbb3629452de6f678453f613d8d886",
+      "bytes": 417
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/native/native-exchanges/action-0004.json": {
+      "sha256": "da1c10f898cb2f6899b434871f7739e7bffc9eead6224bbfc716904f784f285b",
+      "bytes": 445
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/native/native-exchanges/request-0001.json": {
+      "sha256": "13adc390d8bc7989243b12388f4cd068629d4d1b51effa234732837138ae5c29",
+      "bytes": 168957
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/native/native-exchanges/request-0002.json": {
+      "sha256": "8b691563a177eb253d8c8f5428833660452e0318ec4e4e3a7ca99a0d190586e9",
+      "bytes": 170167
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/native/native-exchanges/request-0003.json": {
+      "sha256": "4cb471753d8f9b8de0da1deb29ef767249487a2ff96d3b0fe659de6e9624b01d",
+      "bytes": 169118
+    },
+    "outputs/current-native-live-20261023-run6/openwam_dual_physical/native/native-exchanges/request-0004.json": {
+      "sha256": "ce0f6093828e99d3418867e4bca837451b646535256579628be0f0b83cf1845a",
+      "bytes": 168642
+    },
+    "outputs/current-native-videos-20261023/openwam_dual_physical/receipt.json": {
+      "sha256": "38d07c29ec1f04b14d7dc7a26028699aab9e1053ca4c06cef6503d523607b1e4",
+      "bytes": 1657
+    },
+    "outputs/current-native-videos-20261023/openwam_dual_physical/framework.mp4": {
+      "sha256": "bfd8ec9bbbacdc92cde929ee5439429976cdecccbc9f4e215f84f6302299e063",
+      "bytes": 30563
+    },
+    "outputs/current-native-videos-20261023/openwam_dual_physical/native.mp4": {
+      "sha256": "01b5f8d1b89e1bb9be072afacd5dbbab671e236bd1db37d53c46bab6e8f90e52",
+      "bytes": 30944
+    },
+    "outputs/current-native-videos-20261023/openwam_dual_physical/comparison.mp4": {
+      "sha256": "aaeea6f9d20e5f246341306ecb203afcc194f9c78bd439d4d2f3c62ae9f5b58f",
+      "bytes": 58620
+    },
+    "outputs/current-native-live-20261023-run9/lingbot_robotwin/framework/manifest.json": {
+      "sha256": "bd9508733c3911f5cef9556a07511107ff0889af69209d82d34b4acd194b9b37",
+      "bytes": 53365
+    },
+    "outputs/current-native-live-20261023-run9/lingbot_robotwin/framework/summary.json": {
+      "sha256": "0c376833753140fdf2308183ff91d1f6eb6e06275e5d0d43d798074c2766ee97",
+      "bytes": 4513
+    },
+    "outputs/current-native-live-20261023-run9/lingbot_robotwin/native/native-result.json": {
+      "sha256": "ac79521a060754eb75fab5907bdd590a381230c19c4b6488489afcb56a44cc95",
+      "bytes": 18218
+    },
+    "outputs/current-native-live-20261023-run9/lingbot_robotwin/framework/episodes/adjust-bottle-clean-episode0/result.json": {
+      "sha256": "6cd8754cd8921ae2438bb0ac9e727169cb75719e625d2b54b50eb047ad8d332e",
+      "bytes": 545
+    },
+    "outputs/current-native-live-20261023-run9/lingbot_robotwin/framework/episodes/adjust-bottle-clean-episode0/model_input.public.jsonl": {
+      "sha256": "ef5a021e7ed13fb3eda174e0d4441b46d35f7fc50208f9e5a24f7426c3152e51",
+      "bytes": 12858547
+    },
+    "outputs/current-native-live-20261023-run9/lingbot_robotwin/framework/episodes/adjust-bottle-clean-episode0/trace.internal.jsonl": {
+      "sha256": "884c315595ff77813a485ecc61a06a45545c5f88525fa1a7c67999c066b9e93c",
+      "bytes": 16080199
+    },
+    "outputs/current-native-live-20261023-run9/lingbot_robotwin/model-exchanges/action-0001.msgpack": {
+      "sha256": "01c516162096b0042db8ed4da4ac8b5d193511b6dc9987862f2da601d5b906c4",
+      "bytes": 2853
+    },
+    "outputs/current-native-live-20261023-run9/lingbot_robotwin/model-exchanges/receipt.json": {
+      "sha256": "a91bf8f4927a8210515c3599e7e125ae7667ace37f9685e96b3e2caf43e04b4e",
+      "bytes": 689
+    },
+    "outputs/current-native-live-20261023-run9/lingbot_robotwin/model-exchanges/request-0001.msgpack": {
+      "sha256": "fcd8aeb9681a90960e42d0d5f48fa031394ce7afdcc1312958904a845e7ce49a",
+      "bytes": 691688
+    },
+    "outputs/current-native-live-20261023-run9/lingbot_robotwin/controller-exchanges/receipt.json": {
+      "sha256": "d19701d3929b735adbe4bb5cdf756477cbfbd1a4ee591292e93a14b025585957",
+      "bytes": 2900
+    },
+    "outputs/current-native-live-20261023-run9/lingbot_robotwin/native/native-exchanges/action-0001.msgpack": {
+      "sha256": "b8539277bc0cc42f5d5f5476b91521f94b996af5a396ab77660194809271c08e",
+      "bytes": 2853
+    },
+    "outputs/current-native-live-20261023-run9/lingbot_robotwin/native/native-exchanges/request-0001.msgpack": {
+      "sha256": "fcd8aeb9681a90960e42d0d5f48fa031394ce7afdcc1312958904a845e7ce49a",
+      "bytes": 691688
+    },
+    "outputs/current-native-videos-20261023/lingbot_robotwin/receipt.json": {
+      "sha256": "aea0695fd991d924ba79121369a170c8ee2b3e6437243de41fcab30d6a370796",
+      "bytes": 1647
+    },
+    "outputs/current-native-videos-20261023/lingbot_robotwin/framework.mp4": {
+      "sha256": "ff4ea53aa71c7401904b9602670a8caf40ccea6e299d2af08d60b6f0690ad4e9",
+      "bytes": 19701
+    },
+    "outputs/current-native-videos-20261023/lingbot_robotwin/native.mp4": {
+      "sha256": "ce9125141a1b8b69586ad7ee33e49fd31e43cfd5ca0168a5d62a5b78b8302582",
+      "bytes": 20057
+    },
+    "outputs/current-native-videos-20261023/lingbot_robotwin/comparison.mp4": {
+      "sha256": "2d1828d868d00ad9034e06f432b50394b12c5356d847c3b677eba7f141d97d19",
+      "bytes": 37317
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/framework/manifest.json": {
+      "sha256": "3c55e8a062d1c7af08758c07cb7682f9534dd0dc55a9a018d20bd372231650c7",
+      "bytes": 29529
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/framework/summary.json": {
+      "sha256": "e5402db0c85ba9cf14a2086dddf0398fda37ec6e0897d8606b18a750e3f22a92",
+      "bytes": 2090
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/native/native-result.json": {
+      "sha256": "60d5a34627289cec0046664d919f40bd9bc081b54c354fbd7258c6f5c0936309",
+      "bytes": 8076
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/framework/episodes/spatial-task0-trial0/result.json": {
+      "sha256": "7beabe298c30d8e1ca55f96ba9fa29cd10084ede03358f6b5400405c2551b44d",
+      "bytes": 527
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/framework/episodes/spatial-task0-trial0/model_input.public.jsonl": {
+      "sha256": "885c0199afc0c872f86b5750a016f02b75af076589d3d88816f581d836b6a0b2",
+      "bytes": 6873358
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/framework/episodes/spatial-task0-trial0/trace.internal.jsonl": {
+      "sha256": "1e8907186da78d6169e25592786fe77bc0b1b26c0393c5dc4c34c3b780c8ebd6",
+      "bytes": 8589796
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/model-exchanges/action-0001.json": {
+      "sha256": "efc279e24d139caae03e27c50747e53f8e7dd88e6c1494889c63d1a7af940f55",
+      "bytes": 159
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/model-exchanges/action-0002.json": {
+      "sha256": "10dae01c586d090cf1c90522dfcdb220c727f5b5c7ea2e8229b5eeb1db18073b",
+      "bytes": 158
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/model-exchanges/action-0003.json": {
+      "sha256": "6bfb2806e3c5e6b63dee8a8f9196adfa768d900638aacdf596f5f8e118c2bac1",
+      "bytes": 161
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/model-exchanges/action-0004.json": {
+      "sha256": "c27155dfe5454fe546b406a2f73eb3983a72e8eb2632572c7e1e4598a65bddad",
+      "bytes": 162
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/model-exchanges/receipt.json": {
+      "sha256": "93a6e5361676824cf57507663f9489769b5065519f894e3be1c1f1df38ac8a8b",
+      "bytes": 1732
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/model-exchanges/request-0001.json": {
+      "sha256": "1ade649f659d6856402b14ef6fac7a37042a3151933282dd379481e80a589b91",
+      "bytes": 149669
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/model-exchanges/request-0002.json": {
+      "sha256": "9a99f838032f588bccfed5103cc9f41c0f5b5af18ad66d6f117347cdabb10f4c",
+      "bytes": 150011
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/model-exchanges/request-0003.json": {
+      "sha256": "99b99483cde1f486bfd076630201f371f06d28e71db45fa647859e01dbe13485",
+      "bytes": 150040
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/model-exchanges/request-0004.json": {
+      "sha256": "5b3a15c60574d96d9d9df8d2813f0b0e931bc47a8b04164badbab12b774d7667",
+      "bytes": 151008
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/native/native-exchanges/action-0001.json": {
+      "sha256": "8afae564fb0fe89ac83b43eeabb963618792708e33cfe9fae3f6a4ad752776dc",
+      "bytes": 208
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/native/native-exchanges/action-0002.json": {
+      "sha256": "8443da1b2d47250c5fc0115f37841d95db214e746be677ecb744f5e0d680eddd",
+      "bytes": 207
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/native/native-exchanges/action-0003.json": {
+      "sha256": "3cd5f2f5cbddeacda5ee1de53d827843c94f6af31914db0dc3dd59465d9b94f7",
+      "bytes": 210
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/native/native-exchanges/action-0004.json": {
+      "sha256": "1e557ab7e84d8813ecc1c815d7fb6d0199781c9ac754606377c3440ed231149d",
+      "bytes": 211
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/native/native-exchanges/request-0001.json": {
+      "sha256": "68d9220a62a3add6a3b937ac2a3c4d1ab2649ba15242eeea53670e6ad2c40330",
+      "bytes": 149738
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/native/native-exchanges/request-0002.json": {
+      "sha256": "971c9d8aebae17652e1c1878f304b4b3d4ddec47aa8b07c73af9d7cde300f635",
+      "bytes": 150080
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/native/native-exchanges/request-0003.json": {
+      "sha256": "92194c829cf8a85e13d9befb711ac8da4d5ad5d9e445eb32dd079c84159685df",
+      "bytes": 150109
+    },
+    "outputs/current-native-live-20261023-run10/openwam_libero/native/native-exchanges/request-0004.json": {
+      "sha256": "ca6202a5146e91097d16ac1918c0c6e8f4705efcc0e107333cce63dce04db71c",
+      "bytes": 151077
+    },
+    "outputs/current-native-videos-20261023/openwam_libero/receipt.json": {
+      "sha256": "8d872a91805abf7a1484fee203830d95ad3913f8b8f142561961be84f7a59812",
+      "bytes": 1597
+    },
+    "outputs/current-native-videos-20261023/openwam_libero/framework.mp4": {
+      "sha256": "d95143d36c1ba6754598b60d2af16b2fb93b2b2aba4e36a181770bf46616523b",
+      "bytes": 23046
+    },
+    "outputs/current-native-videos-20261023/openwam_libero/native.mp4": {
+      "sha256": "214fcff73b1fd8520dc5b197740697038675abc14bcaa36f343dfb98345694a9",
+      "bytes": 23893
+    },
+    "outputs/current-native-videos-20261023/openwam_libero/comparison.mp4": {
+      "sha256": "3f9c610a62864b71d2a5b64f2e3aacc5fe0ec7e0484d74dd1eb13dcb56d3bcc7",
+      "bytes": 45324
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/framework/manifest.json": {
+      "sha256": "c2cddf4d79058afe6f2e42e6b8e4d3eee9d1b1e1f73a9dd985464314e73746d0",
+      "bytes": 32435
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/framework/summary.json": {
+      "sha256": "54b04e07b7f7cd8b175fb8d658ba0fc2be3ebb87ede83dfe5c5d39b7b3e4530b",
+      "bytes": 2059
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/native/native-result.json": {
+      "sha256": "501dfaf0e3ca1cefcde27a549ca0027e36814bac784db89f07883b55277366a7",
+      "bytes": 11232
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/framework/episodes/select-fruit-track1-episode0/result.json": {
+      "sha256": "adbe60657da4732b30e1636b30efb45c804dba53378ca950696831b0f62741b0",
+      "bytes": 918
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/framework/episodes/select-fruit-track1-episode0/model_input.public.jsonl": {
+      "sha256": "72392390732192c19887e33ecd21b122909a68061a32c797cf9f5edeca7c964f",
+      "bytes": 38554696
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/framework/episodes/select-fruit-track1-episode0/trace.internal.jsonl": {
+      "sha256": "436565d18892625c3bc85b20cdaccbf733d26ff45d6e58ed91760fd630598275",
+      "bytes": 48184940
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/model-exchanges/action-0001.json": {
+      "sha256": "dccad0cd15321c2f83543648398edbda19c3f41edc43cb1fe456a7c5dec80289",
+      "bytes": 158
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/model-exchanges/action-0002.json": {
+      "sha256": "e7ae68e84e5b1aa751cc3a3e695b7e4f22c8d2eed0e048693ca7803131ebd93d",
+      "bytes": 160
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/model-exchanges/action-0003.json": {
+      "sha256": "eb7492048200d5282bbe6222cc068640b068325144c2f62f37f98cb5a1da7cd1",
+      "bytes": 160
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/model-exchanges/action-0004.json": {
+      "sha256": "e34a40b0c625e9deb6e947a48bd407940796652483f714cab3693a882bff66ea",
+      "bytes": 164
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/model-exchanges/receipt.json": {
+      "sha256": "148e3d51b010a09077b6ada31f1fe70ba050e81e1ac483a0579b9b98e5a05d50",
+      "bytes": 1732
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/model-exchanges/request-0001.json": {
+      "sha256": "53036ff828e903b04f59c4ab86c708c00cbfc81539c247bbff4ae6908d1fc935",
+      "bytes": 212449
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/model-exchanges/request-0002.json": {
+      "sha256": "8931711fc3949fb3a62a853ad5a5f030a9e808d318ba77a8c7e5fc4c18dc9e04",
+      "bytes": 212442
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/model-exchanges/request-0003.json": {
+      "sha256": "4a75c2df39603387bd9099cd259d8feacbe9cc688523665e6497f6c7185f7101",
+      "bytes": 212611
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/model-exchanges/request-0004.json": {
+      "sha256": "818adce1a9679b7cbe66eecc328e08c3f1d5d84f2df245dd743781e4dde67062",
+      "bytes": 212556
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/native/native-exchanges/action-0001.json": {
+      "sha256": "e2f16c4384566f18f11253ea0401e078c99e99a0e9f27c51feb2a14a168a6fc3",
+      "bytes": 207
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/native/native-exchanges/action-0002.json": {
+      "sha256": "6cd423e6932470a95cfc030bffd5b958ec9dd9c75495082ea75d035905f5c7bb",
+      "bytes": 209
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/native/native-exchanges/action-0003.json": {
+      "sha256": "62a45fce8590325523e0ad39e0ba3752b953fe07b309ad94c5ce4f3779cde9e7",
+      "bytes": 209
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/native/native-exchanges/action-0004.json": {
+      "sha256": "a06a500f98485f07d39f33bab3a52f22869394044f06c7ee12b9157676a7092d",
+      "bytes": 213
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/native/native-exchanges/request-0001.json": {
+      "sha256": "d9449b6ea428bcff183417f902c791b8820be609de30ac463ab16980535fc4b5",
+      "bytes": 212518
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/native/native-exchanges/request-0002.json": {
+      "sha256": "c73d455ac3ee9b6e59663067f512eda2b55258f7d8d7d4f077633c9215f1066c",
+      "bytes": 212511
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/native/native-exchanges/request-0003.json": {
+      "sha256": "b3993c378b11c4751bfcc48eb9c7ff531b421ef6320011ec90af65d5093ad113",
+      "bytes": 212680
+    },
+    "outputs/current-native-live-20261023-run10/openwam_vlabench/native/native-exchanges/request-0004.json": {
+      "sha256": "8c76d71399e9c857021bc5c5eec230332bddf981242f34817f710ab3cd4dc4a4",
+      "bytes": 212625
+    },
+    "outputs/current-native-videos-20261023/openwam_vlabench/receipt.json": {
+      "sha256": "0ca27fe8fd9f81122bc00769bd2da083f114dec71b54d4c08099b33182cb6c1b",
+      "bytes": 1620
+    },
+    "outputs/current-native-videos-20261023/openwam_vlabench/framework.mp4": {
+      "sha256": "1240519cac78b2d8b65347fe1a756c663c257eb0cf49b98795d2249c26c40738",
+      "bytes": 38030
+    },
+    "outputs/current-native-videos-20261023/openwam_vlabench/native.mp4": {
+      "sha256": "41e057383a030d1b884a5233036453fbb391d287673566cd0618a403093f26aa",
+      "bytes": 39034
+    },
+    "outputs/current-native-videos-20261023/openwam_vlabench/comparison.mp4": {
+      "sha256": "a1d7a4729c4efb709db03bf20b332aabcae39858627f0c7e6477cbb868124040",
+      "bytes": 75036
+    },
+    "outputs/current-controller-boundary-20261023-run1/openwam_robotwin/native/native-result.json": {
+      "sha256": "5c11da1b1c9ebc2178157701c3f4a6286cfaf8da138bdd00449b38f8fc4d450e",
+      "bytes": 16966
+    },
+    "outputs/current-controller-boundary-20261023-run1/openwam_robotwin/controller-exchanges/receipt.json": {
+      "sha256": "e92b8c3847ac3e6e8e22aca6b4ed2f2974116185ebf749d0f3d002191221c65b",
+      "bytes": 2959
+    },
+    "outputs/current-controller-boundary-20261023-run1/openwam_robotwin/framework/summary.json": {
+      "sha256": "6acb9ab1b42b5987d005dbf963cb0d0fdde0137a7681a6b36e9a0e24c43da10b",
+      "bytes": 2838
+    },
+    "outputs/current-wire-diagnostics-20261023/lingbot_robotwin-actual-controller.json": {
+      "sha256": "74d6fef5c5304574658e1a524b9a76c91c8bb8e9cf9e2152e089e57489d650f6",
+      "bytes": 1413
+    },
+    "outputs/current-wire-diagnostics-20261023/lingbot_robotwin-actual-wire.json": {
+      "sha256": "781e15527bb4f2b65daf0d403c0fb3bc97550f0a4ee574d62e9fda9047f4ce43",
+      "bytes": 3311
+    },
+    "outputs/current-wire-diagnostics-20261023/openpi-libero-first-input.json": {
+      "sha256": "1fcc7b4bde77483f63057fa540261e9c4dc4f9ef8545997c0016673524e97a71",
+      "bytes": 2190
+    },
+    "outputs/current-wire-diagnostics-20261023/openpi-vlabench-first-input.json": {
+      "sha256": "8f407fa47a13a984954b0be1c23672772c7aca41a7c588484268939b274c517a",
+      "bytes": 2450
+    },
+    "outputs/current-wire-diagnostics-20261023/openwam_dual_physical-actual-wire.json": {
+      "sha256": "327f4b63d913364c60a4ef10ebb4639a1c5e65e76167b4f0da1040c67cb066cf",
+      "bytes": 16411
+    },
+    "outputs/current-wire-diagnostics-20261023/openwam_libero-actual-wire.json": {
+      "sha256": "35cac00c4109689c6f7a7041a1988af85af27a12644ea1c5e885d1450cbdab6f",
+      "bytes": 12207
+    },
+    "outputs/current-wire-diagnostics-20261023/openwam_robotwin-actual-wire.json": {
+      "sha256": "9a3ffff4abef7016056097240bea343eb0b4162dd122d39860d34d045d342dba",
+      "bytes": 16485
+    },
+    "outputs/current-wire-diagnostics-20261023/openwam_robotwin-repeat-actual-controller.json": {
+      "sha256": "41254dba28938dadd5b4b2d80b0c10ef232717c387abdbe432eb7a608ea36aca",
+      "bytes": 1416
+    },
+    "outputs/current-wire-diagnostics-20261023/openwam_vlabench-actual-wire.json": {
+      "sha256": "e5488bc8b13bce4743d8699ed03e65af508b87d865e670be1458258a605c8b76",
+      "bytes": 11189
+    },
+    "outputs/native-env-repair-20261023-run1/gpu-utilization.json": {
+      "sha256": "b456358a919ff6864feb16796ef84335caf3f1a77687725874114ce67a6b2d67",
+      "bytes": 442204
+    }
+  },
+  "cases": [
+    {
+      "id": "openpi_libero",
+      "directory": "outputs/current-native-libero-reference-20261023-run2",
+      "framework_completed": true,
+      "framework_statistics": {
+        "env_steps": 4,
+        "sim_time_s": 0.2,
+        "model_calls": 4,
+        "tool_calls": 0,
+        "model_forward_count": null,
+        "physics_steps": null
+      },
+      "native_completed": true,
+      "strict_equal": false,
+      "initial_observation_exact": true,
+      "first_divergence": 1,
+      "native_actions": 4,
+      "native_physics_steps": null,
+      "native_sim_time_s": 0.2
+    },
+    {
+      "id": "openpi_vlabench",
+      "directory": "outputs/current-native-live-20261023-run4/openpi_vlabench",
+      "framework_completed": true,
+      "framework_statistics": {
+        "env_steps": 4,
+        "sim_time_s": 0.4,
+        "model_calls": 4,
+        "tool_calls": 0,
+        "model_forward_count": null,
+        "physics_steps": null
+      },
+      "native_completed": true,
+      "strict_equal": false,
+      "initial_observation_exact": true,
+      "first_divergence": 1,
+      "native_actions": 4,
+      "native_physics_steps": null,
+      "native_sim_time_s": 0.39999999999995617
+    },
+    {
+      "id": "openwam_robotwin",
+      "directory": "outputs/current-native-live-20261023-run6/openwam_robotwin",
+      "framework_completed": true,
+      "framework_statistics": {
+        "env_steps": 4,
+        "sim_time_s": 1.480000070296228,
+        "model_calls": 4,
+        "tool_calls": 0,
+        "model_forward_count": null,
+        "physics_steps": 370
+      },
+      "native_completed": true,
+      "strict_equal": false,
+      "initial_observation_exact": true,
+      "first_divergence": 1,
+      "native_actions": 4,
+      "native_physics_steps": 367,
+      "native_sim_time_s": 1.4680000697262585
+    },
+    {
+      "id": "openwam_dual_physical",
+      "directory": "outputs/current-native-live-20261023-run6/openwam_dual_physical",
+      "framework_completed": true,
+      "framework_statistics": {
+        "env_steps": 4,
+        "sim_time_s": 1.4520000689662993,
+        "model_calls": 4,
+        "tool_calls": 0,
+        "model_forward_count": null,
+        "physics_steps": 363
+      },
+      "native_completed": true,
+      "strict_equal": true,
+      "initial_observation_exact": true,
+      "first_divergence": null,
+      "native_actions": 4,
+      "native_physics_steps": 363,
+      "native_sim_time_s": 1.4520000689662993
+    },
+    {
+      "id": "lingbot_robotwin",
+      "directory": "outputs/current-native-live-20261023-run9/lingbot_robotwin",
+      "framework_completed": true,
+      "framework_statistics": {
+        "env_steps": 4,
+        "sim_time_s": 1.0560000501573086,
+        "model_calls": 4,
+        "tool_calls": 0,
+        "model_forward_count": null,
+        "physics_steps": 264
+      },
+      "native_completed": true,
+      "strict_equal": false,
+      "initial_observation_exact": true,
+      "first_divergence": 1,
+      "native_actions": 4,
+      "native_physics_steps": 265,
+      "native_sim_time_s": 1.0600000503472984
+    },
+    {
+      "id": "openwam_libero",
+      "directory": "outputs/current-native-live-20261023-run10/openwam_libero",
+      "framework_completed": true,
+      "framework_statistics": {
+        "env_steps": 4,
+        "sim_time_s": 0.2,
+        "model_calls": 4,
+        "tool_calls": 0,
+        "model_forward_count": null,
+        "physics_steps": null
+      },
+      "native_completed": true,
+      "strict_equal": true,
+      "initial_observation_exact": true,
+      "first_divergence": null,
+      "native_actions": 4,
+      "native_physics_steps": null,
+      "native_sim_time_s": 0.2
+    },
+    {
+      "id": "openwam_vlabench",
+      "directory": "outputs/current-native-live-20261023-run10/openwam_vlabench",
+      "framework_completed": true,
+      "framework_statistics": {
+        "env_steps": 4,
+        "sim_time_s": 0.4,
+        "model_calls": 4,
+        "tool_calls": 0,
+        "model_forward_count": null,
+        "physics_steps": null
+      },
+      "native_completed": true,
+      "strict_equal": true,
+      "initial_observation_exact": true,
+      "first_divergence": null,
+      "native_actions": 4,
+      "native_physics_steps": null,
+      "native_sim_time_s": 0.39999999999995617
+    }
+  ],
+  "completed_primary_pairs": 7,
+  "strict_primary_pairs": 3,
+  "primary_policy_execution_actions": 56,
+  "supplementary_policy_execution_actions": 8,
+  "total_policy_execution_actions": 64,
+  "real_GPU_forward_count": null,
+  "videos": 21,
+  "repaired_interpreter_links": 9,
+  "available_environment_interpreters": 18,
+  "dependency_environments_passed": 14,
+  "empty_training_scaffold_not_claimed_ready": "pi05-arx-mn",
+  "main_tests_each_Python": 688,
+  "original_tests_retained": 676,
+  "new_synthetic_diagnostic_tests": 12,
+  "tested_Python_versions": [
+    "3.13.5",
+    "3.10.21"
+  ],
+  "bridge_synthetic_tests": 34,
+  "skips": 0,
+  "CLI_exit_codes": [
+    0,
+    0,
+    0,
+    1,
+    2
+  ],
+  "production_runtime_python_sha256_unchanged": {
+    "embodied_eval/__init__.py": "a04e8caa06af9f1d5faf2b9ef273e491b9e899fb09526503b51235e2fccdcb4c",
+    "embodied_eval/__main__.py": "20965b9793b97e537a24d3fc2ca151d11eec6cbe9bdb32d68aa68d184c93f2f9",
+    "embodied_eval/adapters/__init__.py": "e1646dcb8687e4acabb1fc33306fe7cc9a1ae58902635d006bb0e15070ed49ac",
+    "embodied_eval/adapters/libero_spatial_benchmark.py": "c2e706d23f332bc0f5763c279661fa35b728f70c645f5e6cc4d9a1585b7fd2e5",
+    "embodied_eval/adapters/native_common.py": "ab65d304b7507a0ffcbd9e568e920f07341e50c8ecc728707db81b5c0e4322c1",
+    "embodied_eval/adapters/native_policy_transport.py": "7f894762e8b1820b69d3d4b566867a82287bdba91aba6b89da8f257106851bc7",
+    "embodied_eval/adapters/native_robotwin_executor.py": "d58f3f6b6fa419ac8bfb070084ce5534794608c9195c97a0223e2b342d548a9f",
+    "embodied_eval/adapters/native_robotwin_runtime.py": "07d8ab3f3d54882e2c4d14daa34b0bc4b8bf3d61affb8e912eef063ba44a397d",
+    "embodied_eval/adapters/robotwin_benchmark.py": "e9ac61e6866912608ac3cad8594f6ad02b664806801b8ede9dbaa5cdad5c2265",
+    "embodied_eval/adapters/robotwin_identity.py": "573c306a4547ffbf26fdd4b7e4717bf782bbc109bbd7c61112881110cb497da9",
+    "embodied_eval/adapters/runtime_options.py": "d262fdb834d4e628903e9c3103375d42399404c3361acc29ae91ec4de301522d",
+    "embodied_eval/adapters/vlabench_benchmark.py": "29d479beaabe956ad6cf5d83cad2cc6afecbb100276bf4f5b1e394b89a07fe0b",
+    "embodied_eval/artifacts.py": "453340fda0b7664f5d439d812a8876d9797f63f3dba168203fbdc40c7a5329da",
+    "embodied_eval/codec.py": "525e19b7de9b99c3a8fa8cdf4e5f469b76e9add9f46c06e24eb1cfc0d188d49e",
+    "embodied_eval/config.py": "00a00ebe077a4bb4a0f69e6c6471e007b83f6b17952ce323e0eb2cc0349024d5",
+    "embodied_eval/contracts.py": "65f5c2bee495430e9c4fa122122c821b0445fb3e0e45a684cad0cb69f1c54ba7",
+    "embodied_eval/core/__init__.py": "bbcd15e634063b33f9fca48f7452b61b3c0c67a425ea1046399e0519ad8541bd",
+    "embodied_eval/core/compatibility.py": "b6b7a5c78d2cf7de4df2c3c4ef2a0289107cb448399d59427e5fb2a3dd57ab95",
+    "embodied_eval/core/registry.py": "4e42ff53ae71702f2fee94b1a8ee1c6cdc508576bf03e7264601775a593347eb",
+    "embodied_eval/core/transforms.py": "8b3553d51f072b1a6c2c9a53ad93649519776df417e510a9b9dcbc72e7958ab7",
+    "embodied_eval/core/types.py": "99836ec58a3218f9df9ad35496c23a6ac81575365c30db6f14874d275e7ef8b2",
+    "embodied_eval/core/validation.py": "86921f5033f1c153942225324f45da1f445dcb69fa95f6570c5acf256af0a151",
+    "embodied_eval/errors.py": "48e84515926280a9c803b10ffd13d20712928cc07813d4df4bc1bf3453d37b4c",
+    "embodied_eval/geometry.py": "a561b80d251b0a0b46fc3e1065518203cb7da33a168e9ee451be01eaa71d8201",
+    "embodied_eval/interfaces.py": "8a98bc24a4616bd13c7e2486fc2cecb08d309eeba7627a264a70cb7632c45e9f",
+    "embodied_eval/native/__init__.py": "4bff411d59a76a687b953027ebd943428fef292f1e53c2e1007d15c5ebf078b5",
+    "embodied_eval/native/additional_catalog.py": "0bd51d090bdc136a225ca5a3c2bb0cc203ca1ea448510bed7a607affc3bdbccf",
+    "embodied_eval/native/additional_models.py": "36d9607be6164666e0d812baa7103fcd385d46d80b80e31ad10344cbb3e1b78d",
+    "embodied_eval/native/assets_common.py": "677eb09fa61d70b330d8a8dbb34a4983cac297269c9a1204a6f3c3af07fe9d1f",
+    "embodied_eval/native/benchmark_assets.py": "16f7f352600d31a5a829555b39fe16fb97ea6dcbf0b4f1737f9c3aa2700f4438",
+    "embodied_eval/native/benchmark_catalog.py": "20faa5ba8d15fed15a636d605d6363c89896c6dfd7389cb39a972e6a389e2f57",
+    "embodied_eval/native/benchmark_execution.py": "03c80a6c4cae7161ddf72a3c6d12becc1295b366c21e4e26825d7ee221af8572",
+    "embodied_eval/native/contracts.py": "107472d37996d7f085e759bd201de4bc8bf8d5c3594aa24cb54af4e1eecb89ce",
+    "embodied_eval/native/droid_simulator.py": "51727cc8c0fe2e7b87f5880d4fb61f6160bf7c708120610373fadadaf4917129",
+    "embodied_eval/native/environment_records.py": "fc1939b09e9a7d8785fa738a50dc10f8a0a8125b0f647ba9c967f297dffcfaf8",
+    "embodied_eval/native/environment_specs/__init__.py": "80cf96b1d882bfd644cda0006809a5b81b77a98c43f4399079d4ea6502009843",
+    "embodied_eval/native/environment_specs/libero_10.py": "bffd18cbadfa5281df232efdbf1d2b9bc3cd11a62f370421d2115c0a37a70102",
+    "embodied_eval/native/environment_specs/libero_30.py": "2fe54b9c0fcf6c76cbfa50a5e91e48357f0b0b0a2068f4ac02050a10c68ea254",
+    "embodied_eval/native/environment_specs/robotwin.py": "31335359a7cf12cd5f6ac646e440682ee4f9cff64d92da4d5ddc2db14765d776",
+    "embodied_eval/native/environment_specs/vlabench.py": "fde2679faba2c84b3033d5ef3816f6e157614f4533428c03a115ef81df1c9455",
+    "embodied_eval/native/execution_profiles.py": "1b984acadcac5b418ee5b8ed062f7279b65c49cec9d1607be437f70570f3d80b",
+    "embodied_eval/native/joint_native.py": "384a5b51ec8ac37371b8334d82877d7177dcf8452d9950f4a4322e887daff293",
+    "embodied_eval/native/model_assets.py": "c9eb662612c9eb6695dfd00a59fb1fc79e0bd291ff8062a293a612e45990e682",
+    "embodied_eval/native/model_catalog.py": "9383a45c8d90302298a532e819cbad0a6ed9727b83072fb77b9323e459c5a866",
+    "embodied_eval/native/native_benchmarks.py": "4d4f953bb85161882d2def96dc0a1047aac961c47f17f8dd3d3a23ea00f182f0",
+    "embodied_eval/native/native_model_process.py": "5d9984000ae2332fb8fa9463eb5ca1894c43cdbfffbc416b6e4e31d00fa04719",
+    "embodied_eval/native/native_model_worker.py": "063ab48f2d0f94b5a28d39791795aee98614091ffe01c2135d1ee4967795ee1b",
+    "embodied_eval/native/native_models.py": "6cf80bd6f283f296134a08bb6ba231307a9fcaaf26bae7864ad72547613649a6",
+    "embodied_eval/native/openwam_arx.py": "852bfcdc9bd5957ae4d09c27f540f28bf8deaa187c7f1f258a7e3778e9e0af17",
+    "embodied_eval/native/openwam_dual_pose.py": "505658232724488125c7e49bbcb66c97785a4cff3e2aae2fb27f4441cc29dc3d",
+    "embodied_eval/native/protocols.py": "c7243c57a668c31eb5f0f32684b40aa04c6fd3397ef74f449f0908ea3bf4a484",
+    "embodied_eval/native/registry.py": "94695a63ce27f2e7b34afede9a600ae803df64c47a4064de2b314b7a196bc727",
+    "embodied_eval/native/robodojo_simulator.py": "a97533e4dba633c9850b52be0328334b6fcbd4ca03760763307631f1ff7e8642",
+    "embodied_eval/native/rotations.py": "8c2a4b872d063a8e4a82fb7dad4150375c47cfe534e0dd15c61992e464c2a043",
+    "embodied_eval/native/timing_profiles.py": "e3ec3790a748839fda3abf736bba6e89a9ad94e62bcffefa1a5ddf537140456c",
+    "embodied_eval/native/transforms.py": "1eee1970ad29d3164a15eea24a8cf4cfe0936aa125927d21b48a61b7706e84e1",
+    "embodied_eval/runner.py": "dfc6d928f29b4ff73dc7126b9e2db668c02bac7243ded08fcccb512b518590c2",
+    "embodied_eval/v03/__init__.py": "e8db16c8371626e4e6440070e7ebb3014da6239d4868f40c880767876205de4a",
+    "embodied_eval/v03/benchmarks.py": "be2c534d88af18f36a4aa03cfdb17cd570d154d9d6b7bb880d50cb5b3fc83e07",
+    "embodied_eval/v03/config.py": "a4b799506016ad4cee025e3128cefc81ff200283c92f1ce6b59596fc35126acc",
+    "embodied_eval/v03/context.py": "db54d5addf003ade68f44ea12aa23add48b2538903e1dde14a4987fe285d4117",
+    "embodied_eval/v03/contracts.py": "0bdc8b9394c2cec3d22e2bd5e0d109c223d703e6177a4ee366ca55e320edece2",
+    "embodied_eval/v03/execution.py": "ce4ae3bc138cb1a69af8f6068f2bc0fc3ce3759e236a0c5c808097c5c4fe93e3",
+    "embodied_eval/v03/execution_types.py": "1b8ca5731a5042a20c1f363b2f1575e021ec32e8460fffdf3151cd9b018112ae",
+    "embodied_eval/v03/interfaces.py": "3c03a7b4c7908b242c930f50d545a54c784074b49a851bde65a311a05028c67b",
+    "embodied_eval/v03/matching.py": "e3d0983b67711136ae6b84a7ce340d6fa1160cc434c548aa26eae9fb80a4a4e2",
+    "embodied_eval/v03/models.py": "73f365993cc14af2d31b5905921ed2d350c4060bb3690260811db2a714025417",
+    "embodied_eval/v03/preflight.py": "16bd0089d03d1cee574a8e6342dac4736b59d12bb97e67733c09f12033a568c9",
+    "embodied_eval/v03/registry.py": "01ac55c226b58a240bcf2e0b29d1a6dbadf076035286ad729861f4f2374ff1a2",
+    "embodied_eval/v03/runner.py": "899f878065f7b36de87221f0040bd24b7184876bfa8521b110ecd35adfe5b1f0",
+    "embodied_eval/v03/synthetic.py": "5a91f05bcfb39124e75bcb2ca69e1328f7acd188fb4d959f692aed25755b6dc9",
+    "embodied_eval/v03/temporal.py": "993d1c47e7c2c8bb970a123a032af74b2abc7383a289711860054d1016372d68",
+    "embodied_eval/v03/transforms.py": "506eeead9c3300e5490dfb3c0d9f5dde6c880d542b47b1b92b9dcaefb3ba7bd4",
+    "embodied_eval/v03/validation.py": "0e87ff69578baa54e5421dac07dbfbd7be7c596c45001c3376c1d92f0562d340",
+    "embodied_eval/validation.py": "460419de8f2e88cfa2fafc8296c4655d0d109466a588ca77b621cc6d34b34749"
+  },
+  "previous_delivery_index_and_report_unchanged": true,
+  "same_historical_archived_Python_binary_and_package_metadata": true,
+  "shared_assets_originals_or_upstream_sources_modified": false,
+  "clean_same_revision_LIBERO_copy_used_without_reverting_original_dirty_source": true,
+  "weights_normalization_controller_scoring_or_public_protocol_changed": false,
+  "same_bytes_local_weight_cache_files": 38,
+  "same_bytes_local_weight_cache_bytes": 100023996010,
+  "resources": {
+    "system": "Linux",
+    "architecture": "x86_64",
+    "kernel": "5.15.0-141-generic",
+    "GPUs": [
+      {
+        "index": "0",
+        "name": "NVIDIA GeForce RTX 4090",
+        "memory_MiB": "49140",
+        "driver_version": "570.124.06"
+      },
+      {
+        "index": "1",
+        "name": "NVIDIA GeForce RTX 4090",
+        "memory_MiB": "49140",
+        "driver_version": "570.124.06"
+      },
+      {
+        "index": "2",
+        "name": "NVIDIA GeForce RTX 4090",
+        "memory_MiB": "49140",
+        "driver_version": "570.124.06"
+      },
+      {
+        "index": "3",
+        "name": "NVIDIA GeForce RTX 4090",
+        "memory_MiB": "49140",
+        "driver_version": "570.124.06"
+      }
+    ],
+    "disk_bytes": {
+      "shared_workspace": {
+        "total": 14051758602977280,
+        "used": 5335798471720960,
+        "free": 8715960131256320
+      },
+      "local_tmp": {
+        "total": 3838880616448,
+        "used": 2296300904448,
+        "free": 1542579712000
+      }
+    }
+  },
+  "GPU_sampling_window": {
+    "start": "2026-10-23T08:04:33.088103+00:00",
+    "end": "2026-10-23T09:45:10.260568+00:00",
+    "samples": 1171,
+    "mean_percent": 69.6268146883006,
+    "target_percent": 20,
+    "target_met": true,
+    "includes_preexisting_occupancy_not_evaluation_work": true,
+    "whole_project_lifetime_average": false
+  },
+  "qz_authentication": "expired_invalid_grant_user_login_required",
+  "new_platform_jobs": 0,
+  "new_MassWorld_bridge_real_runs": 0,
+  "live_loaded_weight_tensor_attestation": false,
+  "unique_root_cause_of_remaining_strict_differences_proven": false,
+  "actual_controller_arguments_newly_captured": true,
+  "full_task_or_multi_seed_success_rate_evaluation": false,
+  "DreamZero_inference_or_simulation_started": false,
+  "DreamZero_hardware_deferred_to_user": true,
+  "formal_stage4_acceptance": false,
+  "contract_frozen": false,
+  "HTTP_verified": true,
+  "HTTP_allowed_files": 62,
+  "all_21_videos_byte_ranges_verified": true,
+  "preview_bind": "127.0.0.1",
+  "preview_port": 8775,
+  "remote_browser_access_verified": false,
+  "remaining": [
+    "four primary strict differences remain",
+    "fresh ARX/Cosmos and full task suites not executed this round",
+    "weight action physical periods and universal benchmark prefix permissions still unverified",
+    "platform H100 GLX rendering gap not fixed by local RTX validation",
+    "DreamZero two 80GB H100s deferred",
+    "stage4 acceptance and contract freeze await user"
+  ]
+}
