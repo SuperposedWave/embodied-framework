@@ -14,7 +14,7 @@
   "benchmark": {
     "adapter": "libero",
     "options": {
-      "repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/upstream/LIBERO",
+      "repo": "/inspire/hdd3/project/agent-driven-world-model/zhouzhixiang-240107010008/Project/wm-eval-framework/EmbodiedEval/outputs/worldeval-platform-assets-20261019/LIBERO",
       "protocol": "spatial-30settle"
     }
   },

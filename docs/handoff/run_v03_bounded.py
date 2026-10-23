@@ -179,7 +179,12 @@ def execute(args):
             preflight = check(cfg, verify_assets=True)
             write(target / 'preflight.json', preflight)
             if not preflight['structurally_compatible'] or not preflight['assets_verified']:
-                raise ValueError('verified_structure_and_assets_required_before_server_start')
+                row = dict(case=case, passed=False, gate='preflight', policy_execution_state='no_policy_action_started',
+                    issues=preflight['issues'], asset_errors=preflight['asset_errors'])
+                report['cases'].append(row)
+                write(target / 'receipt.json', row)
+                print(json.dumps(row), flush=True)
+                continue
             command, cwd, client = server_spec(cfg)
             with socket.socket() as port:
                 port.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
