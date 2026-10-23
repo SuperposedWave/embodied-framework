@@ -41,13 +41,13 @@ def main():
     checkpoint()
     try:
         import numpy as np
-        from embodied_eval import _legacy_contracts as leaf
-        from embodied_eval.mn import contracts as c
-        from embodied_eval.mn.binding import resolve
-        from embodied_eval.mn.native_models import NativeActionModel
-        from embodied_eval.mn.validation import validate_prediction
-        from embodied_eval.mn.assets import verify_model
-        from embodied_eval.mn.robodojo_simulator import RoboDojoSimulator
+        from embodied_eval.core import types as leaf
+        from embodied_eval.native import contracts as c
+        from tests.legacy_support.frozen.mn.binding import resolve
+        from embodied_eval.native.native_models import NativeActionModel
+        from tests.legacy_support.frozen.mn.validation import validate_prediction
+        from embodied_eval.native.model_assets import verify_model
+        from embodied_eval.native.robodojo_simulator import RoboDojoSimulator
         from prepare_mn_extension import configurations
         cfg = configurations()["pi05_arx_robodojo"]
         phase = "assets"

@@ -12,7 +12,13 @@ from ..core.validation import require
 from ..adapters.native_common import finite_array, native_module
 from ..adapters.native_policy_transport import NativePolicyPeer
 from . import contracts as c
-from .native_catalog import model_options, capability, OSC_PROTOCOL, DUAL_PROTOCOL, GRIPPER_PROTOCOL, GRIPPER_CONTROLLER
+from .model_catalog import model_options
+from .model_catalog import capability
+from .model_catalog import WEIGHT_WIRE_PROFILES
+from .protocols import OSC_PROTOCOL
+from .protocols import DUAL_PROTOCOL
+from .protocols import GRIPPER_PROTOCOL
+from .protocols import GRIPPER_CONTROLLER
 from .rotations import euler_quaternion_xyzw, quat_axisangle
 from .joint_native import RAW_GRIPPER_PROTOCOL
 
@@ -26,6 +32,14 @@ class NativeActionModel:
         self.cache=deque()
         self.calls=self.requests=0
         self.last_instruction=None
+        self.reply_rows = []
+        self.consume_actions = 50 if self.cfg.io_profile == "arx_joint14" else 5
+
+    def configure_execution(self, count):
+        require(self.family == "openpi" and self.cfg.io_profile != "arx_joint14" and
+                type(count) is int and 1 <= count <= 50 and not self.cache,
+                "unsupported_execution_change", "model", "only a fresh, adapter-owned prefix may change")
+        self.consume_actions = count
 
     def _connect(self):
         if self.peer is not None:
@@ -53,12 +67,14 @@ class NativeActionModel:
         self.cache.clear()
         self.latest=None
         self.calls=self.requests=0
+        self.reply_rows = []
         self.last_instruction=task.instruction
         self._connect()
         if self.family=="openwam":
             require(self.peer.reset().get("type")=="reset_ack","native_reset_failed","model","reset acknowledgement required")
         elif self.family=="lingbot_vla":
-            self.peer.infer({"reset":True,"robo_name":"robotwin","path_to_pi_model":None})
+            selector = WEIGHT_WIRE_PROFILES[self.cfg.io_profile]["training_normalization_selector"]
+            self.peer.infer({"reset":True,"robo_name":selector,"path_to_pi_model":None})
 
     def observe(self,model_input):
         from .transforms import prepare_input
@@ -200,14 +216,19 @@ class NativeActionModel:
                 if rows.ndim==1:
                     rows=rows[None,:]
                 width=14 if self.family=="lingbot_vla" or self.cfg.io_profile == "arx_joint14" else 7
-                require(rows.ndim==2 and rows.shape[1]==width and rows.dtype.kind in "iuf" and np.isfinite(rows).all(),"invalid_model_output","actions","finite native action chunk required")
+                require(rows.ndim==2 and len(rows)>0 and rows.shape[1]==width and rows.dtype.kind in "iuf" and np.isfinite(rows).all(),"invalid_model_output","actions","finite nonempty native action chunk required")
+                returned = len(rows)
                 if self.family=="openpi" and self.cfg.io_profile != "arx_joint14":
-                    require(len(rows)>=5,"invalid_model_output","actions","native five-row replan requires five actions")
-                    rows=rows[:5]
+                    count = self.consume_actions
+                    require(len(rows)>=count,"invalid_model_output","actions","generated chunk shorter than configured consumed prefix")
+                    rows=rows[:count]
                 if self.cfg.io_profile == "arx_joint14":
                     require(len(rows) == 50, "invalid_model_output", "actions", "pinned pi05 ARX configuration returns 50-row chunks")
             self.cache.extend(row.copy() for row in rows)
             self.requests+=1
+            self.reply_rows.append({"request": self.requests,
+                "reply_action_rows": 1 if self.family == "openwam" else returned,
+                "adapter_enqueued_rows": len(rows), "server_generation_count": None})
         row=self.cache.popleft()
         action=self.decode_action(row,context,self.latest,acquire=not self.cache)
         from .transforms import convert_pose_action
@@ -226,4 +247,5 @@ class NativeActionModel:
 
     def diagnostics(self):
         return {"family":self.family,"io_profile":self.cfg.io_profile,"policy_calls":self.calls,"native_requests":self.requests,
+                "reply_action_rows": list(self.reply_rows),
                 "cache_rows_remaining":len(self.cache),"server_identity_verified":False,"public_samples_only":True}

@@ -116,7 +116,3 @@ def register(registry):
             lambda o, f=family: policy_capability(f, o), factory,
             lambda o, f=family: policy_options(f, o), lambda o, f=family: verify_policy(f, o),
             policy_readiness, lambda o, f=family: {**POLICIES[f], "server_identity_verified": False}))
-    from .droid_simulator import register as register_droid
-    register_droid(registry)
-    from .robodojo_simulator import register as register_dojo
-    register_dojo(registry)

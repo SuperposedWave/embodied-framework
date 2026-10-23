@@ -50,7 +50,8 @@ def state_names(family, old):
     return mapping
 
 
-def canonical_space(family, old, runtime_verified=False):
+def canonical_space(family, old, runtime_verified=False, options=None):
+    from ..native.benchmark_execution import benchmark_execution
     fmap, cmap = frame_map(family, old), CAMERA_MAPS[family]
     frames = {fmap[key]: replace(spec, parent_id=fmap.get(spec.parent_id)) for key, spec in old.frames.items()}
     # An unknown base orientation is not an identity transform to world.
@@ -129,7 +130,8 @@ def canonical_space(family, old, runtime_verified=False):
         view_aliases={"main": "head"} if "head" in sensors else {}, reference_sites=sites,
         frame_conventions={"world": "right-handed native protocol world; metres/radians/seconds; no cross-benchmark origin identity",
             "robot0/base": "unconnected until a verified full base transform is available"},
-        sample_timing={domain + "." + key: sampling for domain, table in (("sensors", sensors), ("states", states)) for key in table})
+        sample_timing={domain + "." + key: sampling for domain, table in (("sensors", sensors), ("states", states)) for key in table},
+        execution=benchmark_execution(old, period_verified=family == "libero" or runtime_verified, options=options))
 
 
 def canonical_observation(family, old_space, obs, space=None):
@@ -157,6 +159,7 @@ def canonical_observation(family, old_space, obs, space=None):
 class CanonicalBenchmark:
     def __init__(self, family, options, output, entry):
         self.family = family
+        self.options = dict(options)
         self.engine = entry.factory(options, output)
         self.latest = None
         try:
@@ -167,7 +170,7 @@ class CanonicalBenchmark:
 
     def describe(self):
         self.native_space = self.engine.describe()
-        self.space = canonical_space(self.family, self.native_space, runtime_verified=True)
+        self.space = canonical_space(self.family, self.native_space, runtime_verified=True, options=self.options)
         return self.space
 
     def enumerate_tasks(self, episodes):

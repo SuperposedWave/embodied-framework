@@ -45,7 +45,7 @@ def native_action(action):
 def child(args):
     import numpy as np
     import torch
-    from embodied_eval.mn.assets_common import _revision, _hf_objects
+    from embodied_eval.native.assets_common import _revision, _hf_objects
     from replay_mn_native_actions import trace, snapshot, field, summarize
     manifest = json.loads((args.trial / "framework/manifest.json").read_text())
     if manifest["synthetic"] or manifest["config"]["benchmark"]["adapter"] != "droid_sim":
@@ -55,7 +55,7 @@ def child(args):
     repo, assets = Path(options["repo"]), Path(options["assets_dir"])
     revision = "3a6b0e8177f696947f49c082728f10ef5133ede1"
     _revision(repo, revision)
-    verified = _hf_objects(assets.resolve(), ROOT / "embodied_eval/mn/asset_manifests/droid_sim.json")
+    verified = _hf_objects(assets.resolve(), ROOT / "embodied_eval/native/asset_manifests/droid_sim.json")
     if options["scene"] != 1 or options["protocol"] != "droid-three-scenes-native-v1" or len(config["episodes"]) != 1:
         raise ValueError("reviewed_scene_one_single_episode_protocol_required")
     if os.geteuid() == 0:

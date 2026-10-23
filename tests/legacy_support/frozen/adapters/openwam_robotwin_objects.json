@@ -1,0 +1,42 @@
+{
+  "repo_id": "OpenWAM/OpenWAM-Alpha-Sim-RoboTwin-Full",
+  "revision": "04b96af53eeeb111c64631f822efcbb82f4b186e",
+  "source": "public Hugging Face model_info(files_metadata=True, token=False), 2026-10-06; inference objects only",
+  "objects": [
+    {
+      "relative": "checkpoint_step_118655.safetensors",
+      "size": 24813767464,
+      "sha256": "d07ff6f8cfb627ebf47313e65af38773fabcb3861d52fdc7c3bc5e7bee33f6fe"
+    },
+    {
+      "relative": "config.yaml",
+      "size": 3398,
+      "git_blob": "4e4b1c714c6564660537ca50b4bc87c9918f9b8d"
+    },
+    {
+      "relative": "normalization_stats.npy",
+      "size": 1581,
+      "sha256": "3eb52f759ebd004feda2772925d587054f9c2f05e1b979c3ff8c94fdd40e5db5"
+    },
+    {
+      "relative": "tokenizer/google/umt5-xxl/special_tokens_map.json",
+      "size": 6623,
+      "git_blob": "14855e7052ffbb595057dfd791d293c1c940db2c"
+    },
+    {
+      "relative": "tokenizer/google/umt5-xxl/spiece.model",
+      "size": 4548313,
+      "sha256": "e3909a67b780650b35cf529ac782ad2b6b26e6d1f849d3fbb6a872905f452458"
+    },
+    {
+      "relative": "tokenizer/google/umt5-xxl/tokenizer.json",
+      "size": 16837417,
+      "sha256": "6e197b4d3dbd71da14b4eb255f4fa91c9c1f2068b20a2de2472967ca3d22602b"
+    },
+    {
+      "relative": "tokenizer/google/umt5-xxl/tokenizer_config.json",
+      "size": 61728,
+      "git_blob": "4e1cc1cd85599ce0b47fd0a746af188fe4043ff2"
+    }
+  ]
+}

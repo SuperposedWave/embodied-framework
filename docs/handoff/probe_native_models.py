@@ -22,7 +22,7 @@ if str(ROOT) not in sys.path:
 
 
 def child(pair, output, closed_loop=False):
-    from embodied_eval import _legacy_contracts as c
+    from embodied_eval.core import types as c
     from embodied_eval.codec import to_data
     from embodied_eval.config import load_config, make_adapters, make_profile
     from embodied_eval.compatibility import check_compatibility

@@ -38,7 +38,7 @@ def child(args):
 
 def execute(args):
     from embodied_eval.codec import to_data
-    from embodied_eval.v03.migration import migrate
+    from embodied_eval.config import load_config
     from embodied_eval.v03.preflight import check
     from embodied_eval.contracts import Budgets
     gate = json.loads(args.mapping_receipt.read_text())
@@ -54,7 +54,18 @@ def execute(args):
             path = ROOT / f'outputs/native-comparison-{case}-20261009-run1/framework/manifest.json'
         if case not in {row['case'] for row in gate['cases']}:
             raise ValueError('selected_saved_run_must_have_passed_boundary_gate')
-        cfg, _ = migrate(json.loads(path.read_text())['config'])
+        # Historical results select comparison evidence, never a retired
+        # runtime/configuration. Run only explicit current example files.
+        examples = {"openwam_libero": "stage3-openwam-libero-spatial-pilot.json",
+            "openpi_libero": "stage4-pi05-libero-spatial.json",
+            "openwam_vlabench": "stage4-openwam-vlabench-select-fruit.json",
+            "openpi_vlabench": "stage4-pi05-vlabench-select-fruit.json",
+            "openwam_robotwin": "stage4-openwam-robotwin-adjust-bottle.json",
+            "lingbot_robotwin": "stage4-lingbot-robotwin-adjust-bottle.json",
+            "openwam_dual_physical": "mn_openwam_dual_wxyz_encoded_absolute.json"}
+        if case not in examples:
+            raise ValueError("current_example_required_for_this_supervisor")
+        cfg = load_config(ROOT / "examples" / examples[case])
         cfg = replace(cfg, run_id='v03-' + case.replace('_', '-'),
             model=replace(cfg.model, options={**cfg.model.options, 'port': args.port}),
             episodes=(replace(cfg.episodes[0], budgets=Budgets(env_steps=4, model_calls=4, wall_time_s=600.)),))

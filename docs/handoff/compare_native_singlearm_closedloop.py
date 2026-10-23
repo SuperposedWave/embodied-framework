@@ -149,7 +149,8 @@ def run(args):
     import numpy as np
     from replay_mn_native_actions import trace, snapshot, digest, field
     from comparison_video import Frames
-    from embodied_eval.mn.assets import verify_model, verify_benchmark
+    from embodied_eval.native.model_assets import verify_model
+    from embodied_eval.native.benchmark_assets import verify_benchmark
     config = json.loads(args.config.read_text())
     manifest = json.loads((args.framework / "manifest.json").read_text())
     if manifest["synthetic"] or manifest["config"] != config or config["benchmark"]["adapter"] not in ("libero", "vlabench"):

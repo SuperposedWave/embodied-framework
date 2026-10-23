@@ -3,15 +3,15 @@ from dataclasses import replace
 from pathlib import Path
 import tempfile
 import unittest
-from embodied_eval import _legacy_contracts as leaf
+from tests.legacy_support.frozen import _legacy_contracts as leaf
 from embodied_eval.errors import AdapterError,ContractError
-from embodied_eval.mn import contracts as c
-from embodied_eval.mn.registry import AdapterRegistry
-from embodied_eval.mn.synthetic import register,SyntheticModel,SyntheticBenchmark,capability,space
-from embodied_eval.mn.config import RunConfig,AdapterConfig,EpisodeConfig
-from embodied_eval.mn.binding import resolve
-from embodied_eval.mn.validation import validate_prediction,validate_observation
-from embodied_eval.mn.runner import run
+from embodied_eval.native import contracts as c
+from tests.legacy_support.frozen.mn.registry import AdapterRegistry
+from tests.legacy_support.frozen.mn.synthetic import register,SyntheticModel,SyntheticBenchmark,capability,space
+from tests.legacy_support.frozen.mn.config import RunConfig,AdapterConfig,EpisodeConfig
+from tests.legacy_support.frozen.mn.binding import resolve
+from tests.legacy_support.frozen.mn.validation import validate_prediction,validate_observation
+from tests.legacy_support.frozen.mn.runner import run
 
 
 def cfg():

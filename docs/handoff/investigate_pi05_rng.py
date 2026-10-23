@@ -33,11 +33,11 @@ def child(args):
         import numpy as np
         import jax
         from embodied_eval.codec import decode
-        from embodied_eval.mn import contracts as c
-        from embodied_eval.mn.native_models import NativeActionModel
-        from embodied_eval.mn.native_catalog import capability
-        from embodied_eval.mn.assets import verify_model
-        from embodied_eval.mn.transforms import prepare_input
+        from embodied_eval.native import contracts as c
+        from embodied_eval.native.native_models import NativeActionModel
+        from embodied_eval.native.model_catalog import capability
+        from embodied_eval.native.model_assets import verify_model
+        from embodied_eval.native.transforms import prepare_input
         from embodied_eval.adapters.native_common import native_module
         manifest = json.loads((args.framework / "manifest.json").read_text())
         options = manifest["config"]["model"]["options"]

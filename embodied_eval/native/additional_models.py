@@ -25,6 +25,11 @@ class JointPolicyModel:
         self.session_id = None
         self.horizon = self.cfg.open_loop_horizon or POLICIES[family]["horizon"]
 
+    def configure_execution(self, count):
+        require(type(count) is int and 1 <= count <= POLICIES[self.family]["horizon"] and not self.cache,
+                "unsupported_execution_change", "model", "positive supported prefix and empty cache required")
+        self.horizon = count
+
     def begin_episode(self, context, task, profile, space):
         self.profile, self.space = profile, space
         self.cache.clear()

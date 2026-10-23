@@ -16,7 +16,7 @@ def main():
     if not 1 <= args.port <= 65535:
         raise ValueError("valid local port required")
     source = WORKSPACE / "upstream/xpolicy-reference-mn"
-    from embodied_eval.mn.assets import verify_model
+    from embodied_eval.native.model_assets import verify_model
     verify_model("openpi", {"io_profile": "arx_joint14", "repo": str(source), "checkpoint_dir": str(args.checkpoint)})
     native = source / "policy/Pi_05/openpi"
     sys.path[:0] = [str(native / "src"), str(native / "packages/openpi-client/src")]

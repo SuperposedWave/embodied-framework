@@ -39,10 +39,10 @@ def digest(path):
 
 def configurations():
     """Examples of explicit data wiring, never a runtime compatibility list."""
-    from embodied_eval import _legacy_contracts as leaf
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.config import RunConfig, AdapterConfig, EpisodeConfig
-    from embodied_eval.mn.registry import default_registry
+    from embodied_eval.core import types as leaf
+    from embodied_eval.native import contracts as c
+    from tests.legacy_support.frozen.mn.config import RunConfig, AdapterConfig, EpisodeConfig
+    from embodied_eval.native.registry import default_registry
     upstream = WORKSPACE / "upstream"
     model_data = {
         "cosmos3": ("cosmos3", {"io_profile": "nano-policy-droid-joint8", "repo": str(upstream / "cosmos-framework-mn"),
@@ -103,13 +103,13 @@ def configurations():
 
 
 def asset_inventory():
-    from embodied_eval.mn.assets_common import _revision
+    from embodied_eval.native.assets_common import _revision
     locations = {"cosmos3": MODELS / "Cosmos3-Nano-Policy-DROID", "dreamzero": MODELS / "DreamZero-DROID",
         "pi05_arx": MODELS / "pi05_arx_x5_seed0_step59999", "openwam_arx": MODELS / "OpenWAM-Alpha-Sim-RoboDojo",
         "droid_sim": MODELS / "DROID-sim-environments", "robodojo": WORKSPACE / "upstream/RoboDojo"}
     records = {}
     for component, directory in locations.items():
-        manifest_path = ROOT / "embodied_eval/mn/asset_manifests" / (component + ".json")
+        manifest_path = ROOT / "embodied_eval/native/asset_manifests" / (component + ".json")
         manifest = read(manifest_path)
         files = []
         for item in manifest["objects"]:
@@ -220,8 +220,8 @@ def main():
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     from embodied_eval.codec import to_data
-    from embodied_eval.mn.preflight import check
-    from embodied_eval.mn.config import validate_config
+    from tests.legacy_support.frozen.mn.preflight import check
+    from tests.legacy_support.frozen.mn.config import validate_config
     cfgs = configurations()
     checks = {}
     for key, cfg in cfgs.items():

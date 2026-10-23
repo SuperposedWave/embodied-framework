@@ -379,8 +379,8 @@ def main():
               "formal_acceptance": False, "checked_at_utc": datetime.now(timezone.utc).isoformat(), "passed": False}
     try:
         from embodied_eval.codec import decode
-        from embodied_eval.mn.config import RunConfig, validate_config
-        from embodied_eval.mn.registry import default_registry
+        from tests.legacy_support.frozen.mn.config import RunConfig, validate_config
+        from embodied_eval.native.registry import default_registry
         manifest_path = source / "manifest.json"
         manifest = json.loads(manifest_path.read_text())
         if manifest["synthetic"] or manifest["config"]["contract_version"] != "0.2":

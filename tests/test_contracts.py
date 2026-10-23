@@ -4,21 +4,21 @@ import json
 import math
 import unittest
 
-from embodied_eval import _legacy_contracts as c
+from tests.legacy_support.frozen import _legacy_contracts as c
 from embodied_eval.codec import decode, dumps, loads, to_data
-from embodied_eval.compatibility import check_compatibility, validate_model_input
+from tests.legacy_support.frozen.compatibility import check_compatibility, validate_model_input
 from embodied_eval.errors import ContractError
 from embodied_eval.geometry import (
     compose, inverse, transform_pose, apply_pose_delta, quaternion_to_rot6d,
     rot6d_to_quaternion, convert_quantity, rotate_vector, frame_transform,
 )
-from embodied_eval._legacy_validation import (
+from tests.legacy_support.frozen._legacy_validation import (
     validate_space, validate_tensor, validate_observation, validate_task,
     validate_prediction, validate_step_result, validate_episode_result, schema_value,
 )
-from embodied_eval.visibility import build_model_input, public_space
-from examples.contract_sample import make_case, prediction, sequence, IDENTITY
-from examples.validate_contracts import build_examples
+from tests.legacy_support.frozen.visibility import build_model_input, public_space
+from tests.legacy_support.frozen.examples.contract_sample import make_case, prediction, sequence, IDENTITY
+from tests.legacy_support.frozen.examples.validate_contracts import build_examples
 
 
 class ContractCase(unittest.TestCase):

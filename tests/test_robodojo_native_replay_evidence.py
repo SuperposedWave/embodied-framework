@@ -5,10 +5,10 @@ import sys
 import unittest
 import numpy as np
 from embodied_eval.codec import to_data
-from embodied_eval.mn.native_models import NativeActionModel
-from embodied_eval.mn.robodojo_simulator import RoboDojoSimulator
-from embodied_eval.mn import contracts as c
-from embodied_eval.mn.binding import resolve
+from embodied_eval.native.native_models import NativeActionModel
+from embodied_eval.native.robodojo_simulator import RoboDojoSimulator
+from embodied_eval.native import contracts as c
+from tests.legacy_support.frozen.mn.binding import resolve
 
 directory = Path(__file__).resolve().parents[1] / "docs/handoff"
 if str(directory) not in sys.path:

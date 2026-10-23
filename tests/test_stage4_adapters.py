@@ -9,14 +9,14 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from embodied_eval import _legacy_contracts as c
-from embodied_eval.adapters import openpi_libero_spec as pi, vlabench_spec as vla
-from embodied_eval.adapters import openpi_vlabench_spec as pivla
-from embodied_eval.compatibility import check_compatibility
+from tests.legacy_support.frozen import _legacy_contracts as c
+from tests.legacy_support.frozen.adapters import openpi_libero_spec as pi, vlabench_spec as vla
+from tests.legacy_support.frozen.adapters import openpi_vlabench_spec as pivla
+from tests.legacy_support.frozen.compatibility import check_compatibility
 from tests.legacy_support.config import (BenchmarkConfig, EpisodeConfig, ModelConfig, ProfileConfig,
                                   RunConfig, load_config, validate_config)
 from embodied_eval.errors import AdapterError, ContractError
-from embodied_eval.visibility import build_model_input
+from tests.legacy_support.frozen.visibility import build_model_input
 
 try:
     import numpy as np
@@ -84,13 +84,13 @@ class Stage4RegistrationTests(unittest.TestCase):
                 validate_config(replace(config, benchmark=benchmark))
 
     def test_missing_checkpoint_fails_before_adapter_creation(self):
-        from embodied_eval import stage4_pairs
+        from tests.legacy_support.frozen import stage4_pairs
         with tempfile.TemporaryDirectory() as root:
             with self.assertRaises(ContractError):
                 stage4_pairs._file(Path(root) / "missing", "0" * 64)
 
     def test_modified_asset_fails_closed(self):
-        from embodied_eval import stage4_pairs
+        from tests.legacy_support.frozen import stage4_pairs
         with self.assertRaises(ContractError):
             stage4_pairs._file(ROOT / "examples/stage4-pi05-libero-spatial.json", "0" * 64)
 
@@ -114,7 +114,7 @@ class Stage4RegistrationTests(unittest.TestCase):
 @unittest.skipIf(np is None, "real-client optional dependencies unavailable")
 class Stage4MappingTests(unittest.TestCase):
     def test_pi_libero_preserves_trusted_native_numpy_initial_state_loading(self):
-        from embodied_eval.adapters.libero_openpi_benchmark import LiberoOpenpiBenchmark
+        from tests.legacy_support.frozen.adapters.libero_openpi_benchmark import LiberoOpenpiBenchmark
         benchmark = LiberoOpenpiBenchmark.__new__(LiberoOpenpiBenchmark)
         benchmark.config = BenchmarkConfig(libero_repo="/verified-source")
         benchmark.native_task = SimpleNamespace(problem_folder="libero_spatial", init_states_file="task.pruned_init")
@@ -129,7 +129,7 @@ class Stage4MappingTests(unittest.TestCase):
         return c.Context(run_id="test", env_id="env0", episode_id="ep0", message_id="obs0")
 
     def pi_vla_model(self, reply=None):
-        from embodied_eval.adapters.openpi_vlabench_model import OpenpiVLABenchModel
+        from tests.legacy_support.frozen.adapters.openpi_vlabench_model import OpenpiVLABenchModel
         model = OpenpiVLABenchModel(ModelConfig(), Path("/unused"), "/unused")
         space = pivla.space(.01)
         model.profile, model.period = pivla.profile(space, pivla.capability(None)), .01
@@ -227,7 +227,7 @@ class Stage4MappingTests(unittest.TestCase):
         return c.ModelInput(context=self.context(), task_public=c.PublicTask(instruction="pick bowl"), observation_view=obs)
 
     def model(self, reply=None):
-        from embodied_eval.adapters.openpi_libero_model import OpenpiLiberoModel
+        from tests.legacy_support.frozen.adapters.openpi_libero_model import OpenpiLiberoModel
         model = OpenpiLiberoModel(ModelConfig(), Path("/unused"))
         model.profile = pi.profile(pi.space(), pi.capability(None))
         model.period = .05
@@ -277,18 +277,18 @@ class Stage4MappingTests(unittest.TestCase):
             self.assertEqual(len(model.cache), 0)
 
     def test_finite_array_rejects_string_and_complex_payloads(self):
-        from embodied_eval.adapters.native_common import finite_array
+        from tests.legacy_support.frozen.adapters.native_common import finite_array
         for value in (["1", "2"], [1+1j, 2+0j], [float("nan"), 1]):
             with self.assertRaises(AdapterError):
                 finite_array(value, (2,), "state", np.float32)
 
     def test_pi_quaternion_identity_and_half_turn(self):
-        from embodied_eval.adapters.openpi_libero_model import quat_to_axisangle
+        from tests.legacy_support.frozen.adapters.openpi_libero_model import quat_to_axisangle
         np.testing.assert_array_equal(quat_to_axisangle([0, 0, 0, 1]), np.zeros(3))
         np.testing.assert_allclose(quat_to_axisangle([1., 0, 0, 0]), [np.pi, 0, 0])
 
     def test_vla_maps_only_public_native_inputs_and_measured_period(self):
-        from embodied_eval.adapters.openwam_vlabench_model import OpenWAMVLABenchModel
+        from tests.legacy_support.frozen.adapters.openwam_vlabench_model import OpenWAMVLABenchModel
         model = OpenWAMVLABenchModel(ModelConfig(), Path("/unused"))
         declared = vla.space(.01)
         model.profile, model.period = vla.profile(declared, vla.capability(None)), .01
@@ -312,7 +312,7 @@ class Stage4MappingTests(unittest.TestCase):
         self.assertEqual(result.decision.steps[0].commands[0].parameters["finger_targets_m"], [.04, .04])
 
     def benchmark(self, *, elapsed=.01, done=True):
-        from embodied_eval.adapters.vlabench_benchmark import VLABenchBenchmark
+        from tests.legacy_support.frozen.adapters.vlabench_benchmark import VLABenchBenchmark
         class Environment:
             physics = SimpleNamespace(clock=0)
             physics.time = lambda: Environment.physics.clock
@@ -339,7 +339,7 @@ class Stage4MappingTests(unittest.TestCase):
     def test_vla_native_step_and_scoring_keep_unavailable_metric_null(self):
         benchmark, action = self.benchmark()
         utilities = SimpleNamespace(euler_to_quaternion=lambda *values: [1, 0, 0, 0])
-        with patch("embodied_eval.adapters.vlabench_benchmark.native_module", return_value=utilities):
+        with patch("tests.legacy_support.frozen.adapters.vlabench_benchmark.native_module", return_value=utilities):
             result = benchmark.advance(action, replace(self.context(), message_id="request0"), c.Budgets(env_steps=1))
         self.assertTrue(result.terminated)
         self.assertEqual(result.execution_feedback.consumed_env_steps, 1)
@@ -353,7 +353,7 @@ class Stage4MappingTests(unittest.TestCase):
     def test_vla_unexpected_native_time_is_not_reported_as_valid_execution(self):
         benchmark, action = self.benchmark(elapsed=.02)
         utilities = SimpleNamespace(euler_to_quaternion=lambda *values: [1, 0, 0, 0])
-        with patch("embodied_eval.adapters.vlabench_benchmark.native_module", return_value=utilities):
+        with patch("tests.legacy_support.frozen.adapters.vlabench_benchmark.native_module", return_value=utilities):
             with self.assertRaises(AdapterError) as caught:
                 benchmark.advance(action, replace(self.context(), message_id="request0"), c.Budgets(env_steps=1))
         self.assertTrue(caught.exception.execution_started)
@@ -377,7 +377,7 @@ class NativeRobotwinBridgeTests(unittest.TestCase):
                 "private_score": 1}
 
     def lingbot(self, action=None):
-        from embodied_eval.adapters.native_robotwin_models import LingbotRobotwinNativePolicy, NativeEndpoint
+        from tests.legacy_support.frozen.adapters.native_robotwin_models import LingbotRobotwinNativePolicy, NativeEndpoint
         model = LingbotRobotwinNativePolicy(NativeEndpoint(repo="/unused", port=8923))
         model.peer = SimpleNamespace(infer=lambda payload: {"action": np.zeros((4, 14)) if action is None else action})
         return model
@@ -410,8 +410,8 @@ class NativeRobotwinBridgeTests(unittest.TestCase):
         self.assertEqual(sent, [{"reset": True, "robo_name": "robotwin", "path_to_pi_model": None}])
 
     def test_openwam_uses_pinned_conversion_and_prompt_without_execution(self):
-        from embodied_eval.adapters.native_robotwin_models import OpenWAMRobotwinNativePolicy, NativeEndpoint
-        from embodied_eval.adapters.native_common import native_module
+        from tests.legacy_support.frozen.adapters.native_robotwin_models import OpenWAMRobotwinNativePolicy, NativeEndpoint
+        from tests.legacy_support.frozen.adapters.native_common import native_module
         source = ROOT.parent / "upstream/OpenWAM"
         if not source.exists():
             self.skipTest("OpenWAM native reference unavailable")

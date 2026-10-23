@@ -17,7 +17,9 @@ from ..adapters.robotwin_benchmark import RobotwinBenchmark, _RngDomain
 from ..adapters.native_robotwin_runtime import prewarm_native_cuda
 from ..adapters.native_common import finite_array, native_module
 from . import contracts as c
-from .native_catalog import benchmark_options, space as public_space, DUAL_PROTOCOL
+from .benchmark_catalog import benchmark_options
+from .benchmark_catalog import space as public_space
+from .protocols import DUAL_PROTOCOL
 
 
 @contextmanager
@@ -67,26 +69,6 @@ def legacy_context(context):
     return leaf.Context(run_id=context.run_id,env_id=context.env_id,episode_id=context.episode_id,message_id=context.message_id)
 
 
-class _IndependentRobotwinRuntime(RobotwinBenchmark):
-    """Simulator's historical protocol labels do not select the current model."""
-    def _prepare_cuda_runtime(self):
-        prewarm_native_cuda()
-
-    def _choose_instruction(self,episode_info):
-        if self._instruction_protocol=="sealed-instruction":
-            # Port of fixed eval_manifest.choose_instructions: a fresh isolated
-            # seed domain, description limit100, identical selection state for
-            # seen/unseen. No import of a model repository.
-            with _RngDomain(self.selected_seed).activate():
-                descriptions=self.generator(self.config.task_name,[episode_info],100)
-                selection=np.random.get_state()
-                selected={}
-                for key in ("seen","unseen"):
-                    np.random.set_state(selection)
-                    selected[key]=str(np.random.choice(descriptions[0][key]))
-            return selected[self.config.instruction_type]
-        descriptions=self.generator(self.config.task_name,[episode_info],100)
-        return str(np.random.choice(descriptions[0][self.config.instruction_type]))
 
 
 class NativeSimulator:
@@ -97,7 +79,7 @@ class NativeSimulator:
         cfg=self.cfg
         if family=="libero":
             from ..adapters.libero_spatial_benchmark import LiberoSpatialBenchmark
-            from ..adapters import openpi_libero_spec
+            from .environment_specs import libero_10
             class PinnedLiberoRuntime(LiberoSpatialBenchmark):
                 def _load_init_states(self):
                     # Task bytes were verified BEFORE construction. Keep the
@@ -108,13 +90,13 @@ class NativeSimulator:
                     path=Path(self.config.libero_repo)/"libero/libero/init_files"/self.native_task.problem_folder/self.native_task.init_states_file
                     return torch.load(path,weights_only=False)
             if cfg.protocol=="spatial-10settle":
-                PinnedLiberoRuntime.space_factory=staticmethod(openpi_libero_spec.space)
-                PinnedLiberoRuntime.controller_ref=openpi_libero_spec.CONTROLLER
+                PinnedLiberoRuntime.space_factory=staticmethod(libero_10.space)
+                PinnedLiberoRuntime.controller_ref=libero_10.CONTROLLER
                 PinnedLiberoRuntime.settle_steps=10
                 PinnedLiberoRuntime.native_state_dtype=np.float64
                 PinnedLiberoRuntime.action_dtype=None
                 PinnedLiberoRuntime.score_revision="f78abd6"
-            self.runtime=PinnedLiberoRuntime(BenchmarkConfig(adapter="libero_spatial",libero_repo=cfg.repo))
+            self.runtime=PinnedLiberoRuntime(BenchmarkConfig(libero_repo=cfg.repo))
             try:
                 native_module(cfg.repo,"libero.libero")
             except Exception:
@@ -122,16 +104,12 @@ class NativeSimulator:
                 raise
         elif family=="vlabench":
             from ..adapters.vlabench_benchmark import VLABenchBenchmark
-            self.runtime=VLABenchBenchmark(BenchmarkConfig(adapter="vlabench",vlabench_repo=cfg.repo,
+            self.runtime=VLABenchBenchmark(BenchmarkConfig(vlabench_repo=cfg.repo,
                 task_name=cfg.task_name,track=cfg.track,trial_index=cfg.trial_index))
         else:
-            # These names retain the historical simulator revision/initialization
-            # defaults only. No selected model/config/repo is passed to runtime.
-            legacy_protocol="openwam_robotwin" if cfg.protocol=="sealed-instruction" else "lingbot_robotwin"
-            self.runtime=_IndependentRobotwinRuntime(BenchmarkConfig(adapter="robotwin_lingbot",robotwin_repo=cfg.repo,
+            self.runtime=RobotwinBenchmark(BenchmarkConfig(robotwin_repo=cfg.repo,
                 task_name=cfg.task_name,task_config=cfg.task_config,instruction_type=cfg.instruction_type,
-                max_seed_candidates=cfg.max_seed_candidates),legacy_protocol,output)
-            self.runtime._instruction_protocol=cfg.protocol
+                max_seed_candidates=cfg.max_seed_candidates),cfg.protocol,output)
 
     def describe(self):
         actual=self.runtime.describe()
@@ -228,7 +206,7 @@ class NativeSimulator:
             reply=self.runtime.advance(control,request,remaining)
         elif self.family=="vlabench":
             parameters=self._cartesian_parameters(action)
-            from ..adapters.vlabench_spec import CONTROLLER
+            from .environment_specs.vlabench import CONTROLLER
             cmd=leaf.ControllerCommand(command_id=context.message_id+":ik",target_id="robot0/eef",controller_profile_ref=CONTROLLER,parameters=parameters)
             reply=self.runtime.advance(leaf.ActionStep(index=0,duration_s=self.space.control_period_s,commands=(cmd,)),request,remaining)
             reply=replace(reply,execution_feedback=replace(reply.execution_feedback,command_ids=tuple(cmd.command_id for cmd in action.commands)))

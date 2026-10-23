@@ -43,11 +43,11 @@ def robotwin_conversion():
     """
     import numpy as np
     from types import SimpleNamespace
-    from embodied_eval import _legacy_contracts as leaf
-    from embodied_eval._legacy_validation import require
+    from embodied_eval.core import types as leaf
+    from embodied_eval.core.validation import require
     from embodied_eval.adapters.native_common import finite_array
-    from embodied_eval.mn.native_catalog import DUAL_PROTOCOL
-    source = ROOT / "embodied_eval/mn/native_benchmarks.py"
+    from embodied_eval.native.protocols import DUAL_PROTOCOL
+    source = ROOT / "embodied_eval/native/native_benchmarks.py"
     module = ast.parse(source.read_text())
     cls = next(node for node in module.body if isinstance(node, ast.ClassDef) and node.name == "NativeSimulator")
     method = copy.deepcopy(next(node for node in cls.body if isinstance(node, ast.FunctionDef) and node.name == "_advance_robotwin"))
@@ -75,11 +75,11 @@ def compare(directory):
     import numpy as np
     from embodied_eval.adapters.native_common import native_module
     from embodied_eval.codec import decode
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.assets_common import _revision
-    from embodied_eval.mn.native_catalog import PROFILES
-    from embodied_eval.mn.native_models import NativeActionModel
-    from embodied_eval.mn.robodojo_simulator import RoboDojoSimulator
+    from embodied_eval.native import contracts as c
+    from embodied_eval.native.assets_common import _revision
+    from embodied_eval.native.model_catalog import PROFILES
+    from embodied_eval.native.native_models import NativeActionModel
+    from embodied_eval.native.robodojo_simulator import RoboDojoSimulator
     from check_mn_extension_native_mappings import functions, same
     manifest = json.loads((directory / "framework/manifest.json").read_text())
     cfg = manifest["config"]

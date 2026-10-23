@@ -141,9 +141,12 @@ def convert_quantity(value: float, source_unit: str, target_unit: str) -> float:
 
 def frame_transform(space, observation, *, source_frame: str, target_frame: str, max_age_s: float | None = None):
     """Resolve T_target_source from the declared frame graph and current samples."""
-    from ._legacy_validation import validate_space, validate_observation
-    validate_space(space)
-    validate_observation(observation, space)
+    from .core.validation import validate_structure, quaternion
+    validate_structure(space)
+    for frame, sample in observation.frame_transforms.items():
+        if frame not in space.frames or not space.frames[frame].dynamic or not 0 <= sample.captured_at_s <= observation.sim_time_s + 1e-9:
+            _error("invalid dynamic frame sample")
+        quaternion(sample.transform.quaternion_xyzw, frame)
     if source_frame not in space.frames or target_frame not in space.frames:
         _error("source and target frames must be declared")
     if max_age_s is not None and (not math.isfinite(max_age_s) or max_age_s < 0):

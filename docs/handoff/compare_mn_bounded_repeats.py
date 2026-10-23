@@ -11,7 +11,7 @@ sys.path.insert(0, str(ROOT))
 
 def read_trial(root):
     from embodied_eval.codec import decode
-    from embodied_eval.mn import contracts as c
+    from embodied_eval.native import contracts as c
     folder = root / "pi05_arx_robotwin/framework/episodes/ep-0"
     with (folder / "model_input.public.jsonl").open() as stream:
         view = decode(c.ModelInput, json.loads(stream.readline()))
@@ -28,8 +28,8 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     import numpy as np
-    from embodied_eval.mn.native_models import NativeActionModel
-    from embodied_eval import _legacy_contracts as leaf
+    from embodied_eval.native.native_models import NativeActionModel
+    from embodied_eval.core import types as leaf
     a, pa, ra = read_trial(args.first)
     b, pb, rb = read_trial(args.repeat)
     model = NativeActionModel("openpi", {"repo": "/not-imported", "checkpoint_dir": "/not-loaded", "io_profile": "arx_joint14"})

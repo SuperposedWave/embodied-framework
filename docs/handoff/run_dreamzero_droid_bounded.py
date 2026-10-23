@@ -40,7 +40,7 @@ def main():
     args.output.relative_to(ROOT / "outputs")
     if args.child:
         from embodied_eval.config import load_config
-        from embodied_eval.mn.runner import run
+        from tests.legacy_support.frozen.mn.runner import run
         from record_dreamzero_policy_exchange import record_exchanges
         try:
             with record_exchanges(args.output.parent / "native-exchanges"):
@@ -67,7 +67,7 @@ def main():
     directory, cache = verify_preparation(args.preparation)
     from prepare_cuda129_toolchain import private_toolchain
     toolkit = private_toolchain(args.cuda_toolchain)
-    from embodied_eval.mn.additional_catalog import verify_policy
+    from embodied_eval.native.additional_catalog import verify_policy
     from prepare_mn_extension import configurations
     cfg = configurations()["dreamzero_droid_sim"]
     write(args.output / "verified-model-assets.json", verify_policy("dreamzero", cfg.model.options))
@@ -81,7 +81,7 @@ def main():
         episodes=tuple(replace(ep, budgets=replace(ep.budgets, env_steps=args.steps, model_calls=args.steps,
             wall_time_s=2400.)) for ep in cfg.episodes))
     from embodied_eval.codec import to_data
-    from embodied_eval.mn.preflight import check
+    from tests.legacy_support.frozen.mn.preflight import check
     structural = check(cfg)
     write(args.output / "preflight.json", structural)
     if not structural["structurally_compatible"]:

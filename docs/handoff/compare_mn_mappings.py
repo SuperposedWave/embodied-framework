@@ -47,15 +47,16 @@ def source_nodes(path, predicate, namespace):
 
 def perform(case,configs):
     import numpy as np
-    from embodied_eval import _legacy_contracts as old
+    from embodied_eval.core import types as old
     from embodied_eval.codec import decode
     from embodied_eval.config import load_config
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.binding import model_input,resolve
-    from embodied_eval.mn.native_catalog import capability,space
-    from embodied_eval.mn.native_models import NativeActionModel
-    from embodied_eval.mn.native_benchmarks import NativeSimulator
-    from embodied_eval.mn.transforms import prepare_input
+    from embodied_eval.native import contracts as c
+    from tests.legacy_support.frozen.mn.binding import model_input,resolve
+    from embodied_eval.native.model_catalog import capability
+    from embodied_eval.native.benchmark_catalog import space
+    from embodied_eval.native.native_models import NativeActionModel
+    from embodied_eval.native.native_benchmarks import NativeSimulator
+    from embodied_eval.native.transforms import prepare_input
     from embodied_eval.adapters.native_common import native_module
     cfg=load_config(configs/(case+".json"))
     root=ROOT/"outputs"/SOURCE[case]

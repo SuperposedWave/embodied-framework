@@ -50,7 +50,8 @@ def run(args):
     from compare_pi05_robotwin_closedloop import recorded_joint_row
     from replay_mn_native_actions import trace, snapshot, field, digest
     from replay_robotwin_native_actions import observe_physx, seed_native
-    from embodied_eval.mn.assets import verify_model, verify_benchmark
+    from embodied_eval.native.model_assets import verify_model
+    from embodied_eval.native.benchmark_assets import verify_benchmark
     manifest = json.loads((args.framework / "manifest.json").read_text())
     config = json.loads(args.config.read_text())
     if manifest["synthetic"] or manifest["config"] != config or config["benchmark"]["adapter"] != "robotwin":

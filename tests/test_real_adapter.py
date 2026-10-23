@@ -3,12 +3,12 @@ from dataclasses import replace
 from pathlib import Path
 import unittest
 
-from embodied_eval import _legacy_contracts as c
-from embodied_eval.adapters.openwam_libero_spec import EXTENSION, capability, profile, space
-from embodied_eval.compatibility import check_compatibility
+from tests.legacy_support.frozen import _legacy_contracts as c
+from tests.legacy_support.frozen.adapters.openwam_libero_spec import EXTENSION, capability, profile, space
+from tests.legacy_support.frozen.compatibility import check_compatibility
 from tests.legacy_support.config import BenchmarkConfig, EpisodeConfig, ModelConfig, ProfileConfig, RunConfig, run_provenance, validate_config
 from embodied_eval.errors import ContractError
-from embodied_eval.visibility import build_model_input
+from tests.legacy_support.frozen.visibility import build_model_input
 
 
 class RealPilotRegistrationTests(unittest.TestCase):
@@ -67,7 +67,7 @@ class RealPilotRegistrationTests(unittest.TestCase):
     def test_model_maps_official_native_client_action_to_controller_command(self):
         try:
             import numpy as np
-            from embodied_eval.adapters.openwam_libero_model import OpenWAMLiberoModel
+            from tests.legacy_support.frozen.adapters.openwam_libero_model import OpenWAMLiberoModel
         except ImportError:
             self.skipTest("real adapter optional dependencies unavailable")
         class Policy:
@@ -93,7 +93,7 @@ class RealPilotRegistrationTests(unittest.TestCase):
 
     def test_bad_native_proprio_fails_before_model_call(self):
         try:
-            from embodied_eval.adapters.openwam_libero_model import OpenWAMLiberoModel
+            from tests.legacy_support.frozen.adapters.openwam_libero_model import OpenWAMLiberoModel
         except ImportError:
             self.skipTest("real adapter optional dependencies unavailable")
         from embodied_eval.errors import AdapterError
@@ -111,7 +111,7 @@ class RealPilotRegistrationTests(unittest.TestCase):
             self.skipTest("LIBERO source not available in this checkout")
         try:
             import numpy as np
-            from embodied_eval.adapters.libero_spatial_benchmark import LiberoSpatialBenchmark
+            from tests.legacy_support.frozen.adapters.libero_spatial_benchmark import LiberoSpatialBenchmark
         except ImportError:
             self.skipTest("real adapter optional dependencies unavailable")
         class Environment:

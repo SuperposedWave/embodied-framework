@@ -28,14 +28,14 @@ root = pathlib.Path(sys.argv[1]).resolve()
 source = pathlib.Path(sys.argv[2]).resolve()
 assert pathlib.Path(embodied_eval.__file__).resolve().is_relative_to(root)
 registry = default_registry()
-assert not any(n.startswith(('embodied_eval.mn', 'embodied_eval._legacy')) for n in sys.modules)
+assert not any(n.startswith(('embodied_eval.mn', 'embodied_eval._legacy', 'tests.legacy_support')) for n in sys.modules)
 assets = root / 'embodied_eval/native/asset_manifests'
 assert len(list(assets.glob('*.json'))) == 6
 assert not (root / 'tests').exists()
 with tempfile.TemporaryDirectory() as temporary:
     outcome = run(load_config(source/'examples/mn_synthetic_run.json'), pathlib.Path(temporary)/'run')
     assert outcome.exit_code == 0 and outcome.summary['synthetic']
-assert not any(n.startswith(('embodied_eval.mn', 'embodied_eval._legacy')) for n in sys.modules)
+assert not any(n.startswith(('embodied_eval.mn', 'embodied_eval._legacy', 'tests.legacy_support')) for n in sys.modules)
 print(json.dumps(dict(python=sys.version.split()[0], imported_from_unpacked_wheel=True,
     independent_models=len(registry.models), independent_benchmarks=len(registry.benchmarks),
     synthetic_run_exit_code=outcome.exit_code, historical_runtime_modules_loaded=False)))
@@ -67,6 +67,9 @@ def main():
                     assert required in names, required
                 assert len([name for name in names if name.startswith('embodied_eval/native/asset_manifests/')]) == 6
                 code_files = [name for name in names if name.startswith('embodied_eval/') and name.endswith('.py')]
+                assert not any(name.startswith(('embodied_eval/mn/', 'embodied_eval/_legacy', 'tests/')) for name in names)
+                assert not any(name in names for name in ('embodied_eval/stage4_pairs.py', 'embodied_eval/robotwin_pairs.py',
+                                                          'embodied_eval/native/native_catalog.py', 'embodied_eval/native/assets.py'))
                 for name in code_files:
                     assert archive.read(name) == (ROOT/name).read_bytes(), name
                 result['packaged_python_files_exactly_match_current_source'] = len(code_files)

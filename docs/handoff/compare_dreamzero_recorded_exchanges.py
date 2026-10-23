@@ -19,10 +19,10 @@ def compare(directory):
     import torch
     from embodied_eval.adapters.native_common import native_module
     from embodied_eval.codec import decode
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.additional_catalog import verify_policy
-    from embodied_eval.mn.additional_models import JointPolicyModel
-    from embodied_eval.mn.droid_simulator import DroidSimulator
+    from embodied_eval.native import contracts as c
+    from embodied_eval.native.additional_catalog import verify_policy
+    from embodied_eval.native.additional_models import JointPolicyModel
+    from embodied_eval.native.droid_simulator import DroidSimulator
     from check_mn_extension_native_mappings import native_class, same
     from compare_arx_recorded_exchanges import predictions
     manifest = json.loads((directory / "framework/manifest.json").read_text())

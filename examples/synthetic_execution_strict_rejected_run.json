@@ -1,0 +1,8 @@
+{
+  "contract_version": "0.3",
+  "run_id": "synthetic-execution-strict-reject",
+  "model": {"adapter": "synthetic_policy_a", "options": {"cache_rows": 4}},
+  "benchmark": {"adapter": "synthetic_simulator_a", "options": {}},
+  "execution": {"require_verified": true, "consume_actions": 2},
+  "episodes": [{"episode_id": "episode-0", "seed": 0, "budgets": {"env_steps": 6, "model_calls": 6}}]
+}

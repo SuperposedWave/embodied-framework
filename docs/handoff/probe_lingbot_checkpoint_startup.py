@@ -16,13 +16,14 @@ sys.path.insert(0, str(ROOT))
 
 
 def run(output):
-    from embodied_eval.stage4_pairs import _revision, _hf_objects, _file
-    from embodied_eval.adapters.robotwin_spec import VARIANTS
+    from embodied_eval.native.assets_common import _revision, _hf_objects, _file
+    from embodied_eval.native.model_catalog import PROFILES
+    profile = PROFILES["joint14"]
     source = WORKSPACE / "upstream/lingbot-vla-v2"
     model = WORKSPACE.parent.parent / "Model/lingbot-vla-v2-6b-robotwin"
-    _revision(source, VARIANTS["lingbot_robotwin"][0])
+    _revision(source, profile[2])
     files = _hf_objects(model, ROOT / "embodied_eval/adapters/lingbot_robotwin_objects.json")
-    files["native_robotwin_norm"] = _file(source / "assets/norm_stats/robotwin.json", VARIANTS["lingbot_robotwin"][5])
+    files["native_robotwin_norm"] = _file(source / "assets/norm_stats/robotwin.json", profile[4])
     files["native_robot_mapping"] = _file(source / "configs/robot_configs/robotwin.yaml",
         "2c2a26509fc9662a8ada64adaa7fa959627dd6dadc6b48b680c4285da2d8ffd8")
     port = 8935

@@ -38,7 +38,7 @@ def main():
     args.output.relative_to(ROOT / "outputs")
     if args.child:
         from embodied_eval.config import load_config
-        from embodied_eval.mn.runner import run
+        from tests.legacy_support.frozen.mn.runner import run
         from record_arx_policy_exchange import record_exchanges
         try:
             with record_exchanges(args.output.parent / "native-exchanges"):
@@ -50,7 +50,7 @@ def main():
             and args.server_gpu != args.simulator_gpu and 1 <= args.port <= 65535):
         raise ValueError("distinct_explicit_local_GPU_and_port_required")
     from prepare_mn_extension import configurations
-    from embodied_eval.mn.preflight import check
+    from tests.legacy_support.frozen.mn.preflight import check
     from embodied_eval.codec import to_data
     cfg = configurations()["pi05_arx_robotwin"]
     repo = Path(cfg.benchmark.options["repo"])

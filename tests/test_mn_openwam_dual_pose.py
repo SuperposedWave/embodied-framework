@@ -13,18 +13,20 @@ from unittest.mock import patch
 
 import numpy as np
 
-from embodied_eval import _legacy_contracts as leaf
+from tests.legacy_support.frozen import _legacy_contracts as leaf
 from embodied_eval.errors import AdapterError, ContractError
 from embodied_eval.geometry import quaternion_to_rot6d, rot6d_to_quaternion, normalize_quaternion
 from embodied_eval.config import load_config
-from embodied_eval.mn import contracts as c
-from embodied_eval.mn.binding import check_compatibility, resolve
-from embodied_eval.mn.native_catalog import capability, space, GRIPPER_PROTOCOL
-from embodied_eval.mn.native_models import NativeActionModel
-from embodied_eval.mn.native_benchmarks import NativeSimulator
-from embodied_eval.mn.openwam_dual_pose import PROFILE, encode_state, decode_action
+from embodied_eval.native import contracts as c
+from tests.legacy_support.frozen.mn.binding import check_compatibility, resolve
+from embodied_eval.native.model_catalog import capability
+from embodied_eval.native.benchmark_catalog import space
+from embodied_eval.native.protocols import GRIPPER_PROTOCOL
+from embodied_eval.native.native_models import NativeActionModel
+from embodied_eval.native.native_benchmarks import NativeSimulator
+from embodied_eval.native.openwam_dual_pose import PROFILE, encode_state, decode_action
 from embodied_eval.v03.preflight import check
-from embodied_eval.mn.validation import validate_prediction
+from tests.legacy_support.frozen.mn.validation import validate_prediction
 
 
 class SyntheticCodec:
@@ -186,7 +188,7 @@ class OpenWAMEncodedDualPoseTests(unittest.TestCase):
             resize_for_lshape_slot=lambda *args: self.fail("native dual camera unexpectedly resized"), build_payload=lambda **kwargs: kwargs)
         old.utils, old.conversion, new.utils = utils, SyntheticCodec, utils
         prompt = SimpleNamespace(format_prompt_for_inference=lambda text: "source prompt: "+text)
-        with patch("embodied_eval.mn.native_models.native_module", return_value=prompt):
+        with patch("embodied_eval.native.native_models.native_module", return_value=prompt):
             self.assertEqual(new.native_input(view), old.native_input(view))
 
     def test_prediction_validation_accepts_physical_poses_and_raw_grippers(self):

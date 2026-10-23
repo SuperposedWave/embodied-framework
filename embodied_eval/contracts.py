@@ -10,5 +10,6 @@ from .v03.contracts import (
     StateSample, SpaceSpec, InputSpec, OutputSpec, CapabilitySpec, ResolvedProfile,
     Observation, ModelInput, Action, Prediction, TaskSpec, StepResult,
     TemporalPolicy, HistoryRequirement, SampleTiming, ModelTiming, HistorySelection,
+    ExecutionPolicy, ExecutionConstraint, ModelExecution, BenchmarkExecution, ExecutionPlan,
 )
 CONTRACT_VERSION = "0.3"

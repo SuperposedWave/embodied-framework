@@ -1,1 +1,1 @@
-"""Built-in synthetic adapters; no simulator or model dependencies."""
+"""Environment loaders and native transport/control utilities; no pair factories."""

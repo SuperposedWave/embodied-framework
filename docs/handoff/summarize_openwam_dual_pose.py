@@ -90,7 +90,7 @@ def main():
             "decoded_controller_rotation_matrix_max_abs_diff_sign_invariant":rotation_difference})
     core=json.loads((ROOT/"outputs/native-comparison-integrity-20261009-final/receipt.json").read_text())["source_hashes"]
     protected={name:expected for name,expected in core.items() if name.startswith("outputs/") or name in
-        ("embodied_eval/mn/runner.py","embodied_eval/mn/contracts.py","embodied_eval/contracts.py","docs/contract-v0.2.md")}
+        ("embodied_eval/native/runner.py","embodied_eval/native/contracts.py","embodied_eval/contracts.py","docs/contract-v0.2.md")}
     protection={name:sha(ROOT/name)==expected for name,expected in protected.items()}
     saved_actions_protection={row["sample"]:sha(Path(mapping["saved_actions"])/row["sample"])==row["source_sha256"] for row in mapping["actions"]}
     saved_inputs_protection=sha(mapping["saved_inputs"])==mapping["source_and_history_sha256_before"][mapping["saved_inputs"]]
@@ -141,8 +141,8 @@ def main():
         "framework_git_commit_created":False,"old_reports_or_results_rewritten":False}
     args.output.mkdir(parents=True,exist_ok=False)
     write(args.output/"receipt.json",report)
-    changed=("embodied_eval/mn/native_catalog.py","embodied_eval/mn/assets.py","embodied_eval/mn/native_models.py",
-        "embodied_eval/mn/native_benchmarks.py","embodied_eval/mn/openwam_dual_pose.py","tests/test_mn_openwam_dual_pose.py",
+    changed=("embodied_eval/native/native_catalog.py","embodied_eval/native/assets.py","embodied_eval/native/native_models.py",
+        "embodied_eval/native/native_benchmarks.py","embodied_eval/native/openwam_dual_pose.py","tests/test_mn_openwam_dual_pose.py",
         "examples/mn_openwam_dual_wxyz_encoded_absolute.json","docs/handoff/run_mn_trials.py",
         "docs/handoff/compare_native_robotwin_closedloop.py","docs/handoff/check_openwam_dual_pose.py",
         "docs/handoff/run_openwam_dual_pose_comparison.py","docs/handoff/summarize_openwam_dual_pose.py",

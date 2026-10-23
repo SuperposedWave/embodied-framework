@@ -14,8 +14,11 @@ real-client = ["numpy>=1.22,<3", "PyYAML>=6", "Pillow>=10", "websockets>=16,<17"
 
 [tool.setuptools.packages.find]
 include = ["embodied_eval*"]
+namespaces = false
+
+[tool.setuptools]
+include-package-data = false
 
 [tool.setuptools.package-data]
 "embodied_eval.adapters" = ["*.json"]
-"embodied_eval.mn" = ["asset_manifests/*.json"]
 "embodied_eval.native" = ["asset_manifests/*.json"]

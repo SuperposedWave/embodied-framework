@@ -1,0 +1,1 @@
+"""Independent simulator protocol definitions."""

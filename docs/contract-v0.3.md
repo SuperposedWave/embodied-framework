@@ -12,13 +12,13 @@ Adapter指负责某一侧格式转换的适配器。Runner指只负责调用顺�
 
 ## 类型和入口
 
-公共入口：`embodied_eval.contracts`、`embodied_eval.interfaces`、`embodied_eval.config`、`embodied_eval.validation`、`embodied_eval.runner`。公共实现与注册：`embodied_eval/v03/`；版本无关的物理类型、结构校验、坐标路径与注册容器：`embodied_eval/core/`；原生模型编码、环境执行封装及资产核验：`embodied_eval/native/`。`native/contracts.py` 与 `native/environment_records.py` 中的冻结私有消息仅衔接原生组件和历史解码，不是旧版运行入口。`mn/` 中迁出组件的旧路径保留导入别名；历史Runner、配置和协议校验不参与当前通路。此处仅更新内部源码归属，公共字段、默认值和协议语义不变。
+公共入口：`embodied_eval.contracts`、`embodied_eval.interfaces`、`embodied_eval.config`、`embodied_eval.validation`、`embodied_eval.runner`。公共实现与注册：`embodied_eval/v03/`；版本无关的物理类型、结构校验、坐标路径与注册容器：`embodied_eval/core/`；原生模型编码、环境执行封装及资产核验：`embodied_eval/native/`。2026-10-23按用户授权删除旧运行入口、mn／_legacy导入别名、组合工厂及CLI迁移命令。原生私有空间／输入槽记录不再带旧版本封装，控制消息直接复用当前0.3。旧消息解析与回归参考仅在不发布的历史测试区，不能作为旧版运行回退。
 
 消息严格校验未知字段、版本、重复JSON键、非有限数、跨轮次和不完整目标。JSON是配置与证据使用的文本数据格式。版本字符串必须为 `"0.3"`。
 
 | 记录 | 关键字段与含义 |
 | --- | --- |
-| `RunConfig` | `contract_version/run_id/model/benchmark/episodes/control_mode`；分别选择模型、环境和任务，不含逐对接线 |
+| `RunConfig` | `contract_version/run_id/model/benchmark/episodes/control_mode/temporal/execution`；分别选择模型、环境和任务，不含逐对接线 |
 | `SpaceSpec` | 空间身份、机器人、坐标树、传感器、状态、控制器、动作格式、参考部位、视角别名和时间模式 |
 | `CapabilitySpec` | 固定源码、权重、归一化统计、具名 `io_profile_id`、输入要求、输出目标和支持时间模式 |
 | `ResolvedProfile` | 自动匹配回执：实际公共输入路径、完整动作目标、选中控制方式、坐标转换路径和警告；不是用户手填配置 |
@@ -124,19 +124,37 @@ LIBERO现有位置来自grip_site、朝向来自right_hand，它们保持两个�
 ```sh
 .venv/bin/python -m embodied_eval check --config examples/mn_synthetic_run.json
 .venv/bin/python -m embodied_eval run --config examples/mn_synthetic_run.json --output outputs/my-v03-run
-.venv/bin/python -m embodied_eval migrate --config /path/to/old.json --output outputs/migrated-v03.json
 .venv/bin/python -m embodied_eval check --config examples/synthetic_history_exact_run.json
 .venv/bin/python -m embodied_eval run --config examples/synthetic_history_exact_run.json --output outputs/my-history-fixture
 ```
 
 预检查不创建模型／仿真工厂，不下载权重。`--verify-assets` 仅核验本地固定资产。结构可组合、运行资产就绪、真实运行、严格原生一致和正式验收是不同状态。
 
-离线迁移支持已有原生0.1配置及可核实的0.2对应配置，保留权重、归一化、环境协议、种子和预算；自定义接线、坐标转换、未知字段或已退役工具行为无法证明等价时拒绝，不静默丢掉。输出不覆盖已有文件。
+正常运行只接受当前0.3配置；不再发布旧格式迁移命令。历史证据只由明确的离线解析工具读取，不改原文件，不把旧上下文传进当前Runner。原生输入的私有槽排列不是另一套公共协议；权重专用的归一化、相机编码与具名控制器协议也不是旧版本回退。
 
 五个旧mock运行示例退出当前examples目录，原文件留在 `tests/fixtures/legacy-configs` 和 `pre-v03-20261016` Git标签。当前五组CLI用例为单步、缓存、变时长、评分错误和结构拒绝；预期仍为0/0/0/1/2，但不冒充旧工具／Runner持有动作段的同一测试语义。0.1合同样本只是历史测试夹具，不是当前可运行配置。
 
 历史诊断脚本若依赖旧配置或内部格式，应在 `pre-v03-20261016` 检出到独立工作目录后运行，不将历史证据就地转成新版本。当前脚本为 `replay_v03_baseline.py`、`check_v03_saved_boundaries.py`、`run_v03_bounded.py`；旧脚本中纯来源、视频、硬件和原生函数仍可按其明确输入范围复用。
 
-## 不在本轮完成范围
+## 执行策略扩展：benchmark-first-execution-policy@1
 
-DreamZero真实动作仍待后续双H10080GB资源；LingBot-VA暂缓。没有新增全Benchmark任务初始化／评分协议、全任务多种子统计、DataRef载荷读取、硬超时、全身机器人或MassWorld整合。DataRef指对外部数据的引用，当前仍不把其声明能力当作已实现文件读取。契约未冻结，阶段4未自动接受。
+2026-10-23用户批准实施Benchmark优先的方案。本扩展仍属于0.3，不另开旧版兼容通路。它解析执行设置，不做动作插值、重采样、额外取图、异步推理或硬仿真时间上限。
+
+| 字段 | 具体含义 |
+| --- | --- |
+| `RunConfig.execution.require_verified` | 默认false：允许标明未校准的原生参考。true：任何必要规则／权重动作时长未知就拒绝；不是“强行补成已知” |
+| `execution.consume_actions` | 可选正整数：一次预测后消费的动作条数，不是预测总长度、物理步数或秒数 |
+| `CapabilitySpec.execution` / `ModelExecution` | 模型独立声明 `generated_actions`、`preferred_consume_actions`、`reference_consume_actions`、可调最小／最大条数、是否可调、唯一缓存归属、动作物理时长及来源。参考条数防止用模型选项绕过未知环境权限；null不伪装成具体条数 |
+| `SpaceSpec.execution` / `BenchmarkExecution` | 环境独立声明版本／协议／机器人／控制器等scope，以及 `consume_actions` 和 `action_period_s` 各自的规则；scope是规则的适用范围，不是模型与环境组合名单 |
+| `ExecutionConstraint` | `authority`逐参数为fixed／range／policy_owned／reference_default／unknown；分别为固定、允许范围、允许模型决定、仅参考默认、未核实。配套value／minimum／maximum／choices及provenance来源，不能将默认值升级为官方规定 |
+| `ExecutionPlan` | 最终消费条数、环境实际周期或变时长标记、唯一缓存归属、是否更改、决定来源、未核实项和警告。`protocol_verified`仅指声明的必要参数来源已解出，不证明服务身份或验收 |
+
+固定规则冲突就拒绝；范围内优先模型原生值，允许有来源规则下的显式合法实验，不静默裁剪。policy_owned使用模型自身偏好。reference_default／unknown只保留原生参考，不批准更改；严格模式拒绝未核实项。已知权重动作时长与环境不符则拒绝，不自动重采样；变时长仍分别记录原生动作、物理步和实际秒数。
+
+静态预检查不创建GPU／仿真工厂；运行在环境加载后复核实际周期，并调用模型 `configure_execution(plan)`。改变动作消费参数必须获得适配器实际应用回执。无法控制服务器缓存时不得声称已修改；OpenWAM远端缓存、LingBot的服务端返回长度及ARX部署配置仍保留来源边界。LingBot源码默认50不等于每个服务端都已确认返回50，当前计划保留完整实际返回段并记录实收／入缓存条数。
+
+保存 `execution-plan.json`，含预检查计划、运行计划、应用回执、双方声明、逐轮种子和初始化引用；MassWorld外层直接链接其摘要，不再实现一套解析／缓存。`interface_compatible`、`execution_compatible`分别展示接口和执行门禁；`structurally_compatible`保留整个预检查门禁的兼容字段含义。source来源、声明满足、运行资产、服务身份、实际执行、严格原生复现和任务成绩不能互相替代。
+
+## 本轮边界与剩余事项
+
+DreamZero真实动作仍待后续双H10080GB资源；LingBot-VA暂缓。DreamZero服务有因果历史，当前不宣称任意缩短动作段已获得支持，公共预检查只接受具名8条原生参考配置。没有新增全Benchmark任务初始化／评分协议、全任务多种子统计、DataRef载荷读取、硬超时或全身机器人；MassWorld继续使用已实现的整任务桥接，不扩大为新的调度后端。DataRef指对外部数据的引用，当前仍不把其声明能力当作已实现文件读取。契约未冻结，阶段4未自动接受。

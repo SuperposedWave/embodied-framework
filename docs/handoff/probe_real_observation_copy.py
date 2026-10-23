@@ -76,10 +76,10 @@ def compare_snapshot(raw, public, benchmark):
 def child(args):
     import numpy as np
     from dataclasses import replace
-    from embodied_eval import _legacy_contracts as leaf
-    from embodied_eval.mn import contracts as c
+    from embodied_eval.core import types as leaf
+    from embodied_eval.native import contracts as c
     from embodied_eval.codec import decode, to_data
-    from embodied_eval.mn.validation import validate_observation, validate_step
+    from tests.legacy_support.frozen.mn.validation import validate_observation, validate_step
     from replay_mn_native_actions import trace
     manifest = json.loads((args.trial / "framework/manifest.json").read_text())
     if manifest["synthetic"] or manifest["config"]["benchmark"]["adapter"] != args.benchmark:
@@ -97,9 +97,9 @@ def child(args):
     simulator = None
     try:
         if args.benchmark == "droid_sim":
-            from embodied_eval.mn.droid_simulator import DroidSimulator as Simulator, verify
+            from embodied_eval.native.droid_simulator import DroidSimulator as Simulator, verify
         else:
-            from embodied_eval.mn.robodojo_simulator import RoboDojoSimulator as Simulator, verify
+            from embodied_eval.native.robodojo_simulator import RoboDojoSimulator as Simulator, verify
         receipt["verified_assets_before_native_load"] = verify(options)
         receipt["adapter_source_sha256"] = hashlib.sha256(Path(sys.modules[Simulator.__module__].__file__).read_bytes()).hexdigest()
         simulator = Simulator(options, args.output)
@@ -135,7 +135,7 @@ def child(args):
                 return save(captures[0], observation, len(captures))
         simulator._snapshot = observed
         ep = manifest["config"]["episodes"][0]
-        from embodied_eval.mn.config import EpisodeConfig
+        from tests.legacy_support.frozen.mn.config import EpisodeConfig
         episode = decode(EpisodeConfig, ep)
         task = simulator.enumerate_tasks((episode,))[0]
         context = c.Context(run_id="same-execution-projection-diagnostic", env_id="native0", episode_id=episode.episode_id, message_id="reset")

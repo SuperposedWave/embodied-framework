@@ -40,7 +40,7 @@ def main():
         previous = json.loads((preparation / "receipt.json").read_text())
         if previous["kind"] != "fixed_native_gitlink_preparation_not_dependency_or_runtime_validation" or previous["passed"]:
             raise ValueError("require this helper's failed source preparation")
-    from embodied_eval.mn.assets_common import _revision
+    from embodied_eval.native.assets_common import _revision
     parent = WORKSPACE / "upstream/RoboDojo"
     _revision(parent, "266130a3ec41ba9b20b0e5648d2f3542f219c06c")
     records = []

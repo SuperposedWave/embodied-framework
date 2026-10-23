@@ -263,9 +263,9 @@ def build(archive, output):
     preserved = previous["preserved_production_example_test_and_contract_files"]
     assert len(preserved) == 133
     assert all(sha((ROOT / name).read_bytes()) == value for name, value in preserved.items())
-    our_paths = ("embodied_eval/mn/contracts.py", "embodied_eval/mn/interfaces.py",
-                 "embodied_eval/mn/runner.py", "embodied_eval/mn/preflight.py",
-                 "embodied_eval/mn/registry.py", "docs/public-space-fields-review-20261016.html",
+    our_paths = ("embodied_eval/native/contracts.py", "embodied_eval/native/interfaces.py",
+                 "embodied_eval/native/runner.py", "embodied_eval/native/preflight.py",
+                 "embodied_eval/native/registry.py", "docs/public-space-fields-review-20261016.html",
                  "docs/stage-state.json")
     source = {"kind": "readonly_architecture_review_not_integration_or_runtime_validation",
               "at_utc": datetime.now(timezone.utc).isoformat(), "archive": str(archive),

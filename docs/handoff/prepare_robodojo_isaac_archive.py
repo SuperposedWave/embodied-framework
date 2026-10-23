@@ -57,7 +57,7 @@ def main():
     curobo = next(r for r in previous["records"] if r["name"] == "curobo")
     if not curobo["passed"]:
         raise ValueError("fixed CuRobo gitlink required")
-    from embodied_eval.mn.assets_common import _revision
+    from embodied_eval.native.assets_common import _revision
     _revision(curobo["path"], curobo["revision"])
     parent = WORKSPACE / "upstream/RoboDojo"
     _revision(parent, "266130a3ec41ba9b20b0e5648d2f3542f219c06c")

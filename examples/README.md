@@ -7,7 +7,9 @@
 - `mn_openwam_dual_wxyz_encoded_absolute.json`：OpenWAM旧双臂权重的具名标准化物理位姿入口，不是ARX配置的替身。
 - `v03_*.json`：ARX／DROID的六份独立模型与环境配置。DreamZero仍待后续双H10080GB真实验证；配置存在不是推理已通过。
 
-`contract_examples.json`、`contract_sample.py`、`validate_contracts.py` 是保留给旧测试的历史消息序列化样本，**不是0.3运行配置**；当前run/check不接受它们。`stage3-native-debug-pilot.yml` 是原生调试材料，也不是当前框架RunConfig。
+旧 `contract_sample.py`、`validate_contracts.py` 参考移入 `tests/legacy_support/frozen/examples/`；历史JSON消息样本不是0.3运行配置。`stage3-native-debug-pilot.yml` 是原生调试材料，也不是当前框架RunConfig。
+
+`synthetic_execution_prefix_run.json` 演示环境允许模型决定时，将原生缓存偏好4条显式改为执行2条后重新推理；只用合成数据。`synthetic_execution_strict_rejected_run.json` 要求严格时间来源，因为合成模型没有声明匹配权重动作物理时长，预期退出2而非假装已校准。真实权重的时间缺口仍保留。
 
 旧五份mock运行配置及旧原生配置的原件在 `tests/fixtures/legacy-configs/` 和Git标签 `pre-v03-20261016`。不要直接运行或改写历史证据中的旧文件来冒充新结果。
 

@@ -65,17 +65,19 @@ def pose_api(args):
 def run(args):
     import numpy as np
     import transforms3d as t3d
-    from embodied_eval import _legacy_contracts as leaf
+    from embodied_eval.core import types as leaf
     from embodied_eval.codec import decode, to_data
     from embodied_eval.config import load_config
     from embodied_eval.adapters.native_common import native_module
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.assets import verify_model, verify_benchmark
-    from embodied_eval.mn.binding import resolve
-    from embodied_eval.mn.native_catalog import capability, space
-    from embodied_eval.mn.native_models import NativeActionModel
-    from embodied_eval.mn.native_benchmarks import NativeSimulator
-    from embodied_eval.mn.openwam_dual_pose import PROFILE
+    from embodied_eval.native import contracts as c
+    from embodied_eval.native.model_assets import verify_model
+    from embodied_eval.native.benchmark_assets import verify_benchmark
+    from tests.legacy_support.frozen.mn.binding import resolve
+    from embodied_eval.native.model_catalog import capability
+    from embodied_eval.native.benchmark_catalog import space
+    from embodied_eval.native.native_models import NativeActionModel
+    from embodied_eval.native.native_benchmarks import NativeSimulator
+    from embodied_eval.native.openwam_dual_pose import PROFILE
 
     cfg = load_config(args.config)
     if cfg.model.options["io_profile"] != PROFILE:

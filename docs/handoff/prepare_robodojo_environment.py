@@ -75,7 +75,7 @@ def main():
     output.mkdir(parents=True, exist_ok=False)
     if args.route_timeout <= 0:
         raise ValueError("positive per-command route bound required")
-    from embodied_eval.mn.assets_common import _revision
+    from embodied_eval.native.assets_common import _revision
     source = WORKSPACE / "upstream/RoboDojo"
     _revision(source, "266130a3ec41ba9b20b0e5648d2f3542f219c06c")
     declaration = (source / "scripts/install.sh").read_text()

@@ -20,7 +20,7 @@ from ..errors import AdapterError
 from ..core.validation import same_episode, schema_value
 from .native_common import finite_array, native_module
 from .native_robotwin_executor import MeasuredRobotwinExecutor
-from . import robotwin_spec as spec
+from ..native.environment_specs import robotwin as spec
 
 
 class _RngDomain:
@@ -69,9 +69,8 @@ it explicitly, records the resulting text, and uses a distinct protocol version.
 
 
 class RobotwinBenchmark:
-    def __init__(self, config, variant, output, model_repo=None):
+    def __init__(self, config, variant, output):
         self.config, self.variant = config, variant
-        self.model_repo = model_repo
         self.root = Path(config.robotwin_repo).resolve()
         run_root = Path(output).resolve()
         # describe/enumerate may prepare a native scene before ArtifactWriter
@@ -198,7 +197,7 @@ class RobotwinBenchmark:
             self.instruction = self._choose_instruction(info["info"])
             self.env.set_instruction(instruction=self.instruction)
             self.executor = MeasuredRobotwinExecutor(self.env,
-                benchmark_revision=spec.VARIANTS[self.variant][1], action_type=spec.VARIANTS[self.variant][3])
+                benchmark_revision=spec.PROTOCOLS[self.variant][0], action_type=spec.PROTOCOLS[self.variant][1])
             if self.executor.physics_period_s != self.space.physics_period_s:
                 raise AdapterError("benchmark", "native_scene_period_differs", "actual task period differs from negotiated SAPIEN value")
         self._task_created = True
@@ -211,20 +210,19 @@ class RobotwinBenchmark:
             evaluation_private={"selected_native_seed": self.selected_seed, "seed_attempts": self.seed_attempts})]
 
     def _prepare_cuda_runtime(self):
-        """Legacy bootstrap unchanged; independent simulator can override it."""
-        if self.variant == "openwam_robotwin":
-            helper = native_module(self.model_repo, "benchmarks.robotwin.eval_policy_wrapper")
-            helper._prewarm_cuda_for_curobo()
-            helper._patch_warp_torch_namespace()
-        else:
-            from .native_robotwin_runtime import prewarm_native_cuda
-            prewarm_native_cuda()
+        from .native_robotwin_runtime import prewarm_native_cuda
+        prewarm_native_cuda()
 
     def _choose_instruction(self, episode_info):
-        if self.variant == "openwam_robotwin":
-            choices = native_module(self.model_repo, "benchmarks.robotwin.eval_manifest")
-            return choices.choose_instructions(self.generator, task=self.config.task_name,
-                candidate_seed=self.selected_seed, episode_info=episode_info)[self.config.instruction_type]
+        if self.variant == "sealed-instruction":
+            with _RngDomain(self.selected_seed).activate():
+                descriptions = self.generator(self.config.task_name, [episode_info], 100)
+                selection = np.random.get_state()
+                selected = {}
+                for key in ("seen", "unseen"):
+                    np.random.set_state(selection)
+                    selected[key] = str(np.random.choice(descriptions[0][key]))
+            return selected[self.config.instruction_type]
         descriptions = self.generator(self.config.task_name, [episode_info], 100)
         return str(np.random.choice(descriptions[0][self.config.instruction_type]))
 
@@ -270,7 +268,7 @@ class RobotwinBenchmark:
             raise AdapterError("execution", "invalid_native_controller", "dual-arm native controller mismatch")
         parameters = command.parameters
         schema_value(self.space.controllers[controller].parameter_schema, parameters, "native.parameters")
-        row = finite_array(parameters["native_row"], (spec.VARIANTS[self.variant][4],), "native row")
+        row = finite_array(parameters["native_row"], (spec.PROTOCOLS[self.variant][2],), "native row")
         # Validate a lossless declared dtype conversion, including integer rows.
         cast = row.astype(parameters["native_dtype"])
         if not np.isfinite(cast).all() or not np.array_equal(row, cast):

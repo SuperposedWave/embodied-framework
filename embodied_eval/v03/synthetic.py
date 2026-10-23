@@ -46,6 +46,9 @@ def capability(options, ramp=False):
             c.InputSpec(key="instruction", public_path="task_public.instruction", kind="task")),
         output=c.OutputSpec(command_kinds=("joint_target",), targets={"robot0/j0": "joint"}, joint_modes=("position",)),
         supported_timing_modes=("fixed_period", "measured_native"),
+        execution=c.ModelExecution(preferred_consume_actions=cfg.cache_rows,
+            minimum_consume_actions=1, maximum_consume_actions=max(64, cfg.cache_rows), adjustable=True,
+            cache_owner="adapter", provenance={"synthetic": True}),
         temporal=c.ModelTiming(replanning_owner="adapter", provenance={"synthetic": True,
             "rule": "cache_rows controls synthetic forward accounting; action time is not a real weight claim"}))
 
@@ -64,6 +67,10 @@ def space(options):
         state_fields={}, view_aliases={"main": "head"},
         action_specs={"joint-position@1": leaf.ActionSpec(command_kinds=("joint_target",), target_ids=("robot0/j0",))},
         required_action_targets={"joint-position@1": ("robot0/j0",)}, action_joint_modes={"joint-position@1": ("position",)},
+        execution=c.BenchmarkExecution(scope={"protocol": "synthetic-only"},
+            consume_actions=c.ExecutionConstraint(authority="policy_owned", provenance={"synthetic": True}),
+            action_period_s=c.ExecutionConstraint(authority="fixed", value=cfg.period_s, provenance={"synthetic": True})
+                if cfg.timing_mode == "fixed_period" else c.ExecutionConstraint()),
         sample_timing={"sensors.head": c.SampleTiming(kind="uniform" if cfg.timing_mode == "fixed_period" else "event",
             period_s=cfg.period_s if cfg.timing_mode == "fixed_period" else None,
             provenance={"synthetic": True, "rule": "snapshot after each synthetic advance; no real camera"})}
@@ -78,6 +85,13 @@ class SyntheticModel:
         self.events = []
         self.history_inputs = []
         self.cached_value = self.config.value
+
+    def configure_execution(self, plan):
+        if plan.change_requested:
+            self.config = replace(self.config, cache_rows=plan.consume_actions)
+        return {"status": "applied" if plan.change_requested else "native_reference_preserved",
+                "applied_consume_actions": self.config.cache_rows, "cache_owner": "adapter",
+                "server_verified": False, "synthetic": True}
 
     def begin_episode(self, context, task, profile, space):
         self.calls = self.forwards = self.observes = 0

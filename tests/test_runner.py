@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from embodied_eval import _legacy_contracts as c
+from tests.legacy_support.frozen import _legacy_contracts as c
 from embodied_eval.codec import decode, to_data
 from tests.legacy_support.config import RunConfig, ModelConfig, BenchmarkConfig, ProfileConfig, EpisodeConfig
 from embodied_eval.errors import ContractError, AdapterError
@@ -16,7 +16,7 @@ from tests.legacy_support.runner import run
 
 class RunnerTests(unittest.TestCase):
     def test_late_prediction_is_not_executed_after_cooperative_wall_budget(self):
-        from embodied_eval.adapters.mock_model import MockModel
+        from tests.legacy_support.frozen.adapters.mock_model import MockModel
         clock = [0.]
         original = MockModel.predict
         def late_predict(model, context):
@@ -32,7 +32,7 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(outcome.results[0].execution_statistics.model_calls, 1)
 
     def test_unknown_execution_state_is_explicit_and_not_scored_as_failure(self):
-        from embodied_eval.adapters.mock_benchmark import MockBenchmark
+        from tests.legacy_support.frozen.adapters.mock_benchmark import MockBenchmark
         def lost_reply(benchmark, call, request, remaining):
             benchmark._execute(1, request, remaining, tool=call)
             raise AdapterError("infrastructure", "connection_lost", "synthetic lost response",
@@ -51,7 +51,7 @@ class RunnerTests(unittest.TestCase):
         self.check_reused_observation_identity()
 
     def test_cleanup_error_does_not_hide_unknown_execution_state(self):
-        from embodied_eval.adapters.mock_benchmark import MockBenchmark
+        from tests.legacy_support.frozen.adapters.mock_benchmark import MockBenchmark
         def lost_reply(benchmark, call, request, remaining):
             benchmark._execute(1, request, remaining, tool=call)
             raise AdapterError("infrastructure", "connection_lost", "synthetic lost response",
@@ -64,7 +64,7 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual([error["code"] for error in outcome.summary["episodes"][0]["errors"]], ["connection_lost", "end_failed"])
 
     def check_reused_observation_identity(self):
-        from embodied_eval.adapters.mock_benchmark import MockBenchmark
+        from tests.legacy_support.frozen.adapters.mock_benchmark import MockBenchmark
         original = MockBenchmark._snapshot
         def repeated_id(benchmark):
             observation = original(benchmark)
@@ -78,7 +78,7 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(outcome.results[0].execution_statistics.env_steps, 1)
 
     def test_adapter_budget_overrun_retains_known_actual_ticks(self):
-        from embodied_eval.adapters.mock_benchmark import MockBenchmark
+        from tests.legacy_support.frozen.adapters.mock_benchmark import MockBenchmark
         original = MockBenchmark.execute_tool
         def ignore_budget(benchmark, call, request, remaining):
             return original(benchmark, call, request, replace(remaining, env_steps=99, sim_time_s=99.))
@@ -244,7 +244,7 @@ class RunnerTests(unittest.TestCase):
 
     def test_tool_without_required_history_rejected_before_reset(self):
         config = self.tool_config(intermediate_observations_supported=False)
-        with patch("embodied_eval.adapters.mock_benchmark.MockBenchmark.reset") as reset:
+        with patch("tests.legacy_support.frozen.adapters.mock_benchmark.MockBenchmark.reset") as reset:
             with self.assertRaises(ContractError) as error:
                 self.execute(config)
             reset.assert_not_called()

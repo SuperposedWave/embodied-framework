@@ -55,7 +55,7 @@ def native_action(action):
         grip_key = "robot0/" + side + "_grip"
         grip = commands[grip_key]
         if grip["kind"] == "controller_command":
-            from embodied_eval.mn.joint_native import RAW_GRIPPER_PROTOCOL, RAW_GRIPPER_CONTROLLER
+            from embodied_eval.native.joint_native import RAW_GRIPPER_PROTOCOL, RAW_GRIPPER_CONTROLLER
             if action["native_protocol"] != RAW_GRIPPER_PROTOCOL or grip["controller_profile_ref"] != RAW_GRIPPER_CONTROLLER:
                 raise ValueError("matching_source_raw_gripper_required")
             opening = grip["parameters"]["requested_open_fraction"]
@@ -74,9 +74,9 @@ def child(args):
     import numpy as np
     from argparse import Namespace
     from embodied_eval.adapters.native_common import native_module
-    from embodied_eval.mn.assets_common import _revision, _hf_objects
-    from embodied_eval.mn.robodojo_simulator import REVISION, prepare_robot_paths
-    from embodied_eval.mn.native_catalog import PROFILES
+    from embodied_eval.native.assets_common import _revision, _hf_objects
+    from embodied_eval.native.robodojo_simulator import REVISION, prepare_robot_paths
+    from embodied_eval.native.model_catalog import PROFILES
     from replay_mn_native_actions import trace, snapshot, field, summarize
     manifest = json.loads((args.trial / "framework/manifest.json").read_text())
     if manifest["synthetic"] or manifest["config"]["benchmark"]["adapter"] != "robodojo":
@@ -88,7 +88,7 @@ def child(args):
     reference = WORKSPACE / "upstream/xpolicy-reference-mn"
     _revision(repo, REVISION)
     _revision(reference, PROFILES["arx_joint14"][2])
-    verified_assets = _hf_objects(repo.resolve(), ROOT / "embodied_eval/mn/asset_manifests/robodojo.json")
+    verified_assets = _hf_objects(repo.resolve(), ROOT / "embodied_eval/native/asset_manifests/robodojo.json")
     sys.path.insert(0, str(reference))
     sys.path.insert(0, str(repo))
     from isaaclab.app import AppLauncher

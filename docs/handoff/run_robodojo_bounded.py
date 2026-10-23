@@ -38,7 +38,7 @@ def main():
     args = parser.parse_args()
     if args.child:
         from embodied_eval.config import load_config
-        from embodied_eval.mn.runner import run
+        from tests.legacy_support.frozen.mn.runner import run
         try:
             if args.capture_native_exchanges:
                 from record_arx_policy_exchange import record_exchanges
@@ -68,7 +68,7 @@ def main():
             raise ValueError("private shared-library bytes changed")
     from prepare_mn_extension import configurations
     from embodied_eval.codec import to_data
-    from embodied_eval.mn.preflight import check
+    from tests.legacy_support.frozen.mn.preflight import check
     cfg = configurations()[args.policy + "_robodojo"]
     options = dict(cfg.model.options)
     if args.policy == "openwam_arx":

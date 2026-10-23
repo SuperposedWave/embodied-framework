@@ -143,12 +143,12 @@ def native_import(component):
 
 def openwam_request(record, input_episode=None):
     import numpy as np
-    from embodied_eval import _legacy_contracts as leaf
+    from embodied_eval.core import types as leaf
     from embodied_eval.codec import to_data
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.binding import resolve
-    from embodied_eval.mn.registry import default_registry
-    from embodied_eval.mn.validation import validate_prediction
+    from embodied_eval.native import contracts as c
+    from tests.legacy_support.frozen.mn.binding import resolve
+    from embodied_eval.native.registry import default_registry
+    from tests.legacy_support.frozen.mn.validation import validate_prediction
     from prepare_mn_extension import configurations
 
     cfg = configurations()["openwam_arx_robodojo" if input_episode is not None else "openwam_arx_robotwin"]
@@ -256,7 +256,7 @@ def openwam_request(record, input_episode=None):
         projected = model.server._policy._project_binary_dims(generated[0])
         count = len(projected[0]) if model.horizon is None else min(model.horizon, len(projected[0]))
         expected_rows = oracle._eef20_chunk_to_native(projected[0, :count])
-        from embodied_eval.mn.robodojo_simulator import RoboDojoSimulator
+        from embodied_eval.native.robodojo_simulator import RoboDojoSimulator
         executor = RoboDojoSimulator({"repo": "/absent"})  # pure conversion, no reset/application
         predictions = [prediction]
         for index in range(1, count):
@@ -279,10 +279,10 @@ def openwam_request(record, input_episode=None):
 
 
 def droid_reset(record, args):
-    from embodied_eval.mn.registry import default_registry
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.validation import validate_observation, validate_step
-    from embodied_eval import _legacy_contracts as leaf
+    from embodied_eval.native.registry import default_registry
+    from embodied_eval.native import contracts as c
+    from tests.legacy_support.frozen.mn.validation import validate_observation, validate_step
+    from embodied_eval.core import types as leaf
     from embodied_eval.codec import to_data
     from dataclasses import replace
     from prepare_mn_extension import configurations
@@ -333,12 +333,12 @@ def droid_reset(record, args):
 def cosmos_request(record, args):
     import numpy as np
     from dataclasses import replace
-    from embodied_eval import _legacy_contracts as leaf
+    from embodied_eval.core import types as leaf
     from embodied_eval.codec import to_data
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.binding import resolve
-    from embodied_eval.mn.registry import default_registry
-    from embodied_eval.mn.validation import validate_prediction
+    from embodied_eval.native import contracts as c
+    from tests.legacy_support.frozen.mn.binding import resolve
+    from embodied_eval.native.registry import default_registry
+    from tests.legacy_support.frozen.mn.validation import validate_prediction
     from prepare_mn_extension import configurations
     cfg = configurations()["cosmos3_droid_sim"]
     registry = default_registry()
@@ -437,7 +437,7 @@ def cosmos_request(record, args):
         import torch
         import torch.nn.functional as functional
         from check_mn_extension_native_mappings import native_class, same
-        from embodied_eval.mn.droid_simulator import DroidSimulator
+        from embodied_eval.native.droid_simulator import DroidSimulator
         native_source = Path(cfg.model.options["client_repo"]) / "policies/cosmos3/client.py"
         oracle = native_class(native_source, "Cosmos3Client", ("_pack_request", "_postprocess_chunk"),
             {"np": np, "torch": torch, "F": functional})
@@ -539,7 +539,7 @@ def main():
         raise ValueError("DROID-only bounded hold test allows zero to eight actions")
     args.output.mkdir(parents=True, exist_ok=False)
     environment_name, repo_name, revision = COMPONENTS[args.component]
-    from embodied_eval.mn.assets_common import _revision
+    from embodied_eval.native.assets_common import _revision
     _revision(WORKSPACE / "upstream" / repo_name, revision)
     environment = os.environ.copy()
     environment.update(CUDA_VISIBLE_DEVICES=str(args.gpu), HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1",

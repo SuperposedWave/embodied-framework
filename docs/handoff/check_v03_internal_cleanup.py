@@ -55,7 +55,7 @@ class Computation(ast.NodeTransformer):
         return None
 
     def visit_Constant(self, node):
-        if node.value == 'embodied_eval.mn.native_model_worker':
+        if node.value == 'embodied_eval.native.native_model_worker':
             return ast.copy_location(ast.Constant('embodied_eval.native.native_model_worker'), node)
         return node
 
@@ -93,7 +93,7 @@ def main():
         stage4_accepted=False, contract_frozen=False, checks=[])
     try:
         for name in (*MOVED,):
-            before = ast.parse(previous(args.before, f'embodied_eval/mn/{name}.py'))
+            before = ast.parse(previous(args.before, f'embodied_eval/native/{name}.py'))
             after = ast.parse(read(f'embodied_eval/native/{name}.py'))
             assert dump(Computation().visit(before)) == dump(Computation().visit(after)), name
             result['checks'].append(dict(kind='native_computation_AST_unchanged', name=name))
@@ -121,7 +121,7 @@ def main():
                 arg.annotation = None
         assert dump(before_episode) == dump(after_episode)
         result['shared_validation_helpers_unchanged'] = len(HELPERS) + 1
-        old_transform = definitions(previous(args.before, 'embodied_eval/mn/transforms.py'))['transform_between']
+        old_transform = definitions(previous(args.before, 'embodied_eval/native/transforms.py'))['transform_between']
         new_transform = definitions(read('embodied_eval/core/transforms.py'))['transform_between']
         assert dump(old_transform) == dump(new_transform)
         result['frame_path_math_unchanged'] = True
@@ -134,7 +134,7 @@ def main():
                 assert dump(PhysicalNames().visit(node)) == dump(PhysicalNames().visit(new_public[name])), name
                 public_count += 1
         result['public_v03_classes_fields_defaults_annotations_unchanged'] = public_count
-        old_private = definitions(previous(args.before, 'embodied_eval/mn/contracts.py'))
+        old_private = definitions(previous(args.before, 'embodied_eval/native/contracts.py'))
         new_private = definitions(read('embodied_eval/native/contracts.py'))
         new_private['Action'] = new_leaf['Action']
         for name, node in old_private.items():
@@ -147,7 +147,7 @@ def main():
         result['frozen_environment_record_fields_unchanged'] = len(env_records)
         manifests = []
         for path in sorted((ROOT / 'embodied_eval/native/asset_manifests').glob('*.json')):
-            expected = previous(args.before, f'embodied_eval/mn/asset_manifests/{path.name}').encode()
+            expected = previous(args.before, f'embodied_eval/native/asset_manifests/{path.name}').encode()
             assert path.read_bytes() == expected, path.name
             manifests.append(dict(name=path.name, sha256=sha(path)))
         assert len(manifests) == 6

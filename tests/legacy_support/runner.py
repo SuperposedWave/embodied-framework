@@ -4,17 +4,17 @@ import math
 from pathlib import Path
 import time
 
-from embodied_eval import _legacy_contracts as c
+from tests.legacy_support.frozen import _legacy_contracts as c
 from embodied_eval.artifacts import ArtifactWriter
 from embodied_eval.codec import decode, to_data
-from embodied_eval.compatibility import check_compatibility, validate_model_input
+from tests.legacy_support.frozen.compatibility import check_compatibility, validate_model_input
 from embodied_eval.errors import AdapterError, ContractError
-from embodied_eval._legacy_interfaces import ModelAdapter, BenchmarkAdapter
-from embodied_eval._legacy_validation import (
+from tests.legacy_support.frozen._legacy_interfaces import ModelAdapter, BenchmarkAdapter
+from tests.legacy_support.frozen._legacy_validation import (
     require, same_episode, validate_observation, validate_task,
     validate_prediction, validate_step_result, validate_episode_result,
 )
-from embodied_eval.visibility import build_model_input, public_space, public_task
+from tests.legacy_support.frozen.visibility import build_model_input, public_space, public_task
 
 
 @dataclass

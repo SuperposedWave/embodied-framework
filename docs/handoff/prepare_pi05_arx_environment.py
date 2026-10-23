@@ -32,7 +32,7 @@ def main():
     if target.exists():
         raise ValueError("refuse to alter an existing environment")
     sys.path.insert(0, str(ROOT))
-    from embodied_eval.mn.assets_common import _revision
+    from embodied_eval.native.assets_common import _revision
     repo = WORKSPACE / "upstream/xpolicy-reference-mn"
     _revision(repo, "53c5da5a01bc720d1cf0e6ab6ed212e8cef0eda2")
     source = repo / "policy/Pi_05/openpi"

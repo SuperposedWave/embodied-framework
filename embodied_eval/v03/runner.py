@@ -14,6 +14,7 @@ from .preflight import check
 from .registry import default_registry
 from .validation import validate_space, validate_observation, validate_prediction, validate_step, same_episode
 from .temporal import ObservationHistory, assess
+from .execution import resolve_execution, apply_execution
 
 
 def run(config, output, registry=None):
@@ -34,9 +35,11 @@ def run(config, output, registry=None):
         benchmark = b.factory(config.benchmark.options, output)
         space = validate_space(benchmark.describe())
         profile = resolve(space, cap, config.control_mode, config.temporal)
+        execution_plan = resolve_execution(space, cap, config.execution)
         tasks = benchmark.enumerate_tasks(config.episodes)
         require([t.episode_id for t in tasks] == [e.episode_id for e in config.episodes], "task_selection_mismatch", "tasks", "different selected episodes")
         model = m.factory(config.model.options, output)
+        execution_receipt = apply_execution(model, execution_plan)
         provenance = {"synthetic": m.synthetic or b.synthetic, "contract_version": "0.3",
                       "model": m.provenance(config.model.options), "benchmark": b.provenance(config.benchmark.options),
                       "asset_checks_completed": True, "verified_assets": assets, "server_identity_verified": False}
@@ -44,6 +47,13 @@ def run(config, output, registry=None):
         metrics = b.metric_templates(config.benchmark.options)
         writer.manifest(config, space, cap, profile, tasks, metrics, provenance)
         writer.write("temporal-plan.json", assess(space, cap, profile.input_paths, config.temporal)[2])
+        writer.write("execution-plan.json", {"preflight": checked["execution"],
+            "runtime": execution_plan, "application": execution_receipt,
+            "episodes": [{"episode_id": task.episode_id, "seed": ep.seed,
+                          "task_id": task.task_id, "initialization_ref": task.initialization_ref,
+                          "evaluation_config_ref": task.evaluation_config_ref}
+                         for task, ep in zip(tasks, config.episodes)],
+            "model_declaration": cap.execution, "benchmark_declaration": space.execution})
         rows, results = [], []
         for task in tasks:
             decode(c.TaskSpec, task)

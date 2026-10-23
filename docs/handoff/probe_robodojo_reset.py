@@ -29,11 +29,11 @@ def child(args):
     benchmark = None
     try:
         from prepare_mn_extension import configurations
-        from embodied_eval.mn.robodojo_simulator import RoboDojoProcessSimulator, verify
-        from embodied_eval.mn import contracts as c
-        from embodied_eval import _legacy_contracts as leaf
+        from embodied_eval.native.robodojo_simulator import RoboDojoProcessSimulator, verify
+        from embodied_eval.native import contracts as c
+        from embodied_eval.core import types as leaf
         from embodied_eval.codec import to_data
-        from embodied_eval.mn.validation import validate_observation, validate_step
+        from tests.legacy_support.frozen.mn.validation import validate_observation, validate_step
         cfg = configurations()["pi05_arx_robodojo"]
         options = dict(cfg.benchmark.options, device="cuda:0")
         record["verified_native_assets"] = verify(options)

@@ -7,11 +7,12 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock
 from embodied_eval.errors import AdapterError, ContractError
-from embodied_eval.mn.native_catalog import model_options, readiness
-from embodied_eval.mn.native_model_process import NativeModelProcess
-from embodied_eval.mn.native_model_worker import worker_loop, failure
-from embodied_eval.mn.registry import default_registry
-from embodied_eval.mn.robodojo_simulator import launch_application
+from embodied_eval.native.model_catalog import model_options
+from embodied_eval.native.model_catalog import readiness
+from embodied_eval.native.native_model_process import NativeModelProcess
+from embodied_eval.native.native_model_worker import worker_loop, failure
+from tests.legacy_support.frozen.mn.registry import default_registry
+from embodied_eval.native.robodojo_simulator import launch_application
 
 
 OPTIONS = {"repo": "/absent", "checkpoint_dir": "/absent", "io_profile": "eef20_arx_absolute",

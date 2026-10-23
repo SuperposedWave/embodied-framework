@@ -18,9 +18,9 @@ sys.path.insert(0, str(ROOT))
 def compare(framework, native, output):
     import numpy as np
     from embodied_eval.codec import decode
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.native_models import NativeActionModel
-    from embodied_eval.mn.additional_models import JointPolicyModel
+    from embodied_eval.native import contracts as c
+    from embodied_eval.native.native_models import NativeActionModel
+    from embodied_eval.native.additional_models import JointPolicyModel
     from embodied_eval.adapters.native_common import native_module
     from check_mn_extension_native_mappings import same
     manifest_path = framework / "manifest.json"
@@ -35,7 +35,7 @@ def compare(framework, native, output):
     family, options = cfg["model"]["adapter"], cfg["model"]["options"]
     arx_wam = family == "openwam" and options["io_profile"] == "eef20_arx_absolute"
     if arx_wam:
-        from embodied_eval.mn.openwam_arx import OpenWAMArxModel, SOURCE_ROOT
+        from embodied_eval.native.openwam_arx import OpenWAMArxModel, SOURCE_ROOT
         model = OpenWAMArxModel(options)
         model.poses = native_module(options["repo"], "openwam.dataloader.utils.poses", SOURCE_ROOT)
         model.calibration = native_module(options["repo"], "openwam.dataloader.robodojo_contract", SOURCE_ROOT).arx_x5_calibration()

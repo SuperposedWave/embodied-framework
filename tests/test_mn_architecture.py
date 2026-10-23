@@ -8,18 +8,18 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
-from embodied_eval import _legacy_contracts as leaf
+from tests.legacy_support.frozen import _legacy_contracts as leaf
 from embodied_eval.codec import decode, dumps, to_data
 from embodied_eval.errors import ContractError
-from embodied_eval.mn import contracts as c
-from embodied_eval.mn.config import RunConfig, AdapterConfig, EpisodeConfig
-from embodied_eval.mn.registry import AdapterRegistry, default_registry
-from embodied_eval.mn.synthetic import register, space, capability, SyntheticModel, SyntheticBenchmark
-from embodied_eval.mn.binding import check_compatibility, resolve, model_input
-from embodied_eval.mn.preflight import check
-from embodied_eval.mn.runner import run
-from embodied_eval.mn.validation import validate_observation, validate_prediction, validate_space
-from embodied_eval.mn.transforms import prepare_input, convert_pose_action
+from embodied_eval.native import contracts as c
+from tests.legacy_support.frozen.mn.config import RunConfig, AdapterConfig, EpisodeConfig
+from tests.legacy_support.frozen.mn.registry import AdapterRegistry, default_registry
+from tests.legacy_support.frozen.mn.synthetic import register, space, capability, SyntheticModel, SyntheticBenchmark
+from tests.legacy_support.frozen.mn.binding import check_compatibility, resolve, model_input
+from tests.legacy_support.frozen.mn.preflight import check
+from tests.legacy_support.frozen.mn.runner import run
+from tests.legacy_support.frozen.mn.validation import validate_observation, validate_prediction, validate_space
+from embodied_eval.native.transforms import prepare_input, convert_pose_action
 
 
 def config(model="synthetic_policy_a",benchmark="synthetic_simulator_a",options=None):
@@ -137,7 +137,7 @@ class IndependentArchitectureTests(unittest.TestCase):
             import numpy as np
         except ImportError:
             self.skipTest("optional native client NumPy unavailable")
-        from embodied_eval.mn.native_models import NativeActionModel
+        from embodied_eval.native.native_models import NativeActionModel
         request=c.Context(run_id="r",env_id="e",episode_id="ep",message_id="start")
         for family,io,width,kept in (("openpi","state8_osc",7,5),("openpi","state7_absolute",7,5),("lingbot_vla","joint14",14,7)):
             with self.subTest(io_profile=io):
@@ -191,7 +191,7 @@ class IndependentArchitectureTests(unittest.TestCase):
             self.assertTrue(check(config(),self.registry)["structurally_compatible"])
 
     def test_lightweight_registry_imports_no_gpu_or_numpy(self):
-        result=subprocess.run([sys.executable,"-c","import sys; from embodied_eval.mn.registry import default_registry; default_registry(); assert not any(n in sys.modules for n in ('torch','jax','numpy','sapien','mujoco')); print('lightweight')"],capture_output=True,text=True)
+        result=subprocess.run([sys.executable,"-c","import sys; from tests.legacy_support.frozen.mn.registry import default_registry; default_registry(); assert not any(n in sys.modules for n in ('torch','jax','numpy','sapien','mujoco')); print('lightweight')"],capture_output=True,text=True)
         self.assertEqual(result.returncode,0,result.stderr)
 
     def test_v02_context_is_not_v01_wire(self):
@@ -245,7 +245,7 @@ class IndependentArchitectureTests(unittest.TestCase):
         self.assertFalse(result["assets_verified"])
 
     def test_architecture_sources_do_not_dispatch_pairs(self):
-        folder=Path(__file__).resolve().parents[1]/"embodied_eval/mn"
+        folder=Path(__file__).resolve().parents[1]/"embodied_eval/native"
         for path in folder.glob("*.py"):
             content=path.read_text()
             self.assertNotIn("stage4_pairs",content,path.name)
@@ -257,7 +257,9 @@ class IndependentArchitectureTests(unittest.TestCase):
         self.assertNotIn("libero.libero",models)
 
     def test_all_native_descriptors_are_gpu_free(self):
-        from embodied_eval.mn.native_catalog import PROFILES,capability as native_cap,space as native_space
+        from embodied_eval.native.model_catalog import PROFILES
+        from embodied_eval.native.model_catalog import capability as native_cap
+        from embodied_eval.native.benchmark_catalog import space as native_space
         for p,(f,*_) in PROFILES.items():
             decode(c.CapabilitySpec,native_cap(f,{"io_profile":p,"repo":"/nonexistent","checkpoint_dir":"/nonexistent"}))
         for f,p in (("libero","spatial-30settle"),("libero","spatial-10settle"),("vlabench","frozen-track1"),("robotwin","sealed-instruction"),("robotwin","seeded-instruction")):

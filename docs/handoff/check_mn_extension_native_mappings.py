@@ -58,16 +58,16 @@ def main():
     import numpy as np
     import torch
     import torch.nn.functional as F
-    from embodied_eval import _legacy_contracts as leaf
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.additional_catalog import POLICIES, OPENPI_REVISION, ROBOLAB_REVISION
-    from embodied_eval.mn.additional_models import JointPolicyModel
-    from embodied_eval.mn.assets_common import _revision
-    from embodied_eval.mn.binding import resolve
-    from embodied_eval.mn.droid_simulator import space as droid_space, DroidSimulator
-    from embodied_eval.mn.native_catalog import PROFILES
-    from embodied_eval.mn.native_models import NativeActionModel
-    from embodied_eval.mn.robodojo_simulator import space as dojo_space, RoboDojoSimulator, extract_environment_class, REVISION
+    from embodied_eval.core import types as leaf
+    from embodied_eval.native import contracts as c
+    from embodied_eval.native.additional_catalog import POLICIES, OPENPI_REVISION, ROBOLAB_REVISION
+    from embodied_eval.native.additional_models import JointPolicyModel
+    from embodied_eval.native.assets_common import _revision
+    from tests.legacy_support.frozen.mn.binding import resolve
+    from embodied_eval.native.droid_simulator import space as droid_space, DroidSimulator
+    from embodied_eval.native.model_catalog import PROFILES
+    from embodied_eval.native.native_models import NativeActionModel
+    from embodied_eval.native.robodojo_simulator import space as dojo_space, RoboDojoSimulator, extract_environment_class, REVISION
     from embodied_eval.adapters.native_common import native_module
     upstream = ROOT.parent / "upstream"
     repos = {"cosmos3": upstream / "cosmos-framework-mn", "dreamzero": upstream / "dreamzero-mn",
@@ -169,7 +169,7 @@ def main():
     # NOT with the older ambiguous RoboTwin quaternion conversion.
     from collections.abc import Mapping
     from PIL import Image
-    from embodied_eval.mn.openwam_arx import OpenWAMArxModel
+    from embodied_eval.native.openwam_arx import OpenWAMArxModel
     wamroot = repos["pi05_arx"] / "policy/OpenWAM/OpenWAM"
     geom = {"np": np, "_QUATERNION_ATOL": 1e-6, "_ROT6D_DEGENERACY_EPS": 1e-8}
     functions(wamroot / "openwam/dataloader/utils/eef.py", ("quat_xyzw_to_rot6d", "quat_wxyz_to_rot6d"), geom)

@@ -53,6 +53,7 @@ class EmbodiedBackend:
                     numeric[result["episode_id"] + "/" + name] = value
         manifest = output / "manifest.json"
         summary = output / "summary.json"
+        execution_plan = output / "execution-plan.json"
         return {
             "success": outcome.exit_code == 0,
             "exit_code": outcome.exit_code,
@@ -73,5 +74,6 @@ class EmbodiedBackend:
             "evidence": {
                 "manifest": {"path": str(manifest.resolve()), "sha256": hashlib.sha256(manifest.read_bytes()).hexdigest()},
                 "summary": {"path": str(summary.resolve()), "sha256": hashlib.sha256(summary.read_bytes()).hexdigest()},
+                "execution_plan": {"path": str(execution_plan.resolve()), "sha256": hashlib.sha256(execution_plan.read_bytes()).hexdigest()},
             },
         }

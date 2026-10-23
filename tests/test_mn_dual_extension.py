@@ -4,16 +4,17 @@ from dataclasses import replace
 from types import SimpleNamespace
 import unittest
 import numpy as np
-from embodied_eval import _legacy_contracts as leaf
+from tests.legacy_support.frozen import _legacy_contracts as leaf
 from embodied_eval.errors import ContractError
-from embodied_eval.mn import contracts as c
-from embodied_eval.mn.binding import resolve, check_compatibility
-from embodied_eval.mn.native_catalog import capability, space as native_space
-from embodied_eval.mn.native_models import NativeActionModel
-from embodied_eval.mn.native_benchmarks import NativeSimulator
-from embodied_eval.mn.robodojo_simulator import RoboDojoSimulator, space, extract_environment_class, METHODS
-from embodied_eval.mn.validation import validate_space, validate_prediction
-from embodied_eval.mn.joint_native import RAW_GRIPPER_PROTOCOL
+from embodied_eval.native import contracts as c
+from tests.legacy_support.frozen.mn.binding import resolve, check_compatibility
+from embodied_eval.native.model_catalog import capability
+from embodied_eval.native.benchmark_catalog import space as native_space
+from embodied_eval.native.native_models import NativeActionModel
+from embodied_eval.native.native_benchmarks import NativeSimulator
+from embodied_eval.native.robodojo_simulator import RoboDojoSimulator, space, extract_environment_class, METHODS
+from tests.legacy_support.frozen.mn.validation import validate_space, validate_prediction
+from embodied_eval.native.joint_native import RAW_GRIPPER_PROTOCOL
 
 
 class DualExtensionTests(unittest.TestCase):

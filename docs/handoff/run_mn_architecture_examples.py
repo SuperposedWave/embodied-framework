@@ -11,12 +11,12 @@ sys.path.insert(0, str(ROOT))
 
 
 def main():
-    from embodied_eval import _legacy_contracts as leaf
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.config import RunConfig, AdapterConfig, EpisodeConfig
-    from embodied_eval.mn.registry import AdapterRegistry
-    from embodied_eval.mn.synthetic import register, SyntheticModel, SyntheticBenchmark
-    from embodied_eval.mn.runner import run
+    from embodied_eval.core import types as leaf
+    from embodied_eval.native import contracts as c
+    from tests.legacy_support.frozen.mn.config import RunConfig, AdapterConfig, EpisodeConfig
+    from embodied_eval.native.registry import AdapterRegistry
+    from tests.legacy_support.frozen.mn.synthetic import register, SyntheticModel, SyntheticBenchmark
+    from tests.legacy_support.frozen.mn.runner import run
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()

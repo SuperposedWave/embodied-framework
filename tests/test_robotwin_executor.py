@@ -2,13 +2,13 @@
 from types import SimpleNamespace
 import unittest
 
-from embodied_eval import _legacy_contracts as c
+from tests.legacy_support.frozen import _legacy_contracts as c
 from embodied_eval.errors import AdapterError
 
 try:
     import numpy as np
     from embodied_eval.adapters.native_robotwin_executor import MeasuredRobotwinExecutor, LingbotNativeActionCache
-    from embodied_eval.adapters.native_robotwin_models import OPENWAM_ROBOTWIN_REVISION, LINGBOT_ROBOTWIN_REVISION
+    from tests.legacy_support.frozen.adapters.robotwin_identity import OPENWAM_ROBOTWIN_REVISION, LINGBOT_ROBOTWIN_REVISION
 except ImportError:
     np = None
 

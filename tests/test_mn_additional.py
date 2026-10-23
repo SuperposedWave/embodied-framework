@@ -3,14 +3,14 @@ from dataclasses import replace
 from types import SimpleNamespace
 import unittest
 import numpy as np
-from embodied_eval import _legacy_contracts as leaf
+from tests.legacy_support.frozen import _legacy_contracts as leaf
 from embodied_eval.errors import ContractError, AdapterError
-from embodied_eval.mn import contracts as c
-from embodied_eval.mn.additional_catalog import POLICIES, policy_capability, policy_options
-from embodied_eval.mn.additional_models import JointPolicyModel
-from embodied_eval.mn.binding import resolve, check_compatibility
-from embodied_eval.mn.droid_simulator import DroidSimulator, space, metrics
-from embodied_eval.mn.validation import validate_space
+from embodied_eval.native import contracts as c
+from embodied_eval.native.additional_catalog import POLICIES, policy_capability, policy_options
+from embodied_eval.native.additional_models import JointPolicyModel
+from tests.legacy_support.frozen.mn.binding import resolve, check_compatibility
+from embodied_eval.native.droid_simulator import DroidSimulator, space, metrics
+from tests.legacy_support.frozen.mn.validation import validate_space
 
 
 class AdditionalPolicyTests(unittest.TestCase):
@@ -50,7 +50,7 @@ class AdditionalPolicyTests(unittest.TestCase):
         for family in POLICIES:
             with self.subTest(family=family):
                 self.assertFalse(check_compatibility(self.space, policy_capability(family, self.opts(family)), self.binding()).issues)
-        from docs.handoff.prepare_mn_extension import configurations
+        from tests.legacy_support.frozen.prepare_mn_extension import configurations
         examples = configurations()
         # Geometry-named Cosmos views and legacy-named DreamZero slots differ:
         # data wiring follows each reviewed native client, without env branches.
@@ -146,7 +146,7 @@ class AdditionalPolicyTests(unittest.TestCase):
         model = self.model("dreamzero")
         sent = []
         model.peer = SimpleNamespace(infer=lambda data: sent.append(data))
-        with patch("embodied_eval.mn.additional_models.native_module", return_value=SimpleNamespace()):
+        with patch("embodied_eval.native.additional_models.native_module", return_value=SimpleNamespace()):
             model.begin_episode(self.context, leaf.PublicTask(instruction="one"), model.profile, model.space)
             first = model.session_id
             model.begin_episode(self.context, leaf.PublicTask(instruction="two"), model.profile, model.space)

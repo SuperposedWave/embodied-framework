@@ -64,8 +64,8 @@ def child(args):
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
     import torch
     import torch.distributed as dist
-    from embodied_eval.mn.assets_common import _revision
-    from embodied_eval.mn.additional_catalog import POLICIES
+    from embodied_eval.native.assets_common import _revision
+    from embodied_eval.native.additional_catalog import POLICIES
     from prepare_mn_extension import configurations
     from embodied_eval.adapters.native_common import native_module
     cfg = configurations()["dreamzero_droid_sim"]
@@ -134,12 +134,12 @@ def child(args):
             dist.barrier()
             record.update(real_model_request=True, passed=True)
         else:
-            from embodied_eval import _legacy_contracts as leaf
+            from embodied_eval.core import types as leaf
             from embodied_eval.codec import decode
-            from embodied_eval.mn import contracts as c
-            from embodied_eval.mn.additional_models import JointPolicyModel
-            from embodied_eval.mn.binding import resolve
-            from embodied_eval.mn.droid_simulator import DroidSimulator, space as droid_space
+            from embodied_eval.native import contracts as c
+            from embodied_eval.native.additional_models import JointPolicyModel
+            from tests.legacy_support.frozen.mn.binding import resolve
+            from embodied_eval.native.droid_simulator import DroidSimulator, space as droid_space
             obs = decode(c.Observation, first_reset(args.input_episode))
             model = JointPolicyModel("dreamzero", cfg.model.options)
             space = droid_space(cfg.benchmark.options)
@@ -151,7 +151,7 @@ def child(args):
                 sensors={r.key: obs.sensors[profile.binding.inputs[r.key]] for r in model.cap.inputs if r.kind == "sensor"},
                 states={r.key: obs.states[profile.binding.inputs[r.key]] for r in model.cap.inputs if r.kind == "state"},
                 frame_transforms=obs.frame_transforms)
-            from embodied_eval.mn.transforms import prepare_input
+            from embodied_eval.native.transforms import prepare_input
             prepared = prepare_input(view, model.cap, profile, space)
             wire = model.native_input(prepared)
             # Native wrapper consumes exactly this wire payload once; no second
@@ -242,7 +242,7 @@ def main():
     args.output.mkdir(parents=True, exist_ok=False)
     directory, cache = verify_preparation(args.preparation)
     from prepare_mn_extension import configurations
-    from embodied_eval.mn.additional_catalog import verify_policy
+    from embodied_eval.native.additional_catalog import verify_policy
     verified_model = verify_policy("dreamzero", configurations()["dreamzero_droid_sim"].model.options)
     write(args.output / "verified-model-assets.json", verified_model)
     env = dict(os.environ, CUDA_VISIBLE_DEVICES=args.gpus, HF_HUB_CACHE=str(cache),

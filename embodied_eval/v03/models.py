@@ -47,6 +47,7 @@ def public_targets(original):
 
 def capability(family, options, original):
     from ..native.timing_profiles import timing_facts
+    from ..native.execution_profiles import model_execution
     profile = options["io_profile"]
     chunk_owner, timing_audit = timing_facts(family, profile,
         execution_horizon=options.get("open_loop_horizon"))
@@ -84,6 +85,7 @@ def capability(family, options, original):
                            if kind == "end_effector" and "pose_target" in out.command_kinds}),
         supported_timing_modes=original.supported_timing_modes, training_embodiments=original.training_embodiments,
         observation_update=original.observation_update,
+        execution=model_execution(family, options),
         temporal=c.ModelTiming(native_action_period_s=None,
             replanning_owner=chunk_owner,
             provenance={"revision": original.source_revision, "checkpoint": original.checkpoint_ref,
@@ -154,6 +156,18 @@ class CanonicalModel:
         self.paths = profile_paths(options["io_profile"], self.original)
         self.engine = entry.factory(options, output)
 
+    def configure_execution(self, plan):
+        declaration = self.cap.execution
+        if plan.change_requested:
+            require(declaration.adjustable and declaration.cache_owner == "adapter",
+                    "unsupported_execution_change", "model", "no native prefix application path")
+            self.engine.configure_execution(plan.consume_actions)
+        self.execution_receipt = {"status": "applied" if plan.change_requested else "native_reference_preserved",
+            "applied_consume_actions": plan.consume_actions,
+            "cache_owner": declaration.cache_owner, "server_verified": False,
+            "application": "adapter-owned prefix" if plan.change_requested else "unchanged native reference"}
+        return dict(self.execution_receipt)
+
     def begin_episode(self, context, task, profile, space):
         self.profile = profile
         inputs = {req.key: "model/drive_targets" if req.key == "drive_targets" else self.paths[req.key].split(".", 1)[1]
@@ -179,7 +193,8 @@ class CanonicalModel:
         self.engine.end_episode(native_context(context))
 
     def diagnostics(self):
-        return dict(self.engine.diagnostics(), public_contract_version="0.3", model_private_codec_only=True)
+        return dict(self.engine.diagnostics(), public_contract_version="0.3", model_private_codec_only=True,
+                    execution_application=getattr(self, "execution_receipt", None))
 
     def close(self):
         self.engine.close()

@@ -32,7 +32,7 @@ def main():
     if not previous["passed"] or Path(previous["environment"]).resolve() != target.resolve():
         raise ValueError("refuse to modify an environment not created by this task")
     sys.path.insert(0, str(ROOT))
-    from embodied_eval.mn.assets_common import _revision
+    from embodied_eval.native.assets_common import _revision
     repo = WORKSPACE / "upstream/xpolicy-reference-mn"
     _revision(repo, previous["source_revision"])
     requirements = tomllib.loads((repo / "policy/OpenWAM/OpenWAM/pyproject.toml").read_text())["project"]["dependencies"]

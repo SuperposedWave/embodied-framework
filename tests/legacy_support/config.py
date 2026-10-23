@@ -6,9 +6,9 @@ import hashlib
 import re
 import subprocess
 
-from embodied_eval import _legacy_contracts as c
+from tests.legacy_support.frozen import _legacy_contracts as c
 from embodied_eval.codec import decode, loads, to_data
-from embodied_eval._legacy_validation import require
+from tests.legacy_support.frozen._legacy_validation import require
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -80,7 +80,7 @@ def validate_config(config: RunConfig):
     require(re.fullmatch(pattern, config.run_id) is not None, "invalid_id", "run_id", "use a safe, nonempty run ID")
     require(bool(config.episodes), "missing_episode", "episodes", "at least one episode required")
     pair = (config.model.adapter, config.benchmark.adapter)
-    from embodied_eval import stage4_pairs
+    from tests.legacy_support.frozen import stage4_pairs
     require(pair in (("mock_model", "mock_benchmark"), ("openwam_libero", "libero_spatial")) or pair in stage4_pairs.PAIRS,
             "adapter_pair_mismatch", "adapters", "only registered model/benchmark pairs may run")
     if pair in stage4_pairs.PAIRS:
@@ -147,22 +147,22 @@ def load_config(path: Path):
 
 
 def make_adapters(config, output=None):
-    from embodied_eval import stage4_pairs
+    from tests.legacy_support.frozen import stage4_pairs
     if (config.model.adapter, config.benchmark.adapter) in stage4_pairs.PAIRS:
         return stage4_pairs.make_adapters(config, output)
     if config.model.adapter == "openwam_libero":
         verify_real_assets(config)
-        from embodied_eval.adapters.openwam_libero_model import OpenWAMLiberoModel
-        from embodied_eval.adapters.libero_spatial_benchmark import LiberoSpatialBenchmark
+        from tests.legacy_support.frozen.adapters.openwam_libero_model import OpenWAMLiberoModel
+        from tests.legacy_support.frozen.adapters.libero_spatial_benchmark import LiberoSpatialBenchmark
         return OpenWAMLiberoModel(config.model, output), LiberoSpatialBenchmark(config.benchmark)
-    from embodied_eval.adapters.mock_model import MockModel
-    from embodied_eval.adapters.mock_benchmark import MockBenchmark
+    from tests.legacy_support.frozen.adapters.mock_model import MockModel
+    from tests.legacy_support.frozen.adapters.mock_benchmark import MockBenchmark
     return MockModel(config.model, config.benchmark.tool_ticks), MockBenchmark(config.benchmark)
 
 
 def verify_real_assets(config):
     """Fail closed on source and checkpoint mismatch before claiming real provenance."""
-    from embodied_eval.adapters.openwam_libero_spec import (MODEL_REVISION, BENCHMARK_REVISION, CHECKPOINT_SHA256,
+    from tests.legacy_support.frozen.adapters.openwam_libero_spec import (MODEL_REVISION, BENCHMARK_REVISION, CHECKPOINT_SHA256,
         NORMALIZATION_SHA256, TASK_STEM, BDDL_SHA256, INIT_SHA256)
     for path, expected in ((config.model.openwam_repo, MODEL_REVISION),
                            (config.benchmark.libero_repo, BENCHMARK_REVISION)):
@@ -189,13 +189,13 @@ def verify_real_assets(config):
 
 
 def make_profile(config, space, cap):
-    from embodied_eval import stage4_pairs
+    from tests.legacy_support.frozen import stage4_pairs
     if (config.model.adapter, config.benchmark.adapter) in stage4_pairs.PAIRS:
         return stage4_pairs.make_profile(config, space, cap)
     if config.model.adapter == "openwam_libero":
-        from embodied_eval.adapters.openwam_libero_spec import profile
+        from tests.legacy_support.frozen.adapters.openwam_libero_spec import profile
         return profile(space, cap)
-    from embodied_eval.adapters.mock_spec import make_case
+    from tests.legacy_support.frozen.adapters.mock_spec import make_case
     _, _, base, _, _ = make_case()
     scenario = config.model.scenario
     bindings = dict(base.input_bindings)
@@ -213,7 +213,7 @@ def make_profile(config, space, cap):
 
 def fallback_metrics(config=None):
     # Registry metadata, not a benchmark-specific assumption inside the runner.
-    from embodied_eval import stage4_pairs
+    from tests.legacy_support.frozen import stage4_pairs
     if config is not None and (config.model.adapter, config.benchmark.adapter) in stage4_pairs.PAIRS:
         return stage4_pairs.fallback_metrics(config)
     if config is not None and config.benchmark.adapter == "libero_spatial":
@@ -225,11 +225,11 @@ def fallback_metrics(config=None):
 
 def run_provenance(config):
     """Registry-owned origin marker, independent of episode success."""
-    from embodied_eval import stage4_pairs
+    from tests.legacy_support.frozen import stage4_pairs
     if (config.model.adapter, config.benchmark.adapter) in stage4_pairs.PAIRS:
         return stage4_pairs.provenance(config)
     if config.model.adapter == "openwam_libero":
-        from embodied_eval.adapters.openwam_libero_spec import (MODEL_REVISION, BENCHMARK_REVISION, CHECKPOINT_SHA256,
+        from tests.legacy_support.frozen.adapters.openwam_libero_spec import (MODEL_REVISION, BENCHMARK_REVISION, CHECKPOINT_SHA256,
             NORMALIZATION_SHA256, HF_REVISION, BDDL_SHA256, INIT_SHA256)
         return {"synthetic": False, "model_adapter": "openwam_libero", "benchmark_adapter": "libero_spatial",
                 "model_source_revision": MODEL_REVISION, "benchmark_source_revision": BENCHMARK_REVISION,

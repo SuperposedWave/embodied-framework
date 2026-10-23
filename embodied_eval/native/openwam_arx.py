@@ -9,7 +9,8 @@ from ..core import types as leaf
 from ..core.validation import require
 from ..adapters.native_common import native_module, finite_array
 from . import contracts as c
-from .native_catalog import model_options, capability
+from .model_catalog import model_options
+from .model_catalog import capability
 from .transforms import prepare_input
 
 SOURCE_ROOT = "policy/OpenWAM/OpenWAM"

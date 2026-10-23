@@ -9,9 +9,9 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "docs/handoff"))
 from probe_real_observation_copy import compare_snapshot
-from embodied_eval.mn import contracts as c
-from embodied_eval.mn.droid_simulator import DroidSimulator, space as droid_space
-from embodied_eval.mn.robodojo_simulator import RoboDojoSimulator, space as dojo_space
+from embodied_eval.native import contracts as c
+from embodied_eval.native.droid_simulator import DroidSimulator, space as droid_space
+from embodied_eval.native.robodojo_simulator import RoboDojoSimulator, space as dojo_space
 
 
 class RealObservationProjectionEvidence(unittest.TestCase):

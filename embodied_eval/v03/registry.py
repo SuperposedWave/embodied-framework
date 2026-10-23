@@ -12,17 +12,15 @@ def default_registry():
     if _default is None:
         registry = AdapterRegistry()
         originals = native_registry()
-        for family in ("openwam", "openpi", "lingbot_vla", "cosmos3", "dreamzero"):
-            entry = originals.model(family)
+        for family, entry in originals.models.items():
             registry.register_model(family, ModelRegistration(
                 describe=lambda o, f=family, e=entry: capability(f, o, e.describe(o)),
                 factory=lambda o, out, f=family, e=entry: CanonicalModel(f, o, out, e),
                 validate_options=entry.validate_options, verify_assets=entry.verify_assets,
                 readiness=entry.readiness, provenance=entry.provenance))
-        for family in ("libero", "vlabench", "robotwin", "droid_sim", "robodojo"):
-            entry = originals.benchmark(family)
+        for family, entry in originals.benchmarks.items():
             registry.register_benchmark(family, BenchmarkRegistration(
-                describe=lambda o, f=family, e=entry: canonical_space(f, e.describe(o)),
+                describe=lambda o, f=family, e=entry: canonical_space(f, e.describe(o), options=o),
                 factory=lambda o, out, f=family, e=entry: CanonicalBenchmark(f, o, out, e),
                 validate_options=entry.validate_options, verify_assets=entry.verify_assets,
                 readiness=entry.readiness, provenance=entry.provenance, metric_templates=entry.metric_templates))

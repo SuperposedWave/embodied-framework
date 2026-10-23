@@ -28,11 +28,11 @@ def main():
     benchmark=None
     try:
         from embodied_eval.codec import decode
-        from embodied_eval import _legacy_contracts as leaf
-        from embodied_eval.mn import contracts as c
-        from embodied_eval.mn.config import RunConfig,validate_config
-        from embodied_eval.mn.registry import default_registry
-        from embodied_eval.mn.native_benchmarks import NativeSimulator
+        from embodied_eval.core import types as leaf
+        from embodied_eval.native import contracts as c
+        from tests.legacy_support.frozen.mn.config import RunConfig,validate_config
+        from embodied_eval.native.registry import default_registry
+        from embodied_eval.native.native_benchmarks import NativeSimulator
         from replay_mn_native_actions import trace,digest
         from replay_robotwin_native_actions import observe_physx
         root=args.framework.resolve()

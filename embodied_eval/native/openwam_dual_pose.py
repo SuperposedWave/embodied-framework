@@ -15,7 +15,8 @@ from ..core import types as leaf
 from ..adapters.native_common import finite_array
 from ..core.validation import require, quaternion
 from . import contracts as c
-from .native_catalog import GRIPPER_CONTROLLER, GRIPPER_PROTOCOL
+from .protocols import GRIPPER_CONTROLLER
+from .protocols import GRIPPER_PROTOCOL
 
 
 PROFILE = "eef20_dual_wxyz_encoded_absolute"

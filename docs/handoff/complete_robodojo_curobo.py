@@ -27,7 +27,7 @@ def main():
     if not receipt["passed"] or receipt["environment"] != str(TARGET) or receipt["phase"] != "native":
         raise ValueError("helper-owned installed native environment required")
     original = WORKSPACE / "upstream/robodojo-curobo-mn"
-    from embodied_eval.mn.assets_common import _revision
+    from embodied_eval.native.assets_common import _revision
     _revision(original, "d17b54ce32cba095c0b000c4c58777075d11de0e")
     source = previous / "native-install-source/curobo"
     files = subprocess.run(["git", "-C", str(original), "ls-files", "-z"], capture_output=True, check=True).stdout.split(b"\0")

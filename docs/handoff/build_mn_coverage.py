@@ -34,8 +34,8 @@ def read(path):
 def build(configs, trials, replays):
     from embodied_eval.codec import to_data
     from embodied_eval.config import load_config
-    from embodied_eval.mn.preflight import check
-    from embodied_eval.mn.registry import default_registry
+    from tests.legacy_support.frozen.mn.preflight import check
+    from embodied_eval.native.registry import default_registry
     source_path = ROOT / "docs/handoff/source-materials/compatibility-draft.json"
     source = read(source_path)
     old = read(ROOT / "outputs/stage4-implementation-coverage-20261006T1640Z.json")

@@ -3,9 +3,9 @@ from contextlib import nullcontext
 from types import SimpleNamespace
 import unittest
 import numpy as np
-from embodied_eval import _legacy_contracts as leaf
-from embodied_eval.mn import contracts as c
-from embodied_eval.mn.native_benchmarks import NativeSimulator, observe_native_motion_failures
+from tests.legacy_support.frozen import _legacy_contracts as leaf
+from embodied_eval.native import contracts as c
+from embodied_eval.native.native_benchmarks import NativeSimulator, observe_native_motion_failures
 
 
 class ExecutionFailureTests(unittest.TestCase):

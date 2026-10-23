@@ -168,8 +168,8 @@ def audit_case(name, cfg):
                     adapters / "openwam_robotwin_objects.json" if profile.startswith("eef20_dual") else None)
         expected = None
         if profile == "eef10_absolute":
-            from embodied_eval.adapters.vlabench_spec import CONFIG_SHA256
-            expected = CONFIG_SHA256
+            from embodied_eval.native.model_assets import WEIGHT_FILES
+            expected = WEIGHT_FILES["eef10_absolute"]["CONFIG_SHA256"]
         metadata.append(metadata_check(checkpoint / "config.yaml", manifest, expected))
         config = yaml.safe_load((checkpoint / "config.yaml").read_text())
         selected = {k: config["dataloader"][k] for k in ("num_frames", "video_stride")}

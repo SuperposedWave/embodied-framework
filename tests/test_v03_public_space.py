@@ -23,10 +23,10 @@ from embodied_eval.v03.preflight import check
 from embodied_eval.v03.models import private_input, profile_paths, private_space
 from embodied_eval.v03.benchmarks import canonical_space, canonical_observation
 from embodied_eval.v03.transforms import inputs_for_model, action_for_environment
-from embodied_eval.v03.migration import migrate
-from embodied_eval.mn.registry import default_registry as old_registry
-from embodied_eval.mn.binding import resolve as old_resolve, model_input as old_input
-from embodied_eval.mn import contracts as old
+from tests.legacy_support.frozen.migrate_config import migrate
+from tests.legacy_support.frozen.mn.registry import default_registry as old_registry
+from tests.legacy_support.frozen.mn.binding import resolve as old_resolve, model_input as old_input
+from embodied_eval.native import contracts as old
 from tests.v03_helpers import ROOT, cases, observation
 
 

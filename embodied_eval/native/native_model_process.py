@@ -10,9 +10,9 @@ from pathlib import Path
 import subprocess
 from ..errors import AdapterError
 from ..core.validation import require
-from .native_catalog import model_options
+from .model_catalog import model_options
 
-METHODS = ("begin_episode", "observe", "predict", "end_episode", "diagnostics", "close")
+METHODS = ("configure_execution", "begin_episode", "observe", "predict", "end_episode", "diagnostics", "close")
 
 
 class NativeModelProcess:
@@ -86,6 +86,9 @@ class NativeModelProcess:
 
     def begin_episode(self, context, task, profile, space):
         return self._call("begin_episode", context, task, profile, space)
+
+    def configure_execution(self, count):
+        return self._call("configure_execution", count)
 
     def observe(self, model_input):
         return self._call("observe", model_input)

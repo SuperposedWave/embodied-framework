@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from unittest.mock import Mock
 from embodied_eval.errors import AdapterError, ContractError
-from embodied_eval.mn.robodojo_simulator import RoboDojoProcessSimulator, prepare_robot_paths
+from embodied_eval.native.robodojo_simulator import RoboDojoProcessSimulator, prepare_robot_paths
 
 
 class RoboDojoProcessTests(unittest.TestCase):

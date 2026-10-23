@@ -3,6 +3,7 @@ from .v03.contracts import (
     Context, CapabilitySpec, ModelInput, Observation, Prediction, SpaceSpec,
     StepResult, TaskSpec, Action, ResolvedProfile, InputSpec, OutputSpec,
     TemporalPolicy, HistoryRequirement, SampleTiming, ModelTiming, HistorySelection,
+    ExecutionPolicy, ExecutionConstraint, ModelExecution, BenchmarkExecution, ExecutionPlan,
 )
 from .v03.interfaces import BenchmarkAdapter, ModelAdapter
 
@@ -12,4 +13,5 @@ __all__ = [
     "Prediction", "SpaceSpec", "StepResult", "TaskSpec", "Action", "ResolvedProfile",
     "InputSpec", "OutputSpec", "BenchmarkAdapter", "ModelAdapter",
     "TemporalPolicy", "HistoryRequirement", "SampleTiming", "ModelTiming", "HistorySelection",
+    "ExecutionPolicy", "ExecutionConstraint", "ModelExecution", "BenchmarkExecution", "ExecutionPlan",
 ]

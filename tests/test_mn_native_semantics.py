@@ -4,12 +4,12 @@ from dataclasses import replace
 from types import SimpleNamespace
 import unittest
 
-from embodied_eval import _legacy_contracts as leaf
+from tests.legacy_support.frozen import _legacy_contracts as leaf
 from embodied_eval.errors import ContractError
-from embodied_eval.mn import contracts as c
-from embodied_eval.mn.binding import check_compatibility, resolve
-from embodied_eval.mn.native_catalog import space
-from embodied_eval.mn.validation import validate_step
+from embodied_eval.native import contracts as c
+from tests.legacy_support.frozen.mn.binding import check_compatibility, resolve
+from embodied_eval.native.benchmark_catalog import space
+from tests.legacy_support.frozen.mn.validation import validate_step
 
 
 class CanonicalNativeSemanticsTests(unittest.TestCase):
@@ -23,7 +23,7 @@ class CanonicalNativeSemanticsTests(unittest.TestCase):
         self.context = c.Context(run_id="r", env_id="e", episode_id="episode", message_id="request")
 
     def bench(self):
-        from embodied_eval.mn.native_benchmarks import NativeSimulator
+        from embodied_eval.native.native_benchmarks import NativeSimulator
         runtime = SimpleNamespace(raw={}, captured_at=0., _scope=nullcontext)
         pose_plan = lambda p: {"status": "Success", "position": self.np.zeros((1, 6))}
         joint_plan = lambda *a, **kw: (None, self.np.zeros((1, 6)), None, None, None)
@@ -98,7 +98,9 @@ class CanonicalNativeSemanticsTests(unittest.TestCase):
         self.assertTrue(self.np.array_equal(runtime.row, values))
         self.assertEqual(reply.execution_feedback.elapsed_sim_time_s, .036)
         # Raw normalized requests MUST NOT be clipped before native interpolation.
-        from embodied_eval.mn.native_catalog import GRIPPER_PROTOCOL, GRIPPER_CONTROLLER, capability
+        from embodied_eval.native.protocols import GRIPPER_PROTOCOL
+        from embodied_eval.native.protocols import GRIPPER_CONTROLLER
+        from embodied_eval.native.model_catalog import capability
         values[6],values[13]=1.02,-.03
         raw=[]
         for command in commands:
@@ -126,7 +128,7 @@ class CanonicalNativeSemanticsTests(unittest.TestCase):
         self.assertIn("missing_execution_target", {issue.code for issue in check_compatibility(self.space, cap, binding).issues})
 
     def test_declared_joint_mode_mismatch_rejected(self):
-        from embodied_eval.mn.synthetic import capability, space as synthetic_space
+        from tests.legacy_support.frozen.mn.synthetic import capability, space as synthetic_space
         cap = capability({})
         cap = replace(cap, output=replace(cap.output, joint_modes=("velocity",)))
         binding = c.BindingConfig(inputs={"image": "camera", "instruction": "instruction"}, targets={"joint": "robot0/j0"}, action_spec_ref="joint-position@1")
@@ -139,7 +141,7 @@ class CanonicalNativeSemanticsTests(unittest.TestCase):
         self.assertIn("unsupported_gripper_mode", {issue.code for issue in check_compatibility(self.space, cap, binding).issues})
 
     def test_executed_feedback_cannot_omit_one_command(self):
-        from embodied_eval.mn.synthetic import SyntheticBenchmark
+        from tests.legacy_support.frozen.mn.synthetic import SyntheticBenchmark
         env = SyntheticBenchmark({})
         obs = env.reset(None, self.context)
         action = c.Action(commands=(leaf.JointTarget(command_id="command", target_id="robot0/j0", mode="position", unit="rad", value=0.),))

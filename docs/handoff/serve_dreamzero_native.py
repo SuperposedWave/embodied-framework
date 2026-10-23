@@ -29,8 +29,8 @@ def main():
     import torch
     import torch.distributed as dist
     from embodied_eval.adapters.native_common import native_module
-    from embodied_eval.mn.assets_common import _revision
-    from embodied_eval.mn.additional_catalog import POLICIES, OPENPI_REVISION
+    from embodied_eval.native.assets_common import _revision
+    from embodied_eval.native.additional_catalog import POLICIES, OPENPI_REVISION
     from prepare_mn_extension import configurations
     cfg = configurations()["dreamzero_droid_sim"].model.options
     repo = Path(cfg["repo"])

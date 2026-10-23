@@ -2,7 +2,7 @@
 import unittest
 from unittest.mock import Mock
 from embodied_eval.errors import AdapterError
-from embodied_eval.mn.droid_simulator import DroidProcessSimulator
+from embodied_eval.native.droid_simulator import DroidProcessSimulator
 
 
 class DroidProcessTests(unittest.TestCase):

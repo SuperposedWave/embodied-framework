@@ -22,7 +22,7 @@ def main():
     args = parser.parse_args()
     args.output = args.output.resolve()
     args.output.mkdir(parents=True, exist_ok=False)
-    from embodied_eval.mn.assets_common import _revision
+    from embodied_eval.native.assets_common import _revision
     _revision(WORKSPACE / "upstream/cosmos-framework-mn", "cf5d68c00d97ccd2480a2320ed652b92dec63102")
     source = (WORKSPACE / "upstream/cosmos-framework-mn/cosmos_framework/inference/common/checkpoints.py").read_text()
     if not all(value in source for value in (REPOSITORY, REVISION, NAME)):

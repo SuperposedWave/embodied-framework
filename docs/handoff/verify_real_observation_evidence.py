@@ -21,7 +21,7 @@ def verify(directory):
             or not component["passed"] or component["synthetic"] or not component["native_close_returned"]
             or component["actual_saved_actions"] != 4 or len(component["snapshots"]) != 5):
         raise ValueError("completed_real_four_action_five_snapshot_projection_required")
-    source = ROOT / "embodied_eval/mn" / ("droid_simulator.py" if receipt["benchmark"] == "droid_sim" else "robodojo_simulator.py")
+    source = ROOT / "embodied_eval/native" / ("droid_simulator.py" if receipt["benchmark"] == "droid_sim" else "robodojo_simulator.py")
     if hashlib.sha256(source.read_bytes()).hexdigest() != component["adapter_source_sha256"]:
         raise ValueError("projection_source_changed_since_observation")
     expected_images = {"external_cam", "external_cam_2", "wrist_cam"} if receipt["benchmark"] == "droid_sim" else {

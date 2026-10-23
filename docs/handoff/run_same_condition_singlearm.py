@@ -23,7 +23,7 @@ def client_child(args):
     import random
     import numpy as np
     from embodied_eval.config import load_config
-    from embodied_eval.mn.runner import run
+    from tests.legacy_support.frozen.mn.runner import run
     config = load_config(args.child)
     if config.benchmark.adapter == "vlabench":
         sys.path.insert(0, config.benchmark.options["repo"])
@@ -43,7 +43,7 @@ def execute(args):
     from dataclasses import replace
     from embodied_eval.codec import to_data
     from embodied_eval.config import load_config
-    from embodied_eval.mn.preflight import check
+    from tests.legacy_support.frozen.mn.preflight import check
     config = load_config(args.config)
     if config.benchmark.adapter not in ("libero", "vlabench", "robotwin"):
         raise ValueError("reviewed_native_simulator_required")

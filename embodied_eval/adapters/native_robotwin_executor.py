@@ -11,7 +11,7 @@ import math
 
 from ..errors import AdapterError
 from .native_common import finite_array
-from .native_robotwin_models import OPENWAM_ROBOTWIN_REVISION, LINGBOT_ROBOTWIN_REVISION
+from .robotwin_identity import OPENWAM_ROBOTWIN_REVISION, LINGBOT_ROBOTWIN_REVISION
 
 
 def _count(value, label):

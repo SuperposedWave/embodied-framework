@@ -2,10 +2,10 @@
 from dataclasses import replace
 import unittest
 
-from embodied_eval import _legacy_contracts as c
+from tests.legacy_support.frozen import _legacy_contracts as c
 from embodied_eval.codec import decode, json_value, to_data
 from embodied_eval.errors import ContractError
-from embodied_eval._legacy_validation import validate_tensor
+from tests.legacy_support.frozen._legacy_validation import validate_tensor
 
 
 class InlineTensorPathTests(unittest.TestCase):

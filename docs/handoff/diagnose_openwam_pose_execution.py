@@ -22,10 +22,10 @@ def child(args):
     from importlib import metadata
     import numpy as np
     from embodied_eval.codec import decode, to_data
-    from embodied_eval import _legacy_contracts as leaf
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.config import RunConfig, validate_config
-    from embodied_eval.mn.registry import default_registry
+    from embodied_eval.core import types as leaf
+    from embodied_eval.native import contracts as c
+    from tests.legacy_support.frozen.mn.config import RunConfig, validate_config
+    from embodied_eval.native.registry import default_registry
     from robotwin_execution_observer import ExecutionObserver, articulation
     import replay_mn_native_actions as replay
     source = args.framework.resolve()
@@ -69,7 +69,7 @@ def child(args):
                 observer=None if args.no_observer else observer)
         else:
             from contextlib import nullcontext
-            from embodied_eval.mn.native_benchmarks import NativeSimulator
+            from embodied_eval.native.native_benchmarks import NativeSimulator
             benchmark = NativeSimulator("robotwin", config.benchmark.options, args.output / "diagnostic")
             benchmark.describe()
             task = benchmark.enumerate_tasks(config.episodes)[0]

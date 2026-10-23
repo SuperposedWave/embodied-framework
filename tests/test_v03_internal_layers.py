@@ -22,9 +22,9 @@ from embodied_eval.v03.validation import validate_space
 
 ROOT = Path(__file__).resolve().parents[1]
 MOVED = (
-    'contracts', 'transforms', 'additional_catalog', 'additional_models', 'assets',
+    'contracts', 'transforms', 'additional_catalog', 'additional_models', 'model_assets',
     'assets_common', 'droid_simulator', 'joint_native', 'native_benchmarks',
-    'native_catalog', 'native_model_process', 'native_model_worker', 'native_models',
+    'model_catalog', 'native_model_process', 'native_model_worker', 'native_models',
     'openwam_arx', 'openwam_dual_pose', 'robodojo_simulator', 'rotations',
 )
 
@@ -45,7 +45,7 @@ import sys
 from embodied_eval.v03.registry import default_registry
 registry = default_registry()
 assert len(registry.models) == len(registry.benchmarks) == 7
-assert not any(n.startswith(('embodied_eval.mn', 'embodied_eval._legacy')) for n in sys.modules)
+assert not any(n.startswith(('embodied_eval.mn', 'embodied_eval._legacy', 'tests.legacy_support')) for n in sys.modules)
 assert not any(n in sys.modules for n in ('numpy', 'torch', 'jax', 'sapien', 'mujoco', 'isaacsim'))
 """)
 
@@ -54,7 +54,7 @@ assert not any(n in sys.modules for n in ('numpy', 'torch', 'jax', 'sapien', 'mu
 import importlib.abc, sys
 class NoOldImports(importlib.abc.MetaPathFinder):
     def find_spec(self, fullname, path=None, target=None):
-        if fullname.startswith(('embodied_eval.mn', 'embodied_eval._legacy')):
+        if fullname.startswith(('embodied_eval.mn', 'embodied_eval._legacy', 'tests.legacy_support')):
             raise AssertionError(fullname)
 sys.meta_path.insert(0, NoOldImports())
 from embodied_eval.config import load_config
@@ -68,7 +68,7 @@ for path in ('examples/mn_synthetic_run.json', 'examples/mn_openwam_dual_wxyz_en
 import importlib.abc, pathlib, sys, tempfile
 class NoOldImports(importlib.abc.MetaPathFinder):
     def find_spec(self, fullname, path=None, target=None):
-        if fullname.startswith(('embodied_eval.mn', 'embodied_eval._legacy', 'embodied_eval.stage4_pairs', 'embodied_eval.robotwin_pairs')):
+        if fullname.startswith(('embodied_eval.mn', 'embodied_eval._legacy', 'tests.legacy_support', 'embodied_eval.stage4_pairs', 'embodied_eval.robotwin_pairs')):
             raise AssertionError(fullname)
 sys.meta_path.insert(0, NoOldImports())
 from embodied_eval.config import load_config
@@ -79,7 +79,7 @@ with tempfile.TemporaryDirectory() as temporary:
 """)
 
     def test_shared_physical_types_are_one_definition(self):
-        old = importlib.import_module('embodied_eval._legacy_contracts')
+        old = importlib.import_module('tests.legacy_support.frozen._legacy_contracts')
         for name in ('Transform', 'Pose', 'Tensor', 'Budgets', 'SensorSample', 'JointTarget',
                      'PoseTarget', 'ControllerCommand', 'ExecutionFeedback', 'Metric'):
             with self.subTest(name=name):
@@ -101,21 +101,23 @@ with tempfile.TemporaryDirectory() as temporary:
         self.assertEqual(set(registry.benchmarks), {'libero', 'vlabench', 'robotwin', 'droid_sim', 'robodojo'})
         self.assertTrue(all(not e.synthetic for e in (*registry.models.values(), *registry.benchmarks.values())))
 
-    def test_compatibility_aliases_reference_the_same_module(self):
+    def test_old_aliases_are_not_available(self):
         for name in MOVED:
             with self.subTest(name=name):
-                self.assertIs(importlib.import_module('embodied_eval.mn.' + name),
-                              importlib.import_module('embodied_eval.native.' + name))
+                self.assertTrue(importlib.import_module('embodied_eval.native.' + name))
+                with self.assertRaises(ImportError):
+                    importlib.import_module('embodied_eval.mn.' + name)
 
     def test_historical_monkeypatch_reaches_current_native_engine(self):
         import embodied_eval.native.native_models as active
         sentinel = object()
-        with patch('embodied_eval.mn.native_models.native_module', sentinel):
+        with patch('embodied_eval.native.native_models.native_module', sentinel):
             self.assertIs(active.native_module, sentinel)
 
-    def test_old_pickled_class_paths_still_resolve(self):
-        self.assertIs(pickle.loads(b'cembodied_eval.mn.contracts\nAction\n.'), physical.Action)
-        self.assertIs(pickle.loads(b'cembodied_eval._legacy_contracts\nPose\n.'), physical.Pose)
+    def test_old_pickled_class_paths_are_retired(self):
+        for data in (b'cembodied_eval.mn.contracts\nAction\n.', b'cembodied_eval._legacy_contracts\nPose\n.'):
+            with self.assertRaises(ImportError):
+                pickle.loads(data)
 
     def test_shared_action_can_roundtrip_through_a_fresh_process(self):
         action = self.action()
@@ -191,7 +193,9 @@ with tempfile.TemporaryDirectory() as temporary:
         self.assertEqual(len(paths), 6)
         for path in paths:
             with self.subTest(name=path.name):
-                self.assertEqual(path.read_bytes(), (ROOT / 'embodied_eval/mn/asset_manifests' / path.name).read_bytes())
+                frozen = subprocess.run(['git', 'show', '67ca6ad:embodied_eval/native/asset_manifests/' + path.name],
+                                        capture_output=True, cwd=ROOT, check=True).stdout
+                self.assertEqual(path.read_bytes(), frozen)
                 self.assertTrue(json.loads(path.read_text())['objects'])
 
     def test_new_native_worker_is_an_importable_module(self):

@@ -22,8 +22,8 @@ def main():
     args.output.mkdir(parents=True,exist_ok=False)
     from embodied_eval.config import load_config
     from embodied_eval.codec import to_data
-    from embodied_eval.mn.migration import translate
-    from embodied_eval.mn.preflight import check
+    from tests.legacy_support.frozen.mn.migration import translate
+    from tests.legacy_support.frozen.mn.preflight import check
     results=[]
     for filename in FILES:
         old=load_config(ROOT/"examples"/filename)

@@ -22,7 +22,7 @@ def main():
     source, target = args.source.resolve(), args.target.resolve()
     if not source.is_dir() or source == target or target.name != DIRECTORIES[args.component] or args.receipt.exists():
         raise ValueError("explicit source, dedicated target and new receipt required")
-    manifest = json.loads((ROOT / "embodied_eval/mn/asset_manifests" / (args.component + ".json")).read_text())
+    manifest = json.loads((ROOT / "embodied_eval/native/asset_manifests" / (args.component + ".json")).read_text())
     records = []
     for item in manifest["objects"]:
         src, dst = source / item["relative"], target / item["relative"]

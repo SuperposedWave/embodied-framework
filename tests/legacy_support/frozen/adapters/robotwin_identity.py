@@ -1,0 +1,5 @@
+"""Public source pins; metadata must import without real-client dependencies."""
+OPENWAM_REVISION = "48bd67b89d489b14d03b8d92bc66e65d306df32e"
+OPENWAM_ROBOTWIN_REVISION = "0aeea2d669c0f8516f4d5785f0aa33ba812c14b4"
+LINGBOT_REVISION = "be969b8fd117fb70550c5d4bf4bc328211b5b1b6"
+LINGBOT_ROBOTWIN_REVISION = "13c3c47ff4312dd62484bcd51be034af55c062d1"

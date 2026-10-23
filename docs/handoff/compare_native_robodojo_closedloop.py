@@ -45,9 +45,9 @@ def child(args):
     import numpy as np
     from argparse import Namespace
     from embodied_eval.adapters.native_common import native_module
-    from embodied_eval.mn.assets_common import _revision, _hf_objects
-    from embodied_eval.mn.robodojo_simulator import REVISION, prepare_robot_paths
-    from embodied_eval.mn.native_catalog import PROFILES
+    from embodied_eval.native.assets_common import _revision, _hf_objects
+    from embodied_eval.native.robodojo_simulator import REVISION, prepare_robot_paths
+    from embodied_eval.native.model_catalog import PROFILES
     from replay_robodojo_native_actions import native_action
     from replay_mn_native_actions import trace, snapshot, field
     manifest = json.loads((args.trial / "framework/manifest.json").read_text())
@@ -60,7 +60,7 @@ def child(args):
     is_wam = config["model"]["adapter"] == "openwam"
     repo, reference = Path(options["repo"]), Path(config["model"]["options"]["repo"])
     _revision(repo, REVISION); _revision(reference, PROFILES["arx_joint14"][2])
-    assets = _hf_objects(repo.resolve(), ROOT / "embodied_eval/mn/asset_manifests/robodojo.json")
+    assets = _hf_objects(repo.resolve(), ROOT / "embodied_eval/native/asset_manifests/robodojo.json")
     model_proof = json.loads((args.output / "model-assets-verified.json").read_text())
     if model_proof["model_config_sha256"] != hashlib.sha256(json.dumps(config["model"], sort_keys=True).encode()).hexdigest():
         raise ValueError("matching_before_native_load_model_verification_required")
@@ -394,7 +394,7 @@ def main():
         "absolute_and_exists_before_child_changes_directory": True, "child_working_directory": str(args.output),
         "global_environment_changed": False})
     config = json.loads((args.trial / "framework/manifest.json").read_text())["config"]
-    from embodied_eval.mn.assets import verify_model
+    from embodied_eval.native.model_assets import verify_model
     write(args.output / "model-assets-verified.json", {
         "model_config_sha256": hashlib.sha256(json.dumps(config["model"], sort_keys=True).encode()).hexdigest(),
         "verified_at_utc": datetime.now(timezone.utc).isoformat(),

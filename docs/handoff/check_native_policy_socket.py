@@ -20,7 +20,7 @@ def main():
     from websockets.sync.server import serve
     from embodied_eval.adapters.native_policy_transport import NativePolicyPeer
     from embodied_eval.adapters.native_common import native_module
-    from embodied_eval.mn.assets_common import _revision
+    from embodied_eval.native.assets_common import _revision
     repo = ROOT.parent / "upstream/openpi"
     revision = "215abfb217dbac7d5f1273282331b9b1866c0479"
     _revision(repo, revision)

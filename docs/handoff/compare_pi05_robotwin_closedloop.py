@@ -44,7 +44,8 @@ def child(args):
     from check_mn_extension_native_mappings import functions, same
     from replay_mn_native_actions import trace, snapshot, field, digest
     from replay_robotwin_native_actions import observe_physx, seed_native
-    from embodied_eval.mn.assets import verify_model, verify_benchmark
+    from embodied_eval.native.model_assets import verify_model
+    from embodied_eval.native.benchmark_assets import verify_benchmark
     manifest_path = args.framework / "manifest.json"
     manifest = json.loads(manifest_path.read_text())
     config = manifest["config"]

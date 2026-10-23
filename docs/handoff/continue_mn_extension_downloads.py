@@ -29,7 +29,7 @@ def main():
         raise ValueError("require a framework-local first evidence path")
     if args.output.exists():
         raise ValueError("new final continuation receipt required")
-    manifest = json.loads((ROOT / "embodied_eval/mn/asset_manifests" / (args.component + ".json")).read_text())
+    manifest = json.loads((ROOT / "embodied_eval/native/asset_manifests" / (args.component + ".json")).read_text())
     record = {"kind": "finite_pinned_asset_continuation_not_model_validation", "started_at_utc": datetime.now(timezone.utc).isoformat(),
         "component": args.component, "first_receipt": str(args.first_receipt), "revision": manifest["revision"],
         "max_resume_rounds": args.max_resume_rounds, "resumes": [], "model_loaded": False,

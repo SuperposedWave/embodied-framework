@@ -224,6 +224,7 @@ class BridgeTest(unittest.TestCase):
         runner = self.runner()
         runner.run()
         evidence = json.loads((runner.run_dir / 'backend-result.json').read_text())['evidence']
+        self.assertIn('execution_plan', evidence)
         for record in evidence.values():
             self.assertEqual(record['sha256'], hashlib.sha256(Path(record['path']).read_bytes()).hexdigest())
 

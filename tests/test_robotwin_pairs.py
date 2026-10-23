@@ -6,22 +6,22 @@ import tempfile
 from types import SimpleNamespace
 import unittest
 
-from embodied_eval import _legacy_contracts as c
+from tests.legacy_support.frozen import _legacy_contracts as c
 from embodied_eval.codec import to_data, decode
-from embodied_eval.compatibility import check_compatibility
+from tests.legacy_support.frozen.compatibility import check_compatibility
 from tests.legacy_support.config import RunConfig, ModelConfig, BenchmarkConfig, EpisodeConfig, ProfileConfig, validate_config
 from embodied_eval.errors import AdapterError, ContractError
-from embodied_eval._legacy_validation import validate_observation, validate_prediction, validate_step_result, validate_task
-from embodied_eval.visibility import build_model_input
+from tests.legacy_support.frozen._legacy_validation import validate_observation, validate_prediction, validate_step_result, validate_task
+from tests.legacy_support.frozen.visibility import build_model_input
 from embodied_eval.artifacts import ArtifactWriter
 from tests.legacy_support.runner import run_episode
 
 try:
     import numpy as np
-    from embodied_eval.adapters import robotwin_spec as spec
-    from embodied_eval.adapters.robotwin_model import RobotwinModel
-    from embodied_eval.adapters.robotwin_benchmark import RobotwinBenchmark, _RngDomain
-    from embodied_eval.adapters.native_robotwin_executor import LingbotNativeActionCache, MeasuredRobotwinExecutor
+    from tests.legacy_support.frozen.adapters import robotwin_spec as spec
+    from tests.legacy_support.frozen.adapters.robotwin_model import RobotwinModel
+    from tests.legacy_support.frozen.adapters.robotwin_benchmark import RobotwinBenchmark, _RngDomain
+    from tests.legacy_support.frozen.adapters.native_robotwin_executor import LingbotNativeActionCache, MeasuredRobotwinExecutor
     from test_robotwin_executor import FakeRobotwin
 except ImportError:
     np = None
@@ -279,7 +279,7 @@ class RobotwinPairTests(unittest.TestCase):
 
     def test_full_serial_runner_native_accounting_with_fake_adapters(self):
         self.bench.context = None  # Start the one prepared test scene through Runner.
-        from embodied_eval.robotwin_pairs import fallback_metrics
+        from tests.legacy_support.frozen.robotwin_pairs import fallback_metrics
         writer = ArtifactWriter(Path(self.temp.name) / "fake-run")
         outcome = run_episode(self.model, self.bench, self.profile, self.task, self.bench.space,
                               self.cap, writer, "run", fallback_metrics(self.cfg))

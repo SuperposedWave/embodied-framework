@@ -3,13 +3,14 @@ from dataclasses import replace
 from types import SimpleNamespace
 import unittest
 import numpy as np
-from embodied_eval import _legacy_contracts as leaf
+from tests.legacy_support.frozen import _legacy_contracts as leaf
 from embodied_eval.errors import ContractError
-from embodied_eval.mn import contracts as c
-from embodied_eval.mn.native_catalog import capability, space as native_space
-from embodied_eval.mn.openwam_arx import OpenWAMArxModel
-from embodied_eval.mn.robodojo_simulator import RoboDojoSimulator
-from embodied_eval.mn.binding import check_compatibility, resolve
+from embodied_eval.native import contracts as c
+from embodied_eval.native.model_catalog import capability
+from embodied_eval.native.benchmark_catalog import space as native_space
+from embodied_eval.native.openwam_arx import OpenWAMArxModel
+from embodied_eval.native.robodojo_simulator import RoboDojoSimulator
+from tests.legacy_support.frozen.mn.binding import check_compatibility, resolve
 
 
 class OpenWAMArxTests(unittest.TestCase):

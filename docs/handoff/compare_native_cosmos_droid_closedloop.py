@@ -41,8 +41,8 @@ def child(args):
     import torch.nn.functional as functional
     from comparison_video import Frames
     from check_mn_extension_native_mappings import native_class
-    from embodied_eval.mn.assets_common import _revision, _hf_objects
-    from embodied_eval.mn.additional_catalog import ROBOLAB_REVISION, OPENPI_REVISION, verify_policy
+    from embodied_eval.native.assets_common import _revision, _hf_objects
+    from embodied_eval.native.additional_catalog import ROBOLAB_REVISION, OPENPI_REVISION, verify_policy
     from embodied_eval.adapters.native_common import native_module
     from replay_mn_native_actions import trace, snapshot, field
     from replay_droid_native_actions import native_action
@@ -57,7 +57,7 @@ def child(args):
     _revision(repo, "3a6b0e8177f696947f49c082728f10ef5133ede1")
     _revision(model_opts["client_repo"], ROBOLAB_REVISION)
     _revision(model_opts["codec_repo"], OPENPI_REVISION)
-    env_assets = _hf_objects(assets.resolve(), ROOT / "embodied_eval/mn/asset_manifests/droid_sim.json")
+    env_assets = _hf_objects(assets.resolve(), ROOT / "embodied_eval/native/asset_manifests/droid_sim.json")
     model_assets = verify_policy("cosmos3", model_opts)
     source = Path(model_opts["client_repo"]) / "policies/cosmos3/client.py"
     oracle = native_class(source, "Cosmos3Client", ("_pack_request", "_unpack_response", "_postprocess_chunk"),

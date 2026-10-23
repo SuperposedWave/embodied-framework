@@ -34,7 +34,7 @@ def main():
             or Path(original["environment"]).resolve() != target.resolve()):
         raise ValueError("this_helpers_own_installed_new_dreamzero_environment_required")
     repo = WORKSPACE / "upstream/dreamzero-mn"
-    from embodied_eval.mn.assets_common import _revision
+    from embodied_eval.native.assets_common import _revision
     revision = "ab790c198fbce33503358efbbd4187ce9a89adf3"
     _revision(repo, revision)
     project = repo / "pyproject.toml"

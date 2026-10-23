@@ -63,7 +63,7 @@ class ComponentProbeSafetyTests(unittest.TestCase):
             self.assertFalse(json.loads(path.read_text())["passed"])
 
     def test_droid_teardown_does_not_request_process_fast_exit(self):
-        from embodied_eval.mn import droid_simulator
+        from embodied_eval.native import droid_simulator
         app = Mock()
         launcher = Mock(return_value=SimpleNamespace(app=app))
         wrapper = ModuleType("isaaclab.app")

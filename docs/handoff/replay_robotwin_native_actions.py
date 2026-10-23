@@ -127,7 +127,7 @@ def fresh_lingbot_run(args, config, env, raw, instruction, period, episode_dir, 
                     if requests == 0:
                         # Diagnostic comparison only: do not use the Adapter's
                         # payload or prediction to control this native rollout.
-                        from embodied_eval import _legacy_contracts as c
+                        from embodied_eval.core import types as c
                         from embodied_eval.codec import decode
                         from embodied_eval.adapters.robotwin_model import RobotwinModel
                         from deploy import msgpack_numpy
@@ -311,7 +311,7 @@ def run(args):
         meter = None
         meter_checks = []
         if args.meter_cross_check:
-            from embodied_eval import _legacy_contracts as c
+            from embodied_eval.core import types as c
             from embodied_eval.adapters.native_robotwin_executor import MeasuredRobotwinExecutor
             meter = MeasuredRobotwinExecutor(env, benchmark_revision=manifest["space"]["revision"], action_type=action_type)
         with observe_physx(env.scene.physx_system) as counter, trace_path.open() as stream:

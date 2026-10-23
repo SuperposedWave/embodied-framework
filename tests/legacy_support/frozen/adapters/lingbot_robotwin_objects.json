@@ -1,0 +1,92 @@
+{
+  "repo_id": "robbyant/lingbot-vla-v2-6b-robotwin",
+  "revision": "0451855729ec904f970600e0aec8b84661423afe",
+  "source": "public Hugging Face model_info(files_metadata=True, token=False), 2026-10-06; inference objects only",
+  "objects": [
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/added_tokens.json",
+      "size": 707,
+      "git_blob": "b54f9135e44c1e81047e8d05cb027af8bc039eed"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/chat_template.jinja",
+      "size": 5292,
+      "git_blob": "124386803f142761528f710e77ae483f5f8c4fc4"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/config.json",
+      "size": 31,
+      "git_blob": "69c8d69fb69ea6ef5740c524ade3ffdd1409b4c4"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/model-00001-of-00006.safetensors",
+      "size": 4947507248,
+      "sha256": "514801684e0f23aaa4bb64a4fd81e420b97e094331499852d5f2cc567750b360"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/model-00002-of-00006.safetensors",
+      "size": 4944315304,
+      "sha256": "e7b00cf59b21c2f5e9f76f7687ba423c6fe24bfa9fa8e313ef346bb081e73c9f"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/model-00003-of-00006.safetensors",
+      "size": 4944315360,
+      "sha256": "ace74f6d5214059b6387b5728c570a452d51b5950dd9904fe29607dbfa41447b"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/model-00004-of-00006.safetensors",
+      "size": 4992858968,
+      "sha256": "1f1cb6b4099e264b202eae0244f3730e1ced910c0b34355fff2a719993d0cbe5"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/model-00005-of-00006.safetensors",
+      "size": 4963062048,
+      "sha256": "1316d6fe054253650dc65bae416ae6cf9afa283aad82a9712b02b0dd7029394b"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/model-00006-of-00006.safetensors",
+      "size": 711830844,
+      "sha256": "0e1dfc6a23c43f3c387276e2389799867dfa90dc9727bb8e21250c73bfe7dd23"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/model.safetensors.index.json",
+      "size": 207389,
+      "git_blob": "0c2e110c1ca2d3d4d3e97091ace15f8cbfe58b24"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/preprocessor_config.json",
+      "size": 782,
+      "git_blob": "2fa6553554f69b4e3a6b742a75264ff9dff90ad0"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/special_tokens_map.json",
+      "size": 613,
+      "git_blob": "ac23c0aaa2434523c494330aeb79c58395378103"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/tokenizer.json",
+      "size": 11422654,
+      "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/tokenizer_config.json",
+      "size": 5472,
+      "git_blob": "35d32052b3bc1bc9493b6cc3d8b0f22acf33dc83"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/video_preprocessor_config.json",
+      "size": 817,
+      "git_blob": "e32b1d90356f74457edbfca27aa1e121dab7cdc7"
+    },
+    {
+      "relative": "checkpoints/global_step_50000/hf_ckpt/vocab.json",
+      "size": 2776833,
+      "git_blob": "4783fe10ac3adce15ac8f358ef5462739852c569"
+    },
+    {
+      "relative": "lingbotvla_cli.yaml",
+      "size": 6263,
+      "git_blob": "37a2dabdd1a4ab0d651227a4b8b02bebc64f7045"
+    }
+  ]
+}

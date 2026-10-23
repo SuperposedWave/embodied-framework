@@ -4,7 +4,7 @@ This checks EXACT input tensors and action execution values, not new task scores
 The first bounded transitions of each saved run are read, without rewriting it.
 """
 import argparse
-from dataclasses import fields
+from dataclasses import fields, replace
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -35,21 +35,26 @@ def main():
     args.output.mkdir(parents=True, exist_ok=False)
     from build_native_comparison_report import cases
     from embodied_eval.codec import decode, to_data
-    from embodied_eval.mn import contracts as old
-    from embodied_eval.mn.binding import model_input as old_input
+    from tests.legacy_support.frozen import native_records_v02 as old
+    from tests.legacy_support.frozen.mn.binding import model_input as old_input
     from embodied_eval.v03 import contracts as c
-    from embodied_eval.v03.migration import migrate
+    from tests.legacy_support.frozen.migrate_config import migrate
     from embodied_eval.v03.registry import default_registry
     from embodied_eval.v03.benchmarks import canonical_space, canonical_observation
     from embodied_eval.v03.models import private_input, profile_paths
     from embodied_eval.v03.matching import resolve, model_input
     from embodied_eval.v03.validation import validate_space, validate_observation, validate_prediction, validate_step
     from embodied_eval.v03.transforms import action_for_environment
-    from embodied_eval.v03.context import public_context
+    def public_context(context):
+        # Explicit, OFFLINE envelope conversion of immutable historical data.
+        # Runtime boundaries reject old contexts; no source file is rewritten.
+        return c.Context(**{key: getattr(context, key) for key in ("run_id", "env_id", "episode_id", "message_id")})
     items = cases()
     items.append({'id': 'openwam_dual_physical', 'framework': ROOT / 'outputs/openwam-dual-pose-live-20261015-run1/recorded-framework/framework'})
     report = dict(kind='v03_saved_real_boundary_values_not_new_inference', at_utc=datetime.now(timezone.utc).isoformat(),
-        passed=False, new_GPU_inference=False, new_simulation=False, formal_acceptance=False, cases=[], protected_sha256={})
+        passed=False, new_GPU_inference=False, new_simulation=False, formal_acceptance=False, cases=[], protected_sha256={},
+        historical_decoder="test-only frozen 0.2", explicit_offline_envelope_conversion=True,
+        runtime_legacy_fallback=False)
     report['framework_source_sha256'] = {str(path.relative_to(ROOT)): digest(path) for path in sorted((ROOT / 'embodied_eval').rglob('*.py'))}
     report['git_commit_at_start'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     try:
@@ -78,12 +83,13 @@ def main():
                     kind, data = event['event'], event['data']
                     if kind in ('reset', 'step_result'):
                         raw = decode(old.Observation, data if kind == 'reset' else data['observation'])
+                        raw = replace(raw, context=public_context(raw.context))
                         obs = validate_observation(canonical_observation(cfg.benchmark.adapter, decode(old.SpaceSpec, manifest['space']), raw, s), s)
                         view = model_input(obs, public_task, cap, profile, s)
                         actual = private_input(view, original, profile_paths(cfg.model.options['io_profile'], original))
                         expected = old_input(raw, task, original, old_profile)
                         assert set(actual.sensors) == set(expected.sensors)
-                        assert actual.states == expected.states
+                        assert to_data(actual.states) == to_data(expected.states)
                         assert actual.task_public == expected.task_public
                         assert actual.frame_transforms == expected.frame_transforms
                         for key in actual.sensors:

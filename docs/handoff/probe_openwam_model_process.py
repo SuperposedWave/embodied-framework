@@ -17,14 +17,14 @@ sys.path.insert(0, str(ROOT))
 
 def child(args):
     import numpy as np
-    from embodied_eval import _legacy_contracts as leaf
+    from embodied_eval.core import types as leaf
     from embodied_eval.codec import to_data
-    from embodied_eval.mn import contracts as c
-    from embodied_eval.mn.registry import default_registry
-    from embodied_eval.mn.binding import resolve
-    from embodied_eval.mn.validation import validate_prediction
+    from embodied_eval.native import contracts as c
+    from embodied_eval.native.registry import default_registry
+    from tests.legacy_support.frozen.mn.binding import resolve
+    from tests.legacy_support.frozen.mn.validation import validate_prediction
     from prepare_mn_extension import configurations
-    from embodied_eval.mn.robodojo_simulator import RoboDojoSimulator
+    from embodied_eval.native.robodojo_simulator import RoboDojoSimulator
     record = {"kind": "real_model_isolated_runtime_synthetic_inputs_not_benchmark", "passed": False,
         "synthetic_observations": True, "closed_loop": False, "official_score": None}
     model = None

@@ -81,7 +81,7 @@ def main():
     repo = WORKSPACE / "upstream" / name
     source = repo / relative
     sys.path.insert(0, str(ROOT))
-    from embodied_eval.mn.assets_common import _revision
+    from embodied_eval.native.assets_common import _revision
     _revision(repo, revision)
     target = WORKSPACE / "upstream/envs" / (component + "-mn-native")
     complete_framework = args.complete_framework_dependency_from is not None

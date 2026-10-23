@@ -85,7 +85,7 @@ def main():
     core = {}
     for line in (ROOT / "outputs/mn-extension-integrity-20261007-final/SHA256SUMS").read_text().splitlines():
         expected, filename = line.split("  ", 1)
-        if filename in ("docs/contract-v0.2.md", "embodied_eval/mn/contracts.py", "embodied_eval/mn/interfaces.py", "embodied_eval/mn/runner.py"):
+        if filename in ("docs/contract-v0.2.md", "embodied_eval/native/contracts.py", "embodied_eval/native/interfaces.py", "embodied_eval/native/runner.py"):
             actual = digest(ROOT / filename)
             if expected != actual:
                 raise ValueError("sealed_public_core_or_runner_changed")

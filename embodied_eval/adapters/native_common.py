@@ -3,7 +3,6 @@ import importlib
 from pathlib import Path
 import sys
 
-from ..native import environment_records as c
 from ..errors import AdapterError
 
 
@@ -49,14 +48,6 @@ def rgb_image(observation, key):
     return np.ascontiguousarray(array, dtype=np.uint8)
 
 
-def controller_prediction(request, observation, profile, action_ref, controller_ref, parameters, period, transformations):
-    command = c.ControllerCommand(command_id=request.message_id + ":control", target_id="robot0/eef",
-                                  controller_profile_ref=controller_ref, parameters=parameters)
-    return c.Prediction(context=request, request_id=request.message_id,
-        based_on_observation_id=observation.observation_id, profile_ref=profile.profile_id,
-        decision=c.ActionSequence(action_spec_ref=action_ref, execution_horizon_steps=1,
-            steps=(c.ActionStep(index=0, duration_s=period, commands=(command,)),)),
-        diagnostics=c.PredictionDiagnostics(transformations=tuple(transformations), model_forward_count=None))
 
 
 def check_tick_budget(remaining, period):

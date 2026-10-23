@@ -1,25 +1,17 @@
-"""Frozen adapter-private records used by native codecs and historical tests.
+"""Current model-private codec records. No old protocol decoding or fallback.
 
-Geometry, tensor and commands come from core.types. The retained 0.2 stamps
-support private native IPC and historical decoding, NOT a public run/config
-fallback. New public observations and messages are exclusively v03 records.
+Logical slots are weight-owned implementation details, never public bindings.
+Physical commands and control messages use the current public definitions.
+Private slot/spec records are unversioned implementation data, not another wire protocol.
 """
 from dataclasses import dataclass, field
 from typing import Literal
+from ..v03.contracts import Context, TaskSpec, Prediction, StepResult
 from ..core.types import (Action, ActionSpec, Budgets, Command, ControllerSpec, FrameSpec,
                          Metric, PublicTask, RobotSpec, SensorSample, SensorSpec,
                          Tensor, TensorSpec, ExecutionFeedback, TimedTransform)
 
-VERSION = "0.2"
-
-
-@dataclass(frozen=True, kw_only=True)
-class Context:
-    run_id: str
-    env_id: str
-    episode_id: str
-    message_id: str
-    contract_version: Literal["0.2"] = VERSION
+VERSION = "0.3"
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -59,7 +51,6 @@ class SpaceSpec:
     physics_period_s: float | None = None
     required_action_targets: dict[str, tuple[str, ...]] = field(default_factory=dict)
     action_joint_modes: dict[str, tuple[Literal["position", "velocity", "effort"], ...]] = field(default_factory=dict)
-    contract_version: Literal["0.2"] = VERSION
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -95,7 +86,6 @@ class CapabilitySpec:
     supported_timing_modes: tuple[Literal["fixed_period", "measured_native"], ...]
     training_embodiments: tuple[str, ...] = ()
     observation_update: Literal["every_env_step", "decision_boundary"] = "every_env_step"
-    contract_version: Literal["0.2"] = VERSION
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -113,7 +103,6 @@ class BoundProfile:
     model_id: str
     space_ref: str
     warnings: tuple[str, ...] = ()
-    contract_version: Literal["0.2"] = VERSION
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -140,35 +129,3 @@ class ModelInput:
     states: dict[str, StateSample]
     state_specs: dict[str, StateSpec] = field(default_factory=dict)
     frame_transforms: dict[str, TimedTransform] = field(default_factory=dict)
-
-
-
-
-@dataclass(frozen=True, kw_only=True)
-class Prediction:
-    context: Context
-    based_on_observation_id: str
-    action: Action
-    model_forward_count: int | None = None
-    transformations: tuple[str, ...] = ()
-
-
-@dataclass(frozen=True, kw_only=True)
-class TaskSpec:
-    task_id: str
-    episode_id: str
-    public: PublicTask
-    budgets: Budgets
-    initialization_ref: str
-    evaluation_config_ref: str
-    evaluation_private: dict[str, object] = field(default_factory=dict)
-    contract_version: Literal["0.2"] = VERSION
-
-
-@dataclass(frozen=True, kw_only=True)
-class StepResult:
-    observation: Observation
-    execution_feedback: ExecutionFeedback
-    terminated: bool
-    truncated: bool
-    contract_version: Literal["0.2"] = VERSION

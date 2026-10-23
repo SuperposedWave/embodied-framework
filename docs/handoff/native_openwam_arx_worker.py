@@ -25,7 +25,7 @@ def main():
     model = server = None
     try:
         options = connection.recv()
-        from embodied_eval.mn.assets import verify_model
+        from embodied_eval.native.model_assets import verify_model
         from check_mn_extension_native_mappings import functions, native_class
         from native_array_wire import pack, unpack
         import numpy as np

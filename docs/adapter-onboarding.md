@@ -11,10 +11,10 @@
 | `embodied_eval/v03/` | 当前公共协议、双方公共字段转换、独立注册和通用Runner；新Adapter遵循这里的接口 |
 | `embodied_eval/core/` | 直接复用位姿、图像数组、类型化动作、物理校验、坐标路径和注册容器；不从历史契约导入基础类型 |
 | `embodied_eval/native/` | 已有组件的原生输入输出处理、缓存、执行封装、资产清单与核验；不是新增模型必须使用的中间层 |
-| `embodied_eval/adapters/` | 部分仍在使用的环境加载器、控制器工具及历史参考；引用前先核实职责，不直接复用旧组合工厂 |
-| `embodied_eval/mn/`、`_legacy_*` | 历史测试和导入兼容；新Adapter不要向这些位置新增实现 |
+| `embodied_eval/adapters/` | 当前环境加载器、模型通信与物理计数工具；不再提供旧组合工厂或旧模型包装器 |
+| `tests/legacy_support/frozen/` | 只供历史回归／只读证据解析的参考，不随安装包发布，不是第二套生产入口 |
 
-新组件可以直接实现0.3接口，不必先实现旧消息再套一层。已有原生组件暂留的私有消息转换，仅用于保住已核验的输入编码、精度和执行行为，不是每个新接入都要额外填写的配置。
+新组件直接实现0.3接口，不必实现旧消息再套一层。`mn/`、`_legacy_*`、旧组合工厂及CLI的migrate命令已退役。现有原生组件使用无版本的私有编码记录，Context、TaskSpec、Prediction、StepResult等控制消息复用当前0.3定义；不再在运行中转发0.1／0.2消息。历史文件只用明确的离线解析器读取，不能交给当前Runner运行。
 
 ## 接入前先准备什么
 
@@ -54,7 +54,7 @@ Benchmark Adapter用 `SpaceSpec.sample_timing` 声明真实公开采集能力，
 
 运行配置显式选择 `temporal.mode=observation_aligned`。缺时间来源、非整数网格要求精确匹配、未授权的近似、起步固定历史不足都必须先拒绝。运行中再检查未来帧、实际周期、缺帧、重复采集、完整左右视角和容量；不额外调用模型、不重发动作、不自动恢复。
 
-当前现有原生模型配置仍使用其当前画面接口和原生缓存；旧配置无需新增逐对配置。观测历史对齐不代表已经统一动作时间或推理频率；后两者本轮没有实现。近似实验、原生对照、真实推理和任务评分分别记账。
+现有原生模型配置仍使用其当前画面接口和原生缓存，不新增逐对配置。观测时间选择与下面的执行策略解析是两件事；两者都不做动作重采样，也不伪造缺失的训练时间信息。近似实验、原生对照、真实推理和任务评分分别记账。
 
 `embodied_eval/native/timing_profiles.py`保存具名权重输入输出配置的来源审计说明，通过`CapabilitySpec.temporal.provenance.source_audit`在预检查中展示。它是说明，不是调度指令；只按模型配置选择，不接收环境名称。`docs/handoff/audit_native_timing.py --output outputs/新的目录`可离线核验引用源码的固定Git版本与实际文件字节，以及小型配置的已有资产锁；它不加载权重、不检查全部大文件、不运行仿真，也不证明训练数据已经取得并标定。
 
@@ -96,6 +96,7 @@ Benchmark Adapter用 `SpaceSpec.sample_timing` 声明真实公开采集能力，
 
 | 方法 | 要做的事 |
 | --- | --- |
+| `configure_execution` | 应用通用解析器选出的、自己确实支持的动作消费设置，并返回实际应用回执；不能假装已修改远端服务。原生参考未改变时明确标注未核实服务设置 |
 | `begin_episode` | 接收本次公开任务、空间与对应关系，清空上一轮缓存并执行原生要求的重置 |
 | `observe` | 接收公开输入，保留观测编号及采集时间；需要坐标转换时调用公共工具 |
 | `predict` | 按原生顺序调用推理或取缓存；返回公共动作，并关联本次请求和来源观测 |
@@ -104,6 +105,20 @@ Benchmark Adapter用 `SpaceSpec.sample_timing` 声明真实公开采集能力，
 | `diagnostics` | 返回可核验的调用、缓存和来源信息，不输出密钥或完整进程环境 |
 
 连续动作段通常称为 chunk，表示模型一次返回的多条顺序动作。缓存、取图节奏和动作段长度必须匹配原生实现。服务请求次数不等于真实模型前向次数；无法核实前向次数时保留未知值。
+
+## 动作消费与频率如何声明
+
+`CapabilitySpec.execution` 是模型自己的说明：预测多少条、原生偏好执行多少条、可调范围、缓存由适配器还是服务器持有、匹配权重的一条动作是否有已核实物理时长。`None`（JSON中写null）表示未知或尚不能确认的完整原生返回段，不能用训练视频FPS补上。
+
+`SpaceSpec.execution` 是环境自己的规则，按具名源码版本、协议、任务／场景、机器人、控制器说明来源。每个参数独立分为：固定值（fixed）、允许范围（range）、允许模型决定（policy_owned）、仅参考默认值（reference_default）、未核实（unknown）。不能因为模型示例里写了5，就宣称整个环境固定执行5条。
+
+通用解析器在 `v03/execution.py`。固定值必须真正支持；范围内优先模型原生值，显式实验设置也必须在范围内，不能偷偷截到边界；允许模型决定时使用模型偏好；来源不明时只保留原生参考并记未核实，不批准改变。即使把旧的 `open_loop_horizon` 选项改短，也不能绕过环境规则核对。服务器没有设置／确认能力时，预检查拒绝无法保证的固定动作条数，而不是再给Runner加缓存。
+
+运行配置 `execution.consume_actions` 表示“一次预测后执行几条再重新推理”；它不是预测总长度，也不是仿真物理步数。`execution.require_verified=true` 要求所需执行参数都有可核实来源，未知就拒绝。默认false允许明确标为未校准的原生参考运行，不代表可计入正式同协议比较。`protocol_verified`只说明声明层参数来源已解出，不证明实际服务身份或阶段已验收。
+
+运行保存 `execution-plan.json`：静态预检查计划、环境加载后的复查计划、模型应用回执、逐轮种子／初始化身份和双方原始声明。Model Adapter持有唯一动作缓存；Runner仍逐条调用predict／advance，不新增第二层缓存。模型predict次数、请求次数、真实前向次数、原生动作数、物理步数和仿真秒数分别保存。OpenWAM的一次返回一条动作不能被当作服务器只生成一条。
+
+先运行 `examples/synthetic_execution_prefix_run.json` 学习该设置，再用 `synthetic_execution_strict_rejected_run.json` 检查未知权重时长会被严格门禁拒绝。两者仅是合成说明。新接入要用自己的原生样本覆盖固定值、允许范围、非法设置、短返回段、缓存清空、实际应用回执，以及变时长计数。
 
 ## 新环境需要实现什么
 
@@ -150,7 +165,7 @@ Benchmark Adapter用 `SpaceSpec.sample_timing` 声明真实公开采集能力，
 
 对于自己的配置，把 `--config` 后的路径替换为实际配置文件。确认轻量检查通过后，再加 `--verify-assets` 检查已下载文件；它不下载、不启动推理，也不证明原生运行依赖已兼容。
 
-检查结果分别看 `structurally_compatible`（结构满足）、`readiness`（本地准备情况）、`assets_verified`（资产核验）和 `real_validation`（预检查不做真实验证）。即使命令退出码为0，也不能因此宣布已完成真实接入。
+检查结果分别看 `interface_compatible`（公共接口）、`execution_compatible`（执行规则）、`structurally_compatible`（包含预算等预检查的整体门禁）、`execution.plan.unresolved`（未核实项）、`readiness`（本地准备情况）、`assets_verified`（资产核验）和 `real_validation`（预检查不做真实验证）。即使命令退出码为0，也不能因此宣布已完成真实接入。
 
 ### 再做保存数据的转换对照
 

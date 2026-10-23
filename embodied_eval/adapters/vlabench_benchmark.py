@@ -13,7 +13,7 @@ from ..codec import decode
 from ..errors import AdapterError
 from ..core.validation import same_episode
 from .native_common import check_tick_budget, finite_array, native_module
-from . import vlabench_spec as spec
+from ..native.environment_specs import vlabench as spec
 
 
 class VLABenchBenchmark:

@@ -17,13 +17,13 @@ sys.path.insert(0, str(ROOT))
 
 SOURCES = (
     "AGENTS.md", "docs/stage-state.json", "docs/contract-v0.2.md",
-    "embodied_eval/contracts.py", "embodied_eval/mn/contracts.py",
-    "embodied_eval/mn/interfaces.py", "embodied_eval/mn/config.py",
-    "embodied_eval/mn/binding.py", "embodied_eval/mn/transforms.py",
-    "embodied_eval/mn/native_catalog.py", "embodied_eval/mn/native_benchmarks.py",
-    "embodied_eval/mn/native_models.py", "embodied_eval/mn/additional_catalog.py",
-    "embodied_eval/mn/additional_models.py", "embodied_eval/mn/droid_simulator.py",
-    "embodied_eval/mn/robodojo_simulator.py", "embodied_eval/mn/openwam_dual_pose.py",
+    "embodied_eval/contracts.py", "embodied_eval/native/contracts.py",
+    "embodied_eval/native/interfaces.py", "embodied_eval/native/config.py",
+    "embodied_eval/native/binding.py", "embodied_eval/native/transforms.py",
+    "embodied_eval/native/native_catalog.py", "embodied_eval/native/native_benchmarks.py",
+    "embodied_eval/native/native_models.py", "embodied_eval/native/additional_catalog.py",
+    "embodied_eval/native/additional_models.py", "embodied_eval/native/droid_simulator.py",
+    "embodied_eval/native/robodojo_simulator.py", "embodied_eval/native/openwam_dual_pose.py",
     "embodied_eval/adapters/openwam_libero_spec.py",
     "embodied_eval/adapters/vlabench_spec.py", "embodied_eval/adapters/robotwin_spec.py",
     "examples/mn_openwam_dual_wxyz_encoded_absolute.json",
@@ -47,7 +47,7 @@ def main():
     target.mkdir(parents=True, exist_ok=False)
     before = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in SOURCES}
     records = {}
-    for name in ("embodied_eval/contracts.py", "embodied_eval/mn/contracts.py"):
+    for name in ("embodied_eval/contracts.py", "embodied_eval/native/contracts.py"):
         source = (ROOT / name).read_text(encoding="utf-8")
         classes = {}
         for node in ast.parse(source).body:
@@ -59,8 +59,10 @@ def main():
                 classes[node.name] = {"line": node.lineno, "fields": fields}
         records[name] = classes
     from embodied_eval.codec import to_data
-    from embodied_eval.mn.native_catalog import PROFILES, capability, space
-    from embodied_eval.mn.additional_catalog import POLICIES, policy_capability
+    from embodied_eval.native.model_catalog import PROFILES
+    from embodied_eval.native.model_catalog import capability
+    from embodied_eval.native.benchmark_catalog import space
+    from embodied_eval.native.additional_catalog import POLICIES, policy_capability
     capabilities = {}
     for profile, item in PROFILES.items():
         options = {"io_profile": profile, "repo": "metadata-only", "checkpoint_dir": "metadata-only"}
@@ -78,8 +80,8 @@ def main():
                        "task_name": "select_fruit" if family == "vlabench" else "adjust_bottle"}
             spaces[family + "/" + protocol] = to_data(space(family, options))
     # Pure metadata functions: do not construct either simulator class.
-    from embodied_eval.mn.droid_simulator import space as droid_space
-    from embodied_eval.mn.robodojo_simulator import space as dojo_space
+    from embodied_eval.native.droid_simulator import space as droid_space
+    from embodied_eval.native.robodojo_simulator import space as dojo_space
     spaces["droid_sim/droid-three-scenes-native-v1"] = to_data(droid_space({
         "repo": "metadata-only", "assets_dir": "metadata-only"}))
     spaces["robodojo/stack-bowls-arx-x5-native-v1"] = to_data(dojo_space({"repo": "metadata-only"}))

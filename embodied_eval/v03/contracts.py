@@ -7,6 +7,8 @@ from dataclasses import dataclass, field
 from typing import Literal
 from ..core import types as leaf
 from ..core.types import Action
+from .execution_types import (ExecutionPolicy, ExecutionConstraint, BenchmarkExecution,
+                              ModelExecution, ExecutionPlan)
 
 VERSION = "0.3"
 
@@ -124,6 +126,7 @@ class SpaceSpec:
     # Known conventions are descriptions, not guessed transforms/calibration.
     frame_conventions: dict[str, str] = field(default_factory=dict)
     sample_timing: dict[str, SampleTiming] = field(default_factory=dict)
+    execution: BenchmarkExecution | None = None
     contract_version: Literal["0.3"] = VERSION
 
 
@@ -170,6 +173,7 @@ class CapabilitySpec:
     training_embodiments: tuple[str, ...] = ()
     observation_update: Literal["every_env_step", "decision_boundary"] = "every_env_step"
     temporal: ModelTiming | None = None
+    execution: ModelExecution | None = None
     contract_version: Literal["0.3"] = VERSION
 
 

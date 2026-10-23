@@ -50,7 +50,7 @@ def main():
     args = parser.parse_args()
     if args.child:
         from embodied_eval.config import load_config
-        from embodied_eval.mn.runner import run
+        from tests.legacy_support.frozen.mn.runner import run
         try:
             result = run(load_config(args.child), args.output)
             return result.exit_code
@@ -75,7 +75,7 @@ def main():
         benchmark=replace(cfg.benchmark, options=dict(cfg.benchmark.options, device="cuda:0")),
         episodes=tuple(replace(ep, budgets=replace(ep.budgets, env_steps=4, model_calls=4, wall_time_s=600.)) for ep in cfg.episodes))
     from embodied_eval.codec import to_data
-    from embodied_eval.mn.preflight import check
+    from tests.legacy_support.frozen.mn.preflight import check
     structural = check(cfg)
     write(args.output / "preflight.json", structural)
     if not structural["structurally_compatible"]:

@@ -33,7 +33,7 @@ def main():
             or not 1 <= args.workers <= 12 or not 1 <= args.range_workers <= 12 or args.max_seconds_per_route < 1
             or args.max_file_bytes is not None and args.max_file_bytes < 1):
         raise SystemExit("require named component directory, new receipt and positive bounded limits")
-    metadata = json.loads((ROOT / "embodied_eval/mn/asset_manifests" / (args.component + ".json")).read_text())
+    metadata = json.loads((ROOT / "embodied_eval/native/asset_manifests" / (args.component + ".json")).read_text())
     prefix = "datasets/" if metadata["kind"] == "datasets" else ""
     objects = metadata["objects"]
     items = [{**item, "url": "https://huggingface.co/" + prefix + metadata["repository"] + "/resolve/"

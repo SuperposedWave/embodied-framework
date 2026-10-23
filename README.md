@@ -1,6 +1,25 @@
 # EmbodiedEval
 
-## 当前入口：0.3公共空间（2026-10-16）
+## 当前运行方式（2026-10-23）
+
+只发布和运行0.3。模型与仿真环境独立注册，公共字段统一命名；模型只处理自己的权重输入输出与缓存，环境只处理观测、机器人执行与评分。新增一方不编写逐组合Adapter，也不修改另一方或Runner。
+
+执行策略现在按参数“Benchmark有明确规定优先，否则在已明确允许的范围内使用模型原生设置”。固定值、允许范围、允许模型决定、参考默认值与未知分别处理；未知参数允许明确标注的原生参考运行，但不能冒充正式同协议比较。设置与真实应用回执保存在 `execution-plan.json`。
+
+```sh
+.venv/bin/python -m embodied_eval check --config examples/synthetic_execution_prefix_run.json
+.venv/bin/python -m embodied_eval run --config examples/synthetic_execution_prefix_run.json --output outputs/my-execution-check
+```
+
+`mn/`、`_legacy_*`、旧组合工厂、旧模型包装器和CLI的migrate命令已退役；测试参考移入不随安装包发布的 `tests/legacy_support/frozen/`。历史文档、结果、权重和只读上游不回写。保留的权重编码和具名控制器扩展不代表另保留了一套旧版公共协议。
+
+当前结构：`v03/`是公共协议与通用流程；`core/`是通用物理类型；`native/model_catalog.py`与`model_assets.py`只管模型，`native/benchmark_catalog.py`、`benchmark_assets.py`与`environment_specs/`只管环境；`adapters/`只保留实际使用的环境加载与原生通信／执行工具。MassWorld桥接继续委托完整0.3运行，不增加外层动作缓存。
+
+详见[当前契约](docs/contract-v0.3.md)、[接入与调试指引](docs/adapter-onboarding.md)及[本轮修改报告](outputs/current-only-delivery-20261023-final/current-only-decoupling-report.html)。模型与环境结构满足、资产准备、真实推理、原生严格一致、全任务成功率和阶段验收仍是不同状态；契约未冻结、阶段4未自动接受，DreamZero双H10080GB验证仍后置。
+
+## 以下为历史交付记录（当时状态，不是当前API）
+
+## 0.3公共空间首轮交付（2026-10-16）
 
 用户已批准全部迁移到0.3。正常CLI和顶层Python配置、契约、接口与校验已切到0.3：
 环境Adapter先把原生相机／状态变成统一公共字段，模型Adapter只取公共字段并完成自己的私有编码。
@@ -10,7 +29,6 @@
 ```sh
 .venv/bin/python -m embodied_eval check --config examples/mn_synthetic_run.json
 .venv/bin/python -m embodied_eval run --config examples/mn_synthetic_run.json --output outputs/my-v03-run
-.venv/bin/python -m embodied_eval migrate --config /path/to/old.json --output outputs/migrated-v03.json
 ```
 
 详见[0.3契约](docs/contract-v0.3.md)和[接入指引](docs/adapter-onboarding.md)。

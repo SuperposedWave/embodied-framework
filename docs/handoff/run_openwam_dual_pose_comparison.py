@@ -32,10 +32,10 @@ def canonical_config(config):
 def child(args):
     import numpy as np
     from embodied_eval.config import load_config
-    from embodied_eval.mn.registry import default_registry, AdapterRegistry
-    from embodied_eval.mn.runner import run
-    from embodied_eval.mn.native_models import NativeActionModel
-    from embodied_eval.mn.native_benchmarks import NativeSimulator
+    from embodied_eval.native.registry import default_registry, AdapterRegistry
+    from tests.legacy_support.frozen.mn.runner import run
+    from embodied_eval.native.native_models import NativeActionModel
+    from embodied_eval.native.native_benchmarks import NativeSimulator
     from comparison_video import Frames
     args.output.mkdir(parents=True,exist_ok=False)
     framework=args.output/"framework"
@@ -96,7 +96,7 @@ def main():
     if args.mapping_receipt is None or json.loads(args.mapping_receipt.read_text()).get("passed") is not True:
         raise ValueError("completed_offline_mapping_gate_required")
     from embodied_eval.config import load_config
-    from embodied_eval.mn.openwam_dual_pose import PROFILE
+    from embodied_eval.native.openwam_dual_pose import PROFILE
     cfg=load_config(args.config)
     if cfg.model.options["io_profile"]!=PROFILE or cfg.episodes[0].budgets.env_steps!=4:
         raise ValueError("named_profile_and_reviewed_four_action_bound_required")
