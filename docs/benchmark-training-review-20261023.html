@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>已接入具身 Benchmark：微调与零样本评测调研</title>
+  <style>
+    :root { color-scheme:light dark; --canvas:#fafbff; --paper:#fff; --text:#242630; --muted:#666b7a; --accent:#354381; --tint:#eef0f8; --line:#dfe2ec; --code:#20232d; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--canvas); color:var(--text); font:16px/1.76 Inter,"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif; }
+    .report-shell { display:block; width:min(100% - 40px,820px); margin:32px auto 64px; }
+    main.report-content { min-width:0; padding:42px 48px; background:var(--paper); border:1px solid var(--line); border-radius:8px; counter-reset:section; }
+    h1 { margin:0 0 .7em; color:var(--accent); font-size:1.85em; line-height:1.25; scroll-margin-top:24px; }
+    h2 { margin:2em 0 .8em; padding-bottom:.35em; border-bottom:1px solid var(--line); font-size:1.42em; counter-increment:section; counter-reset:subsection; scroll-margin-top:24px; }
+    h2::before { content:counter(section,cjk-ideographic) "、"; color:var(--accent); }
+    h3 { margin:1.5em 0 .6em; font-size:1.18em; counter-increment:subsection; scroll-margin-top:24px; }
+    h3::before { content:counter(section) "." counter(subsection) " "; color:var(--accent); }
+    h1:target,h2:target,h3:target { border-radius:4px; background:var(--tint); box-shadow:0 0 0 6px var(--tint); }
+    p,ul,ol { margin:.8em 0; }
+    .lead { color:var(--muted); font-size:1.05em; }
+    .callout { margin:1.25em 0; padding:14px 16px; background:var(--tint); border-left:4px solid var(--accent); }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:10px 12px; border:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:var(--tint); }
+    code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; overflow-wrap:anywhere; }
+    pre { overflow-x:auto; padding:16px; color:#f5f6fa; background:var(--code); border-radius:8px; }
+    a { color:var(--accent); text-underline-offset:2px; overflow-wrap:anywhere; }
+    @media(max-width:760px) { body { font-size:15px; } .report-shell { width:100%; margin:0; } main.report-content { padding:58px 18px 48px; border:0; border-radius:0; } }
+    @media(prefers-color-scheme:dark) { :root { --canvas:#14161d; --paper:#1b1e27; --text:#e8eaf0; --muted:#aeb3c2; --accent:#aeb9ff; --tint:#282d42; --line:#383d4d; } }
+    @media print { :root { --canvas:#fff; --paper:#fff; --text:#111; --accent:#222; --tint:#f2f2f2; --line:#bbb; } body,.report-shell,main.report-content { background:#fff; } .report-shell { width:100%; margin:0; } main.report-content { width:100%; padding:0; border:0; } a { color:inherit; } }
+  </style>
+</head>
+<body>
+<div class="report-shell"><main class="report-content">
+  <h1 id="report-title">已接入具身 Benchmark：<br>微调与零样本评测调研</h1>
+  <p class="lead">核查日期：2026年10月23日（北京时间）。范围：当前注册的五类机器人仿真环境，官方论文／文档，以及本项目具名权重和固定源码。不是全部具身 Benchmark 的行业普查。</p>
+
+  <section aria-labelledby="conclusion">
+    <h2 id="conclusion">先回答有多少</h2>
+    <div class="callout"><strong>你的观察基本正确。</strong>按我们接入的动作策略主要评测路线统计，五类中有四类采用“先用该 Benchmark 的训练数据训练／微调，再测试”的常见设置；一类 DROID sim_evals 明确按“不另用仿真数据训练，直接部署真实 DROID 策略”设计。但这不是“四类强制微调、一类模型从未训练”的二选一。</div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>已接入环境</th><th>主要路线如何评测</th><th>零样本的边界</th></tr></thead>
+      <tbody>
+        <tr><td>LIBERO</td><td>训练／微调后测试。原始研究为终身学习和模仿学习；我们使用的 π0.5／OpenWAM 也是下游权重。</td><td>新起点或知识迁移不等于整个 Benchmark 从未用于训练。<a href="https://raw.githubusercontent.com/Lifelong-Robot-Learning/LIBERO/8f1084e3132a39270c3a13ebe37270a43ece2a01/README.md">固定版官方说明</a></td></tr>
+        <tr><td>VLABench</td><td>我们接入的是动作模型路线，常规做法是微调后评测。</td><td>官方另有零样本智能体工作流；不能把那条路线算成我们已经接入。<a href="https://arxiv.org/html/2412.18194v1">论文 §4.1／§4.2／§9.1</a></td></tr>
+        <tr><td>RoboTwin 2.0</td><td>论文仿真主实验用任务示范训练，再在干净／随机化场景测试。</td><td>随机化场景未见、指令未见，不等于没用 RoboTwin 训练数据。<a href="https://arxiv.org/html/2506.18088v2">论文 §4.5</a></td></tr>
+        <tr><td>RoboDojo（仿真）</td><td>有明确训练集，官方策略采用训练／微调后评测。</td><td>Open 类任务不提供对应示范，用来测学过其他任务后的新任务泛化。<a href="https://arxiv.org/html/2607.04434v1">论文 §3.1.2／附录 K</a></td></tr>
+        <tr><td>DROID sim_evals</td><td>真实 DROID 数据上训练的策略，直接进入三场景仿真；不要求另做仿真训练。</td><td>这是相对目标仿真环境的迁移，不是“没用 DROID 数据训练”。当前来源没有官方任务成功评分器。<a href="https://raw.githubusercontent.com/arhanjain/sim-evals/3a6b0e8177f696947f49c082728f10ef5133ede1/README.md">固定版原生说明</a></td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>因此可以记为“4 类有常规训练后评测路线，1 类以免仿真训练的迁移为设计目标”。</strong>前四类并非禁止拿冻结模型直接跑；只是那样测的是另一种能力，不能直接冒充原论文同条件复现。VLABench、RoboDojo 含有不同性质的路线／子任务，所以不把这组数字包装成互斥的永久标签。</p>
+    <p>如果问题换成“我们已经严格证明多少类环境及测试任务完全没有出现在模型任何阶段的训练数据里”，<strong>目前不能确认任何一类完成了这种全量排查</strong>。这是训练来源证据不完整，不是说零样本迁移不可能，也不是说已有动作没有运行过。</p>
+  </section>
+
+  <section aria-labelledby="terms">
+    <h2 id="terms">先把几种“没训练”分开</h2>
+    <p>这里的“权重”就是模型训练后保存的参数文件；“微调”是在已有参数基础上，用目标数据继续训练。Benchmark 提供的是环境、任务和评测规则，通常不会因为你没有微调就禁止调用它。</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>说法</th><th>人话解释</th><th>能否直接叫整个 Benchmark 零样本</th></tr></thead>
+      <tbody>
+        <tr><td>本项目没有训练</td><td>下载别人训练好的权重直接评测。</td><td>不能。别人可能已经用目标 Benchmark 训练过。</td></tr>
+        <tr><td>新场景／新物体／新指令</td><td>同类技能学过，换摆放、外观或说法后还能不能做。</td><td>不能扩大成整个环境从未见过。</td></tr>
+        <tr><td>新任务零样本</td><td>不提供这项新任务的示范，看能否组合已学技能完成。</td><td>只能说明指定任务未用于适配，其他训练任务可能来自同一 Benchmark。</td></tr>
+        <tr><td>不使用目标 Benchmark 数据适配</td><td>拿冻结模型直接测，不用该 Benchmark 的示范更新参数。</td><td>还要排查预训练是否已包含相关数据；未公开完整清单时标“未核实”，不能猜。</td></tr>
+        <tr><td>新机器人零样本</td><td>连机器人的关节结构、动作接口或身体也换了。</td><td>是更强、不同的问题；公共格式接得上不等于模型已经学会控制新身体。</td></tr>
+      </tbody>
+    </table></div>
+    <p>这些区别也是本次统计的口径，不是新增公共契约字段。本报告没有改变模型训练、控制器或评测协议。</p>
+  </section>
+
+  <section aria-labelledby="bench-details">
+    <h2 id="bench-details">逐个 Benchmark 说明</h2>
+    <h3 id="libero">LIBERO：原本就不是单纯的“拿来就考”</h3>
+    <p>原始 LIBERO 研究机器人如何持续学习、迁移已有知识；官方提供示范数据、训练算法及训练后的评测入口。LIBERO-90 与 LIBERO-10 的划分，不能简单解释成“在前90项训练后，后10项一律禁止学习”：原始说明将后者用于下游终身学习研究。实际要看具体实验是否继续适配。<a href="https://raw.githubusercontent.com/Lifelong-Robot-Learning/LIBERO/8f1084e3132a39270c3a13ebe37270a43ece2a01/README.md">固定版 README</a>、<a href="https://lifelong-robot-learning.github.io/LIBERO/html/research_topics/overview.html">官方训练／评测说明</a>。</p>
+    <p>对我们当前配置，结论更直接：OpenPI 明确把 <code>pi05_libero</code>列在微调模型中；OpenWAM 对应模型卡也明确写明在 LIBERO 仿真基准上微调。因此，用这些现成权重不需要我们再训练一次，但不能称为“基础模型未接触 LIBERO 的零样本”。<a href="https://raw.githubusercontent.com/Physical-Intelligence/openpi/215abfb217dbac7d5f1273282331b9b1866c0479/README.md">固定版 OpenPI 权重说明</a>、<a href="https://huggingface.co/OpenWAM/OpenWAM-Alpha-Sim-LIBERO">OpenWAM 模型卡</a>。</p>
+
+    <h3 id="vlabench">VLABench：确实有两种不同的考法</h3>
+    <p>官方论文动作模型实验，会先微调 OpenVLA、Octo、RDT 等，再考察物体、语言和任务泛化；另有 VoxPoser、CoPA 一类不追加模型训练的智能体工作流。后者还包含感知、技能调用和规划模块，不能等同于同一个动作模型“只换 Adapter”。<a href="https://arxiv.org/html/2412.18194v1">论文 §4.1、§4.2、§9.1</a>、<a href="https://vlabench.github.io/">官方项目页</a>。</p>
+    <p>我们采用 OpenWAM-VLABench 和 <code>pi05-primitive-10task</code>动作策略，不是上述零样本智能体系统。尤其 π0.5 的固定版模型卡明确说明：10项任务、5000段数据、8张H100、3万次训练迭代。轨道里“未见类别／纹理／指令”是在这种适配后继续测泛化，不能改名为整个 Benchmark 的零样本。<a href="https://huggingface.co/VLABench/pi05-primitive-10task/blob/f658a8bec801aab960fe0ceab370a123b31c1837/README.md">匹配权重的固定版说明</a>。</p>
+    <p>本项目当前仍限 <code>track_1_in_distribution / select_fruit / trial0</code>。配置中的 <code>frozen-track1</code>表示固定场景协议，<strong>不表示模型从未训练过</strong>。OpenWAM 本地发布配置指向 VLABench 训练数据；本轮远端对应模型卡未成功读取，不把这个缺口隐藏成完整训练清单已核验。</p>
+
+    <h3 id="robotwin">RoboTwin：场景变了，不代表任务没学过</h3>
+    <p>RoboTwin 2.0 论文主仿真实验，每项任务用50段干净专家示范训练，在干净和强随机化条件下分别做100次测试。论文另有“零样本仿真到真实”实验，含义是用仿真数据训练后，不再用真实示范适配；不能解释为没有训练。<a href="https://arxiv.org/html/2506.18088v2">论文 §4.4／§4.5</a>。</p>
+    <p>当前 OpenWAM <code>RoboTwin-Full</code>与 LingBot-VLA 的 RoboTwin 版本都是下游训练权重。前者 Full 使用干净加随机化数据，不能拿它冒充“只用干净数据训练、测试随机场景”的 Clean2Random 设置。后者固定源码明确给出50任务、干净加随机化数据的后训练示例。<a href="https://raw.githubusercontent.com/OpenWAM-Official/OpenWAM/48bd67b89d489b14d03b8d92bc66e65d306df32e/benchmarks/robotwin/README.md">固定版 OpenWAM 两种设置</a>、<a href="https://raw.githubusercontent.com/robbyant/lingbot-vla-v2/be969b8fd117fb70550c5d4bf4bc328211b5b1b6/README.md">固定版 LingBot 后训练说明</a>。</p>
+    <p>我们配置的 <code>instruction_type: unseen</code>只限定指令来源，不证明该任务、机器人和物体从未用于训练。另两条把 RoboDojo 的 ARX 权重接入 RoboTwin 的记录属于跨来源部署尝试；没有完整训练排查与任务统计，不能仅凭更换环境就认定严格零样本成功。</p>
+
+    <h3 id="robodojo">RoboDojo：训练后测熟悉任务，也测没教过的新任务</h3>
+    <p>仿真论文提供3500段训练轨迹，包含34项训练任务与一个辅助数据目录；Open 维度不提供对应任务示范。官方 π0.5 仿真实验从基础权重微调6万步。所以它有训练后评测路线，同时保留新任务泛化考法。<a href="https://arxiv.org/html/2607.04434v1">论文 §3.1.2、附录 D／K</a>。</p>
+    <p>官方仓库称当前发布为 <code>eval-only</code>，说的是“这个代码仓库负责评测端，不负责策略训练端”，不是“所有参加模型必须从未微调”。仓库本身也链接训练数据下载说明。<a href="https://github.com/RoboDojo-Benchmark/RoboDojo">官方仓库</a>。</p>
+    <p>我们采用已发布的 ARX π0.5 检查点，以及明确在 RoboDojo 仿真轨道微调的 OpenWAM 权重。当前仅验证 <code>stack_bowls</code>及选定布局，不能把 Open 类未见任务的设计当成本项目已经完成该类评测。<a href="https://huggingface.co/OpenWAM/OpenWAM-Alpha-Sim-RoboDojo">OpenWAM 权重来源</a>。</p>
+
+    <h3 id="droid">DROID sim_evals：免仿真微调，不是免 DROID 训练</h3>
+    <p>这个固定版小型 Isaac Sim 环境的 README 明确说明：仿真经过调节，以便真实 DROID 数据上训练的策略零样本运行，不要求另采仿真数据。它还明确偏向关节位置动作，不是任意策略和控制模式都可直接替换。<a href="https://raw.githubusercontent.com/arhanjain/sim-evals/3a6b0e8177f696947f49c082728f10ef5133ede1/README.md">固定版原生说明</a>。</p>
+    <p>本项目接入的是这个三场景模拟器，不是把完整 DROID 真实世界数据集接成了统一成功率 Benchmark，也不是完整 RoboLab。借用 RoboLab 客户端处理组件，不会改变实际执行环境的身份。</p>
+    <p>DreamZero 固定模型卡明确声明其机器人训练数据来自 DROID。Cosmos 固定源码的后训练文档也将 Nano 基础模型在 Cosmos3-DROID 数据上后训练，作为 Policy-DROID 的复现配方。两者都不是“从未学习 DROID 机器人”的模型。前者仍等待后续双H100真实动作验证，后者已有有限步记录；设计宣称不等于本项目已完成全部场景的零样本成功率证明。<a href="https://huggingface.co/GEAR-Dreams/DreamZero-DROID/blob/96ad344138c66e82536422432ad742f015784942/README.md">DreamZero 固定模型卡</a>、<a href="https://github.com/NVIDIA/cosmos-framework/blob/cf5d68c00d97ccd2480a2320ed652b92dec63102/docs/action_policy_droid_posttrain.md">Cosmos 固定源码文档</a>。</p>
+    <p>限制也必须保留：仿真本身经过调节，不是完全未经设计干预的环境；当前原生来源没有官方任务成功评分器。因此我们能研究迁移和执行，却不能自造一个 success 分数后说复现了官方全套成绩。此判断来自本地固定源码及项目评分声明，详见证据清单。</p>
+  </section>
+
+  <section aria-labelledby="our-checkpoints">
+    <h2 id="our-checkpoints">我们实际拿的是什么权重</h2>
+    <p>本轮盘点13份具名参考配置，去重后为10个检查点目录。相同权重的不同编码配置、不同环境部署不重复算成新模型。下表区分发布者说明、源码配方和完整训练证据；三者不是一回事。</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>模型／检查点目录简名</th><th>目标数据／证据</th><th>应该怎么称呼</th></tr></thead>
+      <tbody>
+        <tr><td>OpenWAM-Alpha-Sim-LIBERO</td><td><a href="https://huggingface.co/OpenWAM/OpenWAM-Alpha-Sim-LIBERO">模型卡</a>明确微调 LIBERO；本地 config 指向 LIBERO。</td><td>现成下游权重评测；不是 LIBERO 基准级零样本。</td></tr>
+        <tr><td>pi05_libero</td><td><a href="https://raw.githubusercontent.com/Physical-Intelligence/openpi/215abfb217dbac7d5f1273282331b9b1866c0479/README.md">OpenPI 固定说明</a>明确 LIBERO 微调版。</td><td>现成下游权重评测。</td></tr>
+        <tr><td>OpenWAM-Alpha-Sim-VLABench</td><td>本地发布 config 的训练数据类型及配套入口指向 VLABench；本轮远端模型卡未读取成功。</td><td>具名 VLABench 下游配置；完整训练清单仍未核实。</td></tr>
+        <tr><td>pi05_vlabench_primitive10</td><td><a href="https://huggingface.co/VLABench/pi05-primitive-10task/blob/f658a8bec801aab960fe0ceab370a123b31c1837/README.md">固定模型卡</a>明确10任务5000段、3万次迭代。</td><td>VLABench 微调后评测；不是因为本项目没训练就变成零样本。</td></tr>
+        <tr><td>OpenWAM-Alpha-Sim-RoboTwin-Full</td><td><a href="https://huggingface.co/OpenWAM/OpenWAM-Alpha-Sim-RoboTwin-Full">模型卡</a>及<a href="https://raw.githubusercontent.com/OpenWAM-Official/OpenWAM/48bd67b89d489b14d03b8d92bc66e65d306df32e/benchmarks/robotwin/README.md">固定评测说明</a>明确 Full 微调设置。</td><td>RoboTwin Full 下游权重；标准化朝向配置仍是相同权重。</td></tr>
+        <tr><td>lingbot-vla-v2-6b-robotwin</td><td><a href="https://raw.githubusercontent.com/robbyant/lingbot-vla-v2/be969b8fd117fb70550c5d4bf4bc328211b5b1b6/README.md">固定源码</a>明确后训练版本及配方。</td><td>RoboTwin 后训练权重。</td></tr>
+        <tr><td>pi05_arx_x5_seed0_step59999</td><td>本地注册锁定 RoboDojo 数据仓库内发布的 ARX 检查点；官方论文提供 π0.5 微调协议。未复核该训练运行的完整清单。</td><td>已发布 ARX 下游检查点；接入 RoboTwin 的另一条路线单记迁移，不自动认定零样本。</td></tr>
+        <tr><td>OpenWAM-Alpha-Sim-RoboDojo</td><td><a href="https://huggingface.co/OpenWAM/OpenWAM-Alpha-Sim-RoboDojo">模型卡</a>明确 RoboDojo 仿真轨道微调。</td><td>RoboDojo 下游权重；跨环境复用不抹去训练历史。</td></tr>
+        <tr><td>Cosmos3-Nano-Policy-DROID</td><td>固定源码后训练文档说明 Cosmos3-DROID 配方；不是该权重每条训练样本的完整审计。</td><td>DROID 后训练策略→目标仿真的迁移候选。</td></tr>
+        <tr><td>DreamZero-DROID</td><td><a href="https://huggingface.co/GEAR-Dreams/DreamZero-DROID/blob/96ad344138c66e82536422432ad742f015784942/README.md">固定模型卡</a>明确 DROID 机器人训练数据。</td><td>DROID 训练策略→目标仿真的迁移候选；真实动作验证尚未完成。</td></tr>
+      </tbody>
+    </table></div>
+    <p>没有给这些检查点统一颁发“训练数据已完整核验”的结论。发布说明可以证实适配目标，但不能替代全部预训练、微调数据清单以及每条测试任务的排除检查。</p>
+  </section>
+
+  <section aria-labelledby="architecture-impact">
+    <h2 id="architecture-impact">对我们的框架意味着什么</h2>
+    <p><strong>不推翻当前“每个模型一个 Adapter、每个环境一个 Adapter”的架构。</strong>Adapter 负责把已有观测和动作正确转换；训练负责让权重学会从观测做决策。换成公共字段不能凭空教会一个没学过的动作技能，任务失败也不能单凭现象判为 Adapter 错误。</p>
+    <p>因此，接入新模型／环境时有两个独立问题：一是图像、状态、坐标、动作和采样语义是否接得上；二是这份权重有没有相应机器人／技能能力。前者由 Adapter 和接口验证解决，后者需要合适现成权重、零样本实验或独立训练方案验证。微调通常产生另一份具名检查点，不意味着要为每个模型与环境组合重写 Python Adapter。</p>
+    <p>后续评测建议分两路记账，而不是把成绩混起来：</p>
+    <ul>
+      <li><strong>训练后评测：</strong>明确使用过哪些目标训练数据、多少示范、训练预算、权重版本，再在指定测试条件下比较。</li>
+      <li><strong>冻结模型迁移：</strong>不追加目标数据训练；如实登记既有训练来源、未见维度和排查缺口。来源不完整就写未核实，不把“我们没训练”写成“从未见过”。</li>
+    </ul>
+    <p>如果要正式比较“谁微调更省数据”，需要另行确定同等示范量、训练预算和测试集合；那是新增实验方案，不是本次只读调研已经授权开始训练。也不应把训练过程塞进通用 Runner。</p>
+  </section>
+
+  <section aria-labelledby="evidence-boundary">
+    <h2 id="evidence-boundary">证据、版本与未解决事项</h2>
+    <p>本地审计保存了五类环境、13份参考配置、10个检查点目录、14份固定源码文件和4份小型发布配置的身份摘要；固定源码文件均与各自 Git 提交内容一致。<a href="../outputs/benchmark-training-review-20261023-run1/local-source-audit.json">查看本轮本地来源清单</a>。摘要使用 SHA-256，即用于发现文件内容变化的指纹，不代表已经证明训练质量或任务成功。</p>
+    <p>主要环境固定版本：LIBERO <code>8f1084e…</code>（OpenWAM 路线）与 <code>f78abd6…</code>（OpenPI 路线）；VLABench <code>cf588fe…</code>；RoboTwin <code>0aeea2d…</code>／<code>13c3c47…</code>；RoboDojo <code>266130a…</code>；DROID sim_evals <code>3a6b0e8…</code>。这些字符串是源码提交的短标识，完整值见来源清单及注册配置。</p>
+    <p>论文使用明确版本：VLABench arXiv v1、RoboTwin 2.0 arXiv v2、RoboDojo arXiv v1。在线项目页及部分模型卡核查于2026年10月23日；它们不自动替换项目固定源码。VLABench ICCV 论文 PDF 在线读取被拒绝，因此具体训练细节引用可读取的官方 arXiv 版本和固定权重说明，不冒充完整读过不可读版本。</p>
+    <ul>
+      <li>完整预训练／微调数据清单、测试样本排除检查：未完成；不能出具严格的全来源“零污染”认证。</li>
+      <li>全任务覆盖、多随机起点和正式成功率：仍按原待办处理；接入五类环境不等于五类所有任务都已跑完。<a href="benchmark-coverage-review.md">既有任务覆盖评审</a>是2026年10月15日历史快照，其中旧公共语义待办已被后续0.3迁移更新，不能据它回退当前架构。</li>
+      <li>DROID sim_evals 官方任务成功评分缺失、DreamZero 后续硬件验证、旧原生复现差异：本轮未关闭。<a href="stage-state.json">当前阶段状态</a>。</li>
+      <li>本轮仅做资料与身份核对，没有下载大权重、启动训练、排 GPU 任务、新推理或新仿真，没有改变 Adapter、Runner、公共契约、历史证据和评分规则；旧测试基线未在本轮重新执行。</li>
+    </ul>
+    <div class="callout"><strong>一句话总结：</strong>我们目前多数路线是在测“一个已经针对目标数据训练过的机器人策略表现如何”，而不是统一测“任意基础模型第一次见这个环境能做多好”。这两种评测都合理，但必须分开标注与比较。</div>
+  </section>
+</main></div>
+</body>
+</html>

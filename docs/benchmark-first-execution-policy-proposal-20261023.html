@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Benchmark优先的执行策略方案｜待确认</title>
+  <style>
+    :root { color-scheme: light dark; --canvas:#fafbff; --paper:#fff; --text:#242630; --muted:#666b7a; --accent:#354381; --tint:#eef0f8; --line:#dfe2ec; --code:#20232d; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--canvas); color:var(--text); font:16px/1.76 Inter,"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif; }
+    .report-shell { display:block; width:min(100% - 40px,820px); margin:32px auto 64px; }
+    main.report-content { min-width:0; padding:42px 48px; background:var(--paper); border:1px solid var(--line); border-radius:8px; counter-reset:section; }
+    h1 { margin:0 0 .7em; color:var(--accent); font-size:1.85em; line-height:1.25; scroll-margin-top:24px; }
+    h2 { margin:2em 0 .8em; padding-bottom:.35em; border-bottom:1px solid var(--line); font-size:1.42em; counter-increment:section; counter-reset:subsection; scroll-margin-top:24px; }
+    h2::before { content:counter(section, cjk-ideographic) "、"; color:var(--accent); }
+    h3 { margin:1.5em 0 .6em; font-size:1.18em; counter-increment:subsection; scroll-margin-top:24px; }
+    h3::before { content:counter(section) "." counter(subsection) " "; color:var(--accent); }
+    h1:target, h2:target, h3:target { border-radius:4px; background:var(--tint); box-shadow:0 0 0 6px var(--tint); }
+    p,ul,ol { margin:.8em 0; }
+    .lead { color:var(--muted); font-size:1.05em; }
+    .callout { margin:1.25em 0; padding:14px 16px; background:var(--tint); border-left:4px solid var(--accent); }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .panel { padding:16px; border:1px solid var(--line); border-radius:6px; }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:10px 12px; border:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:var(--tint); }
+    code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
+    pre { overflow-x:auto; padding:16px; color:#f5f6fa; background:var(--code); border-radius:8px; }
+    a { color:var(--accent); text-underline-offset:2px; }
+    @media (max-width:760px) {
+      body { font-size:15px; }
+      .report-shell { display:block; width:100%; margin:0; }
+      main.report-content { width:100%; margin:0; padding:58px 18px 48px; border:0; border-radius:0; }
+      .grid { grid-template-columns:1fr; }
+    }
+    @media (prefers-color-scheme:dark) { :root { --canvas:#14161d; --paper:#1b1e27; --text:#e8eaf0; --muted:#aeb3c2; --accent:#aeb9ff; --tint:#282d42; --line:#383d4d; } }
+    @media print { :root { --canvas:#fff; --paper:#fff; --text:#111; --accent:#222; --tint:#f2f2f2; --line:#bbb; } body,.report-shell,main.report-content { background:#fff; } .report-shell { display:block; width:100%; margin:0; } main.report-content { width:100%; padding:0; border:0; } a { color:inherit; } }
+  </style>
+</head>
+<body>
+  <div class="report-shell">
+    <main class="report-content">
+      <h1 id="report-title">Benchmark 优先的执行策略方案</h1>
+      <p class="lead">EmbodiedEval 0.3 · 2026年10月23日（北京时间）<br>状态：待确认的设计方案。仅新增评审材料，尚未修改契约、Adapter、Runner或现有评测设置。</p>
+      <section aria-labelledby="summary">
+        <h2 id="summary">核心结论与范围</h2>
+        <div class="callout"><strong>采用你的优先级：</strong>具体 Benchmark 评测协议的明确要求优先；协议允许模型决定的部分，沿用匹配权重的原生部署设置。框架负责把两边声明核对成一份可追溯、可执行的计划，不自行创造全局频率。</div>
+        <p>这里的 Benchmark 不是单独一个名字，而是<strong>固定版本、赛道、任务范围、机器人、控制器和评分设置组成的具名协议</strong>。同一个环境可以既有严格复现协议，也有允许模型自选部署参数的协议。环境能运行某个设置，不代表该设置自动满足某一正式榜单要求。</p>
+        <p>本方案覆盖：物理步长与动作推进规则的身份核对、模型观测要求、动作批次消费、重新决策和缓存归属。动作批次就是 action chunk，即一次预测得到的一串动作；“执行条数”是重新请求动作前使用其中多少条。它与仿真物理计算次数、图像采集次数、真实模型生成次数都不同。</p>
+        <p>假设各模型已有对应任务的微调权重，但不因此假设所有权重的时间含义已核实。首轮不做动作插值、重复动作、自动改控制频率、额外取图、实时异步、硬仿真时间上限或自动调参；不新增训练任务。</p>
+      </section>
+
+      <section aria-labelledby="precedence">
+        <h2 id="precedence">按每个参数判断优先级</h2>
+        <p>不能把整个 Benchmark 简单标为“固定”或“灵活”。例如它可以固定动作周期，却允许模型选择每次执行几条。每个参数分别保存规则、适用范围和来源，再联合检查是否能同时满足。</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>规则性质</th><th>如何选最终值</th><th>停止／限制条件</th></tr></thead>
+          <tbody>
+            <tr><td>Benchmark 明确固定</td><td>采用规定值或规定的执行策略；允许把模型配置调整到这个值，但只能用它确实支持的方式。</td><td>模型不支持则报不兼容；不强行裁切隐藏缓存、重复动作或改变权重。</td></tr>
+            <tr><td>Benchmark 明确允许范围／若干选项</td><td>使用范围内、匹配权重的模型原生设置；用户以后明确选择的新实验值也必须在范围内。</td><td>原生值越界则要求选择一份明确支持的具名设置；不自动取最接近值或取上限。</td></tr>
+            <tr><td>Benchmark 明确交给策略自行决定</td><td>采用模型侧的原生执行条数、批次／融合策略和缓存归属。</td><td>仍须满足环境实际接口、必要观测、动作语义、预算和其他协议限制。</td></tr>
+            <tr><td>只有参考程序默认值，没有强制说明</td><td>复现这份参考程序时沿用其值，记为“参考默认”，不能升级成全 Benchmark 的硬规定。</td><td>若另选设置，单独记为新实验；是否可用于正式榜单仍待核。</td></tr>
+            <tr><td>规则没有说明／来源未核实</td><td>现有原生参考复现可以保持原行为，但标明规则未核实；不自动当成自由配置。</td><td>不能宣布正式协议合规。缺少执行必需语义时直接拒绝，而非仅给警告继续。</td></tr>
+          </tbody>
+        </table></div>
+        <p><strong>明确要求优先，不意味着框架有能力把不兼容变兼容。</strong>如果环境固定每0.05秒一条，而权重明确需要每0.1秒一条，本轮应拒绝该受检协议；调整动作时间或重新适配权重是另一项工作，不能靠“Benchmark优先”一句话跳过。</p>
+        <p>来源须区分官方规则、官方参考实现、模型发布配置和用户自定义实验。若同一协议的文档与代码冲突，先记录冲突，不擅自解释成允许调整。我们自行制定的受控协议可以固定参数，但必须标为本项目实验，不能冒充官方新增规定。</p>
+      </section>
+
+      <section aria-labelledby="responsibilities">
+        <h2 id="responsibilities">四类时间信息分别怎么管</h2>
+        <div class="table-wrap"><table>
+          <thead><tr><th>事项</th><th>归属</th><th>本方案的处理</th></tr></thead>
+          <tbody>
+            <tr><td>仿真物理步长</td><td>Benchmark Adapter 保留原生设置。</td><td>记录版本、实际值和来源，不根据模型任意修改；启动时核对实际环境没有漂移。</td></tr>
+            <tr><td>一条动作推进的时间／完成事件</td><td>Benchmark 协议定义，模型配置说明其适用时间含义。</td><td>固定周期核对周期；变时长保留原生控制并记录实际秒数，不由动作条数猜时间。</td></tr>
+            <tr><td>模型需要的当前／历史图像与状态</td><td>模型声明输入要求，Benchmark 声明真实可提供的数据。</td><td>使用公共层已有的真实时间戳与历史选样能力；训练和运行仍须输入对应，不改现有采集节奏、不伪造历史。</td></tr>
+            <tr><td>执行几条后重新预测，以及是否融合</td><td>先读 Benchmark 的限制，再选择模型支持的部署规则。</td><td>模型 Adapter／原生服务执行自己的规则；框架核对计划和实际证据，不再增加第二套缓存管理。</td></tr>
+          </tbody>
+        </table></div>
+        <p>微调可以使权重适应目标数据节奏，但不能替程序提供缺失历史，也不能把未知动作时长变成已知。如果现有模型只需要当前图，不额外建设它不需要的历史输入。</p>
+        <p>离线、同步原生路径继续保留。推理耗时与仿真推进时间分别记账，不因为GPU负载或推理速度变化，自动改变执行条数。若某个协议要求实时期限、硬仿真时间截止，而当前执行器不能保证，明确列为不支持，不假装通过。</p>
+      </section>
+
+      <section aria-labelledby="architecture">
+        <h2 id="architecture">保持模型与环境独立接入</h2>
+        <p>保留 M+N 架构：M 是模型数量，N 是环境数量，每个组件只实现自己的 Adapter。新增以下<strong>拟议声明</strong>和通用核对逻辑，不为每个组合新增 Python 工厂或白名单。</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>拟议组件</th><th>保存／负责什么</th><th>不做什么</th></tr></thead>
+          <tbody>
+            <tr><td>Benchmark 的执行限制声明</td><td>协议身份；各参数是固定、范围可选、策略自定、参考默认还是未知；相应值、来源及适用范围。</td><td>不按模型名称选择规则，不从模型例程默认值推导官方硬限制。</td></tr>
+            <tr><td>模型的执行能力与偏好声明</td><td>权重身份；预测批次长度；原生执行条数／完整批次／融合方式；可调整范围；缓存归属和原生配置入口；动作时间已知或未知。</td><td>不接收环境对象，不按 Benchmark 名称分支，不用未核实的训练帧率填动作时长。</td></tr>
+            <tr><td>通用执行策略解析器</td><td>按优先级合并两边声明，检查全部约束，生成最终计划或明确拒绝原因。解析器是核对元数据的程序。</td><td>不处理图像、不归一化、不改动作、不做机器人控制，不猜未公开规则。</td></tr>
+            <tr><td>最终执行计划</td><td>逐项列出选定规则、为什么采用、谁负责落实、来源、待核事项，以及是否改变原生设置。</td><td>不是一份新的逐对接线脚本，也不是正式验收证书。</td></tr>
+            <tr><td>Runner 与证据保存</td><td>按通用顺序调用组件，保存计划、动作、时间和请求边界，核对可观测的执行反馈。</td><td>不偷偷绕过原生缓存强制重新推理，不把每次 predict 调用算成一次真实模型生成。</td></tr>
+          </tbody>
+        </table></div>
+        <h3 id="resolve-flow">一次运行的完整流程</h3>
+        <ol>
+          <li>选择具名 Benchmark 协议和具名权重配置，加载各自的声明与来源。</li>
+          <li>在不启动GPU推理的预检查中生成“声明层面计划”，显示采用值、适用范围、缺口与冲突；未知项不伪装为已验证。</li>
+          <li>运行初始化时再次核对环境实际控制周期与组件实际配置；静态声明可能被运行环境覆盖，不能只检查一次。</li>
+          <li>由组件把计划落实到自己的原生设置：模型侧只调自己支持的参数，环境侧保持自己的协议。服务无法确认所选设置时，不把本地配置声明当成服务已生效。</li>
+          <li>执行中保存真实动作及请求边界；配置、声明和实际行为不符时报告违规／未知状态，不在中途自动换设置或重发动作。</li>
+          <li>输出结果时分别报告规则核查、实际落实、原生复现差异和任务成绩。</li>
+        </ol>
+        <p>对于隐藏缓存的服务，外层调用5次接口不一定触发新生成。要满足“每5条重新决策”的协议，模型侧必须能够真正配置并验证这一行为；单纯丢掉外层队列尾部不构成正确实现。只应有一个实际消费规则的管理者。</p>
+        <p>如果原方法本身采用每步融合等策略，记录并复用该策略，不能强行解释成“固定若干步后丢掉尾部”。首轮不新增自动根据任务表现或耗时调整执行长度的算法。</p>
+      </section>
+
+      <section aria-labelledby="examples">
+        <h2 id="examples">用具体情景说明决策</h2>
+        <p>以下数字均为设计示例，不是在宣布 LIBERO／RoboTwin 有这些官方统一要求。</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>情景</th><th>最终处理</th></tr></thead>
+          <tbody>
+            <tr><td>协议固定执行5条；模型每次预测20条，支持原生截取5条再重新预测。</td><td>采用5条，由模型 Adapter／服务落实；不必改变模型预测20条的结构。另记其是否不同于模型默认设置。</td></tr>
+            <tr><td>协议固定5条；模型服务只支持完整执行20条，无法在第5条真正重新预测。</td><td>该协议不兼容。不能让 Runner 假装重新请求就是重新生成；需另行建设有依据的模型侧能力。</td></tr>
+            <tr><td>协议明确交给策略决定；模型原生每批50条。</td><td>采用50条，保留原生观测更新和缓存规则；不改成全模型统一5条。</td></tr>
+            <tr><td>协议允许1至10条；模型默认50条，但支持具名5条配置。</td><td>默认50不合法；只有明确选择5条配置后才按5条运行。不擅自把50压成10。</td></tr>
+            <tr><td>示例程序写4条，但匹配权重的配套入口用5条，官方规则未明确统一限制。</td><td>不把4当硬规定。复现匹配权重入口时保留5并注明规则未核实；正式合规仍待查。</td></tr>
+            <tr><td>环境固定动作周期，模型动作时间未知。</td><td>可保留已具名的原生参考运行及未知标记，但不能宣称时间已校准；需要严格训练时间一致性证明的检查不能通过。</td></tr>
+          </tbody>
+        </table></div>
+        <p>同一个 Benchmark 中，允许不同模型使用不同执行长度，比较的是不同完整策略系统；它不意味着所有模型享有相同的反馈次数。若要研究“同等重新决策机会”，应另定受控协议，并明确它与原生复现的区别。</p>
+      </section>
+
+      <section aria-labelledby="current-ledger">
+        <h2 id="current-ledger">现有接入如何归档</h2>
+        <p>本轮不把现有示例默认值直接升级成官方规则。已有源码核查详见<a href="action-chunk-execution-review-20261023.html">动作批次入口对照报告</a>；本方案下一阶段应按13份具名配置逐项建立规则账本。</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>环境</th><th>已知原生参考行为</th><th>按新方案应如何认定</th></tr></thead>
+          <tbody>
+            <tr><td>LIBERO</td><td>OpenPI 配套入口默认5条。</td><td>先记为该策略参考设置，不推导所有 LIBERO 模型必须5条。<a href="https://github.com/Physical-Intelligence/openpi/blob/215abfb217dbac7d5f1273282331b9b1866c0479/examples/libero/main.py">固定源码</a></td></tr>
+            <tr><td>VLABench</td><td>自带 OpenPI 组件默认4，匹配π0.5入口默认5。</td><td>分别绑定入口和权重来源；正式赛道对执行条数的许可待核，不能从两个默认值直接推出无限制。<a href="https://github.com/OpenMOSS/VLABench/blob/cf588fe60c0c7282174fe979f5913170cfe69017/VLABench/evaluation/model/policy/openpi.py">组件</a>、<a href="https://github.com/Shiduo-zh/openpi/blob/788ef1f20e655de5bb40869fb7b7fcdd49732387/examples/vlabench/eval.py">配套入口</a></td></tr>
+            <tr><td>RoboTwin</td><td>LingBot配套启动器默认50；OpenWAM按自己的同步部署设置消费。</td><td>分别保留模型参考设置；检查所选 Benchmark 协议是否进一步限制，不把一个策略的值强加给其他策略。<a href="https://github.com/robbyant/lingbot-vla-v2/blob/be969b8fd117fb70550c5d4bf4bc328211b5b1b6/experiment/robotwin/start_robotwin_infer_and_eval.sh">LingBot启动器</a></td></tr>
+            <tr><td>RoboDojo</td><td>XPolicyLab 的 OpenWAM 有执行条数配置；所查π0.5循环消费返回整批。</td><td>模型端能力分别登记；正式提交按具体代码、权重、命令和审核要求处理。<a href="https://github.com/XPolicyLab/XPolicyLab/blob/53c5da5a01bc720d1cf0e6ab6ed212e8cef0eda2/policy/OpenWAM/deploy.yml">配置</a>、<a href="https://robodojo-benchmark.com/doc/usage/robodojo-submission/">提交说明</a></td></tr>
+            <tr><td>DROID sim_evals</td><td>原生示例客户端默认8；本项目Cosmos／DreamZero具名部署配置不同。</td><td>8是示例客户端参数，不是所有模型的强制值；仍不能补造原生来源没有的官方任务成功评分。<a href="https://github.com/arhanjain/sim-evals/blob/3a6b0e8177f696947f49c082728f10ef5133ede1/src/sim_evals/inference/droid_jointpos.py">原生客户端</a></td></tr>
+          </tbody>
+        </table></div>
+        <p>所以，方案原则可以现在确定，但不能现在就把五类环境全都填成“官方已允许自由设置”。后续核查可自主填写有依据的条目，无依据的保留缺口，不要求用户逐个猜参数。</p>
+      </section>
+
+      <section aria-labelledby="contract-impact">
+        <h2 id="contract-impact">需要补的契约缺口与影响</h2>
+        <p>当前<a href="contract-v0.3.md">0.3契约</a>已有物理／控制周期、真实采集时间、观测历史要求，以及模型原生动作时间与缓存归属说明；现有时间扩展明确仅处理观测，不调整动作消费。仍缺三项类型化声明：</p>
+        <ul>
+          <li><strong>Benchmark 对执行设置的约束：</strong>硬规定还是允许选择、取值范围、适用版本／赛道及依据。</li>
+          <li><strong>模型实际能调整什么：</strong>生成长度与消费长度分开，原生偏好、可支持集合、服务内部缓存及配置落实方式。</li>
+          <li><strong>两者核对后的最终计划：</strong>选定值、理由、落实方、待核项，以及声明与实际验证的区别。</li>
+        </ul>
+        <p><strong>建议以0.3的具名、显式可选执行策略扩展提交评审，具体字段与兼容方式在实施前定稿。</strong>本文件不是新增字段已经生效，不直接升级0.4，也不把现有观测时间扩展解释成已支持动作调度。</p>
+        <p>实施预计涉及公共声明、配置校验、预检查回执、运行计划与诊断，以及原生已有可调参数的透传。无需更改公共位姿／关节物理含义，也不修改图像处理、归一化、权重、控制器、IK或官方评分。</p>
+        <p>旧0.3配置默认保持当前原生行为，旧报告和历史路径不回写。新严格规则检查显式启用；未启用的新旧原生运行不能因此被标成已获正式合规认证。不能借兼容模式绕过已经明确冲突的严格协议，也不恢复0.1／0.2入口。</p>
+      </section>
+
+      <section aria-labelledby="implementation">
+        <h2 id="implementation">实施顺序与验收</h2>
+        <p>以下是待确认的后续工作，每个阶段交付证据后再确认进入下一阶段。本轮没有开始其中的代码实施。</p>
+        <h3 id="phase-one">建立规则账本和声明方案</h3>
+        <p>逐项覆盖现有五类环境和13份具名配置，分别登记物理／动作推进、观测、执行条数和重新决策规则；补充来源、适用范围、未知项与冲突。定稿可选扩展的字段、默认行为和序列化兼容方案，不改任何实际运行设置。验收重点是“参考默认”和“强制规则”没有混淆。</p>
+        <h3 id="phase-two">实现通用解析和合成检查</h3>
+        <p>实现独立声明、通用解析器、预检查和计划保存，不启动真实模型。覆盖固定值、范围、策略自定、参考默认、未知、相互矛盾及运行值漂移；检查模型无法截短、生成长度不足、历史缺失、变时长误用和双重缓存。两个测试模型与两个测试环境验证交叉组合，再增加第三方无需修改其他Adapter；明确标为合成架构测试。</p>
+        <h3 id="phase-three">接通原生可调入口并验证</h3>
+        <p>先接通源码明确支持的参数，把计划交给对应组件而不是由Runner改动作。使用保存样本验证输入、动作值、精度、缓存与取图边界；再按确认范围做有限步真实对照。若新参数确实改变重新推理位置，单独记录新实验，不拿新动作与旧动作不同作为必然映射错误，也不靠任务成功代替验证。</p>
+        <p>验证中保留现有主634项、桥接34项及五组CLI退出码0／0／0／1／2无回归要求，并新增执行策略测试；这些数字是当前已记录基线，不是本轮重新运行结果。旧原生差异、DreamZero后置硬件和全任务覆盖待办不被本方案自动关闭。后续GPU验证另按阶段确认，沿用既有资源上限与利用率记账规则。</p>
+        <h3 id="acceptance-evidence">每次结果应交付什么证据</h3>
+        <ul>
+          <li>规则身份及来源、模型权重与具名配置、最终执行计划及所选理由。</li>
+          <li>声明是否满足限制、实际配置是否落实、是否仍是原生复现：三项分别报告。</li>
+          <li>实际执行动作数、物理步数、仿真时间、请求动作批次的位置、真实图像采集时间、剩余缓存与停止原因。</li>
+          <li>接口调用、动作请求和真实模型生成分开计数；生成次数无法核实就保留未知。</li>
+          <li>官方指标、任务失败、基础设施错误和执行状态未知分开记录；规则核查通过不等于榜单正式接收，也不等于阶段验收通过。</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="delivery">
+        <h2 id="delivery">本轮交付与待确认内容</h2>
+        <p>本轮只读核对当前代码结构，并依据既有原生源码研究提出以上方案。<a href="../outputs/benchmark-first-execution-policy-20261023-run1/proposal-receipt.json">方案来源与范围回执</a>记录主提交、11份本地参考文件指纹及未实施边界。114个框架Python运行文件与前轮指纹一致，没有新训练、GPU任务、推理或仿真。</p>
+        <div class="callout"><strong>建议确认的方案范围：</strong>Benchmark明确约束优先，允许部分采用模型设置，未知规则单列；先做规则账本、显式声明和通用检查，再接通已有原生参数并验证。首轮不建设跨频率动作重采样，不修改原生控制器和评分，不把本方案当作契约冻结或阶段4通过。</div>
+      </section>
+</main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>动作批次执行条数：五类 Benchmark 原生设置核查</title>
+  <style>
+    :root { color-scheme: light dark; --canvas:#fafbff; --paper:#fff; --text:#242630; --muted:#666b7a; --accent:#354381; --tint:#eef0f8; --line:#dfe2ec; --code:#20232d; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--canvas); color:var(--text); font:16px/1.76 Inter,"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif; }
+    .report-shell { display:block; width:min(100% - 40px,820px); margin:32px auto 64px; }
+    main.report-content { min-width:0; padding:42px 48px; background:var(--paper); border:1px solid var(--line); border-radius:8px; counter-reset:section; }
+    h1 { margin:0 0 .7em; color:var(--accent); font-size:1.85em; line-height:1.25; scroll-margin-top:24px; }
+    h2 { margin:2em 0 .8em; padding-bottom:.35em; border-bottom:1px solid var(--line); font-size:1.42em; counter-increment:section; counter-reset:subsection; scroll-margin-top:24px; }
+    h2::before { content:counter(section, cjk-ideographic) "、"; color:var(--accent); }
+    h3 { margin:1.5em 0 .6em; font-size:1.18em; counter-increment:subsection; scroll-margin-top:24px; }
+    h3::before { content:counter(section) "." counter(subsection) " "; color:var(--accent); }
+    h1:target, h2:target, h3:target { border-radius:4px; background:var(--tint); box-shadow:0 0 0 6px var(--tint); }
+    p,ul,ol { margin:.8em 0; }
+    .lead { color:var(--muted); font-size:1.05em; }
+    .callout { margin:1.25em 0; padding:14px 16px; background:var(--tint); border-left:4px solid var(--accent); }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .panel { padding:16px; border:1px solid var(--line); border-radius:6px; }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:10px 12px; border:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:var(--tint); }
+    code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
+    pre { overflow-x:auto; padding:16px; color:#f5f6fa; background:var(--code); border-radius:8px; }
+    a { color:var(--accent); text-underline-offset:2px; }
+    @media (max-width:760px) {
+      body { font-size:15px; }
+      .report-shell { display:block; width:100%; margin:0; }
+      main.report-content { width:100%; margin:0; padding:58px 18px 48px; border:0; border-radius:0; }
+      .grid { grid-template-columns:1fr; }
+    }
+    @media (prefers-color-scheme:dark) { :root { --canvas:#14161d; --paper:#1b1e27; --text:#e8eaf0; --muted:#aeb3c2; --accent:#aeb9ff; --tint:#282d42; --line:#383d4d; } }
+    @media print { :root { --canvas:#fff; --paper:#fff; --text:#111; --accent:#222; --tint:#f2f2f2; --line:#bbb; } body,.report-shell,main.report-content { background:#fff; } .report-shell { display:block; width:100%; margin:0; } main.report-content { width:100%; padding:0; border:0; } a { color:inherit; } }
+  </style>
+</head>
+<body>
+  <div class="report-shell">
+    <main class="report-content">
+      <h1 id="report-title">执行几条动作，再重新推理？</h1>
+      <p class="lead">已接入五类仿真 Benchmark 的原生入口核查 · 2026年10月23日（北京时间）<br>核查固定源码、模型配套配置和公开提交说明；不修改现有运行规则。</p>
+      <section aria-labelledby="answer">
+        <h2 id="answer">先给结论</h2>
+        <div class="callout"><strong>多数情况下，这是可以设置的模型部署参数；但一份具体的复现结果会选定它。</strong>不是 Benchmark 给所有模型统一规定一个条数，也不是模型预测了多少条就必须全部执行。代码提供调节入口，不等于正式榜单允许不受限制地调整。</div>
+        <p>更准确的表述是：<strong>“可配置参数”与“实验前确定”同时成立。</strong>实验设计时可以选；复现一个已经发布的设置时应保持一致；要比较其他取值，就另记为新设置，不静默替换。</p>
+        <p>本文的“动作批次”即 action chunk，指一次请求得到的一串未来动作。“执行条数”指使用这串动作中的多少条之后，再根据新观测请求下一串；它不是物理计算次数，也不一定是固定的仿真秒数。</p>
+      </section>
+      <section aria-labelledby="comparison">
+        <h2 id="comparison">各家实际怎么做</h2>
+        <div class="table-wrap"><table>
+          <thead><tr><th>固定入口</th><th>默认／选定行为</th><th>代码上能否调整</th></tr></thead>
+          <tbody>
+            <tr><td>LIBERO：OpenPI 示例</td><td><code>replan_steps=5</code>，先用前5条，缓存耗尽后重新请求。</td><td>有独立评测参数；不由 LIBERO 环境统一强制为5。<a href="https://github.com/Physical-Intelligence/openpi/blob/215abfb217dbac7d5f1273282331b9b1866c0479/examples/libero/main.py">源码</a></td></tr>
+            <tr><td>VLABench：自带 OpenPI 组件／我们匹配的 π0.5 入口</td><td>前者构造参数默认4；后者评测参数默认5，并只保存前5条。</td><td>两者均有参数；同一 Benchmark 的入口默认值就可以不同。<a href="https://github.com/OpenMOSS/VLABench/blob/cf588fe60c0c7282174fe979f5913170cfe69017/VLABench/evaluation/model/policy/openpi.py">自带组件</a>、<a href="https://github.com/Shiduo-zh/openpi/blob/788ef1f20e655de5bb40869fb7b7fcdd49732387/examples/vlabench/eval.py">匹配 π0.5 入口</a></td></tr>
+            <tr><td>RoboTwin：LingBot-VLA 配套入口</td><td>启动器默认 <code>use_length=50</code>；服务截取所用前缀，客户端依次执行，再取观测请求。</td><td>启动器有显式参数，不是 RoboTwin 统一规定所有模型都50条。<a href="https://github.com/robbyant/lingbot-vla-v2/blob/be969b8fd117fb70550c5d4bf4bc328211b5b1b6/experiment/robotwin/start_robotwin_infer_and_eval.sh">启动器</a></td></tr>
+            <tr><td>RoboTwin：DP／ACT 原生基线（补充核查，不是新增接入）</td><td>DP 从策略配置读取执行条数，所查14维配置为6；ACT 可选择每步重新预测并融合重叠预测。</td><td>随策略配置和方法决定；不能用同一个“固定条数”概括所有算法。<a href="https://github.com/RoboTwin-Platform/RoboTwin/blob/13c3c47ff4312dd62484bcd51be034af55c062d1/policy/DP/deploy_policy.py">DP 入口</a>、<a href="https://github.com/RoboTwin-Platform/RoboTwin/blob/13c3c47ff4312dd62484bcd51be034af55c062d1/policy/ACT/act_policy.py">ACT 逻辑</a></td></tr>
+            <tr><td>RoboDojo：XPolicyLab 配套策略</td><td>OpenWAM 有 <code>replan_steps</code>，默认继承原生设置；π0.5 所查循环执行模型返回整批，未找到独立截短开关。</td><td>OpenWAM 可配；π0.5 不能因为另一个策略有开关，就假定它也有。<a href="https://github.com/XPolicyLab/XPolicyLab/blob/53c5da5a01bc720d1cf0e6ab6ed212e8cef0eda2/policy/OpenWAM/deploy.yml">OpenWAM 配置</a>、<a href="https://github.com/XPolicyLab/XPolicyLab/blob/53c5da5a01bc720d1cf0e6ab6ed212e8cef0eda2/policy/Pi_05/deploy.py">π0.5 循环</a></td></tr>
+            <tr><td>DROID sim_evals：原生关节位置示例客户端</td><td><code>open_loop_horizon=8</code>，用8条后重新向服务请求。</td><td>是客户端构造参数；所查顶层示例直接使用默认值，没有暴露通用命令行开关。<a href="https://github.com/arhanjain/sim-evals/blob/3a6b0e8177f696947f49c082728f10ef5133ede1/src/sim_evals/inference/droid_jointpos.py">客户端</a>、<a href="https://github.com/arhanjain/sim-evals/blob/3a6b0e8177f696947f49c082728f10ef5133ede1/run_eval.py">顶层入口</a></td></tr>
+            <tr><td>OpenWAM 通用同步部署（用于多条已接入路线）</td><td><code>inference_horizon=null</code> 表示执行完整生成批次；设正整数则仅执行前面若干条，丢弃尾部。</td><td>配置及部署入口可选；这一行为位于模型服务，不是 Benchmark 环境。<a href="https://github.com/OpenWAM-Official/OpenWAM/blob/48bd67b89d489b14d03b8d92bc66e65d306df32e/configs/deploy.yaml">配置</a>、<a href="https://github.com/OpenWAM-Official/OpenWAM/blob/48bd67b89d489b14d03b8d92bc66e65d306df32e/openwam/deploy/executors/sync_executor.py">实际缓存代码</a></td></tr>
+          </tbody>
+        </table></div>
+        <p>这些数字只描述所查固定版本与具体入口，不是为整个 Benchmark 授予永久标签；任务成功、终止或预算耗尽时，也可能没有执行满所选条数。</p>
+      </section>
+      <section aria-labelledby="details">
+        <h2 id="details">几个容易误读的细节</h2>
+        <h3 id="entry-defaults">VLABench 的4和5，不是我们随意改出来的</h3>
+        <p>环境仓库内的 <code>OpenPiPolicy</code> 构造函数默认4，按计数触发新请求。匹配 π0.5 权重的独立评测程序默认5，检查模型至少返回5条，再把前5条放入缓存。两者相机及输入处理也不同，不能只改这个数字就互换入口。它们说明的是“参数属于具体策略实现”，不是证明某一个默认值错误。<a href="https://github.com/OpenMOSS/VLABench/blob/cf588fe60c0c7282174fe979f5913170cfe69017/VLABench/evaluation/model/policy/openpi.py">环境侧组件</a>、<a href="https://github.com/Shiduo-zh/openpi/blob/788ef1f20e655de5bb40869fb7b7fcdd49732387/examples/vlabench/eval.py">π0.5 配套程序</a>。</p>
+        <h3 id="cached-input">每步调用接口，不代表每步重新预测</h3>
+        <p>DROID 示例每步调用客户端 <code>infer</code>，但客户端内部缓存动作，默认累计执行8条才向服务请求下一批。类似地，OpenWAM 同步执行器每次返回一条动作，只有内部缓存为空才调用生成引擎。框架调用次数、网络动作请求次数与真正模型生成次数，不能当成一个数字。<a href="https://github.com/arhanjain/sim-evals/blob/3a6b0e8177f696947f49c082728f10ef5133ede1/src/sim_evals/inference/droid_jointpos.py">DROID 实现</a>、<a href="https://github.com/OpenWAM-Official/OpenWAM/blob/48bd67b89d489b14d03b8d92bc66e65d306df32e/openwam/deploy/executors/sync_executor.py">OpenWAM 实现</a>。</p>
+        <h3 id="observations">取得新图，也不代表已经用它改了动作</h3>
+        <p>所查 RoboDojo／XPolicyLab π0.5 循环在批次内部更新观测，但仍继续执行之前生成的动作，直到整批结束才请求下一批。LingBot 的配套客户端则主要在每批边界取观测，随后执行服务返回的动作序列。不能仅通过“有没有 get_obs 调用”判断是否重新决策。<a href="https://github.com/XPolicyLab/XPolicyLab/blob/53c5da5a01bc720d1cf0e6ab6ed212e8cef0eda2/policy/Pi_05/deploy.py">π0.5 循环</a>、<a href="https://github.com/robbyant/lingbot-vla-v2/blob/be969b8fd117fb70550c5d4bf4bc328211b5b1b6/experiment/robotwin/eval_policy_client_lingbotvla.py">LingBot 客户端</a>。</p>
+        <h3 id="aggregation">不是所有方法都丢弃旧批次</h3>
+        <p>ACT 的可选时间融合方式，会每步生成一串预测，再把过去几次对“当前这一步”的预测加权合并。未启用时则按批次长度间隔生成。这里“时间融合”就是把多次预测中对应同一个执行时刻的动作合在一起，不是插值改变仿真频率。这是额外核查的原生算法例子，不表示本项目新增了 ACT Adapter。<a href="https://github.com/RoboTwin-Platform/RoboTwin/blob/13c3c47ff4312dd62484bcd51be034af55c062d1/policy/ACT/act_policy.py">ACT 实际分支</a>。</p>
+        <h3 id="config-flow">声明可配，还要确认参数确实传到了执行处</h3>
+        <p>LingBot 不只在文档写有参数：启动器默认50并传给服务，服务按 <code>use_length</code>截取动作，客户端再遍历返回结果。RoboTwin DP 的通用 runner 构造默认8，但实际部署从策略配置传入6；只看构造函数会得到错误结论。DROID 构造参数可调，则不等于顶层示例已经提供同名命令行选项。<a href="https://github.com/robbyant/lingbot-vla-v2/blob/be969b8fd117fb70550c5d4bf4bc328211b5b1b6/deploy/lingbot_vla_v2_policy.py">LingBot 服务</a>、<a href="https://github.com/RoboTwin-Platform/RoboTwin/blob/13c3c47ff4312dd62484bcd51be034af55c062d1/policy/DP/diffusion_policy/config/robot_dp_14.yaml">DP 选定配置</a>。</p>
+      </section>
+      <section aria-labelledby="permission">
+        <h2 id="permission">“允许设置”要分三层</h2>
+        <ol>
+          <li><strong>本地代码支持：</strong>上述多个入口确实把执行条数作为参数。这回答“能不能改”。</li>
+          <li><strong>复现发布结果：</strong>需要保持该结果采用的具体配置。默认值只是线索；如果论文、发布命令或回执另有覆盖，实际覆盖值优先。改值可能改变反馈次数和成绩，应作为另一组实验。</li>
+          <li><strong>正式榜单／挑战赛：</strong>按对应规则、提交材料及审核决定，不能仅凭源码能改就推断任何取值都获准。本轮没有取得五类环境所有赛道对该参数的明确许可。</li>
+        </ol>
+        <p>例如，RoboDojo 公开提交说明要求策略复现其 README 记载的结果，提供配置、检查点及评测命令，并经审核后进入榜单。这支持“具体提交必须可复现”，不能用来推出“所有策略都必须固定同一个执行条数”。<a href="https://robodojo-benchmark.com/doc/usage/robodojo-submission/">官方提交说明</a>。</p>
+        <p>本报告的判断是对所查实现的归纳，不是声称找到一条所有 Benchmark 都遵守的统一竞赛规则。也不建议在测试集合上反复选择最好的条数、只报告最高成绩；若要研究这个参数，应预先明确选择依据和评测范围。</p>
+      </section>
+      <section aria-labelledby="framework">
+        <h2 id="framework">我们的框架应该怎么做</h2>
+        <p><strong>默认把它作为“具名权重的部署规则”，而不是 Benchmark Adapter 给所有模型定死的常数。</strong>模型侧保留原生缓存和消费方式，环境侧只负责正确执行收到的动作；框架保存所选值、来源及实际行为，避免双方各自缓存又重复截短。</p>
+        <p>当前已有行为：π0.5／LIBERO与VLABench保留5条；LingBot配套服务使用50条；ARX π0.5完整批次为50条；OpenWAM常规路线由服务执行器管理批次；DROID中的Cosmos／DreamZero具名配置分别默认32／8条。<strong>DROID原生示例默认8，不表示我们所有接入该环境的模型都必须是8。</strong>这是本地代码盘点，不是本轮新推理或全部运行验证。</p>
+        <p>建议采用以下原则，但本轮不实施配置变更：</p>
+        <ul>
+          <li>默认复现匹配权重的原生设置，不在 Runner 中增加全模型统一的“每5步重推理”。</li>
+          <li>对原生已支持的执行条数，后续可用具名部署配置表达；原生未支持的，不偷偷在外层截短。</li>
+          <li>实验性改值与原生复现分开记账；若方法有内部历史、因果状态或时间融合，先核实改变执行条数是否仍符合其方法。</li>
+          <li>终止、预算、已执行动作数、重新请求位置、实际仿真时间分别记录；不能把50条动作自动换算成固定秒数。</li>
+          <li>如果要统一各模型的重新决策机会，另建受控实验协议；不是改了这个参数就仍可称原生同条件复现。</li>
+        </ul>
+        <div class="callout"><strong>一句人话：</strong>各模型可以有自己的“走几步、再抬头看一次”的设置。评测开始前把它定好并记下来；复现谁，就沿用谁的设置。不是框架临场随意挑，也不是所有 Benchmark 提前替所有模型选好。</div>
+      </section>
+      <section aria-labelledby="evidence">
+        <h2 id="evidence">核查范围与证据边界</h2>
+        <p><a href="../outputs/action-chunk-review-20261023-run1/source-audit.json">本轮固定源码清单与文件指纹</a>记录了所查入口、完整源码提交及与本地 Git 内容的比较。SHA-256 是发现文件内容变化的指纹，不是模型成绩认证。当前框架114个 Python 运行文件与前轮指纹一致。</p>
+        <p>本轮仅只读核查与新建报告；没有启动模型／GPU／仿真、没有改执行条数、缓存、取图、控制器、评分或公共契约，没有重跑旧测试。RoboTwin DP／ACT只是补充说明现有方法的差异，不加入已接入模型清单。正式榜单参数许可、已发布成绩的完整运行配置和真实权重的动作时间，仍需分别核实。</p>
+      </section>
+</main>
+  </div>
+</body>
+</html>
